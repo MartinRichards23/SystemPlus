@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/SystemPlus/bin
+/SystemPlus/obj
+/SystemPlus.Web/bin
+/SystemPlus.Web/obj
+/SystemPlus.Windows/bin
+/SystemPlus.Windows/obj
+/SystemPlusStandard/bin
+/SystemPlusStandard/obj
+/TestConsole/obj

@@ -1,0 +1,23 @@
+﻿<Window x:Class="SystemPlus.Windows.Controls.ProgressDlg"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:SystemPlus.Windows"
+        local:WindowBehavior.HideCloseButton="True"
+        Title="Processing" Height="153" Width="444" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        ShowInTaskbar="False" Loaded="Window_Loaded">
+    <Window.Resources>
+        
+    </Window.Resources>
+    <Grid>
+        <Button Content="Cancel" Height="23" Margin="0,0,12,43" Name="btnCancel" VerticalAlignment="Bottom"
+                Opacity="0.5" HorizontalAlignment="Right" Width="127" Click="btnCancel_Click" Foreground="White"
+                Background="#30000000" />
+        <ProgressBar Height="25" Margin="12,0,12,12" Name="progressBar1" VerticalAlignment="Bottom" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,0,0,72" Name="txtStatus" Text="Progress"
+                   VerticalAlignment="Bottom" Foreground="White" />
+        <Label Height="23" Width="80" Margin="0,0,0,14" Name="txtPercent" Content="0%" VerticalAlignment="Bottom"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,0,0,43" Name="txtTime" Text=""
+                   VerticalAlignment="Bottom" Width="195" Foreground="White" />
+    </Grid>
+</Window>

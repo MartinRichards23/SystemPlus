@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="SystemPlus.Windows.Controls.NumericUpDown"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="24" d:DesignWidth="80">
+    <DockPanel LastChildFill="True">
+        <StackPanel Name="spButtons" DockPanel.Dock="Right" Width="20" HorizontalAlignment="Right" Visibility="Visible">
+            <RepeatButton Name="btnUp" HorizontalAlignment="Stretch" Interval="20" Height="12" VerticalAlignment="Top" Click="btnUp_Click">
+                <RepeatButton.Background>
+                    <VisualBrush>
+                        <VisualBrush.Visual>
+                            <Polygon Fill="Black" Stroke="DarkGray" StrokeThickness="1"
+                                     RenderTransformOrigin="0.5, 0.5" Points="0,0 10,-11 20,0 0,0">
+                                <Polygon.RenderTransform>
+                                    <RotateTransform Angle="0" />
+                                </Polygon.RenderTransform>
+                            </Polygon>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </RepeatButton.Background>
+            </RepeatButton>
+            <RepeatButton Name="btnDown" HorizontalAlignment="Stretch" Interval="20" Height="12" VerticalAlignment="Bottom" Click="btnDown_Click">
+                <RepeatButton.Background>
+                    <VisualBrush>
+                        <VisualBrush.Visual>
+                            <Polygon Fill="Black" Stroke="DarkGray" StrokeThickness="1"
+                                     RenderTransformOrigin="0.5, 0.5" Points="0,0 10,-11 20,0 0,0">
+                                <Polygon.RenderTransform>
+                                    <RotateTransform Angle="180" />
+                                </Polygon.RenderTransform>
+                            </Polygon>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </RepeatButton.Background>
+            </RepeatButton>
+        </StackPanel>
+        <TextBox DockPanel.Dock="Left" x:Name="txtValue" PreviewKeyDown="numericTextbox1_PreviewKeyDown" TextChanged="txtValue_TextChanged" Text="" />
+    </DockPanel>
+</UserControl>

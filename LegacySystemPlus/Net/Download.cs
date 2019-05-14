@@ -80,7 +80,7 @@ namespace SystemPlus.Net
                 return redirUrl;
             }
         }
-        
+
         const int bufferSize = 16 * 1024;
 
         public static void DownloadFile(Uri url, string outputFilePath, IProgressToken token)

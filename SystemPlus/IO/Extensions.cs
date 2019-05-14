@@ -16,14 +16,14 @@ namespace SystemPlus.IO
             return ms;
         }
 
-        //public static async Task<MemoryStream> ToMemoryStreamAsync(this Stream stream)
-        //{
-        //    MemoryStream ms = new MemoryStream();
-        //    await stream.CopyToAsync(ms);
-        //    ms.Position = 0;
+        public static async Task<MemoryStream> ToMemoryStreamAsync(this Stream stream)
+        {
+            MemoryStream ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            ms.Position = 0;
 
-        //    return ms;
-        //}
+            return ms;
+        }
 
         public static byte[] ToBytes(this Stream stream)
         {

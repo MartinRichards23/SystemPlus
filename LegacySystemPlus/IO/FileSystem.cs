@@ -178,7 +178,7 @@ namespace SystemPlus.IO
                 return s;
             }
         }
-        
+
         /// <summary>
         /// Enumerates all FileInfos in a directory (including sub directories)
         /// </summary>

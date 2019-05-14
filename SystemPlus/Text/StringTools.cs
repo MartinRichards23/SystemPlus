@@ -17,7 +17,7 @@ namespace SystemPlus.Text
         {
             if (stringA == null)
                 return stringB;
-            
+
             if (stringB == null)
                 return stringA;
 
@@ -274,7 +274,7 @@ namespace SystemPlus.Text
 
             return string.Join(separator, values.Where(s => s != null));
         }
-        
+
         /// <summary>
         /// Returns the human-readable file size for an arbitrary, 64-bit file size 
         /// </summary>
@@ -327,5 +327,5 @@ namespace SystemPlus.Text
             // Return formatted number with suffix
             return string.Format("{0} {1}", readable.ToString(format), suffix);
         }
-    }    
+    }
 }

@@ -107,12 +107,6 @@
     <Compile Include="WindowBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SystemPlus\LegacySystemPlus.csproj">
-      <Project>{f7c3a9c9-931f-4f60-9e65-8068d91466f6}</Project>
-      <Name>LegacySystemPlus</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Controls\NumericUpDown.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -125,6 +119,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LegacySystemPlus\LegacySystemPlus.csproj">
+      <Project>{f7c3a9c9-931f-4f60-9e65-8068d91466f6}</Project>
+      <Name>LegacySystemPlus</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

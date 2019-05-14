@@ -50,7 +50,7 @@ namespace SystemPlus.Reflection
             get
             {
                 AssemblyTitleAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyTitleAttribute>();
-
+                
                 return att?.Title;
             }
         }
@@ -60,7 +60,7 @@ namespace SystemPlus.Reflection
             get
             {
                 AssemblyFileVersionAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyFileVersionAttribute>();
-
+                
                 return att?.Version;
             }
         }
@@ -70,7 +70,7 @@ namespace SystemPlus.Reflection
             get
             {
                 AssemblyCopyrightAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyCopyrightAttribute>();
-
+                
                 return att?.Copyright;
             }
         }
@@ -80,7 +80,7 @@ namespace SystemPlus.Reflection
             get
             {
                 AssemblyCompanyAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyCompanyAttribute>();
-
+                
                 return att?.Company;
             }
         }
@@ -125,7 +125,7 @@ namespace SystemPlus.Reflection
         }
 
         /// <summary>
-        /// Finds and creates a collection of all types implementing the given interface
+        /// Finds instantiates and returns a collection of all types implementing the given interface
         /// </summary>
         public static IEnumerable<T> GetInstancesOfInterface<T>(this Assembly assembly, params object[] constructorArgs) where T : class
         {
@@ -141,21 +141,6 @@ namespace SystemPlus.Reflection
             }
 
             return instances;
-        }
-
-        /// <summary>
-        /// Finds and creates an instance implementing the given interface
-        /// </summary>
-        public static T GetInstanceOfInterface<T>(this Assembly assembly, params object[] constructorArgs) where T : class
-        {
-            Type baseType = typeof(T);
-
-            Type type = assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract && baseType.IsAssignableFrom(t)).FirstOrDefault();
-
-            if (type == null)
-                return null;
-
-            return (T)Activator.CreateInstance(type, constructorArgs);
         }
 
         /// <summary>

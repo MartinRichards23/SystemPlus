@@ -273,18 +273,16 @@ namespace SystemPlus.ComponentModel.Ini
             sections.Clear();
         }
 
-        public bool LoadFile(string filePath)
+        public void LoadFile(string filePath)
         {
             if (!File.Exists(filePath))
-                return false;
+                return;
 
             using (FileStream fs = File.OpenRead(filePath))
             using (StreamReader sr = new StreamReader(fs))
             {
                 Load(sr);
             }
-
-            return true;            
         }
 
         public void Load(string data)

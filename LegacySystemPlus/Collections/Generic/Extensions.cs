@@ -241,7 +241,7 @@ namespace SystemPlus.Collections.Generic
                     break;
             }
         }
-        
+
         public static IEnumerable<IList<T>> EnumerateBatches<T>(this IEnumerable<T> list, int batchSize)
         {
             IList<T> batch = new List<T>();

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -20,7 +19,7 @@ namespace SystemPlus.Net
         {
             return (HttpWebResponse)request.GetResponse(token);
         }
-        
+
         /// <summary>
         /// A WebRequest extension method that gets the WebRequest response or the WebException response.
         /// </summary>
@@ -42,7 +41,7 @@ namespace SystemPlus.Net
             using (Stream s = response.GetResponseStream())
             {
                 MemoryStream ms = new MemoryStream();
-                s.CopyTo(ms, 8000, maxLength);
+                s.CopyTo(ms, 1024, maxLength);
 
                 ms.Position = 0;
                 return ms;
@@ -124,82 +123,66 @@ namespace SystemPlus.Net
         {
             using (MemoryStream rawdata = new MemoryStream())
             {
+                // save data to a memorystream
                 using (Stream rs = response.GetResponseStream())
                 {
-                    rs.CopyTo(rawdata, 8000, maxLength);
+                    rs.CopyTo(rawdata, 1024, maxLength);
                 }
-                
-                string charset = GetCharSet(response.Headers);
-                if (string.IsNullOrEmpty(charset))
-                    charset = GetCharSetFromBody(rawdata);
 
-                Encoding encoding = GetEncoding(charset);
+                // first see if content length header has charset = calue
+                string charset = null;
+                string ctype = response.Headers["content-type"];
+                if (ctype != null)
+                {
+                    int ind = ctype.IndexOf("charset=", StringComparison.InvariantCultureIgnoreCase);
+                    if (ind > -1)
+                        charset = ctype.Substring(ind + 8);
+                }
+
+                // if ContentType is null, or did not contain charset, we search in body
+                if (string.IsNullOrEmpty(charset))
+                {
+                    rawdata.Seek(0, SeekOrigin.Begin);
+
+                    StreamReader srr = new StreamReader(rawdata, Encoding.ASCII);
+                    string meta = srr.ReadToEnd();
+
+                    int startInd = meta.IndexOf("charset=", StringComparison.InvariantCultureIgnoreCase);
+                    if (startInd != -1)
+                    {
+                        int endInd = meta.IndexOf("\"", startInd, StringComparison.InvariantCultureIgnoreCase);
+                        if (endInd != -1)
+                        {
+                            int start = startInd + 8;
+                            charset = meta.Substring(start, endInd - start + 1);
+                            charset = charset.TrimEnd('>', '"');
+                        }
+                    }
+                }
+
+                Encoding encoding;
+                if (string.IsNullOrWhiteSpace(charset))
+                {
+                    encoding = Encoding.UTF8; //default encoding
+                }
+                else
+                {
+                    try
+                    {
+                        encoding = Encoding.GetEncoding(charset);
+                    }
+                    catch
+                    {
+                        encoding = Encoding.UTF8;
+                    }
+                }
 
                 rawdata.Seek(0, SeekOrigin.Begin);
+
                 StreamReader sr = new StreamReader(rawdata, encoding);
-                
+
                 return sr.ReadToEnd();
             }
-        }
-
-        public static string GetCharSet(WebHeaderCollection headers)
-        {
-            string charset = null;
-            string ctype = headers["content-type"];
-            if (ctype != null)
-            {
-                int ind = ctype.IndexOf("charset=", StringComparison.InvariantCultureIgnoreCase);
-                if (ind > -1)
-                    charset = ctype.Substring(ind + 8);
-            }
-
-            return charset;
-        }
-
-        public static string GetCharSetFromBody(Stream rawdata)
-        {
-            rawdata.Seek(0, SeekOrigin.Begin);
-
-            string charset = null;
-
-            StreamReader srr = new StreamReader(rawdata, Encoding.ASCII);
-            string meta = srr.ReadToEnd();
-
-            int startInd = meta.IndexOf("charset=", StringComparison.InvariantCultureIgnoreCase);
-            if (startInd != -1)
-            {
-                int endInd = meta.IndexOf("\"", startInd, StringComparison.InvariantCultureIgnoreCase);
-                if (endInd != -1)
-                {
-                    int start = startInd + 8;
-                    charset = meta.Substring(start, endInd - start + 1);
-                    charset = charset.TrimEnd('>', '"');
-                }
-            }
-
-            return charset;
-        }
-
-        public static Encoding GetEncoding(string charset)
-        {
-            Encoding encoding;
-            if (string.IsNullOrWhiteSpace(charset))
-            {
-                encoding = Encoding.UTF8; //default encoding
-            }
-            else
-            {
-                try
-                {
-                    encoding = Encoding.GetEncoding(charset);
-                }
-                catch
-                {
-                    encoding = Encoding.UTF8;
-                }
-            }
-
-            return encoding;
         }
 
     }

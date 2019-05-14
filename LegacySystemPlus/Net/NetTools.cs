@@ -18,7 +18,7 @@ namespace SystemPlus.Net
 
             if (index < 0)
                 throw new ArgumentException("Email does not contain '@'");
-            
+
             return email.Substring(index + 1);
         }
 
@@ -140,7 +140,7 @@ namespace SystemPlus.Net
         {
             return uri.StartsWith("javascript:", StringComparison.InvariantCultureIgnoreCase);
         }
-
+        
         /// <summary>
         /// Determines if Url is a relative one
         /// </summary>

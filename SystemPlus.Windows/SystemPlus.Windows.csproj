@@ -107,9 +107,9 @@
     <Compile Include="WindowBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SystemPlus\SystemPlus.csproj">
+    <ProjectReference Include="..\SystemPlus\LegacySystemPlus.csproj">
       <Project>{f7c3a9c9-931f-4f60-9e65-8068d91466f6}</Project>
-      <Name>SystemPlus</Name>
+      <Name>LegacySystemPlus</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SystemPlusStandard\SystemPlusStandard.csproj" />
+    <ProjectReference Include="..\SystemPlusStandard\SystemPlus.csproj" />
   </ItemGroup>
 
   <ItemGroup>

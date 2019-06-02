@@ -42,7 +42,7 @@ namespace SystemPlus.Diagnostics
 
             return false;
         }
-        
+
         /// <summary>
         /// Closes all other instances
         /// </summary>

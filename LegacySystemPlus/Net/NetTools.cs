@@ -140,7 +140,7 @@ namespace SystemPlus.Net
         {
             return uri.StartsWith("javascript:", StringComparison.InvariantCultureIgnoreCase);
         }
-        
+
         /// <summary>
         /// Determines if Url is a relative one
         /// </summary>
@@ -281,7 +281,7 @@ namespace SystemPlus.Net
         public static DateTime GetNetworkTime(string ntpServer = "time.windows.com")
         {
             // NTP message size - 16 bytes of the digest (RFC 2030)
-            var ntpData = new byte[48];
+            byte[] ntpData = new byte[48];
 
             //Setting the Leap Indicator, Version Number and Mode values
             ntpData[0] = 0x1B; //LI = 0 (no warning), VN = 3 (IPv4 only), Mode = 3 (Client Mode)

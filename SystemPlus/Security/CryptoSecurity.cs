@@ -30,7 +30,7 @@ namespace SystemPlus.Security
 
             return result.ToString();
         }
-        
+
         public static string GetMacAddress()
         {
             NetworkInterface macAddr = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(n => n.OperationalStatus == OperationalStatus.Up);

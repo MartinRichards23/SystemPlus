@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
 namespace SystemPlus.Data
 {
@@ -7,7 +6,7 @@ namespace SystemPlus.Data
     /// Base class for Sql Server database api
     /// </summary>
     public abstract class SqlServerBase
-    {        
+    {
         protected SqlServerBase(string conString)
         {
             ConString = conString;

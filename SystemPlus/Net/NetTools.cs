@@ -18,7 +18,7 @@ namespace SystemPlus.Net
 
             if (index < 0)
                 throw new ArgumentException("Email does not contain '@'");
-            
+
             return email.Substring(index + 1);
         }
 
@@ -281,7 +281,7 @@ namespace SystemPlus.Net
         public static DateTime GetNetworkTime(string ntpServer = "time.windows.com")
         {
             // NTP message size - 16 bytes of the digest (RFC 2030)
-            var ntpData = new byte[48];
+            byte[] ntpData = new byte[48];
 
             //Setting the Leap Indicator, Version Number and Mode values
             ntpData[0] = 0x1B; //LI = 0 (no warning), VN = 3 (IPv4 only), Mode = 3 (Client Mode)

@@ -241,7 +241,7 @@ namespace SystemPlus.Collections.Generic
                     break;
             }
         }
-        
+
         public static IEnumerable<IList<T>> EnumerateBatches<T>(this IEnumerable<T> list, int batchSize)
         {
             IList<T> batch = new List<T>();
@@ -503,8 +503,7 @@ namespace SystemPlus.Collections.Generic
         /// <param name="collection">The collection to be cleared.</param>
         public static void Clear<T>(this IProducerConsumerCollection<T> collection)
         {
-            T ignored;
-            while (collection.TryTake(out ignored))
+            while (collection.TryTake(out T ignored))
             {
             }
         }

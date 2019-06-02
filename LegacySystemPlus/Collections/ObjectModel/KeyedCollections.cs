@@ -28,7 +28,7 @@ namespace SystemPlus.Collections.ObjectModel
             return item.Key;
         }
     }
-    
+
     public interface IGuid
     {
         Guid Guid { get; }

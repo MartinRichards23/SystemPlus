@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
-using System.Text;
 using SystemPlus.Collections.Generic;
 using SystemPlus.Text;
 
@@ -13,7 +12,7 @@ namespace SystemPlus.Data
     public class SqlGenerator
     {
         string databaseName;
-        List<SqlTable> tables = new List<SqlTable>();
+        readonly List<SqlTable> tables = new List<SqlTable>();
 
         public SqlGenerator()
         {
@@ -389,14 +388,14 @@ namespace SystemPlus.Data
 
             tw.WriteLine("public IList<{0}> {1}()", table.ClassName, methodName);
             tw.WriteLine("{");
-            
+
             tw.WriteLine("IList<{0}> items = new List<{0}>();", table.ClassName);
 
             tw.WriteLine("using (SqlConnection con = GetConnection())");
             tw.WriteLine("using (SqlCommand cmd = new SqlCommand(\"{0}\", con))", methodName);
             tw.WriteLine("{");
             tw.WriteLine("cmd.CommandType = CommandType.StoredProcedure;");
-            
+
             tw.WriteLine();
             tw.WriteLine("using (SqlDataReader rdr = cmd.ExecuteReaderWithRetry(RetryPolicy))");
             tw.WriteLine("{");
@@ -555,6 +554,6 @@ namespace SystemPlus.Data
 
             tw.WriteLine("END");
         }
-        
+
     }
 }

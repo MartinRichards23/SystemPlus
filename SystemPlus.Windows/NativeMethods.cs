@@ -153,7 +153,7 @@ namespace SystemPlus.Windows.NativeUtilities
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr dc, DrawingOptions opts);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(int hWnd, int msg, int wParam, int lParam);
@@ -221,7 +221,7 @@ namespace SystemPlus.Windows.NativeUtilities
 
         [DllImport("gdi32.dll")]
         public static extern bool BitBlt(IntPtr hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, int dwRop);
-        
+
         #endregion
 
         #region Kernal32
@@ -242,12 +242,12 @@ namespace SystemPlus.Windows.NativeUtilities
         public static extern bool SetProcessWorkingSetSize(IntPtr proc, int min, int max);
 
         #endregion
-        
+
         [StructLayout(LayoutKind.Sequential)]
         public struct Win32Point
         {
-            public Int32 X;
-            public Int32 Y;
+            public int X;
+            public int Y;
         };
 
         [Flags]
@@ -314,7 +314,7 @@ namespace SystemPlus.Windows.NativeUtilities
                 Marshal.FreeCoTaskMem(pReturnedString);
                 return false;
             }
-            
+
             // NOTE: Calling Marshal.PtrToStringAuto(pReturnedString) will
             // result in only the first pair being returned
             string returnedString = Marshal.PtrToStringAuto(pReturnedString, (int)bytesReturned - 1);
@@ -332,11 +332,11 @@ namespace SystemPlus.Windows.NativeUtilities
         [StructLayout(LayoutKind.Sequential)]
         public struct FLASHWINFO
         {
-            public UInt32 cbSize;
+            public uint cbSize;
             public IntPtr hwnd;
-            public UInt32 dwFlags;
-            public UInt32 uCount;
-            public UInt32 dwTimeout;
+            public uint dwFlags;
+            public uint uCount;
+            public uint dwTimeout;
         }
 
         public enum Flashenum : uint
@@ -363,7 +363,7 @@ namespace SystemPlus.Windows.NativeUtilities
             fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo));
             fInfo.hwnd = hWnd;
             fInfo.dwFlags = (uint)Flashenum.FLASHW_ALL | (uint)Flashenum.FLASHW_TIMERNOFG;
-            fInfo.uCount = UInt32.MaxValue;
+            fInfo.uCount = uint.MaxValue;
             fInfo.dwTimeout = 0;
 
             return FlashWindowEx(ref fInfo);
@@ -461,12 +461,12 @@ namespace SystemPlus.Windows.NativeUtilities
             SWP_NOZORDER = 0x0004,
             SWP_NOREDRAW = 0x0008,
             SWP_NOACTIVATE = 0x0010,
-            SWP_FRAMECHANGED = 0x0020, 
+            SWP_FRAMECHANGED = 0x0020,
             SWP_SHOWWINDOW = 0x0040,
             SWP_HIDEWINDOW = 0x0080,
             SWP_NOCOPYBITS = 0x0100,
-            SWP_NOOWNERZORDER = 0x0200, 
-            SWP_NOSENDCHANGING = 0x0400 
+            SWP_NOOWNERZORDER = 0x0200,
+            SWP_NOSENDCHANGING = 0x0400
         }
 
         public const int WM_PAINT = 0xF;

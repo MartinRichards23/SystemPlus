@@ -10,7 +10,7 @@ namespace SystemPlus.Text.NGrams
         public int GramLength { get; }
 
         [DataMember]
-        IList<NGram> grams = new List<NGram>();
+        readonly IList<NGram> grams = new List<NGram>();
 
         protected NGramCollection()
         { }
@@ -43,7 +43,7 @@ namespace SystemPlus.Text.NGrams
         readonly int gramLength;
 
         [DataMember]
-        IDictionary<NGram, int> grams = new Dictionary<NGram, int>();
+        readonly IDictionary<NGram, int> grams = new Dictionary<NGram, int>();
 
         protected UniqueNGramCollection()
         { }

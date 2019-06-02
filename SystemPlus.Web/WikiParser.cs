@@ -62,7 +62,7 @@ namespace SystemPlus.Web
         }
     }
     #endregion
-    
+
     /// <summary>
     ///  The Creole Parser is a .NET class which will translate Wiki Creole 1.0 (see http://wikicreole.org into HTML 
     /// 
@@ -152,8 +152,7 @@ namespace SystemPlus.Web
         {
             // all of the syntax of flowing formatting markup across "soft" paragraph breaks gets a lot easier if we just merge soft breaks together.
             // This is what _mergeLines does, giving us an array of "lines" which can be processed for line based formatting such as ==, etc.
-            List<int> originalLineNumbers;
-            List<string> lines = _breakMarkupIntoLines(markup, out originalLineNumbers);
+            List<string> lines = _breakMarkupIntoLines(markup, out List<int> originalLineNumbers);
             StringBuilder htmlMarkup = new StringBuilder();
 
             htmlMarkup.Append(_getStartTag("<p>").Replace("<p", "<p id='CreoleLine0'")); // start with paragraph
@@ -191,8 +190,8 @@ namespace SystemPlus.Web
                         _closeLists(ref htmlMarkup, ref iBullet, ref iNumber, lineTrimmed);
 
                         // end of paragraph (NOTE: we id paragraphs for conveinence sake
-                        htmlMarkup.Append(String.Format("</p>\n{0}",
-                                          _getStartTag("<p>").Replace("<p", String.Format("<p id='CreoleLine{0}'", originalLineNumbers[idParagraph]))));
+                        htmlMarkup.Append(string.Format("</p>\n{0}",
+                                          _getStartTag("<p>").Replace("<p", string.Format("<p id='CreoleLine{0}'", originalLineNumbers[idParagraph]))));
                     }
                     // --- process bullets
                     else if (lineTrimmed[0] == '*')
@@ -261,7 +260,7 @@ namespace SystemPlus.Web
                         // namely ordered list, unordered list or table definition
 
                         // just add it, processing any markup on it.
-                        htmlMarkup.Append(String.Format("{0}\n", _processCreoleFragment(line)));
+                        htmlMarkup.Append(string.Format("{0}\n", _processCreoleFragment(line)));
                     }
                 }
                 else
@@ -282,7 +281,7 @@ namespace SystemPlus.Web
 
             // lastly, we want to expand tabs out into hard spaces so that the creole tabs are preserved 
             // NOTE: this is non-standard CREOLE...
-            htmlMarkup = htmlMarkup.Replace("\t", this._tabStop);
+            htmlMarkup = htmlMarkup.Replace("\t", _tabStop);
 
             // return the HTML we have generated 
             return htmlMarkup.ToString();
@@ -398,7 +397,7 @@ namespace SystemPlus.Web
                     string cell = _processCreoleFragment(line.Substring(iPos, iEnd - iPos)).Trim();
                     if (cell.Length == 0)
                         cell = "&nbsp;"; // table won't render if there isn't at least something...
-                    markup += String.Format("{0}{1}</td>", _getStartTag("<td>"), cell);
+                    markup += string.Format("{0}{1}</td>", _getStartTag("<td>"), cell);
                     iPos = iEnd;
                 }
                 else
@@ -418,7 +417,7 @@ namespace SystemPlus.Web
             string markup = "";
             markup += _getStartTag("<table>");
             // add header
-            markup += String.Format("{0}\n{1}\n", _getStartTag("<thead>"), _getStartTag("<tr>"));
+            markup += string.Format("{0}\n{1}\n", _getStartTag("<thead>"), _getStartTag("<tr>"));
 
             // process each |= cell section
             int iPos = _indexOfWithSkip(line, "|=", 0);
@@ -446,7 +445,7 @@ namespace SystemPlus.Web
                     cell = "&nbsp;";
 
                 // create cell entry
-                markup += String.Format("{0}{1}</td>", _getStartTag("<td>"), _processCreoleFragment(cell));
+                markup += string.Format("{0}{1}</td>", _getStartTag("<td>"), _processCreoleFragment(cell));
             }
             // close up row and header
             markup += "</tr>\n</thead>\n";
@@ -470,18 +469,18 @@ namespace SystemPlus.Web
             // close down bullets if we have fewer *s
             while (iNewIndent < iCurrentIndent)
             {
-                markup += String.Format("{0}\n", outdentTag);
+                markup += string.Format("{0}\n", outdentTag);
                 iCurrentIndent--;
             }
 
             // add bullets if we have more *s
             while (iNewIndent > iCurrentIndent)
             {
-                markup += String.Format("{0}\n", indentTag);
+                markup += string.Format("{0}\n", indentTag);
                 iCurrentIndent++;
             }
             // mark the line in the list, processing the inner fragment for any additional markup
-            markup += String.Format("{0}{1}</li>\n", _getStartTag("<li>"), _processCreoleFragment(line));
+            markup += string.Format("{0}{1}</li>\n", _getStartTag("<li>"), _processCreoleFragment(line));
             return markup;
         }
 
@@ -510,14 +509,14 @@ namespace SystemPlus.Web
                 if (iEnd > iPos)
                 {
                     href = markup.Substring(iPos, iEnd - iPos);
-                    string anchor = String.Format("<a target=_blank href='{0}'>{0}</a>", href);
+                    string anchor = string.Format("<a target=_blank href='{0}'>{0}</a>", href);
                     markup = markup.Substring(0, iPos) + anchor + markup.Substring(iEnd);
                     iPos = iPos + anchor.Length;
                 }
                 else
                 {
                     href = markup.Substring(iPos);
-                    markup = markup.Substring(0, iPos) + String.Format("<a target=_blank href='{0}'>{0}</a>", href);
+                    markup = markup.Substring(0, iPos) + string.Format("<a target=_blank href='{0}'>{0}</a>", href);
                     break;
                 }
                 iPos = _indexOfWithSkip(markup, schema, iPos);
@@ -807,7 +806,7 @@ namespace SystemPlus.Web
                         OnLink(this, linkEventArgs);
 
                     markup = markup.Substring(0, iPos - 2)
-                        + String.Format("<a href='{0}' {2} {3}>{1}</a>", linkEventArgs.Href, linkEventArgs.Text,
+                        + string.Format("<a href='{0}' {2} {3}>{1}</a>", linkEventArgs.Href, linkEventArgs.Text,
                                             (linkEventArgs.Target == LinkEventArgs.TargetEnum.External) ? "target=_blank " : "",
                                             (linkEventArgs.Target == LinkEventArgs.TargetEnum.Unknown) ? "style='border-bottom:1px dashed #000000; text-decoration:none'" : "")
                             + markup.Substring(iEnd + 2);
@@ -874,7 +873,7 @@ namespace SystemPlus.Web
                     }
 
                     markup = markup.Substring(0, iPos - 2)
-                            + String.Format("<img src='{0}' alt='{1}'/>", href, text)
+                            + string.Format("<img src='{0}' alt='{1}'/>", href, text)
                             + markup.Substring(iEnd + 2);
                 }
                 else
@@ -899,7 +898,7 @@ namespace SystemPlus.Web
                 {
                     markup = markup.Substring(0, iPos) + _getStartTag("<tt>") +
                         markup.Substring(iPos + 3, iEnd - (iPos + 3)) +
-                        String.Format("</tt>") +
+                        string.Format("</tt>") +
                         markup.Substring(iEnd + 3);
 
                     iPos = markup.IndexOf("{{{", iPos);

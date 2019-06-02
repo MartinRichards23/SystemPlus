@@ -15,7 +15,7 @@ namespace SystemPlus.Threading
         protected CancellationTokenSource CancelToken { get; } = new CancellationTokenSource();
 
         #endregion
-        
+
         public void Start(TimeSpan period)
         {
             Start(period, period);
@@ -56,7 +56,7 @@ namespace SystemPlus.Threading
                 // still running previous so return
                 return;
             }
-                
+
             try
             {
                 if (CancelToken.IsCancellationRequested)
@@ -75,7 +75,7 @@ namespace SystemPlus.Threading
         }
 
         protected abstract void OnTimer();
-        
+
         public void RunNow()
         {
             OnTimer(null);

@@ -9,13 +9,12 @@ namespace SystemPlus.Collections.Concurrent
         {
             List<T> items = new List<T>();
 
-            T item;
-            while(queue.TryDequeue(out item))
+            while (queue.TryDequeue(out T item))
             {
                 items.Add(item);
             }
 
-            return items;           
+            return items;
         }
     }
 }

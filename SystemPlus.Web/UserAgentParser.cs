@@ -97,7 +97,7 @@ namespace SystemPlus.Web
         /// <returns></returns>
         public override string ToString()
         {
-            var version = VersionString.Format(Major, Minor, Patch, PatchMinor);
+            string version = VersionString.Format(Major, Minor, Patch, PatchMinor);
             return Family + (!string.IsNullOrEmpty(version) ? " " + version : null);
         }
     }
@@ -141,7 +141,7 @@ namespace SystemPlus.Web
         /// <returns></returns>
         public override string ToString()
         {
-            var version = VersionString.Format(Major, Minor, Patch);
+            string version = VersionString.Format(Major, Minor, Patch);
             return Family + (!string.IsNullOrEmpty(version) ? " " + version : null);
         }
     }
@@ -150,7 +150,7 @@ namespace SystemPlus.Web
     {
         public static string Format(params string[] parts)
         {
-            return string.Join(".", parts.Where(v => !String.IsNullOrEmpty(v)).ToArray());
+            return string.Join(".", parts.Where(v => !string.IsNullOrEmpty(v)).ToArray());
         }
     }
 
@@ -261,7 +261,7 @@ namespace SystemPlus.Web
         {
             const string other = "Other";
 
-            var config = new Config(options ?? new ParserOptions());
+            Config config = new Config(options ?? new ParserOptions());
 
             _userAgentParser = CreateParser(Read(yamlParser.ReadMapping("user_agent_parsers"), config.UserAgentSelector), new UserAgent(other, null, null, null));
             _osParser = CreateParser(Read(yamlParser.ReadMapping("os_parsers"), config.OSSelector), new OS(other, null, null, null, null));
@@ -292,9 +292,9 @@ namespace SystemPlus.Web
         /// <returns></returns>
         public static Parser GetDefault(ParserOptions parserOptions = null)
         {
-            using (var stream = typeof(Parser).GetTypeInfo().Assembly.GetManifestResourceStream("SystemPlus.Web.regexes.yaml"))
+            using (Stream stream = typeof(Parser).GetTypeInfo().Assembly.GetManifestResourceStream("SystemPlus.Web.regexes.yaml"))
             // ReSharper disable once AssignNullToNotNullAttribute
-            using (var reader = new StreamReader(stream))
+            using (StreamReader reader = new StreamReader(stream))
                 return new Parser(new MinimalYamlParser(reader.ReadToEnd()), parserOptions);
         }
 
@@ -303,9 +303,9 @@ namespace SystemPlus.Web
         /// </summary>
         public ClientInfo Parse(string uaString)
         {
-            var os = ParseOS(uaString);
-            var device = ParseDevice(uaString);
-            var ua = ParseUserAgent(uaString);
+            OS os = ParseOS(uaString);
+            Device device = ParseDevice(uaString);
+            UserAgent ua = ParseUserAgent(uaString);
             return new ClientInfo(uaString, os, device, ua);
         }
 
@@ -345,37 +345,37 @@ namespace SystemPlus.Web
             // ReSharper disable once InconsistentNaming
             public Func<string, OS> OSSelector(Func<string, string> indexer)
             {
-                var regex = Regex(indexer, "OS");
-                var os = indexer("os_replacement");
-                var v1 = indexer("os_v1_replacement");
-                var v2 = indexer("os_v2_replacement");
-                var v3 = indexer("os_v3_replacement");
-                var v4 = indexer("os_v4_replacement");
+                Regex regex = Regex(indexer, "OS");
+                string os = indexer("os_replacement");
+                string v1 = indexer("os_v1_replacement");
+                string v2 = indexer("os_v2_replacement");
+                string v3 = indexer("os_v3_replacement");
+                string v4 = indexer("os_v4_replacement");
                 return Parsers.OS(regex, os, v1, v2, v3, v4);
             }
 
             public Func<string, UserAgent> UserAgentSelector(Func<string, string> indexer)
             {
-                var regex = Regex(indexer, "User agent");
-                var family = indexer("family_replacement");
-                var v1 = indexer("v1_replacement");
-                var v2 = indexer("v2_replacement");
-                var v3 = indexer("v3_replacement");
+                Regex regex = Regex(indexer, "User agent");
+                string family = indexer("family_replacement");
+                string v1 = indexer("v1_replacement");
+                string v2 = indexer("v2_replacement");
+                string v3 = indexer("v3_replacement");
                 return Parsers.UserAgent(regex, family, v1, v2, v3);
             }
 
             public Func<string, Device> DeviceSelector(Func<string, string> indexer)
             {
-                var regex = Regex(indexer, "Device", indexer("regex_flag"));
-                var device = indexer("device_replacement");
-                var brand = indexer("brand_replacement");
-                var model = indexer("model_replacement");
+                Regex regex = Regex(indexer, "Device", indexer("regex_flag"));
+                string device = indexer("device_replacement");
+                string brand = indexer("brand_replacement");
+                string model = indexer("model_replacement");
                 return Parsers.Device(regex, device, brand, model);
             }
 
             private Regex Regex(Func<string, string> indexer, string key, string regexFlag = null)
             {
-                var pattern = indexer("regex");
+                string pattern = indexer("regex");
                 if (pattern == null)
                     throw new Exception($"{key} is missing regular expression specification.");
 
@@ -468,17 +468,17 @@ namespace SystemPlus.Web
 
                 return (m, num) =>
                 {
-                    var finalString = replacement;
+                    string finalString = replacement;
                     if (finalString.Contains("$"))
                     {
-                        var groups = m.Groups;
+                        GroupCollection groups = m.Groups;
                         for (int i = 0; i < _allReplacementTokens.Length; i++)
                         {
                             int tokenNumber = i + 1;
                             string token = _allReplacementTokens[i];
                             if (finalString.Contains(token))
                             {
-                                var replacementText = string.Empty;
+                                string replacementText = string.Empty;
                                 Group group;
                                 if (tokenNumber <= groups.Count && (group = groups[tokenNumber]).Success)
                                     replacementText = group.Value;
@@ -503,7 +503,7 @@ namespace SystemPlus.Web
                 return (m, num) =>
                 {
                     if (!num.MoveNext()) throw new InvalidOperationException();
-                    var groups = m.Groups; Group group;
+                    GroupCollection groups = m.Groups; Group group;
                     return selector(num.Current <= groups.Count && (group = groups[num.Current]).Success
                                     ? group.Value : null);
                 };
@@ -513,15 +513,15 @@ namespace SystemPlus.Web
             {
                 return input =>
                 {
-                    var m = regex.Match(input);
-                    var num = Generate(1, n => n + 1);
+                    Match m = regex.Match(input);
+                    IEnumerator<int> num = Generate(1, n => n + 1);
                     return m.Success ? binder(m, num) : default(T);
                 };
             }
 
             private static IEnumerator<T> Generate<T>(T initial, Func<T, T> next)
             {
-                for (var state = initial; ; state = next(state))
+                for (T state = initial; ; state = next(state))
                     yield return state;
                 // ReSharper disable once FunctionNeverReturns
             }
@@ -550,7 +550,7 @@ namespace SystemPlus.Web
         public static string ReplaceFirstOccurence(this string input, string search, string replacement)
         {
             if (input == null) throw new ArgumentNullException(nameof(input));
-            var index = input.IndexOf(search, StringComparison.Ordinal);
+            int index = input.IndexOf(search, StringComparison.Ordinal);
             return index >= 0
                  ? input.Substring(0, index) + replacement + input.Substring(index + search.Length)
                  : input;
@@ -562,7 +562,7 @@ namespace SystemPlus.Web
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
             if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
-            return dictionary.TryGetValue(key, out var result) ? result : default(TValue);
+            return dictionary.TryGetValue(key, out TValue result) ? result : default(TValue);
         }
     }
 
@@ -612,7 +612,7 @@ namespace SystemPlus.Web
             int lineCount = 0;
             Mapping activeMapping = null;
 
-            foreach (var line in lines)
+            foreach (string line in lines)
             {
                 lineCount++;
                 if (line.Trim().StartsWith("#")) //skipping comments
@@ -636,7 +636,7 @@ namespace SystemPlus.Web
                 if (activeMapping == null)
                     throw new ArgumentException("YamlParsing: Expecting mapping entry to contain a ':', at line " + lineCount);
 
-                var seqLine = line.Trim();
+                string seqLine = line.Trim();
                 if (seqLine[0] == '-')
                 {
                     activeMapping.BeginSequence();
@@ -664,11 +664,11 @@ namespace SystemPlus.Web
 
         public IEnumerable<Dictionary<string, string>> ReadMapping(string mappingName)
         {
-            if (_mappings.TryGetValue(mappingName, out var mapping))
+            if (_mappings.TryGetValue(mappingName, out Mapping mapping))
             {
-                foreach (var s in mapping.Sequences)
+                foreach (Dictionary<string, string> s in mapping.Sequences)
                 {
-                    var temp = s;
+                    Dictionary<string, string> temp = s;
                     yield return temp;
                 }
             }

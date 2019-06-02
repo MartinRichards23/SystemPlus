@@ -77,7 +77,7 @@ namespace SystemPlus.Collections.Generic
             if (other == null)
                 return;
 
-            foreach(var kvp in other)
+            foreach (KeyValuePair<TKey, TValue> kvp in other)
             {
                 list.TryAdd(kvp.Key, kvp.Value);
             }
@@ -87,7 +87,7 @@ namespace SystemPlus.Collections.Generic
         {
             Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
 
-            foreach (var kvp in keyValues)
+            foreach (KeyValuePair<TKey, TValue> kvp in keyValues)
             {
                 dictionary.TryAdd(kvp.Key, kvp.Value);
             }

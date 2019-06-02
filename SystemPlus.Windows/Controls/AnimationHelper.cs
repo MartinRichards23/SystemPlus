@@ -25,12 +25,14 @@ namespace SystemPlus.Windows.Controls
         {
             double fromValue = (double)animatableElement.GetValue(dependencyProperty);
 
-            DoubleAnimation animation = new DoubleAnimation();
-            animation.From = fromValue;
-            animation.To = toValue;
-            animation.Duration = TimeSpan.FromSeconds(animationDurationSeconds);
+            DoubleAnimation animation = new DoubleAnimation
+            {
+                From = fromValue,
+                To = toValue,
+                Duration = TimeSpan.FromSeconds(animationDurationSeconds)
+            };
 
-            animation.Completed += delegate(object sender, EventArgs e)
+            animation.Completed += delegate (object sender, EventArgs e)
             {
                 //
                 // When the animation has completed bake final value of the animation

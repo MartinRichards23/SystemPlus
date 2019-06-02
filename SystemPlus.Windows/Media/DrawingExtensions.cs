@@ -12,7 +12,7 @@ namespace SystemPlus.Windows.Media
         public static void DrawText(this DrawingContext dc, string text, double size, Brush brush, Point origin)
         {
             Typeface typeface = new Typeface("Arial");
-            
+
             if (!typeface.TryGetGlyphTypeface(out GlyphTypeface glyphTypeface))
                 throw new InvalidOperationException("No glyph typeface found");
 

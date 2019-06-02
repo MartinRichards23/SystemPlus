@@ -2,7 +2,7 @@
 
 namespace SystemPlus.ComponentModel
 {
-    public static  class Extensions
+    public static class Extensions
     {
         /// <summary>
         /// If enum implements the InfoAttribute then returns this tostring

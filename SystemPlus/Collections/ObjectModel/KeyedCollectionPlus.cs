@@ -99,7 +99,7 @@ namespace SystemPlus.Collections.ObjectModel
 
         public TItem TryGet(TKey key)
         {
-            if (this.Contains(key))
+            if (Contains(key))
                 return this[key];
 
             return default(TItem);

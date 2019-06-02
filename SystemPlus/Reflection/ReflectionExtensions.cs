@@ -50,7 +50,7 @@ namespace SystemPlus.Reflection
             get
             {
                 AssemblyTitleAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyTitleAttribute>();
-                
+
                 return att?.Title;
             }
         }
@@ -60,7 +60,7 @@ namespace SystemPlus.Reflection
             get
             {
                 AssemblyFileVersionAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyFileVersionAttribute>();
-                
+
                 return att?.Version;
             }
         }
@@ -70,7 +70,7 @@ namespace SystemPlus.Reflection
             get
             {
                 AssemblyCopyrightAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyCopyrightAttribute>();
-                
+
                 return att?.Copyright;
             }
         }
@@ -80,7 +80,7 @@ namespace SystemPlus.Reflection
             get
             {
                 AssemblyCompanyAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyCompanyAttribute>();
-                
+
                 return att?.Company;
             }
         }

@@ -11,9 +11,9 @@ namespace SystemPlus.Text
         }
 
         const string fileSizeFormat = "fs";
-        const Decimal OneKiloByte = 1024M;
-        const Decimal OneMegaByte = OneKiloByte * 1024M;
-        const Decimal OneGigaByte = OneMegaByte * 1024M;
+        const decimal OneKiloByte = 1024M;
+        const decimal OneMegaByte = OneKiloByte * 1024M;
+        const decimal OneGigaByte = OneMegaByte * 1024M;
 
         public string Format(string format, object arg, IFormatProvider formatProvider)
         {
@@ -27,7 +27,7 @@ namespace SystemPlus.Text
                 return defaultFormat(format, arg, formatProvider);
             }
 
-            Decimal size;
+            decimal size;
 
             try
             {

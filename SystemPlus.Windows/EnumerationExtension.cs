@@ -53,11 +53,11 @@ namespace SystemPlus.Windows
                 Array enumValues = Enum.GetValues(enumType);
 
                 return (from object enumValue in enumValues
-                    select new EnumerationMember
-                    {
-                        Value = enumValue,
-                        Description = EnumTools.GetEnumDescription(enumValue, enumType)
-                    }).ToArray();
+                        select new EnumerationMember
+                        {
+                            Value = enumValue,
+                            Description = EnumTools.GetEnumDescription(enumValue, enumType)
+                        }).ToArray();
             }
         }
     }

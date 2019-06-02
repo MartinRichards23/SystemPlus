@@ -13,7 +13,7 @@ namespace SystemPlus.Text
             StreamReader sr = new StreamReader(stream, Encoding.UTF8);
 
             string line;
-            while((line = sr.ReadLine()) != null)
+            while ((line = sr.ReadLine()) != null)
             {
                 string word = line.Trim();
 

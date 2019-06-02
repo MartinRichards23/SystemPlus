@@ -31,8 +31,10 @@ namespace SystemPlus.Windows.Converters
             if (bms == null)
                 return null;
 
-            Image img = new Image();
-            img.Source = bms;
+            Image img = new Image
+            {
+                Source = bms
+            };
 
             if (Width > 0)
                 img.Width = Width;

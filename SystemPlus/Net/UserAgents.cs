@@ -46,7 +46,7 @@
 
         //    agents.Add(new UserAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:24.0) Gecko/20100101 Firefox/24.0", OperatingSystem.Linux, "Ubuntu with X11", Browser.Firefox, "24.0"));
         //}
-        
+
         public static UserAgent MozillaUserAgent
         {
             get { return new UserAgent("Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0", OperatingSystem.Windows, "10", Browser.Firefox, "49.0"); }
@@ -57,14 +57,14 @@
         //    get { return agents; }
         //}
     }
-    
+
     public enum Browser
     {
         Chrome,
         Firefox,
         IExplorer
     };
-    
+
     public enum OperatingSystem
     {
         Windows,

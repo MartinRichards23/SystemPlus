@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SystemPlus.Collections
+﻿namespace SystemPlus.Collections
 {
     public static class ArrayExtensions
     {

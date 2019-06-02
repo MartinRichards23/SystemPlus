@@ -91,8 +91,10 @@ namespace SystemPlus.Windows
         {
             popup.IsOpen = true;
 
-            DispatcherTimer time = new DispatcherTimer();
-            time.Interval = duration;
+            DispatcherTimer time = new DispatcherTimer
+            {
+                Interval = duration
+            };
             time.Start();
             time.Tick += delegate
             {

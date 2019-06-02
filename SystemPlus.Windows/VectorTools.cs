@@ -187,7 +187,7 @@ namespace SystemPlus.Windows
             }
             return (ccw < 0) ? -1 : ((ccw > 0) ? 1 : 0);
         }
-        
+
         /// <summary>
         /// Returns the dpi of the current environment
         /// </summary>
@@ -200,7 +200,7 @@ namespace SystemPlus.Windows
 
             return new Vector(dpiX, dpiY);
         }
-        
+
         /// <summary>
         /// Clips a size's width and height
         /// </summary>

@@ -15,7 +15,7 @@ namespace SystemPlus
         {
             // find best timezone
             TimeZoneInfo tzInfo = null;
-            foreach (var info in TimeZoneInfo.GetSystemTimeZones())
+            foreach (TimeZoneInfo info in TimeZoneInfo.GetSystemTimeZones())
             {
                 if (info.BaseUtcOffset.TotalHours == offset)
                 {
@@ -34,7 +34,7 @@ namespace SystemPlus
         {
             return datetime.ToString("yyyy-MM-dd_HH-mm-ss");
         }
-        
+
         public static DateTime ParseFileTimeString(string input)
         {
             return DateTime.ParseExact(input, "yyyy-MM-dd_HH-mm-ss", null);

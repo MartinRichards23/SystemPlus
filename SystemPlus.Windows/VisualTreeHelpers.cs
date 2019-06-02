@@ -70,7 +70,7 @@ namespace SystemPlus.Windows
 
             while (current != null)
             {
-                T data = GetDataContext<T>(current);                
+                T data = GetDataContext<T>(current);
                 if (data != null)
                     return data;
 
@@ -105,7 +105,7 @@ namespace SystemPlus.Windows
             {
                 if (!string.IsNullOrEmpty(parentName))
                 {
-                    var frameworkElement = current as FrameworkElement;
+                    FrameworkElement frameworkElement = current as FrameworkElement;
                     if (current is T && frameworkElement != null && frameworkElement.Name == parentName)
                     {
                         return (T)current;
@@ -149,7 +149,7 @@ namespace SystemPlus.Windows
                 }
                 else if (!string.IsNullOrEmpty(childName))
                 {
-                    var frameworkElement = child as FrameworkElement;
+                    FrameworkElement frameworkElement = child as FrameworkElement;
                     // If the child's name is set for search
                     if (frameworkElement != null && frameworkElement.Name == childName)
                     {
@@ -261,7 +261,7 @@ namespace SystemPlus.Windows
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
             {
-                var child = VisualTreeHelper.GetChild(element, i) as FrameworkElement;
+                FrameworkElement child = VisualTreeHelper.GetChild(element, i) as FrameworkElement;
 
                 if (child == null)
                     continue;
@@ -269,7 +269,7 @@ namespace SystemPlus.Windows
                 if (child is T)
                     return (T)child;
 
-                var panel = GetInnerChildOfType<T>(child);
+                T panel = GetInnerChildOfType<T>(child);
 
                 if (panel != null)
                     return panel;
@@ -283,7 +283,7 @@ namespace SystemPlus.Windows
         /// </summary>
         public static IList<FrameworkElement> GetVisibleItems(FrameworkElement element)
         {
-            var theStackPanel = GetInnerChildOfType<VirtualizingStackPanel>(element);
+            VirtualizingStackPanel theStackPanel = GetInnerChildOfType<VirtualizingStackPanel>(element);
 
             IList<FrameworkElement> visibleElements = new List<FrameworkElement>();
 

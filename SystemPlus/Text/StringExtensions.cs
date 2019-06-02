@@ -190,7 +190,7 @@ namespace SystemPlus.Text
             if (string.IsNullOrEmpty(value))
                 return value;
 
-            return Char.ToUpperInvariant(value[0]) + value.Substring(1);
+            return char.ToUpperInvariant(value[0]) + value.Substring(1);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace SystemPlus.Text
             if (string.IsNullOrEmpty(value))
                 return value;
 
-            return Char.ToLowerInvariant(value[0]) + value.Substring(1);
+            return char.ToLowerInvariant(value[0]) + value.Substring(1);
         }
 
         public static IEnumerable<string> SplitIntoChunks(this string value, int maxChunkSize)

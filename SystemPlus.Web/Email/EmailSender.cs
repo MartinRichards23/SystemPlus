@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -16,7 +15,7 @@ namespace SystemPlus.Web.Email
 
         public string DefaultFromEmail { get; }
         public string DefaultFromName { get; }
-        
+
         public EmailSender(string accountEmail, string accountPassword, string defaultFromEmail, string defaultFromName)
         {
             AccountEmail = accountEmail;
@@ -40,7 +39,7 @@ namespace SystemPlus.Web.Email
                 message.Subject = subject;
                 message.Body = body;
                 message.IsBodyHtml = isHtml;
-                
+
                 await SendEmailAsync(message);
             }
         }
@@ -54,7 +53,7 @@ namespace SystemPlus.Web.Email
                     await smtp.SendMailAsync(message);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //string toEmail = message.To.FirstOrDefault()?.Address;
 

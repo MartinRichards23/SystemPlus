@@ -2,7 +2,6 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml;
 
 namespace SystemPlus.Security
 {
@@ -24,7 +23,7 @@ namespace SystemPlus.Security
         {
             using (RandomNumberGenerator rnd = RandomNumberGenerator.Create())
             {
-                var key = new byte[KeyBitSize / 8];
+                byte[] key = new byte[KeyBitSize / 8];
                 rnd.GetBytes(key);
                 return key;
             }
@@ -49,8 +48,8 @@ namespace SystemPlus.Security
             if (string.IsNullOrEmpty(secretMessage))
                 throw new ArgumentException(@"Secret Message Required!", "secretMessage");
 
-            var plainText = Encoding.UTF8.GetBytes(secretMessage);
-            var cipherText = SimpleEncrypt(plainText, cryptKey, authKey, nonSecretPayload);
+            byte[] plainText = Encoding.UTF8.GetBytes(secretMessage);
+            byte[] cipherText = SimpleEncrypt(plainText, cryptKey, authKey, nonSecretPayload);
             return Convert.ToBase64String(cipherText);
         }
 
@@ -70,8 +69,8 @@ namespace SystemPlus.Security
             if (string.IsNullOrWhiteSpace(encryptedMessage))
                 throw new ArgumentException(@"Encrypted Message Required!", "encryptedMessage");
 
-            var cipherText = Convert.FromBase64String(encryptedMessage);
-            var plainText = SimpleDecrypt(cipherText, cryptKey, authKey, nonSecretPayloadLength);
+            byte[] cipherText = Convert.FromBase64String(encryptedMessage);
+            byte[] plainText = SimpleDecrypt(cipherText, cryptKey, authKey, nonSecretPayloadLength);
             return Encoding.UTF8.GetString(plainText);
         }
 
@@ -95,8 +94,8 @@ namespace SystemPlus.Security
             if (string.IsNullOrEmpty(secretMessage))
                 throw new ArgumentException(@"Secret Message Required!", "secretMessage");
 
-            var plainText = Encoding.UTF8.GetBytes(secretMessage);
-            var cipherText = SimpleEncryptWithPassword(plainText, password, nonSecretPayload);
+            byte[] plainText = Encoding.UTF8.GetBytes(secretMessage);
+            byte[] cipherText = SimpleEncryptWithPassword(plainText, password, nonSecretPayload);
             return Convert.ToBase64String(cipherText);
         }
 
@@ -119,8 +118,8 @@ namespace SystemPlus.Security
             if (string.IsNullOrWhiteSpace(encryptedMessage))
                 throw new ArgumentException(@"Encrypted Message Required!", "encryptedMessage");
 
-            var cipherText = Convert.FromBase64String(encryptedMessage);
-            var plainText = SimpleDecryptWithPassword(cipherText, password, nonSecretPayloadLength);
+            byte[] cipherText = Convert.FromBase64String(encryptedMessage);
+            byte[] plainText = SimpleDecryptWithPassword(cipherText, password, nonSecretPayloadLength);
             return Encoding.UTF8.GetString(plainText);
         }
 
@@ -142,7 +141,7 @@ namespace SystemPlus.Security
             byte[] cipherText;
             byte[] iv;
 
-            using (var aes = new AesManaged
+            using (AesManaged aes = new AesManaged
             {
                 KeySize = KeyBitSize,
                 BlockSize = BlockBitSize,
@@ -154,11 +153,11 @@ namespace SystemPlus.Security
                 aes.GenerateIV();
                 iv = aes.IV;
 
-                using (var encrypter = aes.CreateEncryptor(cryptKey, iv))
-                using (var cipherStream = new MemoryStream())
+                using (ICryptoTransform encrypter = aes.CreateEncryptor(cryptKey, iv))
+                using (MemoryStream cipherStream = new MemoryStream())
                 {
-                    using (var cryptoStream = new CryptoStream(cipherStream, encrypter, CryptoStreamMode.Write))
-                    using (var binaryWriter = new BinaryWriter(cryptoStream))
+                    using (CryptoStream cryptoStream = new CryptoStream(cipherStream, encrypter, CryptoStreamMode.Write))
+                    using (BinaryWriter binaryWriter = new BinaryWriter(cryptoStream))
                     {
                         //Encrypt Data
                         binaryWriter.Write(secretMessage);
@@ -169,10 +168,10 @@ namespace SystemPlus.Security
             }
 
             //Assemble encrypted message and add authentication
-            using (var hmac = new HMACSHA256(authKey))
-            using (var encryptedStream = new MemoryStream())
+            using (HMACSHA256 hmac = new HMACSHA256(authKey))
+            using (MemoryStream encryptedStream = new MemoryStream())
             {
-                using (var binaryWriter = new BinaryWriter(encryptedStream))
+                using (BinaryWriter binaryWriter = new BinaryWriter(encryptedStream))
                 {
                     //Prepend non-secret payload if any
                     binaryWriter.Write(nonSecretPayload);
@@ -183,7 +182,7 @@ namespace SystemPlus.Security
                     binaryWriter.Flush();
 
                     //Authenticate all data
-                    var tag = hmac.ComputeHash(encryptedStream.ToArray());
+                    byte[] tag = hmac.ComputeHash(encryptedStream.ToArray());
                     //Postpend tag
                     binaryWriter.Write(tag);
                 }
@@ -203,11 +202,11 @@ namespace SystemPlus.Security
             if (encryptedMessage == null || encryptedMessage.Length == 0)
                 throw new ArgumentException(@"Encrypted Message Required!", "encryptedMessage");
 
-            using (var hmac = new HMACSHA256(authKey))
+            using (HMACSHA256 hmac = new HMACSHA256(authKey))
             {
-                var sentTag = new byte[hmac.HashSize / 8];
+                byte[] sentTag = new byte[hmac.HashSize / 8];
                 //Calculate Tag
-                var calcTag = hmac.ComputeHash(encryptedMessage, 0, encryptedMessage.Length - sentTag.Length);
+                byte[] calcTag = hmac.ComputeHash(encryptedMessage, 0, encryptedMessage.Length - sentTag.Length);
                 const int ivLength = (BlockBitSize / 8);
 
                 //if message length is to small just return null
@@ -218,8 +217,8 @@ namespace SystemPlus.Security
                 Array.Copy(encryptedMessage, encryptedMessage.Length - sentTag.Length, sentTag, 0, sentTag.Length);
 
                 //Compare Tag with constant time comparison
-                var compare = 0;
-                for (var i = 0; i < sentTag.Length; i++)
+                int compare = 0;
+                for (int i = 0; i < sentTag.Length; i++)
                 {
                     compare |= sentTag[i] ^ calcTag[i];
                 }
@@ -228,7 +227,7 @@ namespace SystemPlus.Security
                 if (compare != 0)
                     return null;
 
-                using (var aes = new AesManaged
+                using (AesManaged aes = new AesManaged
                 {
                     KeySize = KeyBitSize,
                     BlockSize = BlockBitSize,
@@ -237,14 +236,14 @@ namespace SystemPlus.Security
                 })
                 {
                     //Grab IV from message
-                    var iv = new byte[ivLength];
+                    byte[] iv = new byte[ivLength];
                     Array.Copy(encryptedMessage, nonSecretPayloadLength, iv, 0, iv.Length);
 
-                    using (var decrypter = aes.CreateDecryptor(cryptKey, iv))
-                    using (var plainTextStream = new MemoryStream())
+                    using (ICryptoTransform decrypter = aes.CreateDecryptor(cryptKey, iv))
+                    using (MemoryStream plainTextStream = new MemoryStream())
                     {
-                        using (var decrypterStream = new CryptoStream(plainTextStream, decrypter, CryptoStreamMode.Write))
-                        using (var binaryWriter = new BinaryWriter(decrypterStream))
+                        using (CryptoStream decrypterStream = new CryptoStream(plainTextStream, decrypter, CryptoStreamMode.Write))
+                        using (BinaryWriter binaryWriter = new BinaryWriter(decrypterStream))
                         {
                             //Decrypt Cipher Text from Message
                             binaryWriter.Write(
@@ -271,7 +270,7 @@ namespace SystemPlus.Security
             if (secretMessage == null || secretMessage.Length == 0)
                 throw new ArgumentException(@"Secret Message Required!", "secretMessage");
 
-            var payload = new byte[((SaltBitSize / 8) * 2) + nonSecretPayload.Length];
+            byte[] payload = new byte[((SaltBitSize / 8) * 2) + nonSecretPayload.Length];
 
             Array.Copy(nonSecretPayload, payload, nonSecretPayload.Length);
             int payloadIndex = nonSecretPayload.Length;
@@ -279,9 +278,9 @@ namespace SystemPlus.Security
             byte[] cryptKey;
             byte[] authKey;
             //Use Random Salt to prevent pre-generated weak password attacks.
-            using (var generator = new Rfc2898DeriveBytes(password, SaltBitSize / 8, Iterations))
+            using (Rfc2898DeriveBytes generator = new Rfc2898DeriveBytes(password, SaltBitSize / 8, Iterations))
             {
-                var salt = generator.Salt;
+                byte[] salt = generator.Salt;
 
                 //Generate Keys
                 cryptKey = generator.GetBytes(KeyBitSize / 8);
@@ -293,9 +292,9 @@ namespace SystemPlus.Security
 
             //Deriving separate key, might be less efficient than using HKDF, 
             //but now compatible with RNEncryptor which had a very similar wireformat and requires less code than HKDF.
-            using (var generator = new Rfc2898DeriveBytes(password, SaltBitSize / 8, Iterations))
+            using (Rfc2898DeriveBytes generator = new Rfc2898DeriveBytes(password, SaltBitSize / 8, Iterations))
             {
-                var salt = generator.Salt;
+                byte[] salt = generator.Salt;
 
                 //Generate Keys
                 authKey = generator.GetBytes(KeyBitSize / 8);
@@ -316,8 +315,8 @@ namespace SystemPlus.Security
             if (encryptedMessage == null || encryptedMessage.Length == 0)
                 throw new ArgumentException(@"Encrypted Message Required!", "encryptedMessage");
 
-            var cryptSalt = new byte[SaltBitSize / 8];
-            var authSalt = new byte[SaltBitSize / 8];
+            byte[] cryptSalt = new byte[SaltBitSize / 8];
+            byte[] authSalt = new byte[SaltBitSize / 8];
 
             //Grab Salt from Non-Secret Payload
             Array.Copy(encryptedMessage, nonSecretPayloadLength, cryptSalt, 0, cryptSalt.Length);
@@ -327,17 +326,17 @@ namespace SystemPlus.Security
             byte[] authKey;
 
             //Generate crypt key
-            using (var generator = new Rfc2898DeriveBytes(password, cryptSalt, Iterations))
+            using (Rfc2898DeriveBytes generator = new Rfc2898DeriveBytes(password, cryptSalt, Iterations))
             {
                 cryptKey = generator.GetBytes(KeyBitSize / 8);
             }
             //Generate auth key
-            using (var generator = new Rfc2898DeriveBytes(password, authSalt, Iterations))
+            using (Rfc2898DeriveBytes generator = new Rfc2898DeriveBytes(password, authSalt, Iterations))
             {
                 authKey = generator.GetBytes(KeyBitSize / 8);
             }
 
             return SimpleDecrypt(encryptedMessage, cryptKey, authKey, cryptSalt.Length + authSalt.Length + nonSecretPayloadLength);
-        }        
+        }
     }
 }

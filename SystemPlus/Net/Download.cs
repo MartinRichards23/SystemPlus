@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Threading;
 using SystemPlus.ComponentModel;
 using SystemPlus.IO;
@@ -80,7 +79,7 @@ namespace SystemPlus.Net
                 return redirUrl;
             }
         }
-        
+
         const int bufferSize = 16 * 1024;
 
         public static void DownloadFile(Uri url, string outputFilePath, IProgressToken token)

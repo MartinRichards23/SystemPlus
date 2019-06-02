@@ -20,7 +20,7 @@
         public string geoplugin_currencySymbol { get; set; }
         public string geoplugin_currencySymbol_UTF8 { get; set; }
         public double geoplugin_currencyConverter { get; set; }
-        
+
         public string GetBestCurrency(string defaultValue)
         {
             if (geoplugin_currencyCode == "GBP" || geoplugin_currencyCode == "USD" || geoplugin_currencyCode == "EUR")
@@ -29,8 +29,8 @@
             }
 
             if (geoplugin_continentCode == "EU")
-                return "EUR";           
-            
+                return "EUR";
+
             return defaultValue;
         }
     }

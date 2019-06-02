@@ -69,6 +69,6 @@ namespace SystemPlus.Windows
             }
 
             return null;
-        }        
+        }
     }
 }

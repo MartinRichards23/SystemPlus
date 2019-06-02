@@ -87,8 +87,7 @@ namespace SystemPlus.Collections.Generic
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            T item;
-            while (TryTakeLast(out item))
+            while (TryTakeLast(out T item))
             {
                 yield return item;
             }

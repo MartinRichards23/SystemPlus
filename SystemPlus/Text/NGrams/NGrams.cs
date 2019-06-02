@@ -106,5 +106,5 @@ namespace SystemPlus.Text.NGrams
         }
 
         #endregion
-    }    
+    }
 }

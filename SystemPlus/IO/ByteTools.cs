@@ -4,7 +4,7 @@ using System.Linq;
 namespace SystemPlus.IO
 {
     public static class ByteTools
-    {        
+    {
         public static long IndexOf(this byte[] src, byte[] pattern)
         {
             int c = src.Length - pattern.Length + 1;

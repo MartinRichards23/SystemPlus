@@ -14,13 +14,13 @@ namespace SystemPlus.ComponentModel.Logging
 
         readonly IList<ILogger> loggers = new List<ILogger>();
 
-        readonly static Logger defaultLog = new Logger();
+        static readonly Logger defaultLog = new Logger();
 
         public event Action<MessageLevel, string, Exception> MessageLogged;
 
         Exception lastError;
         DateTime lastErrorTime;
-        TimeSpan minErrorTime = TimeSpan.FromSeconds(30);
+        readonly TimeSpan minErrorTime = TimeSpan.FromSeconds(30);
 
         #endregion
 

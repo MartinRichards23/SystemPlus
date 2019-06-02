@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace SystemPlus.Text.RegularExpressions
@@ -31,7 +29,7 @@ namespace SystemPlus.Text.RegularExpressions
         {
             List<Regex> regexes = new List<Regex>();
 
-            foreach(string pattern in patterns)
+            foreach (string pattern in patterns)
             {
                 Regex reg = new Regex(pattern, options);
                 regexes.Add(reg);

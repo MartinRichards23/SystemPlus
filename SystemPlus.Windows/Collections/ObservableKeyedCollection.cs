@@ -70,7 +70,7 @@ namespace SystemPlus.Windows.Collections
         public void Resume()
         {
             if (IsSuspended)
-            { 
+            {
                 IsSuspended = false;
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }

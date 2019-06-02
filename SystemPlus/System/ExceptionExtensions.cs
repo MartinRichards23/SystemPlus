@@ -20,7 +20,7 @@ namespace SystemPlus
                     sb.AppendLine();
                     sb.AppendLine("Data:");
 
-                    foreach (var key in ex.Data.Keys)
+                    foreach (object key in ex.Data.Keys)
                     {
                         if (key == null)
                             continue;
@@ -37,7 +37,7 @@ namespace SystemPlus
 
             return sb.ToString();
         }
-                
+
         /// <summary>
         /// Safely adds data to the exception
         /// </summary>
@@ -65,9 +65,9 @@ namespace SystemPlus
         {
             string message = ex.Message;
 
-            if(ex.InnerException != null)
+            if (ex.InnerException != null)
             {
-                message += "\r\n\r\n"+ ex.InnerException.AllMessage();
+                message += "\r\n\r\n" + ex.InnerException.AllMessage();
             }
 
             return message;

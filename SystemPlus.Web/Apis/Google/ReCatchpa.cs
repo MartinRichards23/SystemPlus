@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Runtime.Serialization;
-using System.Text;
 using SystemPlus.IO;
 
 namespace SystemPlus.Web.Google
@@ -12,8 +9,8 @@ namespace SystemPlus.Web.Google
     /// </summary>
     public class ReCatchpa
     {
-        readonly static string publicKey = "6LcGaXcUAAAAAIu-q5r7cGVV8FabLW6eccGaYuzy";
-        readonly static string privateKey = "6LcGaXcUAAAAAN-WuAz3KLhPQz1cnjMFGwHB53d7";
+        static readonly string publicKey = "6LcGaXcUAAAAAIu-q5r7cGVV8FabLW6eccGaYuzy";
+        static readonly string privateKey = "6LcGaXcUAAAAAN-WuAz3KLhPQz1cnjMFGwHB53d7";
 
         public bool Validate(string response)
         {

@@ -223,7 +223,7 @@ namespace SystemPlus.Threading
 
             Task task = new Task(action);
             task.ContinueWith(finish);
-            
+
             threads.Add(task);
             task.Start();
         }
@@ -293,7 +293,7 @@ namespace SystemPlus.Threading
 
                     t = threads[0];
                 }
-                
+
                 t.Wait(timeout, default(CancellationToken));
             }
         }

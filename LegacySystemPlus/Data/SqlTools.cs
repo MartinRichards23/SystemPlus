@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Text;
-using SystemPlus.IO;
-using SystemPlus.IO.Csv;
-using SystemPlus.Text;
 
 namespace SystemPlus.Data
 {

@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using SystemPlus;
 using SystemPlus.IO;
 using SystemPlus.Net;
 
@@ -85,14 +84,14 @@ namespace SystemPlus.Web.Slack
                 }
             }
             catch (WebException ex)
-            {                
+            {
                 if (ex.Response != null)
                 {
                     Stream responseStream = ex.Response.GetResponseStream();
                     StreamReader sr = new StreamReader(responseStream);
                     string s = sr.ReadToEnd();
-                    
-                    if(string.Equals(s, "No service", StringComparison.InvariantCultureIgnoreCase))
+
+                    if (string.Equals(s, "No service", StringComparison.InvariantCultureIgnoreCase))
                         throw new NoServiceException();
                 }
 

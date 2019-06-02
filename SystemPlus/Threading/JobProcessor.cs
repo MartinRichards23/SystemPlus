@@ -73,7 +73,7 @@ namespace SystemPlus.Threading
                 if (CancelToken.IsCancellationRequested)
                     break;
 
-                if(item.NextRun > DateTime.UtcNow)
+                if (item.NextRun > DateTime.UtcNow)
                 {
                     // not ready to run yet
                     continue;
@@ -104,7 +104,7 @@ namespace SystemPlus.Threading
                 Interval = interval;
                 NextRun = DateTime.UtcNow + initialDelay;
             }
-            
+
             public ITimed Job { get; }
             public TimeSpan Interval { get; }
             public DateTime NextRun { get; set; }

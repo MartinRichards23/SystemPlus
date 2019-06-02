@@ -18,11 +18,12 @@ namespace SystemPlus.IO
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             XmlSerializerNamespaces xsn = new XmlSerializerNamespaces();
-            XmlWriterSettings settings = new XmlWriterSettings();
-
-            settings.OmitXmlDeclaration = hideDeclaration;
-            settings.Indent = indent;
-            settings.CheckCharacters = checkChars;
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                OmitXmlDeclaration = hideDeclaration,
+                Indent = indent,
+                CheckCharacters = checkChars
+            };
 
             if (hideNameSpaces)
                 xsn.Add(string.Empty, string.Empty);
@@ -61,8 +62,10 @@ namespace SystemPlus.IO
         public static T XmlDeserialize<T>(Stream data)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.CheckCharacters = false;
+            XmlReaderSettings settings = new XmlReaderSettings
+            {
+                CheckCharacters = false
+            };
 
             using (XmlReader reader = XmlReader.Create(data, settings))
             {
@@ -174,7 +177,7 @@ namespace SystemPlus.IO
         }
 
         #endregion
-        
+
         #region Json
 
         public static void JsonSerialize<T>(T obj, Stream data, IEnumerable<Type> knownTypes = null) where T : class, new()

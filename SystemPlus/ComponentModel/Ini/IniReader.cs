@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using SystemPlus.Collections.Generic;
 using SystemPlus.Collections.ObjectModel;
 using SystemPlus.IO;
 using SystemPlus.Text;
@@ -188,7 +185,7 @@ namespace SystemPlus.ComponentModel.Ini
 
             return defaultValue;
         }
-        
+
         public bool GetLong(string sectionName, string key, ref long value)
         {
             IniValue iniValue = GetIniValue(sectionName, key);
@@ -212,7 +209,7 @@ namespace SystemPlus.ComponentModel.Ini
 
             return defaultValue;
         }
-        
+
         public bool GetDouble(string sectionName, string key, ref double value)
         {
             IniValue iniValue = GetIniValue(sectionName, key);
@@ -315,7 +312,7 @@ namespace SystemPlus.ComponentModel.Ini
                 {
                     // section line
                     string name = line.GetFragment("[", "]");
-                    currentSection = GetOrCreateSection(name);                    
+                    currentSection = GetOrCreateSection(name);
                     continue;
                 }
                 if (currentSection == null)

@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using System.Threading;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Threading;
 using SystemPlus.ComponentModel;
 
 namespace SystemPlus.Windows.Controls
@@ -16,10 +13,10 @@ namespace SystemPlus.Windows.Controls
         public ProgressTokenDlg(Window owner)
         {
             InitializeComponent();
-            
+
             Token = new ProgressToken();
-            this.DataContext = Token;
-              
+            DataContext = Token;
+
             if (owner != null)
                 Owner = owner;
             else if (Application.Current != null && Application.Current.MainWindow != null)
@@ -42,12 +39,12 @@ namespace SystemPlus.Windows.Controls
         {
             set { btnCancel.Visibility = value ? Visibility.Visible : Visibility.Hidden; }
         }
-        
+
         public ProgressToken Token
         {
             get;
         }
-                        
+
         public void ThrowIfCancellationRequested()
         {
             Token.CancelToken.ThrowIfCancellationRequested();

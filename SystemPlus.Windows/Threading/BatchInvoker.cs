@@ -72,8 +72,7 @@ namespace SystemPlus.Windows
                 {
                     IList<T> newItems = new List<T>();
 
-                    T item;
-                    while (waitingToAdd.TryDequeue(out item))
+                    while (waitingToAdd.TryDequeue(out T item))
                     {
                         newItems.Add(item);
                     }

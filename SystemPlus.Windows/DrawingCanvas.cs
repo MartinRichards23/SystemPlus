@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
-using System.Globalization;
-using System.Linq;
-using System.ComponentModel;
-using System.Windows.Media.Effects;
-using SystemPlus.Windows.Media;
-using SystemPlus.Threading;
-using SystemPlus.Windows;
 
 namespace SystemPlus.Windows
 {
@@ -45,8 +37,10 @@ namespace SystemPlus.Windows
             if (DesignerProperties.GetIsInDesignMode(this))
                 return;
 
-            DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Render);
-            timer.Interval = TimeSpan.FromMilliseconds(16);
+            DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Render)
+            {
+                Interval = TimeSpan.FromMilliseconds(16)
+            };
             timer.Tick += timer_Tick;
             timer.Start();
         }
@@ -55,8 +49,8 @@ namespace SystemPlus.Windows
         {
             base.OnRenderSizeChanged(sizeInfo);
 
-            scale.CenterX = this.ActualWidth / 2;
-            scale.CenterY = this.ActualHeight / 2;
+            scale.CenterX = ActualWidth / 2;
+            scale.CenterY = ActualHeight / 2;
             Invalidate();
         }
 
@@ -95,11 +89,11 @@ namespace SystemPlus.Windows
         /// </summary>
         public Point Centre
         {
-            get { return new Point((this.ActualWidth / 2) - translate.X, (this.ActualHeight / 2) - translate.Y); }
+            get { return new Point((ActualWidth / 2) - translate.X, (ActualHeight / 2) - translate.Y); }
             set
             {
-                translate.X = (this.ActualWidth / 2) - value.X;
-                translate.Y = (this.ActualHeight / 2) - value.Y;
+                translate.X = (ActualWidth / 2) - value.X;
+                translate.Y = (ActualHeight / 2) - value.Y;
                 Invalidate();
             }
         }
@@ -108,9 +102,9 @@ namespace SystemPlus.Windows
         {
             get { return viewPort; }
         }
-        
+
         #endregion
-        
+
         /// <summary>
         /// Causes the canvas to render
         /// </summary>
@@ -118,7 +112,7 @@ namespace SystemPlus.Windows
         {
             InvalidateVisual();
         }
-        
+
         void timer_Tick(object sender, EventArgs e)
         {
             Invalidate();

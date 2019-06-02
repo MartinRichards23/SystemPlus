@@ -81,24 +81,26 @@ namespace SystemPlus.Windows.Media
 
         public static Color[] GetHighlightColors()
         {
-            List<Color> cols = new List<Color>();
+            List<Color> cols = new List<Color>
+            {
 
-            // http://msdn.microsoft.com/en-us/library/system.windows.media.colors.aspx
+                // http://msdn.microsoft.com/en-us/library/system.windows.media.colors.aspx
 
-            cols.Add(Colors.Orange);
-            cols.Add(Colors.LightPink);
-            cols.Add(Colors.SkyBlue);
-            cols.Add(Colors.Violet);
-            cols.Add(Colors.PaleGreen);
-            cols.Add(Colors.Fuchsia);
-            cols.Add(Colors.Yellow);
-            cols.Add(Colors.Cyan);
-            cols.Add(Colors.Plum);
-            cols.Add(Colors.Turquoise);
-            cols.Add(Colors.YellowGreen);
-            cols.Add(Colors.LawnGreen);
-            cols.Add(Colors.Goldenrod);
-            cols.Add(Colors.DodgerBlue);
+                Colors.Orange,
+                Colors.LightPink,
+                Colors.SkyBlue,
+                Colors.Violet,
+                Colors.PaleGreen,
+                Colors.Fuchsia,
+                Colors.Yellow,
+                Colors.Cyan,
+                Colors.Plum,
+                Colors.Turquoise,
+                Colors.YellowGreen,
+                Colors.LawnGreen,
+                Colors.Goldenrod,
+                Colors.DodgerBlue
+            };
 
             return cols.ToArray();
         }

@@ -251,8 +251,7 @@ namespace SystemPlus.Windows.Controls
         void Apply()
         {
             double? origVal = Value;
-            double newVal;
-            if (double.TryParse(txtValue.Text, out newVal))
+            if (double.TryParse(txtValue.Text, out double newVal))
             {
                 Value = newVal;
             }

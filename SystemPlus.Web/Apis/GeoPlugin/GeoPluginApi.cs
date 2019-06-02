@@ -12,11 +12,11 @@ namespace SystemPlus.Web.GeoPlugin
         public GeoPluginResult GetIpData(string ipAddress)
         {
             string url = "http://www.geoplugin.net/json.gp?ip=" + ipAddress;
-            
+
             HttpWebRequest request = WebRequest.CreateHttp(url);
             request.Method = "GET";
             request.Timeout = 5000;
-            
+
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             {
                 Stream receiveStream = response.GetResponseStream();
@@ -25,7 +25,7 @@ namespace SystemPlus.Web.GeoPlugin
                 string data = sr.ReadToEnd();
 
                 GeoPluginResult result = Serialization.JsonDeserialize<GeoPluginResult>(data);
-                
+
                 return result;
             }
         }

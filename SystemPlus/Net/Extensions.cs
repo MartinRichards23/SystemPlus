@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -20,7 +19,7 @@ namespace SystemPlus.Net
         {
             return (HttpWebResponse)request.GetResponse(token);
         }
-        
+
         /// <summary>
         /// A WebRequest extension method that gets the WebRequest response or the WebException response.
         /// </summary>
@@ -128,7 +127,7 @@ namespace SystemPlus.Net
                 {
                     rs.CopyTo(rawdata, 8000, maxLength);
                 }
-                
+
                 string charset = GetCharSet(response.Headers);
                 if (string.IsNullOrEmpty(charset))
                     charset = GetCharSetFromBody(rawdata);
@@ -137,7 +136,7 @@ namespace SystemPlus.Net
 
                 rawdata.Seek(0, SeekOrigin.Begin);
                 StreamReader sr = new StreamReader(rawdata, encoding);
-                
+
                 return sr.ReadToEnd();
             }
         }

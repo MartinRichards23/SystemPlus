@@ -18,7 +18,7 @@ namespace SystemPlus.ComponentModel.Logging
     {
         readonly string filePath;
         readonly object key = new object();
-        
+
         public FileLogger(string folder)
         {
             string name;
@@ -125,7 +125,7 @@ namespace SystemPlus.ComponentModel.Logging
             Trace.TraceError(text);
         }
     }
-    
+
     /// <summary>
     /// Logs data to the console
     /// </summary>

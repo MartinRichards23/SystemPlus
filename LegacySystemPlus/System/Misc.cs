@@ -121,7 +121,7 @@ namespace SystemPlus
             }
 
             return values;
-        }        
+        }
     }
 
     public static class TConverter

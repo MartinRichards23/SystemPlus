@@ -27,11 +27,11 @@ namespace SystemPlus.Windows
 
         static void HideCloseButtonChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var window = d as Window;
+            Window window = d as Window;
             if (window == null)
                 return;
 
-            var hideCloseButton = (bool)e.NewValue;
+            bool hideCloseButton = (bool)e.NewValue;
             if (hideCloseButton && !GetIsHiddenCloseButton(window))
             {
                 if (!window.IsLoaded)
@@ -62,7 +62,7 @@ namespace SystemPlus.Windows
         {
             if (sender is Window == false)
                 return;
-            var w = (Window)sender;
+            Window w = (Window)sender;
             HideCloseButton(w);
             w.Loaded -= LoadedDelegate;
         };

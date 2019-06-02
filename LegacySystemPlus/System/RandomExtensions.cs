@@ -55,7 +55,7 @@ namespace SystemPlus
             Array values = Enum.GetValues(typeof(T));
             return (T)values.GetValue(rand.Next(values.Length));
         }
-        
+
         public static long NextLong(this Random rand, long min, long max)
         {
             EnsureMinLEQMax(ref min, ref max);

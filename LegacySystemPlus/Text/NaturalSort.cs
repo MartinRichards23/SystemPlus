@@ -16,15 +16,14 @@ namespace SystemPlus.Text
             if (x == y)
                 return 0;
 
-            string[] x1, y1;
 
-            if (!table.TryGetValue(x, out x1))
+            if (!table.TryGetValue(x, out string[] x1))
             {
                 x1 = Regex.Split(x.Replace(" ", ""), "([0-9]+)");
                 table.Add(x, x1);
             }
 
-            if (!table.TryGetValue(y, out y1))
+            if (!table.TryGetValue(y, out string[] y1))
             {
                 y1 = Regex.Split(y.Replace(" ", ""), "([0-9]+)");
                 table.Add(y, y1);
@@ -53,11 +52,10 @@ namespace SystemPlus.Text
 
         private static int PartCompare(string left, string right)
         {
-            int x, y;
-            if (!int.TryParse(left, out x))
+            if (!int.TryParse(left, out int x))
                 return left.CompareTo(right);
 
-            if (!int.TryParse(right, out y))
+            if (!int.TryParse(right, out int y))
                 return left.CompareTo(right);
 
             return x.CompareTo(y);

@@ -81,7 +81,7 @@ namespace SystemPlus.IO
                 return Decompress(stream, compression);
             }
         }
-        
+
         public static bool CheckMagicNumberGZip(byte[] buffer)
         {
             // gzip pattern

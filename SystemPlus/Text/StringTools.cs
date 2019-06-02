@@ -276,9 +276,9 @@ namespace SystemPlus.Text
         }
 
         /// <summary>
-        /// Returns the human-readable file size for an arbitrary, 64-bit file size 
+        /// Returns the human-readable bytes size
         /// </summary>
-        /// <returns></returns>
+        /// <returns>E.g. 32 GB</returns>
         public static string FormatBytes(long byteCount, string format = "0.#")
         {
             // Get absolute value

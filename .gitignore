@@ -9,8 +9,8 @@
 /SystemPlus.Web/obj
 /SystemPlus.Windows/bin
 /SystemPlus.Windows/obj
-/SystemPlusStandard/bin
-/SystemPlusStandard/obj
+/SystemPlus.Data/bin
+/SystemPlus.Data/obj
 /TestConsole/obj
 /TestConsole/bin
 /LegacySystemPlus/bin

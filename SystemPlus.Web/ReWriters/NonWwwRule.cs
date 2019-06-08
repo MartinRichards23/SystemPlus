@@ -13,10 +13,12 @@ namespace SystemPlus.Web.ReWriters
         {
             HttpRequest req = context.HttpContext.Request;
             HostString currentHost = req.Host;
+
             if (currentHost.Host.StartsWith("www."))
             {
                 HostString newHost = new HostString(currentHost.Host.Substring(4), currentHost.Port ?? 80);
                 StringBuilder newUrl = new StringBuilder().Append("http://").Append(newHost).Append(req.PathBase).Append(req.Path).Append(req.QueryString);
+
                 context.HttpContext.Response.Redirect(newUrl.ToString(), true);
                 context.Result = RuleResult.EndResponse;
             }

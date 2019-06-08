@@ -5,8 +5,8 @@ namespace SystemPlus.Web.Email
 {
     public class Office365Emailer : EmailSender
     {
-        public Office365Emailer(string accountEmail, string accountPassword, string defaultFromEmail, string defaultFromName)
-            : base(accountEmail, accountPassword, defaultFromEmail, defaultFromName)
+        public Office365Emailer(string accountEmail, string accountPassword, string defaultFromName)
+            : base(accountEmail, accountPassword, accountEmail, defaultFromName)
         {
 
         }

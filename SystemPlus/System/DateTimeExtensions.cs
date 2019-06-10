@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 
 namespace SystemPlus
 {
@@ -27,17 +28,14 @@ namespace SystemPlus
             return tzInfo;
         }
 
-        /// <summary>
-        /// Returns a date string formatted to be file name safe. yyyy-MM-dd_HH-mm-ss
-        /// </summary>
-        public static string ToFileTimeString(this DateTime datetime)
-        {
-            return datetime.ToString("yyyy-MM-dd_HH-mm-ss");
-        }
-
         public static DateTime ParseFileTimeString(string input)
         {
             return DateTime.ParseExact(input, "yyyy-MM-dd_HH-mm-ss", null);
+        }
+
+        public static DateTime ParseStringStandard(string input)
+        {
+            return DateTime.ParseExact(input, "yyyy-MM-dd HH:mm:ss", null);
         }
 
         /// <summary>
@@ -49,16 +47,11 @@ namespace SystemPlus
         }
 
         /// <summary>
-        /// Returns a date string formatted yyyy-MM-dd HH:mm:ss
+        /// Returns a date string formatted to be file name safe. yyyy-MM-dd_HH-mm-ss
         /// </summary>
-        public static string ToStringStandard(this DateTime datetime)
+        public static string ToFileTimeString(this DateTime datetime)
         {
-            return datetime.ToString("yyyy-MM-dd HH:mm:ss");
-        }
-
-        public static DateTime ParseStringStandard(string input)
-        {
-            return DateTime.ParseExact(input, "yyyy-MM-dd HH:mm:ss", null);
+            return datetime.ToString("yyyy-MM-dd_HH-mm-ss");
         }
 
         /// <summary>
@@ -69,7 +62,15 @@ namespace SystemPlus
             if (datetime == null)
                 return null;
 
-            return datetime.Value.ToString("yyyy-MM-dd_HH-mm-ss");
+            return datetime.Value.ToFileTimeString();
+        }
+
+        /// <summary>
+        /// Returns a date string formatted yyyy-MM-dd HH:mm:ss
+        /// </summary>
+        public static string ToStringStandard(this DateTime datetime)
+        {
+            return datetime.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         /// <summary>
@@ -80,7 +81,41 @@ namespace SystemPlus
             if (datetime == null)
                 return null;
 
-            return datetime.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            return datetime.Value.ToStringStandard();
+        }
+
+        /// <summary>
+        /// Formats a datetime in user friendly way
+        /// </summary>
+        public static string ToStringFriendly(this DateTime utcTime, TimeZoneInfo timeZone = null, bool addUtc = true, bool checkIsToday = true)
+        {
+            DateTime localTime;
+            DateTime now;
+
+            if (timeZone == null)
+            {
+                localTime = utcTime;
+                now = DateTime.UtcNow;
+            }
+            else
+            {
+                localTime = TimeZoneInfo.ConvertTimeFromUtc(utcTime, timeZone);
+                now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone);
+            }
+
+            string s;
+
+            if (checkIsToday && localTime.Date == now.Date)
+                s = string.Format("Today {0:HH:mm}", localTime);
+            else if (localTime.Year == now.Year)
+                s = localTime.ToString("d-MMM HH:mm");
+            else
+                s = localTime.ToString("d-MMM-yyyy HH:mm");
+
+            if (timeZone == null && addUtc)
+                s += " (UTC)";
+
+            return s;
         }
 
         public static DateTime Round(this DateTime date, TimeSpan span)
@@ -99,6 +134,17 @@ namespace SystemPlus
         {
             long ticks = (date.Ticks + span.Ticks - 1) / span.Ticks;
             return new DateTime(ticks * span.Ticks);
+        }
+
+        /// <summary>
+        /// Converts a UTC time into a local time
+        /// </summary>
+        public static DateTime ToLocal(this DateTime utcTime, TimeZoneInfo timeZone)
+        {
+            if (timeZone == null)
+                return utcTime;
+            else
+                return TimeZoneInfo.ConvertTimeFromUtc(utcTime, timeZone);
         }
 
         /// <summary>
@@ -152,41 +198,6 @@ namespace SystemPlus
             if (val1 > val2)
                 return val1;
             return val2;
-        }
-
-        /// <summary>
-        /// Formats a timespan like '1 days 2 hours 3 minutes 4 seconds'
-        /// </summary>
-        public static string FormatTimeSpan(TimeSpan ts, bool includeMilliseconds = false)
-        {
-            string s;
-
-            if (ts.Days > 0)
-            {
-                s = string.Format("{0} days {1} hours {2} minutes {3} seconds", (int)ts.TotalDays, ts.Hours, ts.Minutes, ts.Seconds);
-            }
-            else if (ts.Hours > 0)
-            {
-                s = string.Format("{0} hours {1} minutes {2} seconds", (int)ts.TotalHours, ts.Minutes, ts.Seconds);
-            }
-            else if (ts.Minutes > 0)
-            {
-                s = string.Format("{0} minutes {1} seconds", (int)ts.TotalMinutes, ts.Seconds);
-            }
-            else if (ts.Seconds > 0)
-            {
-                s = string.Format("{0} seconds", (int)ts.TotalSeconds);
-            }
-            else if (ts.Milliseconds > 0 && includeMilliseconds)
-            {
-                s = string.Format("{0} milliseconds", (int)ts.TotalMilliseconds);
-            }
-            else
-            {
-                s = "0";
-            }
-
-            return s;
         }
 
         public static long ToUnixTimeSeconds(this DateTime dateTime)

@@ -1,4 +1,6 @@
 ﻿using System.Data.SqlClient;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace SystemPlus.Data
 {
@@ -20,20 +22,21 @@ namespace SystemPlus.Data
         /// <summary>
         /// Gets an open SqlConnection
         /// </summary>
-        public virtual SqlConnection GetConnection()
+        public async virtual Task<SqlConnection> GetConnectionAsync(CancellationToken token)
         {
             SqlConnection cn = new SqlConnection(ConString);
-            cn.Open();
+            await cn.OpenAsync(token);
+
             return cn;
         }
 
-        public void TestConnection()
+        public async Task TestConnection(CancellationToken token)
         {
             SqlConnection con = null;
 
             try
             {
-                con = GetConnection();
+                con = await GetConnectionAsync(token);
             }
             finally
             {

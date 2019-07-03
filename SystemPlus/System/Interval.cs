@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SystemPlus.System
+namespace SystemPlus
 {
     public enum Interval
     {

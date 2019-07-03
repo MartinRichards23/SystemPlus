@@ -11,15 +11,19 @@ namespace SystemPlus.Data
 {
     public class SqlGenerator
     {
+        #region Fields
+
         string databaseName;
         readonly List<SqlTable> tables = new List<SqlTable>();
+
+        #endregion
 
         public SqlGenerator()
         {
 
         }
 
-        #region Main methods
+        #region Public methods
 
         public void GetSchema(SqlConnection conn, IEnumerable<string> tableNames = null)
         {
@@ -35,6 +39,95 @@ namespace SystemPlus.Data
                 tables.Add(table);
             }
         }
+        
+        public void WriteDatabaseClass(TextWriter tw)
+        {
+            tw.WriteLine("using System;");
+            tw.WriteLine("using System.Data;");
+            tw.WriteLine("using System.Data.SqlClient;");
+            tw.WriteLine();
+
+            tw.WriteLine("namespace SqlGenerator");
+            tw.WriteLine("{");
+
+            tw.WriteLine("public class {0}", databaseName);
+            tw.WriteLine("{");
+
+            foreach (SqlTable table in tables)
+            {
+                tw.WriteLine("#region {0}", table.Name);
+                tw.WriteLine();
+
+                WriteAdd(tw, table);
+                tw.WriteLine();
+
+                WriteGet(tw, table);
+                tw.WriteLine();
+
+                WriteGetAll(tw, table);
+                tw.WriteLine();
+
+                WriteUpdate(tw, table);
+                tw.WriteLine();
+
+                WriteDelete(tw, table);
+                tw.WriteLine();
+
+                WriteReader(tw, table);
+                tw.WriteLine();
+
+                tw.WriteLine("#endregion");
+                tw.WriteLine();
+            }
+
+            tw.WriteLine("}");
+            tw.WriteLine("}");
+        }
+
+        public void WriteModelClasses(TextWriter tw)
+        {
+            tw.WriteLine("using System;");
+            tw.WriteLine();
+
+            tw.WriteLine("namespace SqlGenerator");
+            tw.WriteLine("{");
+            foreach (SqlTable table in tables)
+            {
+                WriteModelClass(tw, table);
+                tw.WriteLine();
+            }
+            tw.WriteLine("}");
+        }
+
+        public void WriteSqlScript(TextWriter tw)
+        {
+            foreach (SqlTable table in tables)
+            {
+                WriteAddSql(tw, table);
+                tw.WriteLine("GO");
+                tw.WriteLine();
+
+                WriteGetSql(tw, table);
+                tw.WriteLine("GO");
+                tw.WriteLine();
+
+                WriteGetAllSql(tw, table);
+                tw.WriteLine("GO");
+                tw.WriteLine();
+
+                WriteUpdateSql(tw, table);
+                tw.WriteLine("GO");
+                tw.WriteLine();
+
+                WriteDeleteSql(tw, table);
+                tw.WriteLine("GO");
+                tw.WriteLine();
+            }
+        }
+
+        #endregion
+
+        #region Private methods
 
         List<string> GetTableNames(SqlConnection conn)
         {
@@ -129,93 +222,6 @@ namespace SystemPlus.Data
         {
             return string.Format("SELECT TABLE_NAME FROM .INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'");
         }
-
-        public void WriteDatabaseClass(TextWriter tw)
-        {
-            tw.WriteLine("using System;");
-            tw.WriteLine("using System.Data;");
-            tw.WriteLine("using System.Data.SqlClient;");
-            tw.WriteLine();
-
-            tw.WriteLine("namespace SqlGenerator");
-            tw.WriteLine("{");
-
-            tw.WriteLine("public class {0}", databaseName);
-            tw.WriteLine("{");
-
-            foreach (SqlTable table in tables)
-            {
-                tw.WriteLine("#region {0}", table.Name);
-                tw.WriteLine();
-
-                WriteAdd(tw, table);
-                tw.WriteLine();
-
-                WriteGet(tw, table);
-                tw.WriteLine();
-
-                WriteGetAll(tw, table);
-                tw.WriteLine();
-
-                WriteUpdate(tw, table);
-                tw.WriteLine();
-
-                WriteDelete(tw, table);
-                tw.WriteLine();
-
-                WriteReader(tw, table);
-                tw.WriteLine();
-
-                tw.WriteLine("#endregion");
-                tw.WriteLine();
-            }
-
-            tw.WriteLine("}");
-            tw.WriteLine("}");
-        }
-
-        public void WriteModelClasses(TextWriter tw)
-        {
-            tw.WriteLine("using System;");
-            tw.WriteLine();
-
-            tw.WriteLine("namespace SqlGenerator");
-            tw.WriteLine("{");
-            foreach (SqlTable table in tables)
-            {
-                WriteModelClass(tw, table);
-                tw.WriteLine();
-            }
-            tw.WriteLine("}");
-        }
-
-        public void WriteSqlScript(TextWriter tw)
-        {
-            foreach (SqlTable table in tables)
-            {
-                WriteAddSql(tw, table);
-                tw.WriteLine("GO");
-                tw.WriteLine();
-
-                WriteGetSql(tw, table);
-                tw.WriteLine("GO");
-                tw.WriteLine();
-
-                WriteGetAllSql(tw, table);
-                tw.WriteLine("GO");
-                tw.WriteLine();
-
-                WriteUpdateSql(tw, table);
-                tw.WriteLine("GO");
-                tw.WriteLine();
-
-                WriteDeleteSql(tw, table);
-                tw.WriteLine("GO");
-                tw.WriteLine();
-            }
-        }
-
-        #endregion
 
         void WriteModelClass(TextWriter tw, SqlTable table)
         {
@@ -555,5 +561,6 @@ namespace SystemPlus.Data
             tw.WriteLine("END");
         }
 
+        #endregion
     }
 }

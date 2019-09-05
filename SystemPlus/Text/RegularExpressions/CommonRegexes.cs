@@ -13,7 +13,6 @@ namespace SystemPlus.Text.RegularExpressions
         public static readonly Regex WhiteSpaceAll = new Regex(@"[\s]+", RegexOptions.Compiled);
         public static readonly Regex WhiteSpace = new Regex(@"[ \t]+", RegexOptions.Compiled);
 
-        public static readonly Regex Word = new Regex(@"[^\s,:;@\.\-\(\)\<\>""]+", RegexOptions.Compiled);
         public static readonly Regex WordSplit = new Regex(@"[\s,:;@\|\(\)\<\>""]+", RegexOptions.Compiled);
 
         public static readonly Regex PunctuationAll = new Regex(@"\p{P}", RegexOptions.Compiled);

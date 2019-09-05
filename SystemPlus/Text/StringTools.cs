@@ -110,31 +110,6 @@ namespace SystemPlus.Text
             return lines;
         }
 
-        public static string Normalise(this string input)
-        {
-            if (input == null)
-                return null;
-
-            input = input.Trim();
-            input = RemovePunctuation(input);
-            input = input.ToUpperInvariant();
-
-            return input;
-        }
-
-        public static IEnumerable<string> Normalise(this IEnumerable<string> inputs)
-        {
-            List<string> output = new List<string>();
-
-            foreach (string s in inputs)
-            {
-                string n = Normalise(s);
-                output.Add(n);
-            }
-
-            return output;
-        }
-
         /// <summary>
         /// removes all punctuation
         /// </summary>
@@ -144,6 +119,17 @@ namespace SystemPlus.Text
                 return null;
 
             return CommonRegexes.PunctuationAll.Replace(input, replacement);
+        }
+
+        /// <summary>
+        /// removes common punctuation
+        /// </summary>
+        public static string RemoveCommonPunctuation(string input, string replacement = "")
+        {
+            if (input == null)
+                return null;
+
+            return CommonRegexes.PunctuationCommon.Replace(input, replacement);
         }
 
         /// <summary>
@@ -162,17 +148,6 @@ namespace SystemPlus.Text
             }
 
             return stringBuilder.ToString();
-        }
-
-        /// <summary>
-        /// removes common punctuation
-        /// </summary>
-        public static string RemoveCommonPunctuation(string input, string replacement = "")
-        {
-            if (input == null)
-                return null;
-
-            return CommonRegexes.PunctuationCommon.Replace(input, replacement);
         }
 
         /// <summary>
@@ -234,7 +209,6 @@ namespace SystemPlus.Text
 
         /// <summary>
         /// Gets the shortest and longest of two strings
-        /// useful for comparisons
         /// </summary>
         public static void Swap(string a, string b, out string shortest, out string longest)
         {

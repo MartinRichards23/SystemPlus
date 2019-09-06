@@ -7,9 +7,6 @@ namespace SystemPlus.Text.RegularExpressions
     /// </summary>
     public static class CommonRegexes
     {
-        public static readonly Regex BrTags = new Regex(@"</?w?br ?/?>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        public static readonly Regex HtmlTags = new Regex(@"<[^>]*>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
         public static readonly Regex WordSplit = new Regex(@"[\s,:;@\|\(\)\<\>""]+", RegexOptions.Compiled);
 
         public static readonly Regex PunctuationAll = new Regex(@"\p{P}", RegexOptions.Compiled);

@@ -171,44 +171,6 @@ namespace SystemPlus.Text
         }
 
         /// <summary>
-        /// Converts br tags to newlines
-        /// </summary>
-        public static string ConvertBrTags(string input)
-        {
-            if (input == null)
-                return null;
-
-            input = CommonRegexes.BrTags.Replace(input, "\r\n");
-            return input.Trim();
-        }
-
-        public static string HtmlDecode(this string input)
-        {
-            if (input == null)
-                return null;
-
-            input = WebUtility.HtmlDecode(input);
-            input = CollapseAllWhiteSpace(input);
-            return input;
-        }
-
-        public static string HtmlEncode(this string input)
-        {
-            if (input == null)
-                return null;
-
-            return WebUtility.HtmlEncode(input);
-        }
-
-        public static string RemoveHtmlTags(this string input)
-        {
-            if (input == null)
-                return null;
-
-            return CommonRegexes.HtmlTags.Replace(input, string.Empty);
-        }
-
-        /// <summary>
         /// Gets the shortest and longest of two strings
         /// </summary>
         public static void Swap(string a, string b, out string shortest, out string longest)

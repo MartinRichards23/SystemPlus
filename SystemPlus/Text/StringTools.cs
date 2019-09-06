@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using SystemPlus.Text.RegularExpressions;
 
 namespace SystemPlus.Text
@@ -59,8 +60,11 @@ namespace SystemPlus.Text
             if (input == null)
                 return null;
 
-            input = CommonRegexes.WhiteSpace.Replace(input, " ");
-            input = CommonRegexes.Newlines.Replace(input, "\r\n");
+            Regex whiteSpace = new Regex(@"[ \t]+");
+            Regex newlines = new Regex(@"[\r\n]+");
+
+            input = whiteSpace.Replace(input, " ");
+            input = newlines.Replace(input, "\r\n");
             return input;
         }
 
@@ -72,7 +76,9 @@ namespace SystemPlus.Text
             if (input == null)
                 return null;
 
-            input = CommonRegexes.WhiteSpaceAll.Replace(input, replacement);
+            Regex whiteSpaceAll = new Regex(@"[\s]+");
+
+            input = whiteSpaceAll.Replace(input, replacement);
             return input;
         }
 

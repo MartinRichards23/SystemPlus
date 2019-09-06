@@ -154,13 +154,8 @@ namespace SystemPlus.Net
         /// </summary>
         public static string MakeAbsoluteUrl(string baseUrl, string relativeUrl)
         {
-            if (IsAbsoluteUrl(relativeUrl))
-                return relativeUrl;
-
             UriBuilder builder = new UriBuilder(baseUrl);
-
-            Uri frameUri = new Uri(builder.Uri, relativeUrl);
-            return frameUri.ToString();
+            return MakeAbsoluteUrl(builder.Uri, relativeUrl);
         }
 
         /// <summary>

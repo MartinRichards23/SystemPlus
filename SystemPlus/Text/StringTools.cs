@@ -67,12 +67,7 @@ namespace SystemPlus.Text
         /// <summary>
         /// Collapses all consecutive whitespace into a single space
         /// </summary>
-        public static string CollapseAllWhiteSpace(string input)
-        {
-            return CollapseAllWhiteSpace(input, " ");
-        }
-
-        public static string CollapseAllWhiteSpace(string input, string replacement)
+        public static string CollapseAllWhiteSpace(string input, string replacement = " ")
         {
             if (input == null)
                 return null;

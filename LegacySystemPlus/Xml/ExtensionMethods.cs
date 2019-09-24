@@ -43,6 +43,19 @@ namespace SystemPlus.Xml
             return attribute.Value;
         }
 
+        public static double GetAttributeDouble(this XElement element, string name, double defaultVal = 0)
+        {
+            XAttribute attribute = element.Attribute(name);
+
+            if (attribute == null)
+                return defaultVal;
+
+            if (double.TryParse(attribute.Value, out double result))
+                return result;
+
+            return defaultVal;
+        }
+
         public static T GetAttributeValue<T>(this XElement element, string name)
         {
             XAttribute attribute = element.Attribute(name);

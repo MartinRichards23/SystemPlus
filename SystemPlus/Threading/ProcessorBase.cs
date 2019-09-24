@@ -15,12 +15,7 @@ namespace SystemPlus.Threading
         #region Fields
 
         int maxThreads = 1;
-        readonly CancellationToken cancelToken;
-
-        long processedItems;
-
         readonly object key = new object();
-        readonly object syncRoot = new object();
         readonly IProducerConsumerCollection<T> items;
         readonly IList<Task> threads = new List<Task>();
 
@@ -64,7 +59,7 @@ namespace SystemPlus.Threading
         {
             items = baseCollection;
             MaxThreads = maxThreads;
-            this.cancelToken = cancelToken;
+            this.CancelToken = cancelToken;
         }
 
         #endregion
@@ -113,26 +108,17 @@ namespace SystemPlus.Threading
         /// <summary>
         /// The total number of items processed
         /// </summary>
-        public long ProcessedItems
-        {
-            get { return processedItems; }
-        }
+        public long ProcessedItems { get; private set; }
 
         /// <summary>
         /// Token to enable cancellation of workers
         /// </summary>
-        protected CancellationToken CancelToken
-        {
-            get { return cancelToken; }
-        }
+        protected CancellationToken CancelToken { get; }
 
         /// <summary>
         /// Object for syncronising worker threads
         /// </summary>
-        protected object SyncRoot
-        {
-            get { return syncRoot; }
-        }
+        protected object SyncRoot { get; } = new object();
 
         /// <summary>
         /// Duration a thread will wait before terminating
@@ -159,7 +145,7 @@ namespace SystemPlus.Threading
 
             do
             {
-                if (cancelToken.IsCancellationRequested)
+                if (CancelToken.IsCancellationRequested)
                 {
                     item = default(T);
                     return false;
@@ -181,7 +167,7 @@ namespace SystemPlus.Threading
         {
             while (GetNextItem(out T item))
             {
-                if (cancelToken.IsCancellationRequested)
+                if (CancelToken.IsCancellationRequested)
                     break;
 
                 try
@@ -198,7 +184,7 @@ namespace SystemPlus.Threading
                 }
                 finally
                 {
-                    processedItems++;
+                    ProcessedItems++;
                     OnItemProcessed(item);
                 }
             }

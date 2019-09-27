@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SystemPlus
 {
     /// <summary>
-    /// Various statistics tools
+    /// Various statistics helpers
     /// </summary>
     public class Statistics
     {

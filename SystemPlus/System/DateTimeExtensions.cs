@@ -5,7 +5,7 @@ using System.Text;
 namespace SystemPlus
 {
     /// <summary>
-    /// Helpers functions for datetime offsets
+    /// Extensions for DateTimes
     /// </summary>
     public static class DateTimeExtensions
     {
@@ -28,24 +28,6 @@ namespace SystemPlus
             return tzInfo;
         }
 
-        public static DateTime ParseFileTimeString(string input)
-        {
-            return DateTime.ParseExact(input, "yyyy-MM-dd_HH-mm-ss", null);
-        }
-
-        public static DateTime ParseStringStandard(string input)
-        {
-            return DateTime.ParseExact(input, "yyyy-MM-dd HH:mm:ss", null);
-        }
-
-        /// <summary>
-        /// Returns a date string formatted to be file name safe. yyyy-MM-dd
-        /// </summary>
-        public static string ToFileDateString(this DateTime datetime)
-        {
-            return datetime.ToString("yyyy-MM-dd");
-        }
-
         /// <summary>
         /// Returns a date string formatted to be file name safe. yyyy-MM-dd_HH-mm-ss
         /// </summary>
@@ -54,15 +36,9 @@ namespace SystemPlus
             return datetime.ToString("yyyy-MM-dd_HH-mm-ss");
         }
 
-        /// <summary>
-        /// Returns a date string formatted to be file name safe
-        /// </summary>
-        public static string ToFileTimeString(this DateTime? datetime)
+        public static DateTime ParseFileTimeString(string input)
         {
-            if (datetime == null)
-                return null;
-
-            return datetime.Value.ToFileTimeString();
+            return DateTime.ParseExact(input, "yyyy-MM-dd_HH-mm-ss", null);
         }
 
         /// <summary>
@@ -73,15 +49,9 @@ namespace SystemPlus
             return datetime.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        /// <summary>
-        /// Returns a date string formatted yyyy-MM-dd HH:mm:ss
-        /// </summary>
-        public static string ToStringStandard(this DateTime? datetime)
+        public static DateTime ParseStringStandard(string input)
         {
-            if (datetime == null)
-                return null;
-
-            return datetime.Value.ToStringStandard();
+            return DateTime.ParseExact(input, "yyyy-MM-dd HH:mm:ss", null);
         }
 
         /// <summary>
@@ -200,9 +170,12 @@ namespace SystemPlus
             return val2;
         }
 
-        public static long ToUnixTimeSeconds(this DateTime dateTime)
+        /// <summary>
+        /// Gets the Unix time
+        /// </summary>
+        public static long ToUnixTime(this DateTime dateTime)
         {
-            TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            TimeSpan t = dateTime - new DateTime(1970, 1, 1);
             return (long)t.TotalSeconds;
         }
     }

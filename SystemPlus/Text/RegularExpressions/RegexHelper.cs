@@ -9,11 +9,11 @@ namespace SystemPlus.Text.RegularExpressions
         /// <summary>
         /// Checks is a string is a valid regex
         /// </summary>
-        public static bool VerifyRegex(string patten, out string error)
+        public static bool VerifyRegex(string pattern, out string error)
         {
             try
             {
-                Regex regex = new Regex(patten);
+                Regex regex = new Regex(pattern);
 
                 error = null;
                 return true;
@@ -32,19 +32,6 @@ namespace SystemPlus.Text.RegularExpressions
             foreach (string pattern in patterns)
             {
                 Regex reg = new Regex(pattern, options);
-                regexes.Add(reg);
-            }
-
-            return regexes;
-        }
-
-        public static IEnumerable<WildCard> MakeWildcards(IEnumerable<string> patterns, RegexOptions options)
-        {
-            List<WildCard> regexes = new List<WildCard>();
-
-            foreach (string pattern in patterns)
-            {
-                WildCard reg = new WildCard(pattern, options);
                 regexes.Add(reg);
             }
 

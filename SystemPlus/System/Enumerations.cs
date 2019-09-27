@@ -2,6 +2,9 @@
 
 namespace SystemPlus
 {
+    /// <summary>
+    /// Months of the year
+    /// </summary>
     [Serializable]
     public enum Month
     {

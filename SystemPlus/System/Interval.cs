@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SystemPlus
 {
+    /// <summary>
+    /// Common intervals
+    /// </summary>
     public enum Interval
     {
         Mins1 = 1,

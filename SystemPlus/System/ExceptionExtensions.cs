@@ -4,6 +4,9 @@ using SystemPlus.Text;
 
 namespace SystemPlus
 {
+    /// <summary>
+    /// Extensions for Exceptions
+    /// </summary>
     public static class ExceptionExtensions
     {
         /// <summary>

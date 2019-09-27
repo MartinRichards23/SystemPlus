@@ -32,7 +32,6 @@ namespace SystemPlus.Xml
         /// <summary>
         /// Returns attribute value, or null if not present
         /// </summary>
-        /// <returns></returns>
         public static string GetAttributeValue(this XElement element, string name)
         {
             XAttribute attribute = element.Attribute(name);
@@ -48,7 +47,7 @@ namespace SystemPlus.Xml
             XAttribute attribute = element.Attribute(name);
 
             if (attribute == null)
-                return default(T);
+                return default;
 
             TypeConverter tc = TypeDescriptor.GetConverter(typeof(T));
             return (T)tc.ConvertFrom(attribute.Value);

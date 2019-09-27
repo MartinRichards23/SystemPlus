@@ -2,6 +2,9 @@
 
 namespace SystemPlus
 {
+    /// <summary>
+    /// Useful extra tools for the Math class
+    /// </summary>
     public static class MathTools
     {
         public const double TwoPi = Math.PI * 2;
@@ -46,6 +49,9 @@ namespace SystemPlus
             return ((rads * Pi180) + 360) % 360;
         }
 
+        /// <summary>
+        /// Ensures angle is between 0 and 360, e.g. 361 will return 1.
+        /// </summary>
         public static double ClampAngle(double angle)
         {
             angle = angle % 360;

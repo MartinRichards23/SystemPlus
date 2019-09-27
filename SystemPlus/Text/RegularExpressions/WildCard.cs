@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace SystemPlus.Text.RegularExpressions
@@ -25,6 +26,8 @@ namespace SystemPlus.Text.RegularExpressions
         {
         }
 
+        #region Static methods
+
         /// <summary>
         /// Converts a wildcard to a regex.
         /// </summary>
@@ -37,5 +40,20 @@ namespace SystemPlus.Text.RegularExpressions
 
             return regex;
         }
+
+        public static IEnumerable<WildCard> MakeWildcards(IEnumerable<string> patterns, RegexOptions options)
+        {
+            List<WildCard> regexes = new List<WildCard>();
+
+            foreach (string pattern in patterns)
+            {
+                WildCard reg = new WildCard(pattern, options);
+                regexes.Add(reg);
+            }
+
+            return regexes;
+        }
+
+        #endregion
     }
 }

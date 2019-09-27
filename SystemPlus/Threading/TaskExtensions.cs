@@ -2,6 +2,9 @@
 
 namespace SystemPlus.Threading
 {
+    /// <summary>
+    /// Extensions for System.Threading.Tasks
+    /// </summary>
     public static class TaskExtensions
     {
         /// <summary>

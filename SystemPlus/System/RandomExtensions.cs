@@ -23,37 +23,31 @@ namespace SystemPlus
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Returns a random bool
+        /// </summary>
         public static bool NextBool(this Random rand, double trueChance = 0.5)
         {
             return rand.NextDouble() < trueChance;
         }
 
+        /// <summary>
+        /// Returns a random timespan
+        /// </summary>
         public static TimeSpan NextTimespan(this Random rand, TimeSpan min, TimeSpan max)
         {
             long ticks = rand.NextLong(min.Ticks, max.Ticks);
             return new TimeSpan(ticks);
         }
 
+        /// <summary>
+        /// Returns a random long
+        /// </summary>
         public static long NextLong(this Random rand)
         {
             byte[] buffer = new byte[8];
             rand.NextBytes(buffer);
             return BitConverter.ToInt64(buffer, 0);
-        }
-
-        /// <summary>
-        /// Returns a random number between 0 and 1
-        /// </summary>
-        public static float NextFloat(this Random random)
-        {
-            double d = random.NextDouble();
-            return (float)d;
-        }
-
-        public static T NextEnumValue<T>(this Random rand) where T : struct
-        {
-            Array values = Enum.GetValues(typeof(T));
-            return (T)values.GetValue(rand.Next(values.Length));
         }
 
         public static long NextLong(this Random rand, long min, long max)
@@ -67,6 +61,24 @@ namespace SystemPlus
             if (IsModuloBiased(randomOffset, numbersInRange))
                 return NextLong(rand, min, max); // Try again
             return min + PositiveModuloOrZero(randomOffset, numbersInRange);
+        }
+
+        /// <summary>
+        /// Returns a random number between 0 and 1
+        /// </summary>
+        public static float NextFloat(this Random random)
+        {
+            double d = random.NextDouble();
+            return (float)d;
+        }
+
+        /// <summary>
+        /// Returns a random enum value
+        /// </summary>
+        public static T NextEnumValue<T>(this Random rand) where T : struct
+        {
+            Array values = Enum.GetValues(typeof(T));
+            return (T)values.GetValue(rand.Next(values.Length));
         }
 
         static bool IsModuloBiased(long randomOffset, long numbersInRange)

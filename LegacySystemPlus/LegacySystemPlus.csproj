@@ -89,9 +89,7 @@
     <Compile Include="Text\RegularExpressions\RegexHelper.cs" />
     <Compile Include="Text\StopWords.cs" />
     <Compile Include="Text\StringDifference.cs" />
-    <Compile Include="Threading\JobProcessor.cs" />
     <Compile Include="Threading\TaskExtensions.cs" />
-    <Compile Include="Threading\TimerProcessor.cs" />
     <Compile Include="ComponentModel\NotifyPropertyChanged.cs" />
     <Compile Include="Threading\Processor.cs" />
     <Compile Include="Threading\ProcessorBase.cs" />

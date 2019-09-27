@@ -1,6 +1,9 @@
 ﻿namespace SystemPlus
 {
-    public static class Parser
+    /// <summary>
+    /// Helper tools for parsing data
+    /// </summary>
+    public static class ParseTools
     {
         public static int? Int(string s)
         {

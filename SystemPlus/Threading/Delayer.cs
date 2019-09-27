@@ -1,63 +1,60 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SystemPlus.Threading
 {
     /// <summary>
-    /// Class that ensures Wait() is called no more frequently than set by the Delay
+    /// Class that ensures a minimum delay
     /// </summary>
     public class Delayer
     {
-        readonly TimeSpan minDelay;
-        readonly TimeSpan maxDelay;
-        readonly Random rand;
+        #region Fields
 
+        readonly Random rand;
         DateTime lastWait = DateTime.MinValue;
+
+        #endregion
 
         public Delayer(TimeSpan delay)
         {
-            minDelay = delay;
-            maxDelay = delay;
+            MinDelay = delay;
+            MaxDelay = delay;
         }
 
         public Delayer(TimeSpan minDelay, TimeSpan maxDelay)
         {
-            this.minDelay = minDelay;
-            this.maxDelay = maxDelay;
+            MinDelay = minDelay;
+            MaxDelay = maxDelay;
             rand = new Random();
         }
 
-        public TimeSpan MinDelay
-        {
-            get { return minDelay; }
-        }
+        #region Properties
 
-        public TimeSpan MaxDelay
-        {
-            get { return maxDelay; }
-        }
+        public TimeSpan MinDelay { get; }
+        public TimeSpan MaxDelay { get; }
 
-        public void Wait(CancellationToken token = default(CancellationToken))
+        #endregion
+
+        /// <summary>
+        /// Delays for a minimum time since this method was last called.
+        /// </summary>
+        public async Task Delay(CancellationToken token = default)
         {
             TimeSpan d;
 
             if (rand != null)
-                d = rand.NextTimespan(minDelay, maxDelay);
+                d = rand.NextTimespan(MinDelay, MaxDelay);
             else
-                d = minDelay;
+                d = MinDelay;
 
-            while (true)
+            DateTime now = DateTime.UtcNow;
+
+            if (lastWait + d < now)
             {
-                TimeSpan duration = DateTime.UtcNow - lastWait;
+                TimeSpan duration = now - lastWait;
 
-                if (duration > d)
-                {
-                    // have waited long enough
-                    break;
-                }
-
-                Thread.Sleep(50);
-                //Task.Delay(TimeSpan.FromMilliseconds(50), token).Wait();
+                await Task.Delay(duration, token);
             }
 
             lastWait = DateTime.UtcNow;

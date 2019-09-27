@@ -166,7 +166,7 @@ namespace SystemPlus.Data
                     SqlColumn col = new SqlColumn()
                     {
                         Name = rdr.GetValue<string>("Column_name"),
-                        DataType = EnumParsing.Parse(rdr.GetValue<string>("Type"), SqlDbType.NVarChar),
+                        DataType = EnumTools.Parse(rdr.GetValue<string>("Type"), SqlDbType.NVarChar),
                         Computed = rdr.GetValue<string>("Computed") == "yes",
                         Length = rdr.GetValue<int>("Length"),
                         Nullable = rdr.GetValue<string>("Nullable") == "yes",

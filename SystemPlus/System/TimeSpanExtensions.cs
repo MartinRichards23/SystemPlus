@@ -3,6 +3,9 @@ using System.Text;
 
 namespace SystemPlus
 {
+    /// <summary>
+    /// Extensions for TimeSpans
+    /// </summary>
     public static class TimeSpanExtensions
     {
         /// <summary>

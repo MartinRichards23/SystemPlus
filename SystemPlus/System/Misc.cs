@@ -55,11 +55,6 @@ namespace SystemPlus
             return string.Format("{0:x}", i - DateTime.UtcNow.Ticks);
         }
 
-        public static bool IsXp
-        {
-            get { return Environment.OSVersion.Version.Major < 6; }
-        }
-
         /// <summary> 
         /// Perform a deep Copy of the object. 
         /// </summary> 

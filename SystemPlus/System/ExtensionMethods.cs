@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Reflection;
-using System.Text;
 
 namespace SystemPlus
 {
@@ -9,33 +7,6 @@ namespace SystemPlus
     /// </summary>
     public static class ExtensionMethods
     {
-        /// <summary>
-        /// Lists all properties and their values
-        /// </summary>
-        public static string ToPropertiesString(this object obj, string seperator, bool ignoreReadonly)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            Type t = obj.GetType();
-            foreach (PropertyInfo info in t.GetProperties())
-            {
-                if (ignoreReadonly && !info.CanWrite)
-                    continue;
-
-                object val = info.GetValue(obj, null);
-                string textVal;
-
-                if (val == null)
-                    textVal = "null";
-                else
-                    textVal = val.ToString();
-
-                sb.Append(info.Name + ": " + textVal).Append(seperator);
-            }
-
-            return sb.ToString();
-        }
-
         /// <summary>
         /// Determins if a type can be assigned a null value
         /// </summary>
@@ -85,8 +56,4 @@ namespace SystemPlus
         }
     }
 
-    public interface ICloneable<out T> : ICloneable where T : ICloneable<T>
-    {
-        new T Clone();
-    }
 }

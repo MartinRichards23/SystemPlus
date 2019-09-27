@@ -2,7 +2,10 @@
 
 namespace SystemPlus
 {
-    public static class EnumParsing
+    /// <summary>
+    /// Enum tools and extensions
+    /// </summary>
+    public static class EnumTools
     {
         /// <summary>
         /// Parses an enum value, using the default if it fails

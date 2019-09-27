@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SystemPlus.System
+namespace SystemPlus
 {
     /// <summary>
     /// Generic version of ICloneable

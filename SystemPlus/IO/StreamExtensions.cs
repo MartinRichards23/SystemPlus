@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 namespace SystemPlus.IO
 {
-    public static class Extensions
+    /// <summary>
+    /// Extensions methods for streams
+    /// </summary>
+    public static class StreamExtensions
     {
         public static MemoryStream ToMemoryStream(this Stream stream)
         {

@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace SystemPlus.Net.Mail
 {
+    /// <summary>
+    /// Tools for manipulating email addresses
+    /// </summary>
     public static class EmailTools
     {
         /// <summary>
@@ -36,6 +37,5 @@ namespace SystemPlus.Net.Mail
             Regex emailRegex = new Regex(@"^\S+@\S+\.\S+$", RegexOptions.IgnoreCase);
             return emailRegex.IsMatch(email);
         }
-
     }
 }

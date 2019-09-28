@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using SystemPlus.Text;
 
 namespace SystemPlus.Net
 {
+    /// <summary>
+    /// Tools for manipulating Uris
+    /// </summary>
     public static class UrlTools
     {
         /// <summary>
@@ -114,7 +115,7 @@ namespace SystemPlus.Net
         /// </summary>
         public static bool IsAbsoluteUrl(string url)
         {
-            return Uri.TryCreate(url, UriKind.Absolute, out Uri result);
+            return Uri.TryCreate(url, UriKind.Absolute, out _);
         }
 
         /// <summary>
@@ -198,6 +199,9 @@ namespace SystemPlus.Net
             return builder.Uri.PathAndQuery;
         }
 
+        /// <summary>
+        /// Url encode a string using upper case text
+        /// </summary>
         public static string UpperCaseUrlEncode(string data)
         {
             char[] temp = Uri.EscapeDataString(data).ToCharArray();

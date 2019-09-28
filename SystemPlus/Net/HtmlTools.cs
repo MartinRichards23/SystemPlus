@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 using System.Text.RegularExpressions;
 using SystemPlus.Text;
 
 namespace SystemPlus.Net
 {
+    /// <summary>
+    /// Tools for manipulating html
+    /// </summary>
     public static class HtmlTools
     {
         /// <summary>

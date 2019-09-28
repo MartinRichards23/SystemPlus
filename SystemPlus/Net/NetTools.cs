@@ -1,27 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text.RegularExpressions;
-using SystemPlus.Text;
 
 namespace SystemPlus.Net
 {
+    /// <summary>
+    /// Internet tools
+    /// </summary>
     public static class NetTools
     {
-        public static bool IsInternetAvailable()
-        {
-            try
-            {
-                Dns.GetHostEntry("www.google.com");
-                return true;
-            }
-            catch
-            {
-                return false; // host not reachable.
-            }
-        }
-
+        /// <summary>
+        /// Get time from internet server
+        /// </summary>
         public static DateTime GetNetworkTime(string ntpServer = "time.windows.com")
         {
             // NTP message size - 16 bytes of the digest (RFC 2030)

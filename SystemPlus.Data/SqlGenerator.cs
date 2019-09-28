@@ -10,6 +10,9 @@ using SystemPlus.Text;
 
 namespace SystemPlus.Data
 {
+    /// <summary>
+    /// Generates stored procedures and ADO.NET code for basic CRUD operations
+    /// </summary>
     public class SqlGenerator
     {
         #region Fields

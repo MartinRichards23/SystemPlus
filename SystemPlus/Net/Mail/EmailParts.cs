@@ -3,28 +3,19 @@ using System.Text.RegularExpressions;
 
 namespace SystemPlus.Net.Mail
 {
+    /// <summary>
+    /// Represents email components
+    /// </summary>
     public class EmailParts
     {
-        #region Fields
-
-        readonly string localPart;
-
-        readonly string suffix;
-        readonly string tld;
-        readonly string domain;
-        readonly string domainName;
-        readonly string fullDomain;
-
-        #endregion
-
         public EmailParts(string localPart, string fullDomain, string domain, string suffix)
         {
-            this.localPart = localPart;
-            this.fullDomain = fullDomain;
-            this.domain = domain;
-            this.suffix = suffix;
-            domainName = domain.Substring(0, domain.Length - suffix.Length - 1);
-            tld = suffix.Split('.').Last();
+            LocalPart = localPart;
+            FullDomain = fullDomain;
+            Domain = domain;
+            Suffix = suffix;
+            DomainName = domain.Substring(0, domain.Length - suffix.Length - 1);
+            Tld = suffix.Split('.').Last();
         }
 
         #region Properties
@@ -32,50 +23,32 @@ namespace SystemPlus.Net.Mail
         /// <summary>
         /// e.g. "abc.123@xyz.co.uk" returns "abc.123"
         /// </summary>
-        public string LocalPart
-        {
-            get { return localPart; }
-        }
+        public string LocalPart { get; }
 
         /// <summary>
         /// e.g. "abc.123@xyz.co.uk" returns "co.uk"
         /// </summary>
-        public string Suffix
-        {
-            get { return suffix; }
-        }
+        public string Suffix { get; }
 
         /// <summary>
         /// e.g. "abc.123@xyz.co.uk" returns "uk"
         /// </summary>
-        public string Tld
-        {
-            get { return tld; }
-        }
+        public string Tld { get; }
 
         /// <summary>
         /// e.g. "abc.123@xyz.co.uk" returns "xyz.co.uk"
         /// </summary>
-        public string Domain
-        {
-            get { return domain; }
-        }
+        public string Domain { get; }
 
         /// <summary>
         /// e.g. "abc.123@xyz.co.uk" returns "xyz"
         /// </summary>
-        public string DomainName
-        {
-            get { return domainName; }
-        }
+        public string DomainName { get; }
 
         /// <summary>
         /// e.g. "abc.123@xyz.co.uk" returns "www.abc.blogs.co.uk"
         /// </summary>
-        public string FullDomain
-        {
-            get { return fullDomain; }
-        }
+        public string FullDomain { get; }
 
         /// <summary>
         /// e.g. "abc.123@xyz.co.uk" returns "abc.blogs.co.uk"
@@ -84,7 +57,7 @@ namespace SystemPlus.Net.Mail
         {
             get
             {
-                string d = fullDomain;
+                string d = FullDomain;
                 return Regex.Replace(d, @"^www?[0-9]?\.", "", RegexOptions.IgnoreCase);
             }
         }

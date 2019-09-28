@@ -12,37 +12,45 @@ namespace SystemPlus.Net
     {
         #region Fields
 
-        readonly string baseUrl;
         readonly IList<UrlParam> parameters = new List<UrlParam>();
-        readonly bool ignoreEmpty;
 
         #endregion
 
         public UrlQueryString(bool ignoreEmpty)
         {
-            this.ignoreEmpty = ignoreEmpty;
+            IgnoreEmpty = ignoreEmpty;
         }
 
         public UrlQueryString(string baseUrl)
         {
-            this.baseUrl = baseUrl;
+            BaseUrl = baseUrl;
         }
 
         public UrlQueryString(string baseUrl, bool ignoreEmpty)
         {
-            this.baseUrl = baseUrl;
-            this.ignoreEmpty = ignoreEmpty;
+            BaseUrl = baseUrl;
+            IgnoreEmpty = ignoreEmpty;
         }
 
-        public string BaseUrl
+        #region Properties
+
+        public string BaseUrl { get; }
+
+        public bool IgnoreEmpty { get; }
+
+        /// <summary>
+        /// overrides the default indexer
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>the associated decoded value for the specified index</returns>
+        public string this[int index]
         {
-            get { return baseUrl; }
+            get { return parameters[index].Value; }
         }
 
-        public bool IgnoreEmpty
-        {
-            get { return ignoreEmpty; }
-        }
+        #endregion
+
+        #region Public methods
 
         /// <summary>
         /// Parses url parameters out of a url
@@ -106,21 +114,11 @@ namespace SystemPlus.Net
         }
 
         /// <summary>
-        /// overrides the default indexer
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns>the associated decoded value for the specified index</returns>
-        public string this[int index]
-        {
-            get { return parameters[index].Value; }
-        }
-
-        /// <summary>
         /// Makes the full url with query string
         /// </summary>
         public string MakeUrl()
         {
-            return baseUrl + MakeQuery();
+            return BaseUrl + MakeQuery();
         }
 
         /// <summary>
@@ -140,7 +138,7 @@ namespace SystemPlus.Net
             {
                 UrlParam param = parameters[i];
 
-                if (ignoreEmpty && string.IsNullOrEmpty(param.Value))
+                if (IgnoreEmpty && string.IsNullOrEmpty(param.Value))
                     continue;
 
                 sb.Append(paramChar).Append(param.Name).Append("=").Append(param.ValueEncoded);
@@ -156,7 +154,9 @@ namespace SystemPlus.Net
             return MakeUrl();
         }
 
-        #region statics
+        #endregion
+
+        #region Statics
 
         /// <summary>
         /// Extracts a querystring from a full Url
@@ -213,24 +213,15 @@ namespace SystemPlus.Net
 
         sealed class UrlParam
         {
-            readonly string name;
-            readonly string value;
-
             public UrlParam(string name, string value)
             {
-                this.name = name;
-                this.value = value;
+                Name = name;
+                Value = value;
             }
 
-            public string Name
-            {
-                get { return name; }
-            }
+            public string Name { get; }
 
-            public string Value
-            {
-                get { return value; }
-            }
+            public string Value { get; }
 
             public string ValueEncoded
             {

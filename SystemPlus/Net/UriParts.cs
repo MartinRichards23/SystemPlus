@@ -3,25 +3,18 @@ using System.Text.RegularExpressions;
 
 namespace SystemPlus.Net
 {
+    /// <summary>
+    /// Represents domain parts
+    /// </summary>
     public class UriParts
     {
-        #region Fields
-
-        readonly string suffix;
-        readonly string tld;
-        readonly string domain;
-        readonly string domainName;
-        readonly string fullDomain;
-
-        #endregion
-
         public UriParts(string fullDomain, string domain, string suffix)
         {
-            this.fullDomain = fullDomain;
-            this.domain = domain;
-            this.suffix = suffix;
-            domainName = domain.Substring(0, domain.Length - suffix.Length - 1);
-            tld = suffix.Split('.').Last();
+            FullDomain = fullDomain;
+            Domain = domain;
+            Suffix = suffix;
+            DomainName = domain.Substring(0, domain.Length - suffix.Length - 1);
+            Tld = suffix.Split('.').Last();
         }
 
         #region Properties
@@ -29,42 +22,27 @@ namespace SystemPlus.Net
         /// <summary>
         /// e.g. "www.abc.blogs.co.uk" returns "co.uk"
         /// </summary>
-        public string Suffix
-        {
-            get { return suffix; }
-        }
+        public string Suffix { get; }
 
         /// <summary>
         /// e.g. "www.abc.blogs.co.uk" returns "uk"
         /// </summary>
-        public string Tld
-        {
-            get { return tld; }
-        }
+        public string Tld { get; }
 
         /// <summary>
         /// e.g. "www.abc.blogs.co.uk" returns "blogs.co.uk"
         /// </summary>
-        public string Domain
-        {
-            get { return domain; }
-        }
+        public string Domain { get; }
 
         /// <summary>
         /// e.g. "www.abc.blogs.co.uk" returns "blogs"
         /// </summary>
-        public string DomainName
-        {
-            get { return domainName; }
-        }
+        public string DomainName { get; }
 
         /// <summary>
         /// e.g. "www.abc.blogs.co.uk" returns "www.abc.blogs.co.uk"
         /// </summary>
-        public string FullDomain
-        {
-            get { return fullDomain; }
-        }
+        public string FullDomain { get; }
 
         /// <summary>
         /// e.g. "www.abc.blogs.co.uk" returns "abc.blogs.com"
@@ -73,7 +51,7 @@ namespace SystemPlus.Net
         {
             get
             {
-                string d = fullDomain;
+                string d = FullDomain;
                 return Regex.Replace(d, @"^www?[0-9]?\.", "", RegexOptions.IgnoreCase);
             }
         }

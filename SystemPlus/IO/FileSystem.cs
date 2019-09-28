@@ -7,6 +7,9 @@ using System.Text.RegularExpressions;
 
 namespace SystemPlus.IO
 {
+    /// <summary>
+    /// Helpers for the file system
+    /// </summary>
     public static class FileSystem
     {
         /// <summary>

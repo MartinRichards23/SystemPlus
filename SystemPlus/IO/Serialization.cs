@@ -10,6 +10,9 @@ using System.Xml.Serialization;
 
 namespace SystemPlus.IO
 {
+    /// <summary>
+    /// Helpers for serialization
+    /// </summary>
     public static class Serialization
     {
         #region Xml

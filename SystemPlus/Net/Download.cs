@@ -8,6 +8,9 @@ using SystemPlus.Text;
 
 namespace SystemPlus.Net
 {
+    /// <summary>
+    /// Helpers for making web requests
+    /// </summary>
     public static class Download
     {
         public static HttpWebRequest MakeHttpWebRequest(string url)

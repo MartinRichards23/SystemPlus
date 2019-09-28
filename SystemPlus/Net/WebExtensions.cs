@@ -8,7 +8,10 @@ using SystemPlus.IO;
 
 namespace SystemPlus.Net
 {
-    public static class Extensions
+    /// <summary>
+    /// Extension methods for web related classes
+    /// </summary>
+    public static class WebExtensions
     {
         public static HttpWebResponse GetHttpResponse(this HttpWebRequest request)
         {

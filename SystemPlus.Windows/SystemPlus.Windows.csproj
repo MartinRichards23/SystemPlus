@@ -1,124 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B7B73BE0-D18F-4B46-8872-907D89CB6FB9}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SystemPlus.Windows</RootNamespace>
-    <AssemblyName>SystemPlus.Windows</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <ProjectReference Include="..\SystemPlus\SystemPlus.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="ClipboardTools.cs" />
-    <Compile Include="Collections\ObservableCollectionPlus.cs" />
-    <Compile Include="Collections\ObservableKeyedCollection.cs" />
-    <Compile Include="Collections\ObservableSortedKeyedCollection.cs" />
-    <Compile Include="Controls\AnimationHelper.cs" />
-    <Compile Include="Controls\BrowserBehaviour.cs" />
-    <Compile Include="Controls\MyVirtualizingStackPanel.cs" />
-    <Compile Include="Controls\NumericUpDown.xaml.cs">
-      <DependentUpon>NumericUpDown.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ProgressDlg.xaml.cs">
-      <DependentUpon>ProgressDlg.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ProgressTokenDlg.xaml.cs">
-      <DependentUpon>ProgressTokenDlg.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TextBoxWatermarked.cs" />
-    <Compile Include="Controls\ZoomableImage.cs" />
-    <Compile Include="Converters\BitmapToImageConverter.cs" />
-    <Compile Include="Converters\BoolToDoubleConverter.cs" />
-    <Compile Include="Converters\BoolToVisConverter.cs" />
-    <Compile Include="Converters\ColorToBrushConverter.cs" />
-    <Compile Include="Converters\DateTimeOffsetToDateTimeConverter.cs" />
-    <Compile Include="Converters\DoubleIntConverter.cs" />
-    <Compile Include="Converters\EnumerationMemberConverter.cs" />
-    <Compile Include="Converters\EnumToBooleanConverter.cs" />
-    <Compile Include="Converters\InverseBoolConverter.cs" />
-    <Compile Include="Converters\NullStringToVisConverter.cs" />
-    <Compile Include="Converters\NullValueConverter.cs" />
-    <Compile Include="Converters\TimeSpanToStringConverter.cs" />
-    <Compile Include="DrawingCanvas.cs" />
-    <Compile Include="EnumerationExtension.cs" />
-    <Compile Include="ErrorMessageBox.cs" />
-    <Compile Include="ExtensionsMethods.cs" />
-    <Compile Include="IconInfo.cs" />
-    <Compile Include="Media\BrushCache.cs" />
-    <Compile Include="Media\ColourTools.cs" />
-    <Compile Include="Media\DrawingExtensions.cs" />
-    <Compile Include="Media\GridMaker.cs" />
-    <Compile Include="Media\ImageTools.cs" />
-    <Compile Include="Media\LegacyImageTools.cs" />
-    <Compile Include="Media\PointMaker.cs" />
-    <Compile Include="Media\SpiralMaker.cs" />
-    <Compile Include="MenuItemCollection.cs" />
-    <Compile Include="MessageBoxTools.cs" />
-    <Compile Include="NativeMethods.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceBase.cs" />
-    <Compile Include="Security\Extensions.cs" />
-    <Compile Include="SingleWindowManager.cs" />
-    <Compile Include="Threading\BatchInvoker.cs" />
-    <Compile Include="Tools.cs" />
-    <Compile Include="VectorTools.cs" />
-    <Compile Include="VisualTreeHelpers.cs" />
-    <Compile Include="WindowBehavior.cs" />
+    <Folder Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\NumericUpDown.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ProgressDlg.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ProgressTokenDlg.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>

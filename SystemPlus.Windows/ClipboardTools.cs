@@ -38,37 +38,37 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Gets the image from the IDataObject object
         /// </summary>
-        public static BitmapSource GetImage(this IDataObject data)
-        {
-            //string[] a = data.GetFormats();
+        //public static BitmapSource GetImage(this IDataObject data)
+        //{
+        //    //string[] a = data.GetFormats();
 
-            //if (data.GetDataPresent(typeof(BitmapSource)))
-            {
-                BitmapSource bms = data.GetData(typeof(BitmapSource)) as BitmapSource;
+        //    //if (data.GetDataPresent(typeof(BitmapSource)))
+        //    {
+        //        BitmapSource bms = data.GetData(typeof(BitmapSource)) as BitmapSource;
 
-                if (bms != null)
-                    return bms;
-            }
+        //        if (bms != null)
+        //            return bms;
+        //    }
 
-            if (data.GetDataPresent(DataFormats.Dib, true))
-            {
-                using (MemoryStream ms = (MemoryStream)data.GetData(DataFormats.Dib))
-                {
-                    byte[] dib = ms.ToArray();
-                    BitmapSource bms = LegacyImageTools.BitmapSourceFromDib(dib);
+        //    if (data.GetDataPresent(DataFormats.Dib, true))
+        //    {
+        //        using (MemoryStream ms = (MemoryStream)data.GetData(DataFormats.Dib))
+        //        {
+        //            byte[] dib = ms.ToArray();
+        //            BitmapSource bms = LegacyImageTools.BitmapSourceFromDib(dib);
 
-                    if (bms != null)
-                        return bms;
-                }
-            }
+        //            if (bms != null)
+        //                return bms;
+        //        }
+        //    }
 
-            if (data.GetDataPresent(DataFormats.Bitmap, true))
-            {
-                InteropBitmap bmp = data.GetData(DataFormats.Bitmap) as InteropBitmap;
-                return bmp;
-            }
+        //    if (data.GetDataPresent(DataFormats.Bitmap, true))
+        //    {
+        //        InteropBitmap bmp = data.GetData(DataFormats.Bitmap) as InteropBitmap;
+        //        return bmp;
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
     }
 }

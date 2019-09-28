@@ -63,7 +63,7 @@ namespace SystemPlus.Windows.Controls
             DateTime now = DateTime.Now;
             timeSpan = now - startTime;
 
-            txtTime.Text = DateTimeExtensions.FormatTimeSpan(timeSpan);
+            txtTime.Text = TimeSpanExtensions.FormatTimeSpan(timeSpan);
         }
 
         public string Status

@@ -10,7 +10,7 @@ namespace SystemPlus.Windows.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             TimeSpan ts = (TimeSpan)value;
-            return DateTimeExtensions.FormatTimeSpan(ts);
+            return TimeSpanExtensions.FormatTimeSpan(ts);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

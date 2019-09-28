@@ -7,6 +7,9 @@ namespace SystemPlus.ComponentModel
     public interface IProgressToken : INotifyPropertyChanged
     {
         event ProgressTokenCancelledHandler Cancelled;
+
+        #region Properties
+
         CancellationToken CancelToken { get; }
 
         /// <summary>
@@ -37,6 +40,10 @@ namespace SystemPlus.ComponentModel
         ProgressTokenState State { get; set; }
         DateTime StartTime { get; }
 
+        #endregion
+
+        #region Private methods
+
         void UpdateStatus(string status, params object[] args);
         void UpdateProgress(double value, double max);
 
@@ -63,5 +70,7 @@ namespace SystemPlus.ComponentModel
         void HandleError(Exception ex);
 
         void Dispose();
+
+        #endregion
     }
 }

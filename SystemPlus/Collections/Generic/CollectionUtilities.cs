@@ -2,6 +2,9 @@
 
 namespace SystemPlus.Collections.Generic
 {
+    /// <summary>
+    /// Collection utilities
+    /// </summary>
     public static class CollectionUtilities
     {
         /// <summary>

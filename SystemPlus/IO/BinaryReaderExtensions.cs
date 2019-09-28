@@ -6,7 +6,7 @@ namespace SystemPlus.IO
     /// <summary>
     /// Extends the BinaryReader to read big endian numbers, EB and ibm floating points
     /// </summary>
-    public static class BinaryReaderExts
+    public static class BinaryReaderExtensions
     {
         /// <summary>
         /// Reads a big endian 2-byte singed integer from the current stream and advances the current position of the stream by 2 bytes.

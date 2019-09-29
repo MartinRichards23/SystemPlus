@@ -4,6 +4,9 @@ using System.Windows;
 
 namespace SystemPlus.Windows
 {
+    /// <summary>
+    /// Tools for working with Point and Rect
+    /// </summary>
     public static class VectorTools
     {
         /// <summary>

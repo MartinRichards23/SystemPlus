@@ -6,6 +6,9 @@ using SystemPlus.Windows.Media;
 
 namespace SystemPlus.Windows.Controls
 {
+    /// <summary>
+    /// A TextBox with a Watermark property
+    /// </summary>
     public class TextBoxWatermarked : TextBox
     {
         public static readonly DependencyProperty WaterMarkProperty = DependencyProperty.Register("Watermark", typeof(string), typeof(TextBoxWatermarked), new PropertyMetadata(OnWatermarkChanged));

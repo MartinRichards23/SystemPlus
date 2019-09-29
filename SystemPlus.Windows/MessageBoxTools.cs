@@ -12,13 +12,13 @@ namespace SystemPlus.Windows
 
         public static MessageBoxResult InvokeShow(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult)
         {
-            Func<MessageBoxResult> f = delegate
+            MessageBoxResult f()
             {
                 if (Application.Current?.MainWindow != null)
                     return MessageBox.Show(Application.Current.MainWindow, messageBoxText, caption, button, icon, defaultResult);
 
                 return MessageBox.Show(messageBoxText, caption, button, icon, defaultResult);
-            };
+            }
 
             if (Application.Current != null)
             {

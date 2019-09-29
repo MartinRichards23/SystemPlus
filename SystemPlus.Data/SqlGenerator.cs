@@ -43,7 +43,7 @@ namespace SystemPlus.Data
                 tables.Add(table);
             }
         }
-        
+
         public void WriteDatabaseClass(TextWriter tw)
         {
             tw.WriteLine("using System;");

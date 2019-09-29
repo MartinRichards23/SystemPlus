@@ -9,7 +9,7 @@ namespace SystemPlus.Windows.Media
     {
         protected Pointmaker(Point origin)
         {
-            this.Origin = origin;
+            Origin = origin;
         }
 
         protected Point Origin { get; }

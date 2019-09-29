@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using SystemPlus.Web.Email;
-using Microsoft.Extensions.Logging;
 
 namespace SystemPlus.Web.Logging
 {
     public class EmailLoggerProvider : ILoggerProvider
     {
-        IEmailSender emailer;
-        string address;
+        readonly IEmailSender emailer;
+        readonly string address;
 
         public EmailLoggerProvider(IEmailSender emailer, string address)
         {
@@ -30,8 +28,8 @@ namespace SystemPlus.Web.Logging
 
     class EmailLogger : ILogger
     {
-        IEmailSender emailer;
-        string address;
+        readonly IEmailSender emailer;
+        readonly string address;
 
         public EmailLogger(IEmailSender emailer, string address)
         {

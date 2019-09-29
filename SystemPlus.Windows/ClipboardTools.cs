@@ -1,8 +1,5 @@
-﻿using System.IO;
-using System.Windows;
-using System.Windows.Interop;
+﻿using System.Windows;
 using System.Windows.Media.Imaging;
-using SystemPlus.Windows.Media;
 
 namespace SystemPlus.Windows
 {

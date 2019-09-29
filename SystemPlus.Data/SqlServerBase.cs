@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SystemPlus.Data
 {
@@ -22,7 +22,7 @@ namespace SystemPlus.Data
         /// <summary>
         /// Gets an open SqlConnection
         /// </summary>
-        public async virtual Task<SqlConnection> GetConnectionAsync(CancellationToken token)
+        public virtual async Task<SqlConnection> GetConnectionAsync(CancellationToken token)
         {
             SqlConnection cn = new SqlConnection(ConString);
             await cn.OpenAsync(token);

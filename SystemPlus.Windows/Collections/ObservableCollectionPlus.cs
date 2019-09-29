@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -116,27 +115,27 @@ namespace SystemPlus.Windows.Collections
 
         protected override void InsertItem(int index, T item)
         {
-            Dispatcher.Invoke((Action)(() => base.InsertItem(index, item)));
+            Dispatcher.Invoke(() => base.InsertItem(index, item));
         }
 
         protected override void SetItem(int index, T item)
         {
-            Dispatcher.Invoke((Action)(() => base.SetItem(index, item)));
+            Dispatcher.Invoke(() => base.SetItem(index, item));
         }
 
         protected override void MoveItem(int oldIndex, int newIndex)
         {
-            Dispatcher.Invoke((Action)(() => base.MoveItem(oldIndex, newIndex)));
+            Dispatcher.Invoke(() => base.MoveItem(oldIndex, newIndex));
         }
 
         protected override void RemoveItem(int index)
         {
-            Dispatcher.Invoke((Action)(() => base.RemoveItem(index)));
+            Dispatcher.Invoke(() => base.RemoveItem(index));
         }
 
         protected override void ClearItems()
         {
-            Dispatcher.Invoke((Action)(() => base.ClearItems()));
+            Dispatcher.Invoke(() => base.ClearItems());
         }
 
         #endregion

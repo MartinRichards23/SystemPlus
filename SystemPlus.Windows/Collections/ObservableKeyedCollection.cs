@@ -80,12 +80,12 @@ namespace SystemPlus.Windows.Collections
 
         public void InvokeAdd(TItem item)
         {
-            Dispatcher.Invoke((Action)(() => Add(item)));
+            Dispatcher.Invoke(() => Add(item));
         }
 
         public void InvokeAddRange(IEnumerable<TItem> items)
         {
-            Dispatcher.Invoke((Action)(() => AddRange(items)));
+            Dispatcher.Invoke(() => AddRange(items));
         }
 
         public void InvokeRemove(TItem item)
@@ -100,7 +100,7 @@ namespace SystemPlus.Windows.Collections
 
         public void InvokeClear()
         {
-            Dispatcher.Invoke((Action)(Clear));
+            Dispatcher.Invoke(Clear);
         }
 
         public virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs arg)

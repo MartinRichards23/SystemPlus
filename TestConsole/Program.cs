@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace TestConsole
 {
@@ -8,7 +7,7 @@ namespace TestConsole
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            
+
         }
 
         readonly struct VectorStruct
@@ -21,7 +20,7 @@ namespace TestConsole
         {
             Span<VectorStruct> vectors = stackalloc VectorStruct[5];
 
-            foreach(var v in vectors)
+            foreach (VectorStruct v in vectors)
             {
             }
         }

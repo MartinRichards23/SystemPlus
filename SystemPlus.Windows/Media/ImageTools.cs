@@ -7,14 +7,14 @@ using SystemPlus.IO;
 namespace SystemPlus.Windows.Media
 {
     /// <summary>
-    /// Functions for working with bitmaps
+    /// Tools and extensions methods for working with bitmaps
     /// </summary>
     public static class ImageTools
     {
         /// <summary>
         /// Writes the bitmap to a stream
         /// </summary>
-        public static void Write(BitmapSource bms, BitmapEncoder encoder, Stream stream)
+        public static void Write(this BitmapSource bms, BitmapEncoder encoder, Stream stream)
         {
             BitmapFrame bmf = BitmapFrame.Create(bms);
             encoder.Frames.Add(bmf);
@@ -24,7 +24,7 @@ namespace SystemPlus.Windows.Media
         /// <summary>
         /// Writes a bitmap to the given filepath
         /// </summary>
-        public static void Write(BitmapSource bms, BitmapEncoder encoder, string path)
+        public static void Write(this BitmapSource bms, BitmapEncoder encoder, string path)
         {
             // make sure directory exists
             string dir = Path.GetDirectoryName(Path.GetFullPath(path));
@@ -40,7 +40,7 @@ namespace SystemPlus.Windows.Media
         /// <summary>
         /// Gets the bytes of the bitmap in the given encoding
         /// </summary>
-        public static byte[] Write(BitmapSource bms, BitmapEncoder encoder)
+        public static byte[] Write(this BitmapSource bms, BitmapEncoder encoder)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -89,7 +89,7 @@ namespace SystemPlus.Windows.Media
         /// <summary>
         /// Creates a copy of the bitmap at the given size
         /// </summary>
-        public static BitmapSource Resize(BitmapSource source, int width, int height)
+        public static BitmapSource Resize(this BitmapSource source, int width, int height)
         {
             Rect rect = new Rect(0, 0, width, height);
 
@@ -116,7 +116,7 @@ namespace SystemPlus.Windows.Media
         /// <summary>
         /// Creates a copy of the bitmap at the given size, maintains aspect ratio
         /// </summary>
-        public static BitmapSource Resize(BitmapSource bms, int length, bool isWidth)
+        public static BitmapSource Resize(this BitmapSource bms, int length, bool isWidth)
         {
             if (isWidth)
             {
@@ -137,7 +137,7 @@ namespace SystemPlus.Windows.Media
         /// <summary>
         /// Creates a copy of the bitmap with the given format
         /// </summary>
-        public static FormatConvertedBitmap ChangeFormat(BitmapSource bms, PixelFormat newFormat)
+        public static FormatConvertedBitmap ChangeFormat(this BitmapSource bms, PixelFormat newFormat)
         {
             FormatConvertedBitmap newBitmap = new FormatConvertedBitmap();
             newBitmap.BeginInit();
@@ -151,7 +151,7 @@ namespace SystemPlus.Windows.Media
         /// <summary>
         /// Gets the raw bytes of the bitmap
         /// </summary>
-        public static byte[] BitmapSourceToRawBytes(BitmapSource bms)
+        public static byte[] ToRawBytes(this BitmapSource bms)
         {
             int bytesPerPixel = bms.Format.BitsPerPixel / 8;
 
@@ -175,18 +175,11 @@ namespace SystemPlus.Windows.Media
             return renderBitmap;
         }
 
-        public static byte[] ClipSize(byte[] imageData, int maxWidth, int maxHeight)
-        {
-            return ClipSize(imageData, maxWidth, maxHeight, new PngBitmapEncoder() { });
-        }
-
         /// <summary>
         /// Create a smaller version of the given image
         /// </summary>
-        public static byte[] ClipSize(byte[] imageData, int maxWidth, int maxHeight, BitmapEncoder encoder)
+        public static byte[] ClipSize(this BitmapSource bms, int maxWidth, int maxHeight, BitmapEncoder encoder)
         {
-            BitmapSource bms = ImageTools.Read(imageData);
-
             if (bms.PixelWidth > maxWidth || bms.PixelHeight > maxHeight)
             {
                 // if too wide then resize
@@ -202,7 +195,7 @@ namespace SystemPlus.Windows.Media
                 }
             }
 
-            return ImageTools.Write(bms, encoder);
+            return Write(bms, encoder);
         }
 
         /// <summary>

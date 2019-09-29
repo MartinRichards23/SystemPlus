@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Interop;
-using SystemPlus.Windows.NativeUtilities;
 
 namespace SystemPlus.Windows
 {
@@ -27,8 +26,7 @@ namespace SystemPlus.Windows
 
         static void HideCloseButtonChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Window window = d as Window;
-            if (window == null)
+            if (!(d is Window window))
                 return;
 
             bool hideCloseButton = (bool)e.NewValue;

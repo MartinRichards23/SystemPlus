@@ -4,16 +4,16 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using SystemPlus.Windows.NativeUtilities;
+using SystemPlus.Windows;
 using Drawing = System.Drawing;
 
 namespace SystemPlus.Windows.Media
 {
-    /// <summary>
-    /// Functions for working with bitmaps
-    /// </summary>
-    public static class LegacyImageTools
-    {
+    ///// <summary>
+    ///// Functions for working with bitmaps
+    ///// </summary>
+    //public static class LegacyImageTools
+    //{
         ///// <summary>
         ///// Gets a bitmapsource from Device independent bitmap data
         ///// </summary>
@@ -97,5 +97,5 @@ namespace SystemPlus.Windows.Media
         //        return ms.ToArray();
         //    }
         //}
-    }
+    //}
 }

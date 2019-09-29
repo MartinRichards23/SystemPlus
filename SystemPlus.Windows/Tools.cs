@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Interop;
-using static SystemPlus.Windows.NativeUtilities.NativeMethods;
+using static SystemPlus.Windows.NativeMethods;
 
 namespace SystemPlus.Windows
 {

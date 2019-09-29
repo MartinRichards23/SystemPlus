@@ -56,6 +56,8 @@ namespace SystemPlus.Windows.Collections
 
         #endregion
 
+        #region Public methods
+
         /// <summary>
         /// Suspends CollectionChanged events
         /// </summary>
@@ -101,6 +103,32 @@ namespace SystemPlus.Windows.Collections
             Dispatcher.Invoke((Action)(Clear));
         }
 
+        public virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs arg)
+        {
+            if (IsSuspended)
+                return;
+
+            CollectionChanged?.Invoke(this, arg);
+        }
+
+        public override void Sort()
+        {
+            base.Sort();
+
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
+        public override void Sort(Comparison<TItem> comparer)
+        {
+            base.Sort(comparer);
+
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
+        #endregion
+
+        #region Protected methods
+
         protected override void InsertItem(int index, TItem item)
         {
             base.InsertItem(index, item);
@@ -126,34 +154,12 @@ namespace SystemPlus.Windows.Collections
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
-        public virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs arg)
-        {
-            if (IsSuspended)
-                return;
-
-            if (CollectionChanged != null)
-                CollectionChanged(this, arg);
-        }
-
         protected virtual void OnPropertyChanged(string name)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public override void Sort()
-        {
-            base.Sort();
-
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-        }
-
-        public override void Sort(Comparison<TItem> comparer)
-        {
-            base.Sort(comparer);
-
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-        }
+        #endregion
     }
 
     [Serializable]

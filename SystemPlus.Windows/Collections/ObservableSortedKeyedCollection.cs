@@ -9,18 +9,12 @@ namespace SystemPlus.Windows.Collections
     /// </summary>
     public abstract class ObservableSortedKeyedCollection<TKey, TItem> : ObservableKeyedCollection<TKey, TItem>
     {
-        IComparer<TItem> itemComparer;
-
         protected virtual IComparer<TKey> KeyComparer
         {
             get { return Comparer<TKey>.Default; }
         }
 
-        public IComparer<TItem> ItemComparer
-        {
-            get { return itemComparer; }
-            set { itemComparer = value; }
-        }
+        public IComparer<TItem> ItemComparer { get; set; }
 
         protected override void InsertItem(int index, TItem item)
         {
@@ -31,9 +25,9 @@ namespace SystemPlus.Windows.Collections
                 TItem retrievedItem = this[i];
 
                 // if item is icomparable then use that, otherwise sort by key
-                if (itemComparer != null)
+                if (ItemComparer != null)
                 {
-                    int val = itemComparer.Compare(item, retrievedItem);
+                    int val = ItemComparer.Compare(item, retrievedItem);
 
                     if (val < 0)
                     {

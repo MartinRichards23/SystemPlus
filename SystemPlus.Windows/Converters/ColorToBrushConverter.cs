@@ -6,6 +6,9 @@ using SystemPlus.Windows.Media;
 
 namespace SystemPlus.Windows.Converters
 {
+    /// <summary>
+    /// Converts Color to a SolidColorBrush
+    /// </summary>
     [ValueConversion(typeof(Color), typeof(SolidColorBrush))]
     public class ColorToBrushConverter : IValueConverter
     {

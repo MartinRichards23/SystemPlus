@@ -4,6 +4,9 @@ using System.Windows.Data;
 
 namespace SystemPlus.Windows.Converters
 {
+    /// <summary>
+    /// Converts a Double to Int
+    /// </summary>
     [ValueConversion(typeof(int), typeof(double))]
     public class DoubleIntConverter : IValueConverter
     {

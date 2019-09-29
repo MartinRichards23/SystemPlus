@@ -6,23 +6,14 @@ using System.Windows.Media.Imaging;
 
 namespace SystemPlus.Windows.Converters
 {
+    /// <summary>
+    /// Converts BitmapSource to an Image
+    /// </summary>
     [ValueConversion(typeof(BitmapSource), typeof(Image))]
     public class BitmapToImageConverter : IValueConverter
     {
-        double width = -1;
-        double height = -1;
-
-        public double Width
-        {
-            get { return width; }
-            set { width = value; }
-        }
-
-        public double Height
-        {
-            get { return height; }
-            set { height = value; }
-        }
+        public double Width { get; set; } = -1;
+        public double Height { get; set; } = -1;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -5,7 +5,7 @@ using System.Windows.Data;
 namespace SystemPlus.Windows.Converters
 {
     /// <summary>
-    /// Converts a uri to a bitmap from the resources
+    /// Converts a DateTime to DateTimeOffset
     /// </summary>
     [ValueConversion(typeof(DateTimeOffset), typeof(DateTime))]
     public class DateTimeOffsetToDateTimeConverter : IValueConverter

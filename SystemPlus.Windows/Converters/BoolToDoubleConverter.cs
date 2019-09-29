@@ -4,6 +4,9 @@ using System.Windows.Data;
 
 namespace SystemPlus.Windows.Converters
 {
+    /// <summary>
+    /// Converts Bool to a Double
+    /// </summary>
     [ValueConversion(typeof(bool), typeof(double))]
     public class BoolToDoubleConverter : IValueConverter
     {

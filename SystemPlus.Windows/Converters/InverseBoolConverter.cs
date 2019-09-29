@@ -4,6 +4,9 @@ using System.Windows.Data;
 
 namespace SystemPlus.Windows.Converters
 {
+    /// <summary>
+    /// Inverts a Boolean value
+    /// </summary>
     [ValueConversion(typeof(bool), typeof(bool))]
     public class InverseBoolConverter : IValueConverter
     {

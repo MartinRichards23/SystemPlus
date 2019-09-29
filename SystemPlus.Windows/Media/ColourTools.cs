@@ -4,14 +4,17 @@ using System.Windows.Media;
 
 namespace SystemPlus.Windows.Media
 {
+    /// <summary>
+    /// Colour tools and extensions
+    /// </summary>
     public static class ColourTools
     {
-        public static int Brightness(Color c)
+        public static int Brightness(this Color c)
         {
             return (int)Math.Sqrt(c.R * c.R * .241 + c.G * c.G * .691 + c.B * c.B * .068);
         }
 
-        public static Color AdjustBrightness(Color c, int change)
+        public static Color AdjustBrightness(this Color c, int change)
         {
             int r = c.R + change;
             int g = c.G + change;
@@ -20,12 +23,12 @@ namespace SystemPlus.Windows.Media
             return Color.FromArgb(c.A, (byte)r, (byte)g, (byte)b);
         }
 
-        public static string ColorToHtml(Color col)
+        public static string ColorToHtml(this Color col)
         {
             return string.Format("rgba({0},{1},{2},{3:f2})", col.R, col.G, col.B, col.ScA);
         }
 
-        public static string ColorToHexRgb(Color col)
+        public static string ColorToHexRgb(this Color col)
         {
             return string.Format("#{0:X2}{1:X2}{2:X2}", col.R, col.G, col.B);
         }
@@ -58,9 +61,17 @@ namespace SystemPlus.Windows.Media
             return Color.FromArgb(bytes[3], bytes[2], bytes[1], bytes[0]);
         }
 
-        public static int ColorToInt(Color input)
+        public static int ColorToInt(this Color input)
         {
             return BitConverter.ToInt32(new[] { input.B, input.G, input.R, input.A }, 0);
+        }
+
+        public static int? ColorToInt(this Color? input)
+        {
+            if (input == null)
+                return null;
+
+            return ColorToInt((Color)input);
         }
 
         public static Color? ColorFromInt(int? input)
@@ -69,14 +80,6 @@ namespace SystemPlus.Windows.Media
                 return null;
 
             return ColorFromInt((int)input);
-        }
-
-        public static int? ColorToInt(Color? input)
-        {
-            if (input == null)
-                return null;
-
-            return ColorToInt((Color)input);
         }
 
         public static Color[] GetHighlightColors()

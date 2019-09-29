@@ -8,15 +8,11 @@ using System.Windows.Threading;
 namespace SystemPlus.Windows.Collections
 {
     /// <summary>
-    /// An implementation of ObservableCollection that provides suspend and resume functionality
-    /// and can be updated from any thread
+    /// An implementation of ObservableCollection that provides suspend and resume functionality and can be updated from any thread
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ObservableCollectionPlus<T> : ObservableCollection<T>
     {
-        readonly Dispatcher dispatcher;
-        bool isSuspended;
-
         #region Constructors
 
         public ObservableCollectionPlus()
@@ -36,7 +32,7 @@ namespace SystemPlus.Windows.Collections
 
         public ObservableCollectionPlus(IEnumerable<T> collection, Dispatcher dispatcher)
         {
-            this.dispatcher = dispatcher;
+            Dispatcher = dispatcher;
 
             foreach (T item in collection)
             {
@@ -46,19 +42,18 @@ namespace SystemPlus.Windows.Collections
 
         #endregion
 
+        #region Properties
+
         /// <summary>
         /// Gets whether CollectionChanged events are currently suspended
         /// </summary>
-        public bool IsSuspended
-        {
-            get { return isSuspended; }
-            private set { isSuspended = value; }
-        }
+        public bool IsSuspended { get; private set; }
 
-        public Dispatcher Dispatcher
-        {
-            get { return dispatcher; }
-        }
+        public Dispatcher Dispatcher { get; }
+
+        #endregion
+
+        #region Public methods
 
         /// <summary>
         /// Suspends CollectionChanged events
@@ -100,6 +95,10 @@ namespace SystemPlus.Windows.Collections
             }
         }
 
+        #endregion
+
+        #region Protected methods
+
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (IsSuspended)
@@ -139,5 +138,7 @@ namespace SystemPlus.Windows.Collections
         {
             Dispatcher.Invoke((Action)(() => base.ClearItems()));
         }
+
+        #endregion
     }
 }

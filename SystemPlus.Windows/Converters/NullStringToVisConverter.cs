@@ -5,6 +5,9 @@ using System.Windows.Data;
 
 namespace SystemPlus.Windows.Converters
 {
+    /// <summary>
+    /// Returns Visibility.Collapsed if the String is null
+    /// </summary>
     [ValueConversion(typeof(string), typeof(Visibility))]
     public class NullStringToVisConverter : IValueConverter
     {

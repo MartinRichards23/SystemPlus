@@ -5,7 +5,7 @@ namespace SystemPlus.Windows.Media
 {
     /// <summary>
     /// Caches SolidColorBrushes
-    /// Only use when the same colour brush is created repeatedly
+    /// Use when the same colour brush is created repeatedly
     /// </summary>
     public static class BrushCache
     {

@@ -4,6 +4,9 @@ using System.Windows.Data;
 
 namespace SystemPlus.Windows.Converters
 {
+    /// <summary>
+    /// Converts TimeSpan to a string
+    /// </summary>
     [ValueConversion(typeof(TimeSpan), typeof(string))]
     public class TimeSpanToStringConverter : IValueConverter
     {

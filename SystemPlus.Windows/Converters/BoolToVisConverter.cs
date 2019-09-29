@@ -5,6 +5,9 @@ using System.Windows.Data;
 
 namespace SystemPlus.Windows.Converters
 {
+    /// <summary>
+    /// Converts Bool to a Visibility
+    /// </summary>
     [ValueConversion(typeof(bool), typeof(Visibility))]
     public class BoolToVisConverter : IValueConverter
     {

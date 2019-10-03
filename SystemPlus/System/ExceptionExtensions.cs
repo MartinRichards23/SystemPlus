@@ -95,7 +95,7 @@ namespace SystemPlus
             if (obj is T)
                 return (T)obj;
 
-            return default(T);
+            return default;
         }
     }
 }

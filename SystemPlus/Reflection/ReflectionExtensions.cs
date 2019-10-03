@@ -94,7 +94,7 @@ namespace SystemPlus.Reflection
             object[] attributes = assembly.GetCustomAttributes(typeof(T), false);
 
             if (attributes.Length == 0)
-                return default(T);
+                return default;
 
             return (T)attributes[0];
         }

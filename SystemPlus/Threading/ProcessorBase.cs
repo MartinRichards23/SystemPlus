@@ -147,7 +147,7 @@ namespace SystemPlus.Threading
             {
                 if (CancelToken.IsCancellationRequested)
                 {
-                    item = default(T);
+                    item = default;
                     return false;
                 }
 

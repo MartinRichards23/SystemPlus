@@ -33,7 +33,7 @@ namespace SystemPlus.Collections.Generic
                 return value;
             }
 
-            return default(TValue);
+            return default;
         }
 
         /// <summary>

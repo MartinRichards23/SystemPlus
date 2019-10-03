@@ -9,8 +9,12 @@ namespace SystemPlus.Web.Google
     /// </summary>
     public class ReCatchpa
     {
-        static readonly string publicKey = "6LcGaXcUAAAAAIu-q5r7cGVV8FabLW6eccGaYuzy";
-        static readonly string privateKey = "6LcGaXcUAAAAAN-WuAz3KLhPQz1cnjMFGwHB53d7";
+        readonly string privateKey;
+
+        public ReCatchpa(string privateKey)
+        {
+            this.privateKey = privateKey;
+        }
 
         public bool Validate(string response)
         {

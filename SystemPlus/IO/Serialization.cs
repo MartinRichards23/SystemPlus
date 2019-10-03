@@ -97,7 +97,7 @@ namespace SystemPlus.IO
 
         #region DataContract
 
-        public static void DataSerialize<T>(T obj, Stream stream, XmlWriterSettings settings = null, IEnumerable<Type> knownTypes = null)
+        public static void DataSerialize<T>(T obj, Stream stream, XmlWriterSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), knownTypes);
 
@@ -107,7 +107,7 @@ namespace SystemPlus.IO
             }
         }
 
-        public static void DataSerialize<T>(T obj, TextWriter output, XmlWriterSettings settings = null, IEnumerable<Type> knownTypes = null)
+        public static void DataSerialize<T>(T obj, TextWriter output, XmlWriterSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), knownTypes);
 
@@ -117,7 +117,7 @@ namespace SystemPlus.IO
             }
         }
 
-        public static void DataSerialize<T>(T obj, FileInfo file, XmlWriterSettings settings = null)
+        public static void DataSerialize<T>(T obj, FileInfo file, XmlWriterSettings? settings = null)
         {
             if (!file.Directory.Exists)
                 file.Directory.Create();
@@ -128,7 +128,7 @@ namespace SystemPlus.IO
             }
         }
 
-        public static string DataSerialize<T>(T obj, XmlWriterSettings settings = null)
+        public static string DataSerialize<T>(T obj, XmlWriterSettings? settings = null)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -142,7 +142,7 @@ namespace SystemPlus.IO
             }
         }
 
-        public static T DataDeserialize<T>(Stream stream, XmlReaderSettings settings = null, IEnumerable<Type> knownTypes = null)
+        public static T DataDeserialize<T>(Stream stream, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), knownTypes);
 
@@ -152,7 +152,7 @@ namespace SystemPlus.IO
             }
         }
 
-        public static T DataDeserialize<T>(TextReader input, XmlReaderSettings settings = null, IEnumerable<Type> knownTypes = null)
+        public static T DataDeserialize<T>(TextReader input, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), knownTypes);
             
@@ -162,7 +162,7 @@ namespace SystemPlus.IO
             }
         }
 
-        public static T DataDeserialize<T>(string data, XmlReaderSettings settings = null, IEnumerable<Type> knownTypes = null)
+        public static T DataDeserialize<T>(string data, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(data);
             using (MemoryStream mem = new MemoryStream(bytes))
@@ -171,7 +171,7 @@ namespace SystemPlus.IO
             }
         }
 
-        public static T DataDeserialize<T>(FileInfo file, XmlReaderSettings settings = null, IEnumerable<Type> knownTypes = null)
+        public static T DataDeserialize<T>(FileInfo file, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
             using (FileStream fs = File.OpenRead(file.FullName))
             {
@@ -183,13 +183,13 @@ namespace SystemPlus.IO
 
         #region Json
 
-        public static void JsonSerialize<T>(T obj, Stream data, IEnumerable<Type> knownTypes = null) where T : class, new()
+        public static void JsonSerialize<T>(T obj, Stream data, IEnumerable<Type>? knownTypes = null) where T : class, new()
         {
             DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(T), knownTypes);
             json.WriteObject(data, obj);
         }
 
-        public static string JsonSerialize<T>(T obj, IEnumerable<Type> knownTypes = null) where T : class, new()
+        public static string JsonSerialize<T>(T obj, IEnumerable<Type>? knownTypes = null) where T : class, new()
         {
             using (MemoryStream ms = new MemoryStream())
             using (StreamReader sr = new StreamReader(ms))

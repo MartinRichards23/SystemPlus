@@ -101,7 +101,7 @@ namespace SystemPlus.Collections.Generic
             if (list.Count > 0)
                 return list.TakeLast();
 
-            return default(T);
+            return default;
         }
 
         /// <summary>

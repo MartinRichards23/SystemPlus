@@ -59,7 +59,7 @@ namespace SystemPlus.Threading
         {
             items = baseCollection;
             MaxThreads = maxThreads;
-            CancelToken = cancelToken;
+            this.CancelToken = cancelToken;
         }
 
         #endregion

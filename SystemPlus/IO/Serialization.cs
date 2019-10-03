@@ -155,7 +155,7 @@ namespace SystemPlus.IO
         public static T DataDeserialize<T>(TextReader input, XmlReaderSettings settings = null, IEnumerable<Type> knownTypes = null)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), knownTypes);
-
+            
             using (XmlReader reader = XmlReader.Create(input, settings))
             {
                 return (T)serializer.ReadObject(reader);

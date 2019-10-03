@@ -130,7 +130,7 @@ namespace SystemPlus.Text
             else
                 end = value.IndexOf(before, start, comparisonType) + after.Length + 1;
 
-            return value.Substring(start, end - start);
+            return value[start..end];
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static bool IsInt(this string value)
         {
-            return long.TryParse(value, out long dummy);
+            return long.TryParse(value, out _);
         }
 
         public static int ToInt(this string value, int defaultValue)

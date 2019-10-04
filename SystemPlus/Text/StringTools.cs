@@ -198,7 +198,7 @@ namespace SystemPlus.Text
         public static string JoinIgnoreNulls<T>(string separator, params T[] values)
         {
             if (values == null)
-                return null;
+                return string.Empty;
 
             return string.Join(separator, values.Where(s => s != null));
         }
@@ -206,7 +206,7 @@ namespace SystemPlus.Text
         public static string JoinIgnoreNulls<T>(string separator, IEnumerable<T> values)
         {
             if (values == null)
-                return null;
+                return string.Empty;
 
             return string.Join(separator, values.Where(s => s != null));
         }

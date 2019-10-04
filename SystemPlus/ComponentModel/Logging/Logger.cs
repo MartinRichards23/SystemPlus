@@ -14,11 +14,9 @@ namespace SystemPlus.ComponentModel.Logging
 
         readonly IList<ILogger> loggers = new List<ILogger>();
 
-        static readonly Logger defaultLog = new Logger();
+        public event Action<MessageLevel, string?, Exception?> MessageLogged;
 
-        public event Action<MessageLevel, string, Exception> MessageLogged;
-
-        Exception lastError;
+        Exception? lastError;
         DateTime lastErrorTime;
         readonly TimeSpan minErrorTime = TimeSpan.FromSeconds(30);
 
@@ -114,7 +112,7 @@ namespace SystemPlus.ComponentModel.Logging
         /// <summary>
         /// Record an error
         /// </summary>
-        public void LogError(Exception error)
+        public void LogError(Exception? error)
         {
             LogError(null, error);
         }
@@ -122,7 +120,7 @@ namespace SystemPlus.ComponentModel.Logging
         /// <summary>
         /// Record an error message
         /// </summary>
-        public void LogError(string message)
+        public void LogError(string? message)
         {
             LogError(message, null);
         }
@@ -130,7 +128,7 @@ namespace SystemPlus.ComponentModel.Logging
         /// <summary>
         /// Record an error
         /// </summary>
-        public void LogError(string message, Exception error)
+        public void LogError(string? message, Exception? error)
         {
             if (error != null)
             {
@@ -190,7 +188,7 @@ namespace SystemPlus.ComponentModel.Logging
             OnMessageLogged(MessageLevel.Error, message, error);
         }
 
-        protected void OnMessageLogged(MessageLevel level, string message, Exception error)
+        protected void OnMessageLogged(MessageLevel level, string? message, Exception? error)
         {
             try
             {
@@ -219,10 +217,7 @@ namespace SystemPlus.ComponentModel.Logging
 
         #region Statics
 
-        public static Logger Default
-        {
-            get { return defaultLog; }
-        }
+        public static Logger Default { get; } = new Logger();
 
         #endregion
     }

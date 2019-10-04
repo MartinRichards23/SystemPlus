@@ -145,10 +145,8 @@ namespace SystemPlus.Net
 
             foreach (string url in urls)
             {
-                if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri uri))
-                    continue;
-
-                uris.Add(uri);
+                if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri? uri))
+                    uris.Add(uri);
             }
 
             return uris;

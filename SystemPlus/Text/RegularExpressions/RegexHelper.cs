@@ -9,7 +9,7 @@ namespace SystemPlus.Text.RegularExpressions
         /// <summary>
         /// Checks is a string is a valid regex
         /// </summary>
-        public static bool VerifyRegex(string pattern, out string error)
+        public static bool VerifyRegex(string pattern, out string? error)
         {
             try
             {

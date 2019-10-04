@@ -10,7 +10,7 @@ namespace SystemPlus.Collections.Generic
         /// <summary>
         /// Gets a value, returns default if no key
         /// </summary>
-        public static TValue TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue defaultValue = default(TValue))
+        public static TValue TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue defaultValue = default)
         {
             if (list.ContainsKey(key))
             {

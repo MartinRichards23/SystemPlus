@@ -332,11 +332,13 @@ namespace SystemPlus.Data
         void WriteGet(TextWriter tw, SqlTable table)
         {
             string methodName = string.Format("Get{0}", table.ClassName);
-            string parameters = null;
+            string parameters = string.Empty;
+
             foreach (SqlColumn col in table.PrimaryKeyColumns)
             {
                 parameters += string.Format("{0} {1},", col.PropertyTypeName, col.InstanceName);
             }
+
             parameters = parameters.Trim(',');
 
             tw.WriteLine("public {0} {1}({2})", table.ClassName, methodName, parameters);
@@ -507,11 +509,13 @@ namespace SystemPlus.Data
         void WriteDelete(TextWriter tw, SqlTable table)
         {
             string methodName = string.Format("Delete{0}", table.ClassName);
-            string parameters = null;
+            string parameters = string.Empty;
+
             foreach (SqlColumn col in table.PrimaryKeyColumns)
             {
                 parameters += string.Format("{0} {1},", col.PropertyTypeName, col.InstanceName);
             }
+
             parameters = parameters.Trim(',');
 
             tw.WriteLine("public void {0}({1})", methodName, parameters);

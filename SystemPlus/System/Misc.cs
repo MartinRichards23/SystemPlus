@@ -67,8 +67,8 @@ namespace SystemPlus
                 throw new ArgumentException(@"The type must be serializable.", "source");
 
             // Don't serialize a null object, simply return the default for that object 
-            if (ReferenceEquals(source, null))
-                return default(T);
+            if (source == null)
+                return default;
 
             IFormatter formatter = new BinaryFormatter();
 

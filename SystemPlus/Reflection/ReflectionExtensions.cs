@@ -35,53 +35,45 @@ namespace SystemPlus.Reflection
             get { return Assembly.GetCallingAssembly()?.Version(); }
         }
 
-        public static string Name(this Assembly assembly)
+        public static string? Name(this Assembly assembly)
         {
             return assembly?.GetName()?.Name;
         }
 
-        public static Version Version(this Assembly assembly)
+        public static Version? Version(this Assembly assembly)
         {
             return assembly?.GetName()?.Version;
         }
 
-        public static string AssemblyTitle
+        public static string? AssemblyTitle
         {
             get
             {
-                AssemblyTitleAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyTitleAttribute>();
-
-                return att?.Title;
+                return Assembly.GetEntryAssembly()?.GetAssemblyAttribute<AssemblyTitleAttribute>()?.Title;
             }
         }
 
-        public static string AssemblyFileVersion
+        public static string? AssemblyFileVersion
         {
             get
             {
-                AssemblyFileVersionAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyFileVersionAttribute>();
-
-                return att?.Version;
+                return Assembly.GetEntryAssembly()?.GetAssemblyAttribute<AssemblyFileVersionAttribute>()?.Version;
             }
         }
 
-        public static string AssemblyCopyright
+        public static string? AssemblyCopyright
         {
             get
             {
-                AssemblyCopyrightAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyCopyrightAttribute>();
-
-                return att?.Copyright;
+                return Assembly.GetEntryAssembly()?.GetAssemblyAttribute<AssemblyCopyrightAttribute>()?.Copyright;
             }
         }
 
-        public static string AssemblyCompany
+        public static string? AssemblyCompany
         {
             get
             {
-                AssemblyCompanyAttribute att = Assembly.GetEntryAssembly().GetAssemblyAttribute<AssemblyCompanyAttribute>();
-
-                return att?.Company;
+                return Assembly.GetEntryAssembly()?.GetAssemblyAttribute<AssemblyCompanyAttribute>()?.Company;
             }
         }
 

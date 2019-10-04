@@ -4,6 +4,9 @@ using SystemPlus.Collections.Generic;
 
 namespace SystemPlus.Text
 {
+    /// <summary>
+    /// Various algorithms for comparing strings
+    /// </summary>
     public static class StringDifference
     {
         /// <summary>
@@ -277,7 +280,7 @@ namespace SystemPlus.Text
             int last = Math.Min(4, s1.Length);
             for (; p < last && s1[p] == s2[p]; p++)
             {
-                score = score + ((p * (1 - score)) / 10);
+                score += ((p * (1 - score)) / 10);
             }
 
             return score;

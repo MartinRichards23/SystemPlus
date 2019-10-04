@@ -21,15 +21,15 @@ namespace SystemPlus.Web.Google
             if (string.IsNullOrWhiteSpace(response))
                 return false;
 
-            WebClient client = new WebClient();
+            using (WebClient client = new WebClient())
+            {
+                string googleReply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", privateKey, response));
 
-            string googleReply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", privateKey, response));
+                ReCaptchaClass captchaResponse = Serialization.JsonDeserialize<ReCaptchaClass>(googleReply);
 
-            ReCaptchaClass captchaResponse = Serialization.JsonDeserialize<ReCaptchaClass>(googleReply);
-
-            return captchaResponse.Success;
+                return captchaResponse.Success;
+            }
         }
-
     }
 
     [DataContract]
@@ -39,7 +39,7 @@ namespace SystemPlus.Web.Google
         public bool Success { get; set; }
 
         [DataMember(Name = "error-codes")]
-        public string ErrorCodes { get; set; }
+        public string? ErrorCodes { get; set; }
     }
 }
 

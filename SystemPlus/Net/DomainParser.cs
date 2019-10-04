@@ -144,45 +144,37 @@ namespace SystemPlus.Net
 
         sealed class UrlSuffix : IKeyed
         {
-            readonly string suffix;
-            readonly bool starred;
-
             public UrlSuffix(string suffix, bool starred)
             {
-                this.suffix = suffix;
-                this.starred = starred;
+                Key = suffix;
+                Starred = starred;
             }
 
-            public bool Starred
-            {
-                get { return starred; }
-            }
+            public bool Starred { get; }
+
+            public string Key { get; }
 
             public override bool Equals(object obj)
             {
                 // if parameter cannot be cast return false
-                UrlSuffix other = obj as UrlSuffix;
-                if (other == null)
-                    return false;
+                if (obj is UrlSuffix other)
+                {
+                    return Key == other.Key;
+                }
 
-                // return true if the fields match
-                return (suffix == other.suffix);
+                return false;
             }
 
             public override int GetHashCode()
             {
-                return suffix.GetHashCode();
+                return Key.GetHashCode();
             }
 
             public override string ToString()
             {
-                return suffix;
+                return Key;
             }
 
-            public string Key
-            {
-                get { return suffix; }
-            }
         }
     }
 }

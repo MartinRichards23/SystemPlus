@@ -23,7 +23,7 @@ namespace SystemPlus.ComponentModel
 
         public static string GetEnumDescription(object enumValue, Type enumType)
         {
-            FieldInfo field = enumType.GetField(enumValue.ToString());
+            FieldInfo? field = enumType.GetField(enumValue.ToString());
 
             if (field == null)
                 return enumValue.ToString();

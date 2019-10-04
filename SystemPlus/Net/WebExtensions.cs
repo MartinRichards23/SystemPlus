@@ -131,7 +131,7 @@ namespace SystemPlus.Net
                     rs.CopyTo(rawdata, 8000, maxLength);
                 }
 
-                string charset = GetCharSet(response.Headers);
+                string? charset = GetCharSet(response.Headers);
                 if (string.IsNullOrEmpty(charset))
                     charset = GetCharSetFromBody(rawdata);
 
@@ -144,9 +144,9 @@ namespace SystemPlus.Net
             }
         }
 
-        public static string GetCharSet(WebHeaderCollection headers)
+        public static string? GetCharSet(WebHeaderCollection headers)
         {
-            string charset = null;
+            string? charset = null;
             string ctype = headers["content-type"];
             if (ctype != null)
             {
@@ -158,11 +158,11 @@ namespace SystemPlus.Net
             return charset;
         }
 
-        public static string GetCharSetFromBody(Stream rawdata)
+        public static string? GetCharSetFromBody(Stream rawdata)
         {
             rawdata.Seek(0, SeekOrigin.Begin);
 
-            string charset = null;
+            string? charset = null;
 
             StreamReader srr = new StreamReader(rawdata, Encoding.ASCII);
             string meta = srr.ReadToEnd();
@@ -182,7 +182,7 @@ namespace SystemPlus.Net
             return charset;
         }
 
-        public static Encoding GetEncoding(string charset)
+        public static Encoding GetEncoding(string? charset)
         {
             Encoding encoding;
             if (string.IsNullOrWhiteSpace(charset))

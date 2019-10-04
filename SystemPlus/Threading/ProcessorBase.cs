@@ -280,7 +280,7 @@ namespace SystemPlus.Threading
                     t = threads[0];
                 }
 
-                t.Wait(timeout, default(CancellationToken));
+                t.Wait(timeout, default);
             }
         }
 

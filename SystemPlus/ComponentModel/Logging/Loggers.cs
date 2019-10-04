@@ -73,7 +73,7 @@ namespace SystemPlus.ComponentModel.Logging
                 bool writeHeader = false;
                 if (!File.Exists(filePath))
                 {
-                    string dir = Path.GetDirectoryName(filePath);
+                    string? dir = Path.GetDirectoryName(filePath);
                     FileSystem.EnsureDirExists(dir);
 
                     writeHeader = true;

@@ -69,8 +69,7 @@ namespace SystemPlus.Text
 
         static string defaultFormat(string format, object arg, IFormatProvider formatProvider)
         {
-            IFormattable formattableArg = arg as IFormattable;
-            if (formattableArg != null)
+            if (arg is IFormattable formattableArg)
             {
                 return formattableArg.ToString(format, formatProvider);
             }

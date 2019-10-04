@@ -79,7 +79,7 @@ namespace SystemPlus.Net
 
         public UrlQueryString Add(string name, object value)
         {
-            string valString;
+            string? valString;
 
             if (value == null)
                 valString = null;

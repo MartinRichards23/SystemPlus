@@ -10,7 +10,7 @@ namespace SystemPlus.Collections.Generic
         /// <summary>
         /// Gets a value, returns default if no key
         /// </summary>
-        public static TValue TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue defaultValue = default)
+        public static TValue TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue defaultValue = default) where TKey : notnull
         {
             if (list.ContainsKey(key))
             {
@@ -24,7 +24,7 @@ namespace SystemPlus.Collections.Generic
         /// <summary>
         /// Removes a values and returns it, otherwise returns default value
         /// </summary>
-        public static TValue TryTakeValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key)
+        public static TValue TryTakeValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key) where TKey : notnull
         {
             if (list.ContainsKey(key))
             {
@@ -39,7 +39,7 @@ namespace SystemPlus.Collections.Generic
         /// <summary>
         /// Adds item if key not already in collection
         /// </summary>
-        public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue item)
+        public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue item) where TKey : notnull
         {
             if (list.ContainsKey(key))
                 return false;
@@ -51,7 +51,7 @@ namespace SystemPlus.Collections.Generic
         /// <summary>
         /// Adds item or sets the value if it exists already
         /// </summary>
-        public static void AddOrSet<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue value)
+        public static void AddOrSet<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue value) where TKey : notnull
         {
             if (list.ContainsKey(key))
                 list[key] = value;
@@ -59,12 +59,12 @@ namespace SystemPlus.Collections.Generic
                 list.Add(key, value);
         }
 
-        public static void Increment<TKey>(this IDictionary<TKey, int> list, TKey key)
+        public static void Increment<TKey>(this IDictionary<TKey, int> list, TKey key) where TKey : notnull
         {
             list.Increment(key, 1);
         }
 
-        public static void Increment<TKey>(this IDictionary<TKey, int> list, TKey key, int increment)
+        public static void Increment<TKey>(this IDictionary<TKey, int> list, TKey key, int increment) where TKey : notnull
         {
             if (list.ContainsKey(key))
                 list[key] += increment;

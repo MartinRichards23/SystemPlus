@@ -15,7 +15,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public string Name { get; }
         public string Key { get; }
-        public string Value { get; set; }
+        public string? Value { get; set; }
 
         public override string ToString()
         {

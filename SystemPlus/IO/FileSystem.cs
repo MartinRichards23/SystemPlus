@@ -102,7 +102,7 @@ namespace SystemPlus.IO
                 extension = "." + extension;
 
             if (!directory.EndsWith("\\", StringComparison.Ordinal))
-                directory = directory + "\\";
+                directory += "\\";
 
             string tempName = name;
 
@@ -148,7 +148,7 @@ namespace SystemPlus.IO
             return name;
         }
 
-        public static bool ValidateFileName(string name, out string invalidChars)
+        public static bool ValidateFileName(string name, out string? invalidChars)
         {
             Match m = Regex.Match(name, "[\\/:\"*?<>|]");
 
@@ -171,11 +171,11 @@ namespace SystemPlus.IO
         /// <summary>
         /// Folder that the assembly exe is located in
         /// </summary>
-        public static string CurrentFolder
+        public static string? CurrentFolder
         {
             get
             {
-                string s = Assembly.GetEntryAssembly().Location;
+                string? s = Assembly.GetEntryAssembly()?.Location;                
                 s = Path.GetDirectoryName(s);
                 return s;
             }

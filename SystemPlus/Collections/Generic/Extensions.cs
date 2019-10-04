@@ -366,7 +366,7 @@ namespace SystemPlus.Collections.Generic
         /// <param name="collection">The collection to be cleared.</param>
         public static void Clear<T>(this IProducerConsumerCollection<T> collection)
         {
-            while (collection.TryTake(out T ignored))
+            while (collection.TryTake(out _))
             {
             }
         }

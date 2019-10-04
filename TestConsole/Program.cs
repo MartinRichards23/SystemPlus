@@ -19,7 +19,7 @@ namespace TestConsole
         private void Test()
         {
             Span<VectorStruct> vectors = stackalloc VectorStruct[5];
-
+            
             foreach (VectorStruct v in vectors)
             {
             }

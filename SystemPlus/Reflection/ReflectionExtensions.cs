@@ -145,8 +145,10 @@ namespace SystemPlus.Reflection
 
             foreach (Type type in types)
             {
-                T instance = (T)Activator.CreateInstance(type, constructorArgs);
-                instances.Add(instance);
+                if (Activator.CreateInstance(type, constructorArgs) is T instance)
+                {
+                    instances.Add(instance);
+                }
             }
 
             return instances;

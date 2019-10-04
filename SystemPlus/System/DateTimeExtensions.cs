@@ -11,10 +11,10 @@ namespace SystemPlus
         /// <summary>
         /// Get the timezone that matches the given offset
         /// </summary>
-        public static TimeZoneInfo GetTimeZoneByOffset(double offset)
+        public static TimeZoneInfo? GetTimeZoneByOffset(double offset)
         {
             // find best timezone
-            TimeZoneInfo tzInfo = null;
+            TimeZoneInfo? tzInfo = null;
             foreach (TimeZoneInfo info in TimeZoneInfo.GetSystemTimeZones())
             {
                 if (info.BaseUtcOffset.TotalHours == offset)
@@ -56,7 +56,7 @@ namespace SystemPlus
         /// <summary>
         /// Formats a datetime in user friendly way
         /// </summary>
-        public static string ToStringFriendly(this DateTime utcTime, TimeZoneInfo timeZone = null, bool addUtc = true, bool checkIsToday = true)
+        public static string ToStringFriendly(this DateTime utcTime, TimeZoneInfo? timeZone = null, bool addUtc = true, bool checkIsToday = true)
         {
             DateTime localTime;
             DateTime now;

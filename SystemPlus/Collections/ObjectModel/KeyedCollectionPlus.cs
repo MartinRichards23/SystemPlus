@@ -49,7 +49,7 @@ namespace SystemPlus.Collections.ObjectModel
             if (Contains(key))
                 return this[key];
 
-            return default(TItem);
+            return default;
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace SystemPlus.Collections.ObjectModel
             if (Contains(key))
                 return this[key];
 
-            return default(TItem);
+            return default;
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace SystemPlus.Collections.ObjectModel
                 return true;
             }
 
-            item = default(TItem);
+            item = default;
             return false;
         }
     }

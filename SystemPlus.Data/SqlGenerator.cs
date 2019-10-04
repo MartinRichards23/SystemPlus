@@ -29,7 +29,7 @@ namespace SystemPlus.Data
 
         #region Public methods
 
-        public void GetSchema(SqlConnection conn, IEnumerable<string> tableNames = null)
+        public void GetSchema(SqlConnection conn, IEnumerable<string>? tableNames = null)
         {
             databaseName = conn.Database;
             List<string> names = GetTableNames(conn);

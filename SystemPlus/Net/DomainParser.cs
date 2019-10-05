@@ -154,7 +154,7 @@ namespace SystemPlus.Net
 
             public string Key { get; }
 
-            public override bool Equals(object obj)
+            public override bool Equals(object? obj)
             {
                 // if parameter cannot be cast return false
                 if (obj is UrlSuffix other)

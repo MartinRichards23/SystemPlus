@@ -30,7 +30,7 @@ namespace SystemPlus.Windows
                     return descendent;
             }
 
-            return default(T);
+            return default;
         }
 
         public static T FindVisualParent<T>(DependencyObject child) where T : Visual
@@ -77,7 +77,7 @@ namespace SystemPlus.Windows
                 current = VisualTreeHelper.GetParent(current);
             }
 
-            return default(T);
+            return default;
         }
 
         /// <summary>
@@ -124,20 +124,20 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Looks for a child control within a parent by name
         /// </summary>
-        public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+        public static T? FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
         {
             // Confirm parent and childName are valid.
             if (parent == null)
                 return null;
 
-            T foundChild = null;
+            T? foundChild = null;
 
             int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
             for (int i = 0; i < childrenCount; i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(parent, i);
                 // If the child is not of the request child type child
-                T childType = child as T;
+                T? childType = child as T;
                 if (childType == null)
                 {
                     // recursively drill down the tree
@@ -149,7 +149,7 @@ namespace SystemPlus.Windows
                 }
                 else if (!string.IsNullOrEmpty(childName))
                 {
-                    FrameworkElement frameworkElement = child as FrameworkElement;
+                    FrameworkElement? frameworkElement = child as FrameworkElement;
                     // If the child's name is set for search
                     if (frameworkElement != null && frameworkElement.Name == childName)
                     {
@@ -179,20 +179,20 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Looks for a child control within a parent by type
         /// </summary>
-        public static T FindChild<T>(DependencyObject parent) where T : DependencyObject
+        public static T? FindChild<T>(DependencyObject parent) where T : DependencyObject
         {
             // Confirm parent is valid.
             if (parent == null)
                 return null;
 
-            T foundChild = null;
+            T? foundChild = null;
 
             int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
             for (int i = 0; i < childrenCount; i++)
             {
                 DependencyObject child = VisualTreeHelper.GetChild(parent, i);
                 // If the child is not of the request child type child
-                T childType = child as T;
+                T? childType = child as T;
                 if (childType == null)
                 {
                     // recursively drill down the tree
@@ -217,12 +217,12 @@ namespace SystemPlus.Windows
         /// </summary>
         public static T GetDataContext<T>(object sender)
         {
-            FrameworkElement fe = sender as FrameworkElement;
+            FrameworkElement? fe = sender as FrameworkElement;
 
             if (fe != null && fe.DataContext is T)
                 return (T)fe.DataContext;
 
-            return default(T);
+            return default;
         }
 
         /// <summary>
@@ -230,12 +230,12 @@ namespace SystemPlus.Windows
         /// </summary>
         public static T GetTag<T>(object sender)
         {
-            FrameworkElement fe = sender as FrameworkElement;
+            FrameworkElement? fe = sender as FrameworkElement;
 
             if (fe != null && fe.Tag is T)
                 return (T)fe.Tag;
 
-            return default(T);
+            return default;
         }
 
         /// <summary>
@@ -243,12 +243,10 @@ namespace SystemPlus.Windows
         /// </summary>
         public static T GetContextPlacement<T>(object sender) where T : FrameworkElement
         {
-            MenuItem mnu = sender as MenuItem;
-            if (mnu == null)
+            if (!(sender is MenuItem mnu))
                 return null;
 
-            ContextMenu context = mnu.Parent as ContextMenu;
-            if (context == null)
+            if (!(mnu.Parent is ContextMenu context))
                 return null;
 
             return context.PlacementTarget as T;
@@ -289,10 +287,8 @@ namespace SystemPlus.Windows
 
             for (int i = 0; i < theStackPanel.Children.Count; i++)
             {
-                //if (i >= theStackPanel.VerticalOffset && i <= theStackPanel.VerticalOffset + theStackPanel.ViewportHeight)
-                //{
-                visibleElements.Add(theStackPanel.Children[i] as FrameworkElement);
-                //}
+                if (theStackPanel.Children[i] is FrameworkElement fe)
+                    visibleElements.Add(fe);
             }
 
             return visibleElements;

@@ -13,7 +13,7 @@ namespace SystemPlus.Windows.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
-                return null;
+                return 0;
 
             return System.Convert.ToDouble(value);
         }
@@ -21,7 +21,7 @@ namespace SystemPlus.Windows.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
-                return null;
+                return 0;
 
             return System.Convert.ToInt32(value);
         }

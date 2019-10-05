@@ -11,44 +11,7 @@ namespace SystemPlus.Windows
     /// </summary>
     public static class NativeMethods
     {
-        #region Advapi32 functions
-
-        [DllImport("advapi32.dll")]
-        public static extern int RegOpenKeyEx(UIntPtr hKey, [MarshalAs(UnmanagedType.VBByRefStr)] ref string subKey, int options, int sam, out UIntPtr phkResult);
-
-        [DllImport("advapi32.dll")]
-        public static extern int RegOpenKeyEx(RegistryHive hKey, [MarshalAs(UnmanagedType.VBByRefStr)] ref string subKey, int options, int sam, out UIntPtr phkResult);
-
-        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, EntryPoint = "RegQueryValueExW", SetLastError = true)]
-        public static extern int RegQueryValueEx(UIntPtr hKey, string lpValueName, int lpReserved, out uint lpType, StringBuilder lpData, ref uint lpcbData);
-
-        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, EntryPoint = "RegQueryValueExW", SetLastError = true)]
-        public static extern int RegQueryValueEx(UIntPtr hKey, string lpValueName, int lpReserved, out uint lpType, byte[] lpData, ref uint lpcbData);
-
-        [DllImport("advapi32.dll")]
-        public static extern int RegDeleteValue(UIntPtr hKey, [MarshalAs(UnmanagedType.VBByRefStr)] ref string lpValueName);
-
-        [DllImport("advapi32.dll", EntryPoint = "RegEnumKeyEx", CharSet = CharSet.Unicode)]
-        public static extern int RegEnumKeyEx(UIntPtr hkey, uint index, StringBuilder lpName, ref uint lpcbName, IntPtr reserved, IntPtr lpClass, IntPtr lpcbClass, out long lpftLastWriteTime);
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        public static extern int RegSetValueEx(UIntPtr hKey, [MarshalAs(UnmanagedType.VBByRefStr)] ref string key, int reserved, RegistryValueKind dwType, [MarshalAs(UnmanagedType.VBByRefStr)] ref string lpData, int cbData);
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        public static extern int RegSetValueEx(UIntPtr hKey, [MarshalAs(UnmanagedType.VBByRefStr)] ref string key, int reserved, RegistryValueKind dwType, [MarshalAs(UnmanagedType.LPArray)] ref byte[] lpData, int cbData);
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        public static extern int RegSetValueEx(UIntPtr hKey, [MarshalAs(UnmanagedType.VBByRefStr)] ref string key, int reserved, RegistryValueKind dwType, [MarshalAs(UnmanagedType.I4)] ref int lpData, int cbData);
-
-        [DllImport("advapi32.dll")]
-        public static extern int RegFlushKey(UIntPtr hKey);
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        public static extern int RegCloseKey(UIntPtr hKey);
-
-        #endregion
-
-        #region Win32 functions
+        #region User32 functions
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -203,6 +166,10 @@ namespace SystemPlus.Windows
 
         [DllImport("gdi32.dll")]
         public static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int nWidth, int nHeight);
+
+        #endregion
+
+        #region Gdi32 functions
 
         [DllImport("gdi32.dll")]
         public static extern IntPtr SelectObject(IntPtr hdc, IntPtr hObject);

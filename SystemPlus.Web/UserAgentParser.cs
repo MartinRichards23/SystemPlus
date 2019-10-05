@@ -561,7 +561,9 @@ namespace SystemPlus.Web
     {
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
-            if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
+            if (dictionary == null) 
+                throw new ArgumentNullException(nameof(dictionary));
+
             return dictionary.TryGetValue(key, out TValue result) ? result : default(TValue);
         }
     }

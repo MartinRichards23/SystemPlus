@@ -23,9 +23,9 @@ namespace SystemPlus.Windows
             return (T)app.FindResource(resourceKey);
         }
 
-        public static T GetItemByName<T>(this ItemCollection items, string name) where T : FrameworkElement
+        public static T? GetItemByName<T>(this ItemCollection items, string name) where T : FrameworkElement
         {
-            foreach (T fe in items)
+            foreach (T fe in items.OfType<T>())
             {
                 if (fe.Name == name)
                     return fe;
@@ -39,8 +39,8 @@ namespace SystemPlus.Windows
         /// </summary>
         public static Size Multiply(this Size size, double value)
         {
-            size.Width = size.Width * value;
-            size.Height = size.Height * value;
+            size.Width *= value;
+            size.Height *= value;
             return size;
         }
 
@@ -49,8 +49,8 @@ namespace SystemPlus.Windows
         /// </summary>
         public static Point Multiply(this Point point, double value)
         {
-            point.X = point.X * value;
-            point.Y = point.Y * value;
+            point.X *= value;
+            point.Y *= value;
             return point;
         }
 
@@ -212,7 +212,7 @@ namespace SystemPlus.Windows
         /// </summary>
         public static void InvokeWithExceptions(this Dispatcher dispatcher, Action action)
         {
-            Exception error = null;
+            Exception? error = null;
             Action wrapper = () =>
             {
                 try
@@ -261,7 +261,7 @@ namespace SystemPlus.Windows
         {
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal, dispatcher);
 
-            EventHandler handler = null;
+            EventHandler? handler = null;
             handler = (sender, e) =>
             {
                 // Stop the timer so it won't keep executing every X seconds

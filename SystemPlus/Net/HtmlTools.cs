@@ -19,9 +19,6 @@ namespace SystemPlus.Net
 
         public static string HtmlDecode(this string input)
         {
-            if (input == null)
-                return null;
-
             input = WebUtility.HtmlDecode(input);
             input = StringTools.CollapseAllWhiteSpace(input);
             return input;
@@ -29,17 +26,11 @@ namespace SystemPlus.Net
 
         public static string HtmlEncode(this string input)
         {
-            if (input == null)
-                return null;
-
             return WebUtility.HtmlEncode(input);
         }
 
         public static string RemoveHtmlTags(this string input)
         {
-            if (input == null)
-                return null;
-
             Regex htmlTagRegex = new Regex(@"<[^>]*>", RegexOptions.IgnoreCase);
 
             return htmlTagRegex.Replace(input, string.Empty);
@@ -50,9 +41,6 @@ namespace SystemPlus.Net
         /// </summary>
         public static string ReplaceBrTags(string input)
         {
-            if (input == null)
-                return null;
-
             Regex brTagRegex = new Regex(@"</?w?br ?/?>", RegexOptions.IgnoreCase);
 
             input = brTagRegex.Replace(input, "\r\n");

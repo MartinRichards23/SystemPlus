@@ -72,7 +72,7 @@ namespace SystemPlus.Collections.Generic
                 list.Add(key, increment);
         }
 
-        public static void MergeIn<TKey, TValue>(this IDictionary<TKey, TValue> list, IDictionary<TKey, TValue> other)
+        public static void MergeIn<TKey, TValue>(this IDictionary<TKey, TValue> list, IDictionary<TKey, TValue> other) where TKey : notnull
         {
             if (other == null)
                 return;
@@ -83,7 +83,7 @@ namespace SystemPlus.Collections.Generic
             }
         }
 
-        public static IDictionary<TKey, TValue> AsDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> keyValues)
+        public static IDictionary<TKey, TValue> AsDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> keyValues) where TKey : notnull
         {
             Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
 

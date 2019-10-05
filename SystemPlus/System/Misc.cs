@@ -106,7 +106,7 @@ namespace SystemPlus
                         }
                         else
                         {
-                            kvp = new KeyValuePair<string, string>(param, null);
+                            kvp = new KeyValuePair<string, string>(param, string.Empty);
                         }
 
                         values.Add(kvp);

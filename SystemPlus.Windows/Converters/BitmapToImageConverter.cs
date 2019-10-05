@@ -17,7 +17,7 @@ namespace SystemPlus.Windows.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            BitmapSource bms = value as BitmapSource;
+            BitmapSource? bms = value as BitmapSource;
 
             if (bms == null)
                 return null;

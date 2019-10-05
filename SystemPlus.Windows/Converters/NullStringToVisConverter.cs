@@ -13,7 +13,7 @@ namespace SystemPlus.Windows.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string s = value as string;
+            string? s = value as string;
 
             if (string.IsNullOrEmpty(s))
                 return Visibility.Collapsed;

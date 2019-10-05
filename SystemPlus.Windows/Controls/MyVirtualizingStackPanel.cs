@@ -25,7 +25,7 @@ namespace SystemPlus.Windows.Controls
         /// <returns>
         /// The TreeViewItem that contains the specified item.
         /// </returns>
-        public static TreeViewItem GetTreeViewItem(ItemsControl container, object item)
+        public static TreeViewItem? GetTreeViewItem(ItemsControl container, object item)
         {
             if (container == null)
                 return null;
@@ -64,7 +64,7 @@ namespace SystemPlus.Windows.Controls
 
             Panel itemsHostPanel = (Panel)VisualTreeHelper.GetChild(itemsPresenter, 0);
 
-            MyVirtualizingStackPanel virtualizingPanel = itemsHostPanel as MyVirtualizingStackPanel;
+            MyVirtualizingStackPanel? virtualizingPanel = itemsHostPanel as MyVirtualizingStackPanel;
 
             for (int i = 0, count = container.Items.Count; i < count; i++)
             {
@@ -89,7 +89,7 @@ namespace SystemPlus.Windows.Controls
                 if (subContainer != null)
                 {
                     // Search the next level for the object.
-                    TreeViewItem resultContainer = GetTreeViewItem(subContainer, item);
+                    TreeViewItem? resultContainer = GetTreeViewItem(subContainer, item);
                     if (resultContainer != null)
                         return resultContainer;
 

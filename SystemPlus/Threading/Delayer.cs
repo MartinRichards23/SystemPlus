@@ -11,7 +11,7 @@ namespace SystemPlus.Threading
     {
         #region Fields
 
-        readonly Random rand;
+        readonly Random? rand;
         DateTime lastWait = DateTime.MinValue;
 
         #endregion

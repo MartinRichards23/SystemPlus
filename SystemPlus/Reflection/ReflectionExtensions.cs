@@ -15,22 +15,22 @@ namespace SystemPlus.Reflection
     {
         #region Properties
 
-        public static string ProductName
+        public static string? ProductName
         {
             get { return Assembly.GetEntryAssembly()?.Name(); }
         }
 
-        public static Version ProductVersion
+        public static Version? ProductVersion
         {
             get { return Assembly.GetEntryAssembly()?.Version(); }
         }
 
-        public static string CallerName
+        public static string? CallerName
         {
             get { return Assembly.GetCallingAssembly()?.Name(); }
         }
 
-        public static Version CallerVersion
+        public static Version? CallerVersion
         {
             get { return Assembly.GetCallingAssembly()?.Version(); }
         }
@@ -128,8 +128,8 @@ namespace SystemPlus.Reflection
 
             foreach (Type type in types)
             {
-                T instance = (T)Activator.CreateInstance(type, constructorArgs);
-                instances.Add(instance);
+                if (Activator.CreateInstance(type, constructorArgs) is T instance)
+                    instances.Add(instance);
             }
 
             return instances;

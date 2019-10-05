@@ -89,7 +89,7 @@ namespace SystemPlus.IO
 
         public static IEnumerable<string> EnumerateLines(this TextReader reader)
         {
-            string line;
+            string? line;
             while ((line = reader.ReadLine()) != null)
             {
                 yield return line;

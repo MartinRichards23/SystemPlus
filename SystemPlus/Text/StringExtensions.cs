@@ -16,7 +16,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static string Clip(this string value, int max, string ending = "…")
         {
-            if (value == null || value.Length <= max)
+            if (value.Length <= max)
                 return value;
 
             return value.Substring(0, max) + ending;
@@ -33,7 +33,7 @@ namespace SystemPlus.Text
         /// <summary>
         /// Trims the string, works on null values
         /// </summary>
-        public static string TryTrim(this string s)
+        public static string? TryTrim(this string? s)
         {
             if (s == null)
                 return null;
@@ -44,7 +44,7 @@ namespace SystemPlus.Text
         /// <summary>
         /// Trims the string, works on null values
         /// </summary>
-        public static string TryTrim(this string s, params char[] trimChars)
+        public static string? TryTrim(this string? s, params char[] trimChars)
         {
             if (s == null)
                 return null;
@@ -70,9 +70,6 @@ namespace SystemPlus.Text
         /// </summary>
         public static string Join(this IEnumerable<string> values, string separator)
         {
-            if (values == null)
-                return null;
-
             return string.Join(separator, values.Where(s => !string.IsNullOrWhiteSpace(s)));
         }
 
@@ -81,9 +78,6 @@ namespace SystemPlus.Text
         /// </summary>
         public static string ToTitleCase(this string value)
         {
-            if (value == null)
-                return null;
-
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value.ToLower());
         }
 
@@ -114,9 +108,6 @@ namespace SystemPlus.Text
         /// </summary>
         public static string GetFragmentInclusive(this string value, string after, string before, StringComparison comparisonType)
         {
-            if (value == null)
-                return null;
-
             int start;
             int end;
 
@@ -136,11 +127,8 @@ namespace SystemPlus.Text
         /// <summary>
         /// Gets string between before and after strings
         /// </summary>
-        public static string GetFragment(this string value, string after, string before, StringComparison comparisonType)
+        public static string GetFragment(this string value, string? after, string? before, StringComparison comparisonType)
         {
-            if (value == null)
-                return null;
-
             int start;
             int end;
 
@@ -170,7 +158,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static string GetFragment(this string value, string after)
         {
-            return GetFragment(value, after, null);
+            return GetFragment(value, after, null, StringComparison.InvariantCulture);
         }
 
         /// <summary>

@@ -24,8 +24,8 @@ namespace SystemPlus.Windows.Controls
 
         static void OnHtmlChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            WebBrowser webBrowser = dependencyObject as WebBrowser;
-            string html = e.NewValue as string;
+            WebBrowser? webBrowser = dependencyObject as WebBrowser;
+            string? html = e.NewValue as string;
 
             if (webBrowser != null && html != null)
                 webBrowser.NavigateToString(html);
@@ -33,12 +33,12 @@ namespace SystemPlus.Windows.Controls
 
         public static void HideScriptErrors(WebBrowser wb, bool hide)
         {
-            FieldInfo fiComWebBrowser = typeof(WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
+            FieldInfo? fiComWebBrowser = typeof(WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
 
             if (fiComWebBrowser == null)
                 return;
 
-            object objComWebBrowser = fiComWebBrowser.GetValue(wb);
+            object? objComWebBrowser = fiComWebBrowser.GetValue(wb);
 
             if (objComWebBrowser == null)
                 return;

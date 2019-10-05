@@ -4,9 +4,11 @@ namespace SystemPlus.Text
 {
     public class FileSizeFormatProvider : IFormatProvider, ICustomFormatter
     {
-        public object GetFormat(Type formatType)
+        public object? GetFormat(Type? formatType)
         {
-            if (formatType == typeof(ICustomFormatter)) return this;
+            if (formatType == typeof(ICustomFormatter)) 
+                return this;
+
             return null;
         }
 
@@ -15,16 +17,16 @@ namespace SystemPlus.Text
         const decimal OneMegaByte = OneKiloByte * 1024M;
         const decimal OneGigaByte = OneMegaByte * 1024M;
 
-        public string Format(string format, object arg, IFormatProvider formatProvider)
+        public string Format(string? format, object? arg, IFormatProvider? formatProvider)
         {
             if (format == null || !format.StartsWith(fileSizeFormat, StringComparison.Ordinal))
             {
-                return defaultFormat(format, arg, formatProvider);
+                return DefaultFormat(format, arg, formatProvider);
             }
 
             if (arg is string)
             {
-                return defaultFormat(format, arg, formatProvider);
+                return DefaultFormat(format, arg, formatProvider);
             }
 
             decimal size;
@@ -35,7 +37,7 @@ namespace SystemPlus.Text
             }
             catch (InvalidCastException)
             {
-                return defaultFormat(format, arg, formatProvider);
+                return DefaultFormat(format, arg, formatProvider);
             }
 
             string suffix;
@@ -67,13 +69,14 @@ namespace SystemPlus.Text
             return string.Format(stringFormat, size, suffix);
         }
 
-        static string defaultFormat(string format, object arg, IFormatProvider formatProvider)
+        static string DefaultFormat(string? format, object? arg, IFormatProvider? formatProvider)
         {
             if (arg is IFormattable formattableArg)
             {
                 return formattableArg.ToString(format, formatProvider);
             }
-            return arg.ToString();
+
+            return arg?.ToString() ?? string.Empty;
         }
     }
 }

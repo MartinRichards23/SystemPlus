@@ -23,26 +23,34 @@ namespace SystemPlus.ComponentModel
 
         public static string GetEnumDescription(object enumValue, Type enumType)
         {
-            FieldInfo? field = enumType.GetField(enumValue.ToString());
+            string? enumString = enumValue.ToString();
+
+            if (enumString == null)
+                return string.Empty;
+
+            FieldInfo? field = enumType.GetField(enumString);
 
             if (field == null)
-                return enumValue.ToString();
+                return string.Empty;
 
             object[] atts = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
-            DescriptionAttribute descriptionAttribute = atts.FirstOrDefault() as DescriptionAttribute;
+            DescriptionAttribute? descriptionAttribute = atts.FirstOrDefault() as DescriptionAttribute;
 
             if (descriptionAttribute == null)
-                return enumValue.ToString();
+                return string.Empty;
 
             return descriptionAttribute.Description;
         }
 
-        public static InfoAttribute GetEnumInfo(object enumValue, Type enumType)
+        public static InfoAttribute? GetEnumInfo(object enumValue, Type enumType)
         {
-            InfoAttribute descriptionAttribute = enumType.GetField(enumValue.ToString()).GetCustomAttributes(typeof(InfoAttribute), false).FirstOrDefault() as InfoAttribute;
+            string? enumString = enumValue.ToString();
 
-            return descriptionAttribute;
+            if (enumString == null)
+                return null;
+
+            return enumType.GetField(enumString)?.GetCustomAttributes(typeof(InfoAttribute), false).FirstOrDefault() as InfoAttribute;
         }
     }
 
@@ -53,11 +61,9 @@ namespace SystemPlus.ComponentModel
     public class InfoAttribute : Attribute, INotifyPropertyChanged
     {
         public string Name { get; protected set; }
-        public string Description { get; protected set; }
+        public string? Description { get; protected set; }
 
-#pragma warning disable CS0067 // The event 'InfoAttribute.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'InfoAttribute.PropertyChanged' is never used
 
         public InfoAttribute(string name)
         {

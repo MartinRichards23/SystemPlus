@@ -47,13 +47,16 @@ namespace SystemPlus.Text.NGrams
             return Text;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(obj as NGram);
         }
 
-        public bool Equals(NGram obj)
+        public bool Equals(NGram? obj)
         {
+            if (obj == null)
+                return false;
+
             return Text.Equals(obj.Text);
         }
 

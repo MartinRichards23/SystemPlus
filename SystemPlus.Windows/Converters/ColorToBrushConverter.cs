@@ -18,9 +18,8 @@ namespace SystemPlus.Windows.Converters
                 return null;
 
             // For a more sophisticated converter, check also the targetType and react accordingly..
-            if (value is Color)
+            if (value is Color color)
             {
-                Color color = (Color)value;
                 return BrushCache.GetBrush(color);
             }
 

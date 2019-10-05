@@ -125,7 +125,7 @@ namespace SystemPlus.Data
         public static T TryReadItem<T>(this IDataReader rdr, Func<IDataReader, T> t)
         {
             if (!rdr.Read())
-                return default(T);
+                return default;
 
             return t(rdr);
         }
@@ -149,7 +149,7 @@ namespace SystemPlus.Data
             byte[] compressedData = reader.GetValue<byte[]>(name);
 
             if (compressedData == null)
-                return default(T);
+                return default;
 
             byte[] data = Compression.Decompress(compressedData);
             string json = Encoding.UTF8.GetString(data);
@@ -192,7 +192,7 @@ namespace SystemPlus.Data
             string json = reader.GetValue<string>(name);
 
             if (string.IsNullOrEmpty(json))
-                return default(T);
+                return default;
 
             return Serialization.JsonDeserialize<T>(json);
         }
@@ -231,7 +231,7 @@ namespace SystemPlus.Data
             return target.Add(param);
         }
 
-        public static SqlParameter AddRecords(this SqlParameterCollection target, string parameterName, SqlRecordCollection value)
+        public static SqlParameter? AddRecords(this SqlParameterCollection target, string parameterName, SqlRecordCollection value)
         {
             if (value != null && value.Count > 0)
             {

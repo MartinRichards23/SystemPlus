@@ -12,7 +12,7 @@ namespace SystemPlus.IO.Csv
             sw.WriteCsvVal(null, separator);
         }
 
-        public static void WriteCsvVal(this TextWriter sw, object val, string separator = ",")
+        public static void WriteCsvVal(this TextWriter sw, object? val, string separator = ",")
         {
             string sval = EscapeCsvField(val, separator);
             sw.Write(sval + separator);
@@ -28,7 +28,7 @@ namespace SystemPlus.IO.Csv
             sw.WriteLine();
         }
 
-        public static string EscapeCsvField(object value, string separator = ",")
+        public static string EscapeCsvField(object? value, string separator = ",")
         {
             if (value == null)
                 return string.Empty;
@@ -36,7 +36,7 @@ namespace SystemPlus.IO.Csv
             return EscapeCsvField(value.ToString(), separator);
         }
 
-        public static string EscapeCsvField(string value, string separator = ",")
+        public static string EscapeCsvField(string? value, string separator = ",")
         {
             if (string.IsNullOrEmpty(value))
                 return string.Empty;

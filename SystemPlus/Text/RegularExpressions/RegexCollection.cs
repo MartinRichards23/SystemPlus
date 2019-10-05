@@ -51,9 +51,10 @@ namespace SystemPlus.Text.RegularExpressions
 
             foreach (Regex regex in this)
             {
-                foreach (Match m in regex.Matches(input))
+                foreach (Match? m in regex.Matches(input))
                 {
-                    matches.Add(m);
+                    if (m != null)
+                        matches.Add(m);
                 }
             }
 

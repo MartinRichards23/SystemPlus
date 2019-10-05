@@ -120,9 +120,7 @@ namespace SystemPlus.Collections.Generic
         public static void AddRange<T>(this ICollection<T> destination, IEnumerable<T> source)
         {
             if (source == null)
-            {
                 return;
-            }
 
             foreach (T item in source)
             {
@@ -136,9 +134,7 @@ namespace SystemPlus.Collections.Generic
         public static void TryAddRange<T>(this ICollection<T> destination, IEnumerable source)
         {
             if (source == null)
-            {
                 return;
-            }
 
             foreach (T item in source)
             {
@@ -153,9 +149,7 @@ namespace SystemPlus.Collections.Generic
         public static void AddRange(this IList destination, IEnumerable source)
         {
             if (source == null)
-            {
                 return;
-            }
 
             foreach (object item in source)
             {

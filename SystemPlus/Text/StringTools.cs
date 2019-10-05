@@ -32,9 +32,6 @@ namespace SystemPlus.Text
         /// </summary>
         public static string TrimLineEnds(string value)
         {
-            if (value == null)
-                return null;
-
             string[] lines = value.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             string newvalue = string.Join(Environment.NewLine, lines.Select(s => s.TrimEnd()));
             return newvalue;
@@ -45,9 +42,6 @@ namespace SystemPlus.Text
         /// </summary>
         public static string NormaliseNewLines(string input)
         {
-            if (input == null)
-                return null;
-
             return CommonRegexes.NewLine.Replace(input, Environment.NewLine);
         }
 
@@ -56,9 +50,6 @@ namespace SystemPlus.Text
         /// </summary>
         public static string CollapseWhiteSpace(string input)
         {
-            if (input == null)
-                return null;
-
             Regex whiteSpace = new Regex(@"[ \t]+");
             Regex newlines = new Regex(@"[\r\n]+");
 
@@ -72,9 +63,6 @@ namespace SystemPlus.Text
         /// </summary>
         public static string CollapseAllWhiteSpace(string input, string replacement = " ")
         {
-            if (input == null)
-                return null;
-
             Regex whiteSpaceAll = new Regex(@"[\s]+");
 
             input = whiteSpaceAll.Replace(input, replacement);
@@ -115,9 +103,6 @@ namespace SystemPlus.Text
         /// </summary>
         public static string RemovePunctuation(string input, string replacement = "")
         {
-            if (input == null)
-                return null;
-
             return CommonRegexes.PunctuationAll.Replace(input, replacement);
         }
 
@@ -126,9 +111,6 @@ namespace SystemPlus.Text
         /// </summary>
         public static string RemoveCommonPunctuation(string input, string replacement = "")
         {
-            if (input == null)
-                return null;
-
             return CommonRegexes.PunctuationCommon.Replace(input, replacement);
         }
 
@@ -155,9 +137,6 @@ namespace SystemPlus.Text
         /// </summary>
         public static string RemoveNonNumeric(string input)
         {
-            if (input == null)
-                return null;
-
             return CommonRegexes.NonNumeric.Replace(input, "");
         }
 
@@ -188,9 +167,6 @@ namespace SystemPlus.Text
 
         public static string PutInQuotes(string value)
         {
-            if (value == null)
-                return null;
-
             value = value.Trim('\"');
             return "\"" + value + "\"";
         }

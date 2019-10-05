@@ -302,7 +302,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public void Load(TextReader reader)
         {
-            IniSection currentSection = null;
+            IniSection? currentSection = null;
 
             foreach (string line in reader.EnumerateLines())
             {
@@ -317,8 +317,10 @@ namespace SystemPlus.ComponentModel.Ini
                     currentSection = GetOrCreateSection(name);
                     continue;
                 }
+
                 if (currentSection == null)
                     continue;
+
                 if (!line.Contains("="))
                 {
                     // no "=", therefore not valid key=value line
@@ -382,7 +384,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         #region Statics
 
-        public static bool ParseBool(string value, bool defaultVal = false)
+        public static bool ParseBool(string? value, bool defaultVal = false)
         {
             if (bool.TryParse(value, out bool b))
                 return b;

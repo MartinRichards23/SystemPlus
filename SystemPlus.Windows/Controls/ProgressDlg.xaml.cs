@@ -10,7 +10,7 @@ namespace SystemPlus.Windows.Controls
     {
         readonly CancellationTokenSource cancelToken = new CancellationTokenSource();
         DateTime startTime;
-        DispatcherTimer timer;
+        DispatcherTimer? timer;
         readonly bool showTimer;
         TimeSpan timeSpan;
 
@@ -52,13 +52,13 @@ namespace SystemPlus.Windows.Controls
             if (showTimer)
             {
                 timer = new DispatcherTimer();
-                timer.Tick += timer_Tick;
+                timer.Tick += Timer_Tick;
                 timer.Interval = TimeSpan.FromSeconds(0.9);
                 timer.Start();
             }
         }
 
-        void timer_Tick(object sender, EventArgs e)
+        void Timer_Tick(object? sender, EventArgs e)
         {
             DateTime now = DateTime.Now;
             timeSpan = now - startTime;
@@ -136,7 +136,7 @@ namespace SystemPlus.Windows.Controls
             cancelToken.Token.ThrowIfCancellationRequested();
         }
 
-        void btnCancel_Click(object sender, RoutedEventArgs e)
+        void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             cancelToken.Cancel();
         }

@@ -13,7 +13,7 @@ namespace SystemPlus.Xml
         /// <summary>
         /// Checks is a string is a valid xpath expression
         /// </summary>
-        public static bool VerifyXPath(string xpath, out string error)
+        public static bool VerifyXPath(string xpath, out string? error)
         {
             try
             {
@@ -37,12 +37,12 @@ namespace SystemPlus.Xml
             XAttribute attribute = element.Attribute(name);
 
             if (attribute == null)
-                return null;
+                return string.Empty;
 
             return attribute.Value;
         }
 
-        public static T GetAttributeValue<T>(this XElement element, string name)
+        public static T GetAttributeValue<T>(this XElement element, string name) where T : struct
         {
             XAttribute attribute = element.Attribute(name);
 

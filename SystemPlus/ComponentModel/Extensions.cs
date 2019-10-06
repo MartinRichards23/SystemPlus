@@ -10,7 +10,7 @@ namespace SystemPlus.ComponentModel
         /// </summary>
         public static string ToInfoString(this Enum value)
         {
-            InfoAttribute info = EnumTools.GetEnumInfo(value, value.GetType());
+            InfoAttribute? info = EnumTools.GetEnumInfo(value, value.GetType());
 
             if (info != null)
                 return info.ToString();

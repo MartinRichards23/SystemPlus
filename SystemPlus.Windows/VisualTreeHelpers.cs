@@ -105,7 +105,7 @@ namespace SystemPlus.Windows
             {
                 if (!string.IsNullOrEmpty(parentName))
                 {
-                    FrameworkElement frameworkElement = current as FrameworkElement;
+                    FrameworkElement? frameworkElement = current as FrameworkElement;
                     if (current is T && frameworkElement != null && frameworkElement.Name == parentName)
                     {
                         return (T)current;
@@ -259,7 +259,7 @@ namespace SystemPlus.Windows
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
             {
-                FrameworkElement child = VisualTreeHelper.GetChild(element, i) as FrameworkElement;
+                FrameworkElement? child = VisualTreeHelper.GetChild(element, i) as FrameworkElement;
 
                 if (child == null)
                     continue;

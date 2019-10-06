@@ -564,7 +564,7 @@ namespace SystemPlus.Web
             if (dictionary == null) 
                 throw new ArgumentNullException(nameof(dictionary));
 
-            return dictionary.TryGetValue(key, out TValue result) ? result : default(TValue);
+            return dictionary.TryGetValue(key, out TValue result) ? result : default;
         }
     }
 

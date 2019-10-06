@@ -26,11 +26,6 @@ namespace SystemPlus.Windows.Media
         /// </summary>
         public static void Write(this BitmapSource bms, BitmapEncoder encoder, string path)
         {
-            // make sure directory exists
-            string dir = Path.GetDirectoryName(Path.GetFullPath(path));
-
-            FileSystem.EnsureDirExists(dir);
-
             using (FileStream fs = File.Create(path, 1024, FileOptions.Asynchronous))
             {
                 Write(bms, encoder, fs);

@@ -15,7 +15,7 @@ namespace SystemPlus.ComponentModel.Logging
 
         public abstract void WriteInfo(string message);
         public abstract void WriteWarning(string message);
-        public abstract void WriteError(string message, Exception ex);
+        public abstract void WriteError(string? message, Exception? ex);
 
         public virtual void Flush()
         {
@@ -25,10 +25,8 @@ namespace SystemPlus.ComponentModel.Logging
         {
             StringBuilder writer = new StringBuilder();
 
-
             try
             {
-                AssemblyName assem = Assembly.GetEntryAssembly().GetName();
                 CultureInfo culture = Thread.CurrentThread.CurrentCulture;
 
                 writer.AppendLine("Utc time: " + DateTime.UtcNow);

@@ -331,7 +331,7 @@ namespace SystemPlus.Collections.Generic
         /// <param name="comparer">The equality comparer to use to determine whether or not keys are equal.
         /// If null, the default equality comparer for <c>TSource</c> is used.</param>
         /// <returns>A sequence consisting of distinct elements from the source sequence, comparing them by the specified key projection.</returns>
-        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey> comparer)
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -341,7 +341,7 @@ namespace SystemPlus.Collections.Generic
             return DistinctByImpl(source, keySelector, comparer);
         }
 
-        static IEnumerable<TSource> DistinctByImpl<TSource, TKey>(IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey> comparer)
+        static IEnumerable<TSource> DistinctByImpl<TSource, TKey>(IEnumerable<TSource> source, Func<TSource, TKey> keySelector, IEqualityComparer<TKey>? comparer)
         {
             HashSet<TKey> knownKeys = new HashSet<TKey>(comparer);
             foreach (TSource element in source)

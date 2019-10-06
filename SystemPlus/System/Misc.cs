@@ -66,10 +66,6 @@ namespace SystemPlus
             if (!typeof(T).IsSerializable)
                 throw new ArgumentException(@"The type must be serializable.", "source");
 
-            // Don't serialize a null object, simply return the default for that object 
-            if (source == null)
-                return default;
-
             IFormatter formatter = new BinaryFormatter();
 
             using (Stream stream = new MemoryStream())

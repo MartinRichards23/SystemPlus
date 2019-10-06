@@ -14,12 +14,9 @@ namespace SystemPlus.Text.NGrams
         [DataMember]
         readonly string[] words;
 
-        string text;
+        string? text;
 
         #endregion
-
-        protected NGram()
-        { }
 
         public NGram(string[] words)
         {

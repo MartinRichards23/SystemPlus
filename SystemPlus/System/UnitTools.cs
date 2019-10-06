@@ -24,7 +24,7 @@ namespace SystemPlus
             return FormatMetres(metres, metric, null);
         }
 
-        public static string FormatMetres(double metres, bool metric, IFormatProvider provider)
+        public static string FormatMetres(double metres, bool metric, IFormatProvider? provider)
         {
             // want to get it looking like this
             // 1,000 km   or  1000 mi

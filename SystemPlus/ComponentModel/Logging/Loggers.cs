@@ -21,8 +21,8 @@ namespace SystemPlus.ComponentModel.Logging
 
         public FileLogger(string folder)
         {
-            string name;
-            Version version;
+            string? name;
+            Version? version;
 
             try
             {

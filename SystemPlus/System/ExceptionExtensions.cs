@@ -23,12 +23,12 @@ namespace SystemPlus
                     sb.AppendLine();
                     sb.AppendLine("Data:");
 
-                    foreach (object key in ex.Data.Keys)
+                    foreach (object? key in ex.Data.Keys)
                     {
                         if (key == null)
                             continue;
 
-                        object val = ex.Data[key];
+                        object? val = ex.Data[key];
 
                         if (val == null)
                             continue;
@@ -90,7 +90,7 @@ namespace SystemPlus
         /// </summary>
         public static T GetResult<T>(this Exception ex)
         {
-            object obj = ex.Data["Result"];
+            object? obj = ex.Data["Result"];
 
             if (obj is T)
                 return (T)obj;

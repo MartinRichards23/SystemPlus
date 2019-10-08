@@ -43,6 +43,13 @@ namespace SystemPlus.Data
         public bool IsPrimaryKey { get; set; }
         public bool IsIdentity { get; set; }
 
+        public string PropertyName { get; set; }
+        public string InstanceName { get; set; }
+        public Type PropertyType { get; set; }
+        public string PropertyTypeName { get; set; }
+        public string SqlParamName { get; set; }
+        public string SqlDataType { get; set; }
+
         public void SetValues()
         {
             PropertyName = Name.ToUpperFirst();
@@ -58,13 +65,6 @@ namespace SystemPlus.Data
             SqlParamName = "@" + Name.ToLowerFirst();
             SqlDataType = SqlTools.GetSqlDataTypeName(DataType, Length);
         }
-
-        public string PropertyName { get; set; }
-        public string InstanceName { get; set; }
-        public Type PropertyType { get; set; }
-        public string PropertyTypeName { get; set; }
-        public string SqlParamName { get; set; }
-        public string SqlDataType { get; set; }
 
         public override string ToString()
         {

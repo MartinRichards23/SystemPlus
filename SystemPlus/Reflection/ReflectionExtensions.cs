@@ -157,7 +157,7 @@ namespace SystemPlus.Reflection
         /// <summary>
         /// Gets embedded resource stream, path should be in form "Folder\File.txt"
         /// </summary>
-        public static Stream GetEmbeddedResource(this Assembly assembly, string baseNamespace, string path)
+        public static Stream? GetEmbeddedResource(this Assembly assembly, string baseNamespace, string path)
         {
             string fullpath = baseNamespace + "." + path.Replace('\\', '.').Replace('/', '.').Trim('.');
             return assembly.GetManifestResourceStream(fullpath);

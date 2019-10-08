@@ -63,7 +63,7 @@ namespace SystemPlus.ComponentModel.Ini
             }
         }
 
-        public IniValue GetIniValue(string sectionName, string key)
+        public IniValue? GetIniValue(string sectionName, string key)
         {
             string normalSectionName = NormaliseKey(sectionName);
             string normalKey = NormaliseKey(key);
@@ -111,7 +111,7 @@ namespace SystemPlus.ComponentModel.Ini
             if (value != null)
                 json = Serialization.JsonSerialize(value);
             else
-                json = null;
+                json = string.Empty;
 
             IniSection section = GetOrCreateSection(sectionName);
             section.AddValue(key, json);
@@ -119,7 +119,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public bool GetString(string sectionName, string key, ref string value)
         {
-            IniValue iniValue = GetIniValue(sectionName, key);
+            IniValue? iniValue = GetIniValue(sectionName, key);
             if (iniValue == null)
                 return false;
 
@@ -129,7 +129,8 @@ namespace SystemPlus.ComponentModel.Ini
 
         public string GetString(string sectionName, string key, string defaultValue)
         {
-            string value = null;
+            string value = string.Empty;
+
             if (GetString(sectionName, key, ref value))
                 return value;
 
@@ -138,7 +139,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public bool GetBool(string sectionName, string key, ref bool value)
         {
-            IniValue iniValue = GetIniValue(sectionName, key);
+            IniValue? iniValue = GetIniValue(sectionName, key);
             if (iniValue == null)
                 return false;
 
@@ -166,7 +167,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public bool GetInt(string sectionName, string key, ref int value)
         {
-            IniValue iniValue = GetIniValue(sectionName, key);
+            IniValue? iniValue = GetIniValue(sectionName, key);
             if (iniValue == null)
                 return false;
 
@@ -190,7 +191,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public bool GetLong(string sectionName, string key, ref long value)
         {
-            IniValue iniValue = GetIniValue(sectionName, key);
+            IniValue? iniValue = GetIniValue(sectionName, key);
             if (iniValue == null)
                 return false;
 
@@ -214,7 +215,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public bool GetDouble(string sectionName, string key, ref double value)
         {
-            IniValue iniValue = GetIniValue(sectionName, key);
+            IniValue? iniValue = GetIniValue(sectionName, key);
             if (iniValue == null)
                 return false;
 
@@ -240,7 +241,7 @@ namespace SystemPlus.ComponentModel.Ini
         {
             try
             {
-                string result = GetString(sectionName, key, null);
+                string result = GetString(sectionName, key, string.Empty);
 
                 if (string.IsNullOrWhiteSpace(result))
                     return defValue;
@@ -255,7 +256,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public T GetEnum<T>(string sectionName, string key, T defValue) where T : struct
         {
-            string val = GetString(sectionName, key, null);
+            string val = GetString(sectionName, key, string.Empty);
 
             if (Enum.TryParse(val, true, out T result))
                 return result;

@@ -21,7 +21,7 @@ namespace SystemPlus.Windows.Controls
         /// Starts an animation to a particular value on the specified dependency property.
         /// You can pass in an event handler to call when the animation has completed.
         /// </summary>
-        public static void StartAnimation(this UIElement animatableElement, DependencyProperty dependencyProperty, double toValue, double animationDurationSeconds, EventHandler completedEvent)
+        public static void StartAnimation(this UIElement animatableElement, DependencyProperty dependencyProperty, double toValue, double animationDurationSeconds, EventHandler? completedEvent)
         {
             double fromValue = (double)animatableElement.GetValue(dependencyProperty);
 
@@ -41,10 +41,7 @@ namespace SystemPlus.Windows.Controls
                 animatableElement.SetValue(dependencyProperty, animatableElement.GetValue(dependencyProperty));
                 CancelAnimation(animatableElement, dependencyProperty);
 
-                if (completedEvent != null)
-                {
-                    completedEvent(sender, e);
-                }
+                completedEvent?.Invoke(sender, e);
             };
 
             animation.Freeze();

@@ -11,16 +11,16 @@ namespace SystemPlus.Web.Slack
     public class Payload
     {
         [DataMember]
-        public string channel { get; set; }
+        public string? channel { get; set; }
 
         [DataMember]
-        public string username { get; set; }
+        public string? username { get; set; }
 
         [DataMember]
-        public string text { get; set; }
+        public string? text { get; set; }
 
         [DataMember]
-        public List<Attachment> attachments { get; set; }
+        public List<Attachment>? attachments { get; set; }
 
         public string TextPlain
         {
@@ -32,46 +32,46 @@ namespace SystemPlus.Web.Slack
     public class Attachment
     {
         [DataMember]
-        public string fallback { get; set; }
+        public string? fallback { get; set; }
 
         [DataMember]
-        public string color { get; set; }
+        public string? color { get; set; }
 
         [DataMember]
-        public string pretext { get; set; }
+        public string? pretext { get; set; }
 
         [DataMember]
-        public string author_name { get; set; }
+        public string? author_name { get; set; }
 
         [DataMember]
-        public string author_link { get; set; }
+        public string? author_link { get; set; }
 
         [DataMember]
-        public string author_icon { get; set; }
+        public string? author_icon { get; set; }
 
         [DataMember]
-        public string title { get; set; }
+        public string? title { get; set; }
 
         [DataMember]
-        public string title_link { get; set; }
+        public string? title_link { get; set; }
 
         [DataMember]
-        public string text { get; set; }
+        public string? text { get; set; }
 
         [DataMember]
-        public List<Field> fields { get; set; }
+        public List<Field>? fields { get; set; }
 
         [DataMember]
-        public string image_url { get; set; }
+        public string? image_url { get; set; }
 
         [DataMember]
-        public string thumb_url { get; set; }
+        public string? thumb_url { get; set; }
 
         [DataMember]
-        public string footer { get; set; }
+        public string? footer { get; set; }
 
         [DataMember]
-        public string footer_icon { get; set; }
+        public string? footer_icon { get; set; }
 
         [DataMember]
         public long ts { get; set; }
@@ -101,10 +101,10 @@ namespace SystemPlus.Web.Slack
     public class Field
     {
         [DataMember]
-        public string title { get; set; }
+        public string? title { get; set; }
 
         [DataMember]
-        public string value { get; set; }
+        public string? value { get; set; }
 
         [DataMember]
         public bool @short { get; set; }

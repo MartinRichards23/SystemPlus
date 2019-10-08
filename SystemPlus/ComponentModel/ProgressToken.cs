@@ -11,10 +11,10 @@ namespace SystemPlus.ComponentModel
     {
         #region Fields
 
-        string title;
-        string status;
+        string title = string.Empty;
+        string status = string.Empty;
         bool isIndeterminate = false;
-        double progress;
+        double progress = 0;
         ProgressTokenState state = ProgressTokenState.Normal;
         readonly DateTime startTime = DateTime.UtcNow;
         CancellationTokenSource cancelTokenSource;

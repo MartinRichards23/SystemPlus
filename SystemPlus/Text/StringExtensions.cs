@@ -148,7 +148,7 @@ namespace SystemPlus.Text
         /// <summary>
         /// Gets string between before and after strings
         /// </summary>
-        public static string GetFragment(this string value, string after, string before)
+        public static string GetFragment(this string value, string? after, string? before)
         {
             return GetFragment(value, after, before, StringComparison.InvariantCulture);
         }

@@ -32,7 +32,7 @@ namespace SystemPlus.Data
 
         public async Task TestConnection(CancellationToken token)
         {
-            SqlConnection con = null;
+            SqlConnection? con = null;
 
             try
             {

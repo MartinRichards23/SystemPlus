@@ -42,13 +42,13 @@ namespace SystemPlus.ComponentModel.Ini
 
             if (iniValue != null)
             {
-                iniValue.Value = value?.ToString();
+                iniValue.Value = value?.ToString() ?? string.Empty;
             }
             else
             {
                 iniValue = new IniValue(key)
                 {
-                    Value = value?.ToString(),
+                    Value = value?.ToString() ?? string.Empty,
                 };
 
                 values.Add(iniValue);

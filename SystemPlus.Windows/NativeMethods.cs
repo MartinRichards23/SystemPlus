@@ -263,7 +263,7 @@ namespace SystemPlus.Windows
             return temp.ToString().Trim();
         }
 
-        public static bool GetPrivateProfileSection(string sectionName, string fileName, out string[] section)
+        public static bool GetPrivateProfileSection(string sectionName, string fileName, out string[]? section)
         {
             section = null;
 
@@ -284,9 +284,9 @@ namespace SystemPlus.Windows
 
             // NOTE: Calling Marshal.PtrToStringAuto(pReturnedString) will
             // result in only the first pair being returned
-            string returnedString = Marshal.PtrToStringAuto(pReturnedString, (int)bytesReturned - 1);
+            string? returnedString = Marshal.PtrToStringAuto(pReturnedString, (int)bytesReturned - 1);
 
-            section = returnedString.Split('\0');
+            section = returnedString?.Split('\0');
 
             Marshal.FreeCoTaskMem(pReturnedString);
             return true;

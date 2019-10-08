@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemPlus.Windows", "SystemPlus.Windows\SystemPlus.Windows.csproj", "{B7B73BE0-D18F-4B46-8872-907D89CB6FB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPlus.Windows", "SystemPlus.Windows\SystemPlus.Windows.csproj", "{B7B73BE0-D18F-4B46-8872-907D89CB6FB9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPlus", "SystemPlus\SystemPlus.csproj", "{7649D296-B5EE-4506-A896-D86E84375E31}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPlus.Web", "SystemPlus.Web\SystemPlus.Web.csproj", "{78B947F7-9A07-4B8E-AEE1-D0384E571679}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "TestConsole\TestConsole.csproj", "{04FB5E85-A52F-4CC2-A759-FFBE89B1F8C4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemPlus.Data", "SystemPlus.Data\SystemPlus.Data.csproj", "{1AAB91CA-0EC1-4C14-BB3E-0E765E400BD4}"
 EndProject
@@ -31,10 +29,6 @@ Global
 		{78B947F7-9A07-4B8E-AEE1-D0384E571679}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78B947F7-9A07-4B8E-AEE1-D0384E571679}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78B947F7-9A07-4B8E-AEE1-D0384E571679}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04FB5E85-A52F-4CC2-A759-FFBE89B1F8C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04FB5E85-A52F-4CC2-A759-FFBE89B1F8C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04FB5E85-A52F-4CC2-A759-FFBE89B1F8C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04FB5E85-A52F-4CC2-A759-FFBE89B1F8C4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1AAB91CA-0EC1-4C14-BB3E-0E765E400BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1AAB91CA-0EC1-4C14-BB3E-0E765E400BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AAB91CA-0EC1-4C14-BB3E-0E765E400BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU

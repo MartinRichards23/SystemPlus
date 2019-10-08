@@ -136,7 +136,7 @@ namespace SystemPlus.Collections.Generic
             if (source == null)
                 return;
 
-            foreach (T item in source)
+            foreach (T item in source.OfType<T>())
             {
                 if (!destination.Contains(item))
                     destination.Add(item);
@@ -151,7 +151,7 @@ namespace SystemPlus.Collections.Generic
             if (source == null)
                 return;
 
-            foreach (object item in source)
+            foreach (object? item in source)
             {
                 destination.Add(item);
             }

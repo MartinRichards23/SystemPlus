@@ -9,15 +9,10 @@
         
     </Window.Resources>
     <Grid>
-        <Button Content="Cancel" Height="23" Margin="0,0,12,43" Name="btnCancel" VerticalAlignment="Bottom"
-                Opacity="0.5" HorizontalAlignment="Right" Width="127" Click="btnCancel_Click" Foreground="White"
-                Background="#30000000" />
+        <Button Content="Cancel" Height="23" Margin="0,0,12,43" Name="btnCancel" VerticalAlignment="Bottom" Opacity="0.5" HorizontalAlignment="Right" Width="127" Click="BtnCancel_Click" Foreground="White" Background="#30000000" />
         <ProgressBar Height="25" Margin="12,0,12,12" Name="progressBar1" VerticalAlignment="Bottom" />
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,0,0,72" Name="txtStatus" Text="Progress"
-                   VerticalAlignment="Bottom" Foreground="White" />
-        <Label Height="23" Width="80" Margin="0,0,0,14" Name="txtPercent" Content="0%" VerticalAlignment="Bottom"
-               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,0,0,43" Name="txtTime" Text=""
-                   VerticalAlignment="Bottom" Width="195" Foreground="White" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,0,0,72" Name="txtStatus" Text="Progress" VerticalAlignment="Bottom" Foreground="White" />
+        <Label Height="23" Width="80" Margin="0,0,0,14" Name="txtPercent" Content="0%" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,0,0,43" Name="txtTime" Text="" VerticalAlignment="Bottom" Width="195" Foreground="White" />
     </Grid>
 </Window>

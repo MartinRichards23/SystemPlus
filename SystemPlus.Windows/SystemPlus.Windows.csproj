@@ -12,6 +12,7 @@
     <RepositoryUrl>https://github.com/MartinRichards23/SystemPlus</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Description>Tools and extensions for WPF .NET Core</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

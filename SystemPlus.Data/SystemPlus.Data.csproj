@@ -11,6 +11,7 @@
     <RepositoryUrl>https://github.com/MartinRichards23/SystemPlus</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Description>Tools and extensions for the .NET Core System.Data namespace</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

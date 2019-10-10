@@ -11,7 +11,7 @@
     <PackageProjectUrl>http://codelogica.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/MartinRichards23/SystemPlus</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Description>Tools and extensions for .NET Core</Description>
+    <Description>Tools and extensions for WPF .NET Core</Description>
   </PropertyGroup>
 
   <ItemGroup>

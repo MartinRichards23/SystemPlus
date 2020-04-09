@@ -150,11 +150,26 @@ namespace SystemPlus.IO
 
         public static bool ValidateFileName(string name, out string? invalidChars)
         {
-            Match m = Regex.Match(name, "[\\/:\"*?<>|]");
+            var invalid = Path.GetInvalidFileNameChars();
 
-            if (m.Success)
+            if (string.IsNullOrEmpty(name))
             {
-                invalidChars = m.Value;
+                invalidChars = string.Empty;
+                return false;
+            }
+
+            if (name.IndexOfAny(invalid) >= 0)
+            {
+                invalidChars = string.Empty;
+
+                foreach (char c in invalid)
+                {
+                    int i = name.IndexOf(c);
+
+                    if (i >= 0)
+                        invalidChars += c;
+                }
+
                 return false;
             }
 

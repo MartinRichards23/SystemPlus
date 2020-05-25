@@ -261,8 +261,7 @@ namespace SystemPlus.Windows
         {
             DispatcherTimer dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal, dispatcher);
 
-            EventHandler? handler = null;
-            handler = (sender, e) =>
+            void handler(object? sender, EventArgs e)
             {
                 // Stop the timer so it won't keep executing every X seconds
                 // and also avoid keeping the handler in memory.
@@ -271,7 +270,7 @@ namespace SystemPlus.Windows
 
                 // Perform the action.
                 dispatcher.Invoke(action);
-            };
+            }
 
             dispatcherTimer.Tick += handler;
             dispatcherTimer.Interval = delay;

@@ -17,7 +17,9 @@ namespace SystemPlus.Windows
 
             if (error is AggregateException aggEx)
             {
-                Show(aggEx.InnerException);
+                if (aggEx.InnerException != null)
+                    Show(aggEx.InnerException);
+
                 return;
             }
 
@@ -26,8 +28,8 @@ namespace SystemPlus.Windows
             // Make text depending on what kind of error it is
             if (error is WebException webEx)
             {
-                if (webEx.Response is HttpWebResponse)
-                    text = string.Format("An internet problem has occurred, code: {0}", ((HttpWebResponse)webEx.Response).StatusCode);
+                if (webEx.Response is HttpWebResponse response)
+                    text = string.Format("An internet problem has occurred, code: {0}", response.StatusCode);
                 else
                     text = string.Format("An internet problem has occurred, code: {0}", webEx.Status);
             }
@@ -42,12 +44,12 @@ namespace SystemPlus.Windows
 
             text = text.Trim();
 
-            Show(text, ReflectionExtensions.ProductName);
+            Show(text, ReflectionExtensions.ProductName ?? string.Empty);
         }
 
         public static void Show(string message)
         {
-            Show(message, ReflectionExtensions.ProductName);
+            Show(message, ReflectionExtensions.ProductName ?? string.Empty);
         }
 
         protected static void Show(string text, string title)

@@ -8,14 +8,20 @@ namespace SystemPlus.Text
         /// <summary>
         /// Sorts strings in natural way, e.g. file 1, file 2, file 3, file 25
         /// </summary>
-        public int Compare(string x, string y)
+        public int Compare(string? x, string? y)
         {
             Dictionary<string, string[]> table = new Dictionary<string, string[]>();
             bool isAscending = false;
 
             if (x == y)
                 return 0;
-            
+
+            if (x == null)
+                x = string.Empty;
+
+            if (y == null)
+                y = string.Empty;
+
             if (!table.TryGetValue(x, out string[]? x1))
             {
                 x1 = Regex.Split(x.Replace(" ", ""), "([0-9]+)");

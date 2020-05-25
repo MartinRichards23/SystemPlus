@@ -26,10 +26,8 @@ namespace SystemPlus.Windows.Media
         /// </summary>
         public static void Write(this BitmapSource bms, BitmapEncoder encoder, string path)
         {
-            using (FileStream fs = File.Create(path, 1024, FileOptions.Asynchronous))
-            {
-                Write(bms, encoder, fs);
-            }
+            using FileStream fs = File.Create(path, 1024, FileOptions.Asynchronous);
+            Write(bms, encoder, fs);
         }
 
         /// <summary>
@@ -37,11 +35,9 @@ namespace SystemPlus.Windows.Media
         /// </summary>
         public static byte[] Write(this BitmapSource bms, BitmapEncoder encoder)
         {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                Write(bms, encoder, ms);
-                return ms.ToArray();
-            }
+            using MemoryStream ms = new MemoryStream();
+            Write(bms, encoder, ms);
+            return ms.ToArray();
         }
 
         /// <summary>
@@ -49,10 +45,8 @@ namespace SystemPlus.Windows.Media
         /// </summary>
         public static BitmapImage Read(string path)
         {
-            using (FileStream fs = File.OpenRead(path))
-            {
-                return Read(fs);
-            }
+            using FileStream fs = File.OpenRead(path);
+            return Read(fs);
         }
 
         /// <summary>
@@ -75,10 +69,8 @@ namespace SystemPlus.Windows.Media
         /// </summary>
         public static BitmapImage Read(byte[] bytes)
         {
-            using (MemoryStream ms = new MemoryStream(bytes))
-            {
-                return Read(ms);
-            }
+            using MemoryStream ms = new MemoryStream(bytes);
+            return Read(ms);
         }
 
         /// <summary>

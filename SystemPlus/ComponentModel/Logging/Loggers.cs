@@ -53,7 +53,7 @@ namespace SystemPlus.ComponentModel.Logging
             Write(MessageLevel.Warning, message);
         }
 
-        public override void WriteError(string message, Exception error)
+        public override void WriteError(string? message, Exception? error)
         {
             string text = string.Empty;
 
@@ -112,7 +112,7 @@ namespace SystemPlus.ComponentModel.Logging
             Trace.TraceWarning(message);
         }
 
-        public override void WriteError(string message, Exception error)
+        public override void WriteError(string? message, Exception? error)
         {
             string text = string.Empty;
 
@@ -141,7 +141,7 @@ namespace SystemPlus.ComponentModel.Logging
             Console.WriteLine(message);
         }
 
-        public override void WriteError(string message, Exception error)
+        public override void WriteError(string? message, Exception? error)
         {
             string text = string.Empty;
 
@@ -190,7 +190,7 @@ namespace SystemPlus.ComponentModel.Logging
             BufferMessage(MessageLevel.Warning, message);
         }
 
-        public override void WriteError(string message, Exception error)
+        public override void WriteError(string? message, Exception? error)
         {
             string text = string.Empty;
 

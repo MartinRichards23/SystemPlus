@@ -7,7 +7,7 @@
              d:DesignHeight="24" d:DesignWidth="80">
     <DockPanel LastChildFill="True">
         <StackPanel Name="spButtons" DockPanel.Dock="Right" Width="20" HorizontalAlignment="Right" Visibility="Visible">
-            <RepeatButton Name="btnUp" HorizontalAlignment="Stretch" Interval="20" Height="12" VerticalAlignment="Top" Click="btnUp_Click">
+            <RepeatButton Name="btnUp" HorizontalAlignment="Stretch" Interval="20" Height="12" VerticalAlignment="Top" Click="BtnUp_Click">
                 <RepeatButton.Background>
                     <VisualBrush>
                         <VisualBrush.Visual>
@@ -21,7 +21,7 @@
                     </VisualBrush>
                 </RepeatButton.Background>
             </RepeatButton>
-            <RepeatButton Name="btnDown" HorizontalAlignment="Stretch" Interval="20" Height="12" VerticalAlignment="Bottom" Click="btnDown_Click">
+            <RepeatButton Name="btnDown" HorizontalAlignment="Stretch" Interval="20" Height="12" VerticalAlignment="Bottom" Click="BtnDown_Click">
                 <RepeatButton.Background>
                     <VisualBrush>
                         <VisualBrush.Visual>
@@ -36,6 +36,6 @@
                 </RepeatButton.Background>
             </RepeatButton>
         </StackPanel>
-        <TextBox DockPanel.Dock="Left" x:Name="txtValue" PreviewKeyDown="numericTextbox1_PreviewKeyDown" TextChanged="txtValue_TextChanged" Text="" />
+        <TextBox DockPanel.Dock="Left" x:Name="txtValue" PreviewKeyDown="NumericTextbox1_PreviewKeyDown" TextChanged="TxtValue_TextChanged" Text="" />
     </DockPanel>
 </UserControl>

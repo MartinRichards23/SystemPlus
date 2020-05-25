@@ -14,7 +14,7 @@ namespace SystemPlus.Web.W3C
     {
         public W3CResult ValidateHtml(string html)
         {
-            HttpWebRequest request = request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/nu/?out=json");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://validator.w3.org/nu/?out=json");
             request.Method = "POST";
             request.UserAgent = UserAgents.MozillaUserAgent.AgentString;
             request.KeepAlive = true;
@@ -23,16 +23,14 @@ namespace SystemPlus.Web.W3C
 
             request.WriteRequestStream(html, Encoding.UTF8);
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                Stream receiveStream = response.GetFullResponseStream();
-                StreamReader sr = new StreamReader(receiveStream);
+            using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream receiveStream = response.GetFullResponseStream();
+            StreamReader sr = new StreamReader(receiveStream);
 
-                string json = sr.ReadToEnd();
+            string json = sr.ReadToEnd();
 
-                W3CResult result = Serialization.JsonDeserialize<W3CResult>(json);
-                return result;
-            }
+            W3CResult result = Serialization.JsonDeserialize<W3CResult>(json);
+            return result;
         }
     }
 }

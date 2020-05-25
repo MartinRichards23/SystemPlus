@@ -34,7 +34,7 @@ namespace SystemPlus.Windows.Controls
                 return container as TreeViewItem;
 
             // Expand the current container
-            if (container is TreeViewItem && !((TreeViewItem)container).IsExpanded)
+            if (container is TreeViewItem tvi && !tvi.IsExpanded)
                 container.SetValue(TreeViewItem.IsExpandedProperty, true);
 
             // Try to generate the ItemsPresenter and the ItemsPanel.
@@ -64,12 +64,10 @@ namespace SystemPlus.Windows.Controls
 
             Panel itemsHostPanel = (Panel)VisualTreeHelper.GetChild(itemsPresenter, 0);
 
-            MyVirtualizingStackPanel? virtualizingPanel = itemsHostPanel as MyVirtualizingStackPanel;
-
             for (int i = 0, count = container.Items.Count; i < count; i++)
             {
                 TreeViewItem subContainer;
-                if (virtualizingPanel != null)
+                if (itemsHostPanel is MyVirtualizingStackPanel virtualizingPanel)
                 {
                     // Bring the item into view so 
                     // that the container will be generated.

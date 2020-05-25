@@ -15,24 +15,24 @@ namespace SystemPlus.Windows.Converters
         public double Width { get; set; } = -1;
         public double Height { get; set; } = -1;
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            BitmapSource? bms = value as BitmapSource;
-
-            if (bms == null)
-                return null;
-
-            Image img = new Image
+            if (value is BitmapSource bms)
             {
-                Source = bms
-            };
+                Image img = new Image
+                {
+                    Source = bms
+                };
 
-            if (Width > 0)
-                img.Width = Width;
-            if (Height > 0)
-                img.Height = Height;
+                if (Width > 0)
+                    img.Width = Width;
+                if (Height > 0)
+                    img.Height = Height;
 
-            return img;
+                return img;
+            }
+
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

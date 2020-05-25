@@ -31,27 +31,23 @@ namespace SystemPlus.Web.Email
 
         public async Task SendEmailAsync(string toEmail, string fromEmail, string fromName, string subject, string body, bool isHtml)
         {
-            using (MailMessage message = new MailMessage())
-            {
-                message.To.Add(toEmail);
-                message.From = new MailAddress(fromEmail, fromName);
+            using MailMessage message = new MailMessage();
+            message.To.Add(toEmail);
+            message.From = new MailAddress(fromEmail, fromName);
 
-                message.Subject = subject;
-                message.Body = body;
-                message.IsBodyHtml = isHtml;
+            message.Subject = subject;
+            message.Body = body;
+            message.IsBodyHtml = isHtml;
 
-                await SendEmailAsync(message);
-            }
+            await SendEmailAsync(message);
         }
 
         public async Task SendEmailAsync(MailMessage message)
         {
             try
             {
-                using (SmtpClient smtp = GetClient())
-                {
-                    await smtp.SendMailAsync(message);
-                }
+                using SmtpClient smtp = GetClient();
+                await smtp.SendMailAsync(message);
             }
             catch (Exception)
             {

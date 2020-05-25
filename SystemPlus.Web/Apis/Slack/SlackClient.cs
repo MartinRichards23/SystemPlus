@@ -31,20 +31,18 @@ namespace SystemPlus.Web.Slack
                 HttpWebRequest request = request = (HttpWebRequest)WebRequest.Create(url);
                 request.Method = "GET";
 
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    Stream receiveStream = response.GetFullResponseStream();
-                    StreamReader sr = new StreamReader(receiveStream);
+                using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetFullResponseStream();
+                StreamReader sr = new StreamReader(receiveStream);
 
-                    string responseMessage = sr.ReadToEnd();
+                string responseMessage = sr.ReadToEnd();
 
-                    OauthReponse oauthResponse = Serialization.JsonDeserialize<OauthReponse>(responseMessage);
+                OauthReponse oauthResponse = Serialization.JsonDeserialize<OauthReponse>(responseMessage);
 
-                    if (oauthResponse == null || !oauthResponse.ok)
-                        throw new Exception("Slack error: " + responseMessage);
+                if (oauthResponse == null || !oauthResponse.ok)
+                    throw new Exception("Slack error: " + responseMessage);
 
-                    return oauthResponse;
-                }
+                return oauthResponse;
             }
             catch (Exception ex)
             {
@@ -72,16 +70,14 @@ namespace SystemPlus.Web.Slack
 
                 request.WriteRequestStream(payloadJson, Encoding.UTF8);
 
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    Stream receiveStream = response.GetFullResponseStream();
-                    StreamReader sr = new StreamReader(receiveStream);
+                using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream receiveStream = response.GetFullResponseStream();
+                StreamReader sr = new StreamReader(receiveStream);
 
-                    string responseMessage = sr.ReadToEnd();
+                string responseMessage = sr.ReadToEnd();
 
-                    if (responseMessage != "ok")
-                        throw new Exception("Slack error: " + responseMessage);
-                }
+                if (responseMessage != "ok")
+                    throw new Exception("Slack error: " + responseMessage);
             }
             catch (WebException ex)
             {

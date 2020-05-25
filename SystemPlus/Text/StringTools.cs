@@ -234,7 +234,7 @@ namespace SystemPlus.Text
             }
 
             // Divide by 1024 to get fractional value
-            readable = (readable / 1024);
+            readable /= 1024;
 
             // Return formatted number with suffix
             return string.Format("{0} {1}", readable.ToString(format), suffix);

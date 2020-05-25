@@ -29,83 +29,46 @@ namespace SystemPlus
     {
         public static string ToTimeString(this Interval interval)
         {
-            switch (interval)
+            return interval switch
             {
-                case Interval.Mins1:
-                    return "1 minute";
-                case Interval.Mins2:
-                    return "2 minutes";
-                case Interval.Mins5:
-                    return "5 minutes";
-                case Interval.Mins15:
-                    return "15 minutes";
-                case Interval.Mins30:
-                    return "30 minutes";
-
-                case Interval.Hour1:
-                    return "1 Hour";
-                case Interval.Hour2:
-                    return "2 hours";
-                case Interval.Hour4:
-                    return "4 hours";
-                case Interval.Hour8:
-                    return "8 hours";
-                case Interval.Hour12:
-                    return "12 hours";
-
-                case Interval.Day1:
-                    return "Daily";
-                case Interval.Day2:
-                    return "2 days";
-
-                case Interval.Week1:
-                    return "Weekly";
-                case Interval.Week2:
-                    return "2 Weeks";
-
-                default:
-                    return "";
-            }
+                Interval.Mins1 => "1 minute",
+                Interval.Mins2 => "2 minutes",
+                Interval.Mins5 => "5 minutes",
+                Interval.Mins15 => "15 minutes",
+                Interval.Mins30 => "30 minutes",
+                Interval.Hour1 => "1 Hour",
+                Interval.Hour2 => "2 hours",
+                Interval.Hour4 => "4 hours",
+                Interval.Hour8 => "8 hours",
+                Interval.Hour12 => "12 hours",
+                Interval.Day1 => "Daily",
+                Interval.Day2 => "2 days",
+                Interval.Week1 => "Weekly",
+                Interval.Week2 => "2 Weeks",
+                _ => "",
+            };
         }
 
         public static TimeSpan ToTimespan(this Interval interval)
         {
-            switch (interval)
+            return interval switch
             {
-                case Interval.Mins1:
-                    return TimeSpan.FromMinutes(1);
-                case Interval.Mins2:
-                    return TimeSpan.FromMinutes(2);
-                case Interval.Mins5:
-                    return TimeSpan.FromMinutes(5);
-                case Interval.Mins15:
-                    return TimeSpan.FromMinutes(15);
-                case Interval.Mins30:
-                    return TimeSpan.FromMinutes(30);
-
-                case Interval.Hour1:
-                    return TimeSpan.FromHours(1);
-                case Interval.Hour2:
-                    return TimeSpan.FromHours(2);
-                case Interval.Hour4:
-                    return TimeSpan.FromHours(4);
-                case Interval.Hour8:
-                    return TimeSpan.FromHours(8);
-                case Interval.Hour12:
-                    return TimeSpan.FromHours(12);
-
-                case Interval.Day1:
-                    return TimeSpan.FromDays(1);
-                case Interval.Day2:
-                    return TimeSpan.FromDays(2);
-
-                case Interval.Week1:
-                    return TimeSpan.FromDays(7);
-                case Interval.Week2:
-                    return TimeSpan.FromDays(14);
-                default:
-                    throw new Exception("Unknown value");
-            }
+                Interval.Mins1 => TimeSpan.FromMinutes(1),
+                Interval.Mins2 => TimeSpan.FromMinutes(2),
+                Interval.Mins5 => TimeSpan.FromMinutes(5),
+                Interval.Mins15 => TimeSpan.FromMinutes(15),
+                Interval.Mins30 => TimeSpan.FromMinutes(30),
+                Interval.Hour1 => TimeSpan.FromHours(1),
+                Interval.Hour2 => TimeSpan.FromHours(2),
+                Interval.Hour4 => TimeSpan.FromHours(4),
+                Interval.Hour8 => TimeSpan.FromHours(8),
+                Interval.Hour12 => TimeSpan.FromHours(12),
+                Interval.Day1 => TimeSpan.FromDays(1),
+                Interval.Day2 => TimeSpan.FromDays(2),
+                Interval.Week1 => TimeSpan.FromDays(7),
+                Interval.Week2 => TimeSpan.FromDays(14),
+                _ => throw new Exception("Unknown value"),
+            };
         }
     }
 }

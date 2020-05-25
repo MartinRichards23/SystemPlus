@@ -14,10 +14,8 @@ namespace SystemPlus.Security
         {
             get
             {
-                using (WindowsIdentity id = WindowsIdentity.GetCurrent())
-                {
-                    return id.Name;
-                }
+                using WindowsIdentity id = WindowsIdentity.GetCurrent();
+                return id.Name;
             }
         }
 
@@ -26,15 +24,13 @@ namespace SystemPlus.Security
         /// </summary>
         public static bool IsAppRunningWithAdminprivileges()
         {
-            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
-            {
-                if (identity == null)
-                    return false;
+            using WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            if (identity == null)
+                return false;
 
-                WindowsPrincipal wp = new WindowsPrincipal(identity);
+            WindowsPrincipal wp = new WindowsPrincipal(identity);
 
-                return wp.IsInRole(WindowsBuiltInRole.Administrator);
-            }
+            return wp.IsInRole(WindowsBuiltInRole.Administrator);
         }
     }
 }

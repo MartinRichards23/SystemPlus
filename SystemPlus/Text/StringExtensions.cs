@@ -142,7 +142,7 @@ namespace SystemPlus.Text
             else
                 end = value.IndexOf(before, start, comparisonType);
 
-            return value.Substring(start, end - start);
+            return value[start..end];
         }
 
         /// <summary>

@@ -44,8 +44,8 @@ namespace SystemPlus.Windows.Media
             {
                 object col = ColorConverter.ConvertFromString(input);
 
-                if (col is Color)
-                    return (Color)col;
+                if (col is Color color)
+                    return color;
 
                 return defaultColour;
             }

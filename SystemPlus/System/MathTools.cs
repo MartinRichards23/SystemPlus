@@ -54,7 +54,7 @@ namespace SystemPlus
         /// </summary>
         public static double ClampAngle(double angle)
         {
-            angle = angle % 360;
+            angle %= 360;
 
             while (angle < 0)
             {

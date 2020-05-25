@@ -292,10 +292,9 @@ namespace SystemPlus.Web
         /// <returns></returns>
         public static Parser GetDefault(ParserOptions parserOptions = null)
         {
-            using (Stream stream = typeof(Parser).GetTypeInfo().Assembly.GetManifestResourceStream("SystemPlus.Web.regexes.yaml"))
-            // ReSharper disable once AssignNullToNotNullAttribute
-            using (StreamReader reader = new StreamReader(stream))
-                return new Parser(new MinimalYamlParser(reader.ReadToEnd()), parserOptions);
+            using Stream stream = typeof(Parser).GetTypeInfo().Assembly.GetManifestResourceStream("SystemPlus.Web.regexes.yaml");
+            using StreamReader reader = new StreamReader(stream);
+            return new Parser(new MinimalYamlParser(reader.ReadToEnd()), parserOptions);
         }
 
         /// <summary>
@@ -459,7 +458,7 @@ namespace SystemPlus.Web
                 if (replacement == null)
                     return Select();
 
-                string ReplaceFunction(string replacementString, string matchedGroup, string token)
+                static string ReplaceFunction(string replacementString, string matchedGroup, string token)
                 {
                     return matchedGroup != null
                         ? replacementString.ReplaceFirstOccurence(token, matchedGroup)
@@ -515,7 +514,7 @@ namespace SystemPlus.Web
                 {
                     Match m = regex.Match(input);
                     IEnumerator<int> num = Generate(1, n => n + 1);
-                    return m.Success ? binder(m, num) : default(T);
+                    return m.Success ? binder(m, num) : default;
                 };
             }
 
@@ -561,7 +560,7 @@ namespace SystemPlus.Web
     {
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
-            if (dictionary == null) 
+            if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
             return dictionary.TryGetValue(key, out TValue result) ? result : default;
@@ -658,9 +657,9 @@ namespace SystemPlus.Web
         private static string ReadQuotedValue(string value)
         {
             if (value.StartsWith("'") && value.EndsWith("'"))
-                return value.Substring(1, value.Length - 2);
+                return value[1..^1];
             if (value.StartsWith("\"") && value.EndsWith("\""))
-                return value.Substring(1, value.Length - 2);
+                return value[1..^1];
             return value;
         }
 

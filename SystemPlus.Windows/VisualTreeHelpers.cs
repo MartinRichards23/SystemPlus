@@ -33,27 +33,28 @@ namespace SystemPlus.Windows
             return default;
         }
 
-        public static T FindVisualParent<T>(DependencyObject child) where T : Visual
+        public static T? FindVisualParent<T>(DependencyObject child) where T : Visual
         {
             while ((child != null) && !(child is T))
             {
                 child = VisualTreeHelper.GetParent(child);
             }
-            return (T)child;
+
+            return child as T;
         }
 
         /// <summary>
         /// Returns the first ancester of specified type
         /// </summary>
-        public static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        public static T? FindAncestor<T>(DependencyObject current) where T : DependencyObject
         {
             current = VisualTreeHelper.GetParent(current);
 
             while (current != null)
             {
-                if (current is T)
+                if (current is T t)
                 {
-                    return (T)current;
+                    return t;
                 }
                 current = VisualTreeHelper.GetParent(current);
             }
@@ -83,12 +84,12 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Returns a specific ancester of an object
         /// </summary>
-        public static T FindAncestor<T>(DependencyObject current, T lookupItem) where T : DependencyObject
+        public static T? FindAncestor<T>(DependencyObject current, T lookupItem) where T : DependencyObject
         {
             while (current != null)
             {
-                if (current is T && ReferenceEquals(current, lookupItem))
-                    return (T)current;
+                if (current is T t && ReferenceEquals(current, lookupItem))
+                    return t;
 
                 current = VisualTreeHelper.GetParent(current);
             }
@@ -99,21 +100,20 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Finds an ancestor object by name and type
         /// </summary>
-        public static T FindAncestor<T>(DependencyObject current, string parentName) where T : DependencyObject
+        public static T? FindAncestor<T>(DependencyObject current, string parentName) where T : DependencyObject
         {
             while (current != null)
             {
                 if (!string.IsNullOrEmpty(parentName))
                 {
-                    FrameworkElement? frameworkElement = current as FrameworkElement;
-                    if (current is T && frameworkElement != null && frameworkElement.Name == parentName)
+                    if (current is T t && current is FrameworkElement frameworkElement && frameworkElement.Name == parentName)
                     {
-                        return (T)current;
+                        return t;
                     }
                 }
-                else if (current is T)
+                else if (current is T t)
                 {
-                    return (T)current;
+                    return t;
                 }
                 current = VisualTreeHelper.GetParent(current);
             }
@@ -137,39 +137,40 @@ namespace SystemPlus.Windows
             {
                 DependencyObject child = VisualTreeHelper.GetChild(parent, i);
                 // If the child is not of the request child type child
-                T? childType = child as T;
-                if (childType == null)
+                if (child is T t)
                 {
-                    // recursively drill down the tree
-                    foundChild = FindChild<T>(child, childName);
-
-                    // If the child is found, break so we do not overwrite the found child.
-                    if (foundChild != null)
-                        break;
-                }
-                else if (!string.IsNullOrEmpty(childName))
-                {
-                    FrameworkElement? frameworkElement = child as FrameworkElement;
-                    // If the child's name is set for search
-                    if (frameworkElement != null && frameworkElement.Name == childName)
+                    if (!string.IsNullOrEmpty(childName))
                     {
-                        // if the child's name is of the request name
-                        foundChild = (T)child;
+                        // If the child's name is set for search
+                        if (child is FrameworkElement frameworkElement && frameworkElement.Name == childName)
+                        {
+                            // if the child's name is of the request name
+                            foundChild = t;
+                            break;
+                        }
+
+                        // recursively drill down the tree
+                        foundChild = FindChild<T>(child, childName);
+
+                        // If the child is found, break so we do not overwrite the found child.
+                        if (foundChild != null)
+                            break;
+                    }
+                    else
+                    {
+                        // child element found.
+                        foundChild = t;
                         break;
                     }
-
-                    // recursively drill down the tree
-                    foundChild = FindChild<T>(child, childName);
-
-                    // If the child is found, break so we do not overwrite the found child.
-                    if (foundChild != null)
-                        break;
                 }
                 else
                 {
-                    // child element found.
-                    foundChild = (T)child;
-                    break;
+                    // recursively drill down the tree
+                    foundChild = FindChild<T>(child, childName);
+
+                    // If the child is found, break so we do not overwrite the found child.
+                    if (foundChild != null)
+                        break;
                 }
             }
 
@@ -192,8 +193,13 @@ namespace SystemPlus.Windows
             {
                 DependencyObject child = VisualTreeHelper.GetChild(parent, i);
                 // If the child is not of the request child type child
-                T? childType = child as T;
-                if (childType == null)
+                if (child is T t)
+                {
+                    // child element found.
+                    foundChild = t;
+                    break;
+                }
+                else
                 {
                     // recursively drill down the tree
                     foundChild = FindChild<T>(child);
@@ -201,12 +207,6 @@ namespace SystemPlus.Windows
                     // If the child is found, break so we do not overwrite the found child.
                     if (foundChild != null)
                         break;
-                }
-                else
-                {
-                    // child element found.
-                    foundChild = (T)child;
-                    break;
                 }
             }
             return foundChild;
@@ -217,10 +217,8 @@ namespace SystemPlus.Windows
         /// </summary>
         public static T GetDataContext<T>(object sender)
         {
-            FrameworkElement? fe = sender as FrameworkElement;
-
-            if (fe != null && fe.DataContext is T)
-                return (T)fe.DataContext;
+            if (sender is FrameworkElement fe && fe.DataContext is T t)
+                return t;
 
             return default;
         }
@@ -230,10 +228,8 @@ namespace SystemPlus.Windows
         /// </summary>
         public static T GetTag<T>(object sender)
         {
-            FrameworkElement? fe = sender as FrameworkElement;
-
-            if (fe != null && fe.Tag is T)
-                return (T)fe.Tag;
+            if (sender is FrameworkElement fe && fe.Tag is T t)
+                return t;
 
             return default;
         }
@@ -241,36 +237,34 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Returns the contextmenu placement target from sender object
         /// </summary>
-        public static T GetContextPlacement<T>(object sender) where T : FrameworkElement
+        public static T? GetContextPlacement<T>(object sender) where T : FrameworkElement
         {
-            if (!(sender is MenuItem mnu))
-                return null;
+            if (sender is MenuItem mnu)
+            {
+                if (mnu.Parent is ContextMenu context)
+                    return context.PlacementTarget as T;
+            }
 
-            if (!(mnu.Parent is ContextMenu context))
-                return null;
-
-            return context.PlacementTarget as T;
+            return null;
         }
 
         /// <summary>
         /// Gets the inner child of type i.e. for a listbox get the inner VirtualizingStackPanel
         /// </summary>
-        public static T GetInnerChildOfType<T>(FrameworkElement element) where T : FrameworkElement
+        public static T? GetInnerChildOfType<T>(FrameworkElement element) where T : FrameworkElement
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
             {
-                FrameworkElement? child = VisualTreeHelper.GetChild(element, i) as FrameworkElement;
+                if (VisualTreeHelper.GetChild(element, i) is FrameworkElement child)
+                {
+                    if (child is T t)
+                        return t;
 
-                if (child == null)
-                    continue;
+                    T? panel = GetInnerChildOfType<T>(child);
 
-                if (child is T)
-                    return (T)child;
-
-                T panel = GetInnerChildOfType<T>(child);
-
-                if (panel != null)
-                    return panel;
+                    if (panel != null)
+                        return panel;
+                }
             }
 
             return null;
@@ -281,14 +275,17 @@ namespace SystemPlus.Windows
         /// </summary>
         public static IList<FrameworkElement> GetVisibleItems(FrameworkElement element)
         {
-            VirtualizingStackPanel theStackPanel = GetInnerChildOfType<VirtualizingStackPanel>(element);
+            VirtualizingStackPanel? theStackPanel = GetInnerChildOfType<VirtualizingStackPanel>(element);
 
             IList<FrameworkElement> visibleElements = new List<FrameworkElement>();
 
-            for (int i = 0; i < theStackPanel.Children.Count; i++)
+            if (theStackPanel != null)
             {
-                if (theStackPanel.Children[i] is FrameworkElement fe)
-                    visibleElements.Add(fe);
+                for (int i = 0; i < theStackPanel.Children.Count; i++)
+                {
+                    if (theStackPanel.Children[i] is FrameworkElement fe)
+                        visibleElements.Add(fe);
+                }
             }
 
             return visibleElements;

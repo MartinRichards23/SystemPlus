@@ -24,10 +24,7 @@ namespace SystemPlus.Windows.Controls
 
         static void OnHtmlChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            WebBrowser? webBrowser = dependencyObject as WebBrowser;
-            string? html = e.NewValue as string;
-
-            if (webBrowser != null && html != null)
+            if (dependencyObject is WebBrowser webBrowser && e.NewValue is string html)
                 webBrowser.NavigateToString(html);
         }
 

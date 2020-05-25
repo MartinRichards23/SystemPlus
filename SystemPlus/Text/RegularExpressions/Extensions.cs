@@ -9,7 +9,7 @@ namespace SystemPlus.Text.RegularExpressions
         /// </summary>
         public static string BlankOut(this Regex regex, string input, char blankChar = ' ')
         {
-            MatchEvaluator mv = m => new string(blankChar, m.Length);
+            string mv(Match m) => new string(blankChar, m.Length);
             return regex.Replace(input, mv);
         }
     }

@@ -55,7 +55,6 @@ namespace SystemPlus.Data
                 case SqlDbType.DateTime2: return typeof(DateTime);
                 case SqlDbType.DateTimeOffset: return typeof(DateTimeOffset);
                 case SqlDbType.Time: return typeof(TimeSpan);
-
                 default: throw new Exception("Unknown data type " + sqlType.ToString());
             }
         }

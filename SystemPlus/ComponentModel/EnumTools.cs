@@ -35,12 +35,10 @@ namespace SystemPlus.ComponentModel
 
             object[] atts = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
-            DescriptionAttribute? descriptionAttribute = atts.FirstOrDefault() as DescriptionAttribute;
+            if (atts.FirstOrDefault() is DescriptionAttribute descriptionAttribute)
+                return descriptionAttribute.Description;
 
-            if (descriptionAttribute == null)
-                return string.Empty;
-
-            return descriptionAttribute.Description;
+            return string.Empty;
         }
 
         public static InfoAttribute? GetEnumInfo(object enumValue, Type enumType)

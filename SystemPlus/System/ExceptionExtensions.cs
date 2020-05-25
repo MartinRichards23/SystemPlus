@@ -92,8 +92,8 @@ namespace SystemPlus
         {
             object? obj = ex.Data["Result"];
 
-            if (obj is T)
-                return (T)obj;
+            if (obj is T t)
+                return t;
 
             return default;
         }

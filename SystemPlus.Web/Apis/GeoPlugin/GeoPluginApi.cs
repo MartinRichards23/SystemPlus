@@ -17,17 +17,15 @@ namespace SystemPlus.Web.GeoPlugin
             request.Method = "GET";
             request.Timeout = 5000;
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                Stream receiveStream = response.GetResponseStream();
-                StreamReader sr = new StreamReader(receiveStream);
+            using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream receiveStream = response.GetResponseStream();
+            StreamReader sr = new StreamReader(receiveStream);
 
-                string data = sr.ReadToEnd();
+            string data = sr.ReadToEnd();
 
-                GeoPluginResult result = Serialization.JsonDeserialize<GeoPluginResult>(data);
+            GeoPluginResult result = Serialization.JsonDeserialize<GeoPluginResult>(data);
 
-                return result;
-            }
+            return result;
         }
 
         //public GeoPluginResult GetIpInfoData(string ipAddress)

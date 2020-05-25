@@ -144,7 +144,7 @@ namespace SystemPlus.Data
         /// <summary>
         /// Gets value as compressed byte[] and returns it deserialized
         /// </summary>
-        public static T GetCompressedJsonValue<T>(this IDataReader reader, string name) where T : class, new()
+        public static T? GetCompressedJsonValue<T>(this IDataReader reader, string name) where T : class, new()
         {
             byte[] compressedData = reader.GetValue<byte[]>(name);
 
@@ -187,7 +187,7 @@ namespace SystemPlus.Data
         /// <summary>
         /// Gets value as string and returns it deserialized
         /// </summary>
-        public static T GetJsonValue<T>(this IDataReader reader, string name) where T : class, new()
+        public static T? GetJsonValue<T>(this IDataReader reader, string name) where T : class, new()
         {
             string json = reader.GetValue<string>(name);
 

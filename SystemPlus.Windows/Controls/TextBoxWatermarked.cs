@@ -41,9 +41,11 @@ namespace SystemPlus.Windows.Controls
 
         static void OnWatermarkChanged(DependencyObject sender, DependencyPropertyChangedEventArgs ea)
         {
-            TextBoxWatermarked tbw = sender as TextBoxWatermarked;
-            if (tbw == null || !tbw.IsLoaded) return; //needed to check IsLoaded so that we didn't dive into the ShowWatermark() routine before initial Bindings had been made
-            tbw.ShowWatermark();
+            //need to check IsLoaded so that we didn't dive into the ShowWatermark() routine before initial Bindings had been made
+            if (sender is TextBoxWatermarked tbw && tbw.IsLoaded)
+                tbw.ShowWatermark();
+
+            return; 
         }
 
         void ShowWatermark()

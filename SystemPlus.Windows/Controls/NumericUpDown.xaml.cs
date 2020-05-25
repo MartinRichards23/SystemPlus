@@ -162,7 +162,7 @@ namespace SystemPlus.Windows.Controls
             }
         }
 
-        void btnUp_Click(object sender, RoutedEventArgs e)
+        void BtnUp_Click(object sender, RoutedEventArgs e)
         {
             double? origVal = Value;
 
@@ -172,7 +172,7 @@ namespace SystemPlus.Windows.Controls
                 OnValueChanged();
         }
 
-        void btnDown_Click(object sender, RoutedEventArgs e)
+        void BtnDown_Click(object sender, RoutedEventArgs e)
         {
             double? origVal = Value;
 
@@ -187,11 +187,10 @@ namespace SystemPlus.Windows.Controls
             if (!IsLoaded)
                 return;
 
-            if (ValueChanged != null)
-                ValueChanged(this, new EventArgs());
+            ValueChanged?.Invoke(this, new EventArgs());
         }
 
-        void numericTextbox1_PreviewKeyDown(object sender, KeyEventArgs e)
+        void NumericTextbox1_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             bool isNumPadNumeric = (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9);
             bool isNumeric = (e.Key >= Key.D0 && e.Key <= Key.D9);
@@ -239,7 +238,7 @@ namespace SystemPlus.Windows.Controls
             e.Handled = true;
         }
 
-        void txtValue_TextChanged(object sender, TextChangedEventArgs e)
+        void TxtValue_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (UpdateOnTextChanged && valid)
             {

@@ -17,7 +17,7 @@ namespace SystemPlus.ComponentModel
         double progress = 0;
         ProgressTokenState state = ProgressTokenState.Normal;
         readonly DateTime startTime = DateTime.UtcNow;
-        CancellationTokenSource cancelTokenSource;
+        CancellationTokenSource? cancelTokenSource;
 
         ProgressExceptionHandler exceptionHandler;
 

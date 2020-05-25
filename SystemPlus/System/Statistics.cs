@@ -26,7 +26,7 @@ namespace SystemPlus
                 sumOfDerivation += (value) * (value);
             }
 
-            average = average / count;
+            average /= count;
 
             double sumOfDerivationAverage = sumOfDerivation / count;
             return sumOfDerivationAverage - (average * average);

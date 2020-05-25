@@ -21,14 +21,12 @@ namespace SystemPlus.Web.Google
             if (string.IsNullOrWhiteSpace(response))
                 return false;
 
-            using (WebClient client = new WebClient())
-            {
-                string googleReply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", privateKey, response));
+            using WebClient client = new WebClient();
+            string googleReply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", privateKey, response));
 
-                ReCaptchaClass captchaResponse = Serialization.JsonDeserialize<ReCaptchaClass>(googleReply);
+            ReCaptchaClass captchaResponse = Serialization.JsonDeserialize<ReCaptchaClass>(googleReply);
 
-                return captchaResponse.Success;
-            }
+            return captchaResponse.Success;
         }
     }
 

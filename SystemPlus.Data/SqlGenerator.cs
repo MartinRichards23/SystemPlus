@@ -155,71 +155,69 @@ namespace SystemPlus.Data
         {
             string sql = string.Format("sp_help '{0}'", tableName);
 
-            using (SqlCommand cmd = new SqlCommand(sql, conn))
-            using (SqlDataReader rdr = cmd.ExecuteReader())
+            using SqlCommand cmd = new SqlCommand(sql, conn);
+            using SqlDataReader rdr = cmd.ExecuteReader();
+            rdr.Read();
+
+            string name = rdr.GetValue<string>("Name");
+            SqlTable table = new SqlTable(name)
+            { };
+
+            rdr.NextResult();
+            while (rdr.Read())
             {
-                rdr.Read();
-
-                string name = rdr.GetValue<string>("Name");
-                SqlTable table = new SqlTable(name)
-                { };
-
-                rdr.NextResult();
-                while (rdr.Read())
+                SqlColumn col = new SqlColumn()
                 {
-                    SqlColumn col = new SqlColumn()
-                    {
-                        Name = rdr.GetValue<string>("Column_name"),
-                        DataType = EnumTools.Parse(rdr.GetValue<string>("Type"), SqlDbType.NVarChar),
-                        Computed = rdr.GetValue<string>("Computed") == "yes",
-                        Length = rdr.GetValue<int>("Length"),
-                        Nullable = rdr.GetValue<string>("Nullable") == "yes",
-                    };
-                    col.SetValues();
+                    Name = rdr.GetValue<string>("Column_name"),
+                    DataType = EnumTools.Parse(rdr.GetValue<string>("Type"), SqlDbType.NVarChar),
+                    Computed = rdr.GetValue<string>("Computed") == "yes",
+                    Length = rdr.GetValue<int>("Length"),
+                    Nullable = rdr.GetValue<string>("Nullable") == "yes",
+                };
+                col.SetValues();
 
-                    table.Columns.Add(col);
-                }
-
-                rdr.NextResult();
-                while (rdr.Read())
-                {
-                    string identityCol = rdr.GetValue<string>("Identity");
-
-                    if (!string.IsNullOrWhiteSpace(identityCol))
-                    {
-                        SqlColumn col = table.Columns.FirstOrDefault(c => c.Name == identityCol);
-
-                        if (col != null)
-                            col.IsIdentity = true;
-                    }
-                }
-
-                rdr.NextResult();
-                // rowguidcol table
-
-                rdr.NextResult();
-
-                rdr.NextResult();
-                // indexes table
-                while (rdr.Read())
-                {
-                    if (rdr.HasColumn("index_name"))
-                    {
-                        string indexName = rdr.GetValue<string>("index_name");
-                        string indexDescription = rdr.GetValue<string>("index_description");
-                        string indexKeys = rdr.GetValue<string>("index_keys");
-
-                        if (indexDescription.Contains("primary key"))
-                        {
-                            string[] colNames = indexKeys.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
-
-                            table.Columns.Where(c => colNames.Contains(c.Name)).ForEach(c => c.IsPrimaryKey = true);
-                        }
-                    }
-                }
-
-                return table;
+                table.Columns.Add(col);
             }
+
+            rdr.NextResult();
+            while (rdr.Read())
+            {
+                string identityCol = rdr.GetValue<string>("Identity");
+
+                if (!string.IsNullOrWhiteSpace(identityCol))
+                {
+                    SqlColumn col = table.Columns.FirstOrDefault(c => c.Name == identityCol);
+
+                    if (col != null)
+                        col.IsIdentity = true;
+                }
+            }
+
+            rdr.NextResult();
+            // rowguidcol table
+
+            rdr.NextResult();
+
+            rdr.NextResult();
+            // indexes table
+            while (rdr.Read())
+            {
+                if (rdr.HasColumn("index_name"))
+                {
+                    string indexName = rdr.GetValue<string>("index_name");
+                    string indexDescription = rdr.GetValue<string>("index_description");
+                    string indexKeys = rdr.GetValue<string>("index_keys");
+
+                    if (indexDescription.Contains("primary key"))
+                    {
+                        string[] colNames = indexKeys.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
+
+                        table.Columns.Where(c => colNames.Contains(c.Name)).ForEach(c => c.IsPrimaryKey = true);
+                    }
+                }
+            }
+
+            return table;
         }
 
         string GetSqlForTableNames()

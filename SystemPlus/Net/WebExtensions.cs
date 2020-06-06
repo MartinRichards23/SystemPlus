@@ -204,5 +204,13 @@ namespace SystemPlus.Net
             return encoding;
         }
 
+        public static void AddBasicAuthHeader(this HttpWebRequest request, string name, string password)
+        {
+            string s = $"{name}:{password}";
+            var plainTextBytes = Encoding.UTF8.GetBytes(s);
+            string base64 = Convert.ToBase64String(plainTextBytes);
+
+            request.Headers.Add("Authorization", $"Basic {base64}");
+        }
     }
 }

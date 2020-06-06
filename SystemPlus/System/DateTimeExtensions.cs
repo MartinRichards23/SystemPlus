@@ -177,5 +177,17 @@ namespace SystemPlus
             TimeSpan t = dateTime - new DateTime(1970, 1, 1);
             return (long)t.TotalSeconds;
         }
+
+        public static DateTime FromUnixTimeSeconds(long unixTime)
+        {
+            DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return epoch.AddSeconds(unixTime);
+        }
+
+        public static DateTime FromUnixTimeMilliSeconds(long unixTime)
+        {
+            DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return epoch.AddMilliseconds(unixTime);
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace SystemPlus.ComponentModel
         public string Name { get; protected set; }
         public string? Description { get; protected set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public InfoAttribute(string name)
         {

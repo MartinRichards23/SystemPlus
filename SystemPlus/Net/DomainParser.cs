@@ -167,7 +167,7 @@ namespace SystemPlus.Net
 
             public override int GetHashCode()
             {
-                return Key.GetHashCode();
+                return HashCode.Combine(Key);
             }
 
             public override string ToString()

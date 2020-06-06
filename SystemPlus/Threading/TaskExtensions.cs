@@ -10,6 +10,6 @@ namespace SystemPlus.Threading
         /// <summary>
         /// Allows an async function to be called and not awaited without the warning.
         /// </summary>
-        public static void DoNotAwait(this Task task) { }
+        public static void DoNotAwait(this Task _) { }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace SystemPlus.Text.NGrams
@@ -59,7 +60,7 @@ namespace SystemPlus.Text.NGrams
 
         public override int GetHashCode()
         {
-            return Text.GetHashCode();
+            return HashCode.Combine(Text);
         }
 
         #region Static functions

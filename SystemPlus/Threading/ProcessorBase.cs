@@ -19,10 +19,10 @@ namespace SystemPlus.Threading
         readonly IProducerConsumerCollection<T> items;
         readonly IList<Task> threads = new List<Task>();
 
-        public event Action StartedWorking;
-        public event Action StoppedWorking;
-        public event Action<T, Exception> Error;
-        public event Action<T> ItemProcessed;
+        public event Action? StartedWorking;
+        public event Action? StoppedWorking;
+        public event Action<T, Exception>? Error;
+        public event Action<T>? ItemProcessed;
 
         TimeSpan threadWait = TimeSpan.FromSeconds(1);
 

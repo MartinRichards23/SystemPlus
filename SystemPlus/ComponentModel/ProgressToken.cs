@@ -21,8 +21,8 @@ namespace SystemPlus.ComponentModel
 
         ProgressExceptionHandler exceptionHandler;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public event ProgressTokenCancelledHandler Cancelled;
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public event ProgressTokenCancelledHandler? Cancelled;
 
         #endregion
 

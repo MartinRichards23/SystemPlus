@@ -50,7 +50,7 @@ namespace SystemPlus.Windows.Controls
             Token.CancelToken.ThrowIfCancellationRequested();
         }
 
-        void btnCancel_Click(object sender, RoutedEventArgs e)
+        void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             Token.Cancel();
         }

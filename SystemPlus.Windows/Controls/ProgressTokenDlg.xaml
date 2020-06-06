@@ -17,7 +17,7 @@
         <!--<TextBlock Height="23" HorizontalAlignment="Left" Margin="12,0,0,72" Text="{Binding Path=Title}" VerticalAlignment="Bottom" />-->
         <TextBlock Height="23" Margin="12,0,99,43" Text="{Binding Path=Status}"  VerticalAlignment="Bottom" />
 
-        <Button Content="Cancel" Height="23" Margin="0,0,12,43" Name="btnCancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="82" Click="btnCancel_Click" />
+        <Button Content="Cancel" Height="23" Margin="0,0,12,43" Name="btnCancel" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="82" Click="BtnCancel_Click" />
 
         <ProgressBar Height="25" Margin="12,0,12,12" Name="progressBar1" Value="{Binding Path=Progress}" VerticalAlignment="Bottom" IsIndeterminate="{Binding Path=IsIndeterminate}" />
         <TextBlock Name="txtPercent" Height="23" Width="100" Margin="0,0,0,14" Text="{Binding Path=Progress, StringFormat='{}{0:0}%'}" Visibility="{Binding Path=IsIndeterminate, Converter={StaticResource boolToVis}}" VerticalAlignment="Bottom" TextAlignment="Center" />

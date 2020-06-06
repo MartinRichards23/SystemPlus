@@ -16,17 +16,13 @@ namespace SystemPlus.IO
 
             if (compression == CompressionType.GZip)
             {
-                using (Stream stream = new GZipStream(baseStream, CompressionMode.Compress, true))
-                {
-                    stream.Write(data, 0, data.Length);
-                }
+                using Stream stream = new GZipStream(baseStream, CompressionMode.Compress, true);
+                stream.Write(data, 0, data.Length);
             }
             else
             {
-                using (Stream stream = new DeflateStream(baseStream, CompressionMode.Compress, true))
-                {
-                    stream.Write(data, 0, data.Length);
-                }
+                using Stream stream = new DeflateStream(baseStream, CompressionMode.Compress, true);
+                stream.Write(data, 0, data.Length);
             }
 
             // only safe to read after deflate closed
@@ -38,11 +34,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static byte[] Compress(byte[] data, CompressionType compression = CompressionType.GZip)
         {
-            using (MemoryStream ms = CompressToStream(data, compression))
-            {
-                // only safe to read after deflate closed
-                return ms.ToArray();
-            }
+            using MemoryStream ms = CompressToStream(data, compression);
+            // only safe to read after deflate closed
+            return ms.ToArray();
         }
 
         /// <summary>
@@ -52,21 +46,19 @@ namespace SystemPlus.IO
         {
             if (compression == CompressionType.GZip)
             {
-                using (Stream zip = new GZipStream(stream, CompressionMode.Decompress))
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    zip.CopyTo(memoryStream);
-                    return memoryStream.ToArray();
-                }
+                using Stream zip = new GZipStream(stream, CompressionMode.Decompress);
+                using MemoryStream memoryStream = new MemoryStream();
+
+                zip.CopyTo(memoryStream);
+                return memoryStream.ToArray();
             }
             else
             {
-                using (Stream zip = new DeflateStream(stream, CompressionMode.Decompress))
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    zip.CopyTo(memoryStream);
-                    return memoryStream.ToArray();
-                }
+                using Stream zip = new DeflateStream(stream, CompressionMode.Decompress);
+                using MemoryStream memoryStream = new MemoryStream();
+
+                zip.CopyTo(memoryStream);
+                return memoryStream.ToArray();
             }
 
         }
@@ -76,10 +68,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static byte[] Decompress(byte[] data, CompressionType compression = CompressionType.GZip)
         {
-            using (MemoryStream stream = new MemoryStream(data))
-            {
-                return Decompress(stream, compression);
-            }
+            using MemoryStream stream = new MemoryStream(data);
+
+            return Decompress(stream, compression);
         }
 
         public static bool CheckMagicNumberGZip(byte[] buffer)

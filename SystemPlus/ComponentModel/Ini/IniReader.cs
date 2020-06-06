@@ -278,27 +278,24 @@ namespace SystemPlus.ComponentModel.Ini
             if (!File.Exists(filePath))
                 return;
 
-            using (FileStream fs = File.OpenRead(filePath))
-            using (StreamReader sr = new StreamReader(fs))
-            {
-                Load(sr);
-            }
+            using FileStream fs = File.OpenRead(filePath);
+            using StreamReader sr = new StreamReader(fs);
+
+            Load(sr);
         }
 
         public void Load(string data)
         {
-            using (StringReader sr = new StringReader(data))
-            {
-                Load(sr);
-            }
+            using StringReader sr = new StringReader(data);
+
+            Load(sr);
         }
 
         public void Load(Stream data)
         {
             using (StreamReader sr = new StreamReader(data))
-            {
-                Load(sr);
-            }
+
+            Load(sr);
         }
 
         public void Load(TextReader reader)

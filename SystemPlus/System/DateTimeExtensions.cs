@@ -189,5 +189,11 @@ namespace SystemPlus
             DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return epoch.AddMilliseconds(unixTime);
         }
+
+        public static bool IsOlderThanUTC(this DateTime dateTime, TimeSpan time)
+        {
+            TimeSpan age = DateTime.UtcNow - dateTime;
+            return time > age;
+        }
     }
 }

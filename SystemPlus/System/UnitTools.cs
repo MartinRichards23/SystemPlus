@@ -8,16 +8,8 @@ namespace SystemPlus
     public static class UnitTools
     {
         public const double YardsInMile = 1760;
-
-        public static double ConvertMilesToMetres(double miles)
-        {
-            return miles * 1.609344;
-        }
-
-        public static double ConvertMetresToMiles(double metres)
-        {
-            return metres / 1.609344;
-        }
+        public const double KilometresInMile = 1.609344;
+        public const double MetresInYard = 0.9144;
 
         public static string FormatMetres(double metres, bool metric)
         {
@@ -61,14 +53,24 @@ namespace SystemPlus
             }
         }
 
-        public static double ConvertMilesToKilometers(double miles)
+        public static double ConvertMilesToKilometres(double miles)
         {
-            return miles * 1.609344;
+            return miles * KilometresInMile;
         }
 
-        public static double ConvertKilometersToMiles(double kilometers)
+        public static double ConvertYardsToMetres(double yards)
         {
-            return kilometers * 0.621371192;
+            return yards * MetresInYard;
+        }
+
+        public static double ConvertKilometresToMiles(double km)
+        {
+            return km / KilometresInMile;
+        }
+
+        public static double ConvertMetresToYards(double metres)
+        {
+            return metres / MetresInYard;
         }
 
         public static double ConvertYardsToMiles(double yards)
@@ -80,16 +82,5 @@ namespace SystemPlus
         {
             return miles * YardsInMile;
         }
-
-        public static double ConvertYardsToMetres(double yards)
-        {
-            return yards / 1.0936133;
-        }
-
-        public static double ConvertMetresToYards(double metres)
-        {
-            return metres * 1.0936133;
-        }
-
     }
 }

@@ -6,7 +6,7 @@ namespace SystemPlus
     /// <summary>
     /// Various statistics helpers
     /// </summary>
-    public class Statistics
+    public static class Statistics
     {
         public static double CalcStandardDeviation(IEnumerable<double> doubleList)
         {

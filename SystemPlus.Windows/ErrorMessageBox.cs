@@ -8,7 +8,7 @@ namespace SystemPlus.Windows
     /// <summary>
     /// Shows error messageboxes
     /// </summary>
-    public class ErrorMessageBox
+    public static class ErrorMessageBox
     {
         public static void Show(Exception error)
         {
@@ -29,9 +29,9 @@ namespace SystemPlus.Windows
             if (error is WebException webEx)
             {
                 if (webEx.Response is HttpWebResponse response)
-                    text = string.Format("An internet problem has occurred, code: {0}", response.StatusCode);
+                    text = $"An internet problem has occurred, code: {response.StatusCode}";
                 else
-                    text = string.Format("An internet problem has occurred, code: {0}", webEx.Status);
+                    text = $"An internet problem has occurred, code: {webEx.Status}";
             }
             else if (error is ArgumentNullException || error is NullReferenceException || error is ArgumentOutOfRangeException || error is IndexOutOfRangeException)
             {
@@ -52,7 +52,7 @@ namespace SystemPlus.Windows
             Show(message, ReflectionExtensions.ProductName ?? string.Empty);
         }
 
-        protected static void Show(string text, string title)
+        static void Show(string text, string title)
         {
             MessageBoxTools.InvokeShow(text, title, MessageBoxButton.OK, MessageBoxImage.Error);
         }

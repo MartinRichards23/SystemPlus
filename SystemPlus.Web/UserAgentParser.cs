@@ -110,7 +110,7 @@ namespace SystemPlus.Web
         /// <summary>
         /// Construct a UserAgent instance 
         /// </summary>
-        public UserAgent(string family, string major, string minor, string patch)
+        public UserAgent(string? family, string? major, string? minor, string? patch)
         {
             Family = family;
             Major = major;
@@ -121,19 +121,19 @@ namespace SystemPlus.Web
         /// <summary>
         /// The family of user agent
         /// </summary>
-        public string Family { get; }
+        public string? Family { get; }
         /// <summary>
         /// Major version of the user agent, if available
         /// </summary>
-        public string Major { get; }
+        public string? Major { get; }
         /// <summary>
         /// Minor version of the user agent, if available
         /// </summary>
-        public string Minor { get; }
+        public string? Minor { get; }
         /// <summary>
         /// Patch version of the user agent, if available
         /// </summary>
-        public string Patch { get; }
+        public string? Patch { get; }
 
         /// <summary>
         /// The user agent as a readbale string
@@ -257,7 +257,7 @@ namespace SystemPlus.Web
         private readonly Func<string, Device> _deviceParser;
         private readonly Func<string, UserAgent> _userAgentParser;
 
-        private Parser(MinimalYamlParser yamlParser, ParserOptions options)
+        private Parser(MinimalYamlParser yamlParser, ParserOptions? options)
         {
             const string other = "Other";
 
@@ -279,7 +279,7 @@ namespace SystemPlus.Web
         /// <param name="yaml">a string containing yaml definitions of reg-ex</param>
         /// <param name="parserOptions">specifies the options for the parser</param>
         /// <returns>A <see cref="Parser"/> instance parsing user agent strings based on the regexes defined in the yaml string</returns>
-        public static Parser FromYaml(string yaml, ParserOptions parserOptions = null)
+        public static Parser FromYaml(string yaml, ParserOptions? parserOptions = null)
         {
             return new Parser(new MinimalYamlParser(yaml), parserOptions);
         }
@@ -290,7 +290,7 @@ namespace SystemPlus.Web
         /// </summary>
         /// <param name="parserOptions">specifies the options for the parser</param>
         /// <returns></returns>
-        public static Parser GetDefault(ParserOptions parserOptions = null)
+        public static Parser GetDefault(ParserOptions? parserOptions = null)
         {
             using Stream stream = typeof(Parser).GetTypeInfo().Assembly.GetManifestResourceStream("SystemPlus.Web.regexes.yaml");
             using StreamReader reader = new StreamReader(stream);
@@ -372,7 +372,7 @@ namespace SystemPlus.Web
                 return Parsers.Device(regex, device, brand, model);
             }
 
-            private Regex Regex(Func<string, string> indexer, string key, string regexFlag = null)
+            private Regex Regex(Func<string, string> indexer, string key, string? regexFlag = null)
             {
                 string pattern = indexer("regex");
                 if (pattern == null)
@@ -383,7 +383,7 @@ namespace SystemPlus.Web
                 // proceeding.
 
                 if (pattern.IndexOf(@"\_", StringComparison.Ordinal) >= 0)
-                    pattern = pattern.Replace(@"\_", "_");
+                    pattern = pattern.Replace(@"\_", "_", StringComparison.InvariantCulture);
 
                 // TODO: potentially allow parser to specify e.g. to use 
                 // compiled regular expressions which are faster but increase 
@@ -468,14 +468,14 @@ namespace SystemPlus.Web
                 return (m, num) =>
                 {
                     string finalString = replacement;
-                    if (finalString.Contains("$"))
+                    if (finalString.Contains("$", StringComparison.InvariantCulture))
                     {
                         GroupCollection groups = m.Groups;
                         for (int i = 0; i < _allReplacementTokens.Length; i++)
                         {
                             int tokenNumber = i + 1;
                             string token = _allReplacementTokens[i];
-                            if (finalString.Contains(token))
+                            if (finalString.Contains(token, StringComparison.InvariantCulture))
                             {
                                 string replacementText = string.Empty;
                                 Group group;
@@ -484,7 +484,7 @@ namespace SystemPlus.Web
 
                                 finalString = ReplaceFunction(finalString, replacementText, token);
                             }
-                            if (!finalString.Contains("$"))
+                            if (!finalString.Contains("$", StringComparison.InvariantCulture))
                                 break;
                         }
                     }
@@ -616,7 +616,7 @@ namespace SystemPlus.Web
             foreach (string line in lines)
             {
                 lineCount++;
-                if (line.Trim().StartsWith("#")) //skipping comments
+                if (line.Trim().StartsWith("#", StringComparison.InvariantCulture)) //skipping comments
                     continue;
                 if (line.Trim().Length == 0)
                     continue;
@@ -624,7 +624,7 @@ namespace SystemPlus.Web
                 //is this a new mapping entity
                 if (line[0] != ' ')
                 {
-                    int indexOfMappingColon = line.IndexOf(':');
+                    int indexOfMappingColon = line.IndexOf(':', StringComparison.InvariantCulture);
                     if (indexOfMappingColon == -1)
                         throw new ArgumentException("YamlParsing: Expecting mapping entry to contain a ':', at line " + lineCount);
                     string name = line.Substring(0, indexOfMappingColon).Trim();
@@ -644,7 +644,7 @@ namespace SystemPlus.Web
                     seqLine = seqLine.Substring(1);
                 }
 
-                int indexOfColon = seqLine.IndexOf(':');
+                int indexOfColon = seqLine.IndexOf(':', StringComparison.InvariantCulture);
                 if (indexOfColon == -1)
                     throw new ArgumentException("YamlParsing: Expecting scalar mapping entry to contain a ':', at line " + lineCount);
 
@@ -656,9 +656,9 @@ namespace SystemPlus.Web
 
         private static string ReadQuotedValue(string value)
         {
-            if (value.StartsWith("'") && value.EndsWith("'"))
+            if (value.StartsWith("'") && value.EndsWith("'", StringComparison.InvariantCulture))
                 return value[1..^1];
-            if (value.StartsWith("\"") && value.EndsWith("\""))
+            if (value.StartsWith("\"") && value.EndsWith("\"", StringComparison.InvariantCulture))
                 return value[1..^1];
             return value;
         }

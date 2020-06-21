@@ -107,7 +107,7 @@ namespace SystemPlus.Data
                 else
                     l = "max";
 
-                sqlDataType += string.Format("({0})", l);
+                sqlDataType += $"({l})";
             }
             else if (dataType == SqlDbType.Char || dataType == SqlDbType.VarChar)
             {
@@ -117,7 +117,7 @@ namespace SystemPlus.Data
                 else
                     l = "max";
 
-                sqlDataType += string.Format("({0})", l);
+                sqlDataType += $"({l})";
             }
 
             return sqlDataType;

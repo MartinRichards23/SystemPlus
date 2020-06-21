@@ -84,7 +84,7 @@ namespace SystemPlus.ComponentModel.Logging
                 {
                     if (writeHeader)
                     {
-                        string header = WriteLogHeader();
+                        string header = MakeLogHeader();
                         w.WriteLine(header);
                         w.WriteLine();
                     }
@@ -236,7 +236,7 @@ namespace SystemPlus.ComponentModel.Logging
                 if (buffer.Length < 1)
                     return;
 
-                string header = WriteLogHeader();
+                string header = MakeLogHeader();
 
                 // see if there is data to send
                 body = header + "\r\n\r\n" + buffer;

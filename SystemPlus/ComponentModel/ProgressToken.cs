@@ -19,7 +19,7 @@ namespace SystemPlus.ComponentModel
         readonly DateTime startTime = DateTime.UtcNow;
         CancellationTokenSource? cancelTokenSource;
 
-        ProgressExceptionHandler exceptionHandler;
+        ProgressExceptionHandler? exceptionHandler;
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public event ProgressTokenCancelledHandler? Cancelled;

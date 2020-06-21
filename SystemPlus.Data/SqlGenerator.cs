@@ -153,7 +153,7 @@ namespace SystemPlus.Data
 
         SqlTable GetTableSchema(SqlConnection conn, string tableName)
         {
-            string sql = string.Format("sp_help '{0}'", tableName);
+            string sql = $"sp_help '{tableName}'";
 
             using SqlCommand cmd = new SqlCommand(sql, conn);
             using SqlDataReader rdr = cmd.ExecuteReader();
@@ -208,7 +208,7 @@ namespace SystemPlus.Data
                     string indexDescription = rdr.GetValue<string>("index_description");
                     string indexKeys = rdr.GetValue<string>("index_keys");
 
-                    if (indexDescription.Contains("primary key"))
+                    if (indexDescription.Contains("primary key", StringComparison.InvariantCultureIgnoreCase))
                     {
                         string[] colNames = indexKeys.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -222,7 +222,7 @@ namespace SystemPlus.Data
 
         string GetSqlForTableNames()
         {
-            return string.Format("SELECT TABLE_NAME FROM .INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'");
+            return "SELECT TABLE_NAME FROM .INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
         }
 
         void WriteModelClass(TextWriter tw, SqlTable table)
@@ -240,7 +240,7 @@ namespace SystemPlus.Data
 
         void WriteReader(TextWriter tw, SqlTable table)
         {
-            string methodName = string.Format("Read{0}", table.ClassName);
+            string methodName = $"Read{table.ClassName}";
 
             tw.WriteLine("public {0} {1}(IDataReader rdr)", table.ClassName, methodName);
             tw.WriteLine("{");
@@ -260,7 +260,7 @@ namespace SystemPlus.Data
 
         void WriteAdd(TextWriter tw, SqlTable table)
         {
-            string methodName = string.Format("Add{0}", table.ClassName);
+            string methodName = $"Add{table.ClassName}";
 
             tw.WriteLine("public void {0}({1} {2})", methodName, table.ClassName, table.InstanceName);
             tw.WriteLine("{");
@@ -303,7 +303,7 @@ namespace SystemPlus.Data
                 if (col.IsIdentity)
                     continue;
 
-                paramaters.Add(string.Format("{0} {1}", col.SqlParamName, col.SqlDataType));
+                paramaters.Add($"{col.SqlParamName} {col.SqlDataType}");
                 columnNames.Add(col.Name);
                 paramNames.Add(col.SqlParamName);
             }
@@ -312,7 +312,7 @@ namespace SystemPlus.Data
             string allColNames = string.Join(", ", columnNames);
             string allParamNames = string.Join(", ", paramNames);
 
-            string methodName = string.Format("Add{0}", table.ClassName);
+            string methodName = $"Add{table.ClassName}";
 
             tw.WriteLine("CREATE PROCEDURE [dbo].[{0}]", methodName);
             tw.WriteLine(allParams);
@@ -329,12 +329,12 @@ namespace SystemPlus.Data
 
         void WriteGet(TextWriter tw, SqlTable table)
         {
-            string methodName = string.Format("Get{0}", table.ClassName);
+            string methodName = $"Get{table.ClassName}";
             string parameters = string.Empty;
 
             foreach (SqlColumn col in table.PrimaryKeyColumns)
             {
-                parameters += string.Format("{0} {1},", col.PropertyTypeName, col.InstanceName);
+                parameters += $"{col.PropertyTypeName} {col.InstanceName},";
             }
 
             parameters = parameters.Trim(',');
@@ -371,14 +371,14 @@ namespace SystemPlus.Data
 
             foreach (SqlColumn col in table.PrimaryKeyColumns)
             {
-                paramaters.Add(string.Format("{0} {1}", col.SqlParamName, col.SqlDataType));
-                valEquals.Add(string.Format("{0}={1}", col.Name, col.SqlParamName));
+                paramaters.Add($"{col.SqlParamName} {col.SqlDataType}");
+                valEquals.Add($"{col.Name}={col.SqlParamName}");
             }
 
             string allParams = string.Join(",\r\n", paramaters);
             string allValEquals = string.Join(" AND ", valEquals);
 
-            string methodName = string.Format("Get{0}", table.ClassName);
+            string methodName = $"Get{table.ClassName}";
 
             tw.WriteLine("CREATE PROCEDURE [dbo].[{0}]", methodName);
             tw.WriteLine(allParams);
@@ -394,7 +394,7 @@ namespace SystemPlus.Data
 
         void WriteGetAll(TextWriter tw, SqlTable table)
         {
-            string methodName = string.Format("GetAll{0}", table.Name);
+            string methodName = $"GetAll{table.Name}";
 
             tw.WriteLine("public IList<{0}> {1}()", table.ClassName, methodName);
             tw.WriteLine("{");
@@ -422,7 +422,7 @@ namespace SystemPlus.Data
 
         void WriteGetAllSql(TextWriter tw, SqlTable table)
         {
-            string methodName = string.Format("GetAll{0}", table.Name);
+            string methodName = $"GetAll{table.Name}";
 
             tw.WriteLine("CREATE PROCEDURE [dbo].[{0}]", methodName);
 
@@ -437,7 +437,7 @@ namespace SystemPlus.Data
 
         void WriteUpdate(TextWriter tw, SqlTable table)
         {
-            string methodName = string.Format("Update{0}", table.ClassName);
+            string methodName = $"Update{table.ClassName}";
 
             tw.WriteLine("public void {0}({1} {2})", methodName, table.ClassName, table.InstanceName);
             tw.WriteLine("{");
@@ -476,19 +476,19 @@ namespace SystemPlus.Data
                 if (col.Computed)
                     continue;
 
-                paramaters.Add(string.Format("{0} {1}", col.SqlParamName, col.SqlDataType));
+                paramaters.Add($"{col.SqlParamName} {col.SqlDataType}");
 
                 if (col.IsPrimaryKey)
-                    valEquals.Add(string.Format("{0}={1}", col.Name, col.SqlParamName));
+                    valEquals.Add($"{col.Name}={col.SqlParamName}");
                 else
-                    seters.Add(string.Format("{0}={1}", col.Name, col.SqlParamName));
+                    seters.Add($"{col.Name}={col.SqlParamName}");
             }
 
             string allParams = string.Join(",\r\n", paramaters);
             string allseters = string.Join(",\r\n", seters);
             string allvalEquals = string.Join(" AND ", valEquals);
 
-            string methodName = string.Format("Update{0}", table.ClassName);
+            string methodName = $"Update{table.ClassName}";
 
             tw.WriteLine("CREATE PROCEDURE [dbo].[{0}]", methodName);
             tw.WriteLine(allParams);
@@ -506,12 +506,12 @@ namespace SystemPlus.Data
 
         void WriteDelete(TextWriter tw, SqlTable table)
         {
-            string methodName = string.Format("Delete{0}", table.ClassName);
+            string methodName = $"Delete{table.ClassName}";
             string parameters = string.Empty;
 
             foreach (SqlColumn col in table.PrimaryKeyColumns)
             {
-                parameters += string.Format("{0} {1},", col.PropertyTypeName, col.InstanceName);
+                parameters += $"{col.PropertyTypeName} {col.InstanceName},";
             }
 
             parameters = parameters.Trim(',');
@@ -545,15 +545,15 @@ namespace SystemPlus.Data
             {
                 if (col.IsPrimaryKey)
                 {
-                    paramaters.Add(string.Format("{0} {1}", col.SqlParamName, col.SqlDataType));
-                    valEquals.Add(string.Format("{0}={1}", col.Name, col.SqlParamName));
+                    paramaters.Add($"{col.SqlParamName} {col.SqlDataType}");
+                    valEquals.Add($"{col.Name}={col.SqlParamName}");
                 }
             }
 
             string allParams = string.Join(",\r\n", paramaters);
             string allvalEquals = string.Join(" AND ", valEquals);
 
-            string methodName = string.Format("Delete{0}", table.ClassName);
+            string methodName = $"Delete{table.ClassName}";
 
             tw.WriteLine("CREATE PROCEDURE [dbo].[{0}]", methodName);
             tw.WriteLine(allParams);

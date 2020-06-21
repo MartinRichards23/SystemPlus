@@ -21,7 +21,7 @@ namespace SystemPlus.ComponentModel.Logging
         {
         }
 
-        protected string WriteLogHeader()
+        protected static string MakeLogHeader()
         {
             StringBuilder writer = new StringBuilder();
 

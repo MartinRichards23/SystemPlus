@@ -22,7 +22,7 @@ namespace SystemPlus.Web.Google
                 return false;
 
             using WebClient client = new WebClient();
-            string googleReply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", privateKey, response));
+            string googleReply = client.DownloadString($"https://www.google.com/recaptcha/api/siteverify?secret={privateKey}&response={response}");
 
             ReCaptchaClass captchaResponse = Serialization.JsonDeserialize<ReCaptchaClass>(googleReply);
 

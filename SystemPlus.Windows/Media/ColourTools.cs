@@ -25,12 +25,12 @@ namespace SystemPlus.Windows.Media
 
         public static string ColorToHtml(this Color col)
         {
-            return string.Format("rgba({0},{1},{2},{3:f2})", col.R, col.G, col.B, col.ScA);
+            return $"rgba({col.R},{col.G},{col.B},{col.ScA:f2})";
         }
 
         public static string ColorToHexRgb(this Color col)
         {
-            return string.Format("#{0:X2}{1:X2}{2:X2}", col.R, col.G, col.B);
+            return $"#{col.R:X2}{col.G:X2}{col.B:X2}";
         }
 
         public static Color ColorFromText(string input)

@@ -293,8 +293,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public void Load(Stream data)
         {
-            using (StreamReader sr = new StreamReader(data))
-
+            using StreamReader sr = new StreamReader(data);
             Load(sr);
         }
 

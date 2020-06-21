@@ -7,7 +7,7 @@ namespace SystemPlus.Windows.Controls
     /// <summary>
     /// Tools for working with the WebBrowser control
     /// </summary>
-    public class BrowserBehavior
+    public static class BrowserBehavior
     {
         public static readonly DependencyProperty HtmlProperty = DependencyProperty.RegisterAttached("Html", typeof(string), typeof(BrowserBehavior), new FrameworkPropertyMetadata(OnHtmlChanged));
 

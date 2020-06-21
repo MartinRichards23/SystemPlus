@@ -13,8 +13,8 @@ namespace SystemPlus.Windows.Controls
     {
         public static readonly DependencyProperty WaterMarkProperty = DependencyProperty.Register("Watermark", typeof(string), typeof(TextBoxWatermarked), new PropertyMetadata(OnWatermarkChanged));
 
-        bool _isWatermarked;
-        Binding _textBinding;
+        bool isWatermarked;
+        Binding? textBinding;
 
         public string Watermark
         {
@@ -52,10 +52,10 @@ namespace SystemPlus.Windows.Controls
         {
             if (string.IsNullOrEmpty(Text) && !string.IsNullOrEmpty(Watermark))
             {
-                _isWatermarked = true;
+                isWatermarked = true;
 
                 //save the existing binding so it can be restored
-                _textBinding = BindingOperations.GetBinding(this, TextProperty);
+                textBinding = BindingOperations.GetBinding(this, TextProperty);
 
                 //blank out the existing binding so we can throw in our Watermark
                 BindingOperations.ClearBinding(this, TextProperty);
@@ -70,12 +70,12 @@ namespace SystemPlus.Windows.Controls
 
         void HideWatermark()
         {
-            if (_isWatermarked)
+            if (isWatermarked)
             {
-                _isWatermarked = false;
+                isWatermarked = false;
                 ClearValue(ForegroundProperty);
                 Text = "";
-                if (_textBinding != null) SetBinding(TextProperty, _textBinding);
+                if (textBinding != null) SetBinding(TextProperty, textBinding);
             }
         }
     }

@@ -298,7 +298,7 @@ namespace SystemPlus.Text
                 if (word.Length < 3)
                     continue;
 
-                if (b.Contains(word))
+                if (b.Contains(word, StringComparison.InvariantCulture))
                 {
                     double wordWeight = word.Length / (double)a.Length;
                     score += wordWeight;

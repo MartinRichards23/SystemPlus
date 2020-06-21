@@ -230,14 +230,14 @@ namespace SystemPlus.Text
             }
             else
             {
-                return byteCount.ToString("0 B"); // Byte
+                return byteCount.ToString("0 B", CultureInfo.CurrentCulture); // Byte
             }
 
             // Divide by 1024 to get fractional value
             readable /= 1024;
 
             // Return formatted number with suffix
-            return string.Format("{0} {1}", readable.ToString(format), suffix);
+            return $"{readable.ToString(format, CultureInfo.CurrentCulture)} {suffix}";
         }
     }
 }

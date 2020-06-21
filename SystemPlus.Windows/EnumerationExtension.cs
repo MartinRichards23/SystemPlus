@@ -16,7 +16,7 @@ namespace SystemPlus.Windows
         public EnumerationExtension(Type enumType)
         {
             if (enumType == null)
-                throw new ArgumentNullException("enumType");
+                throw new ArgumentNullException(nameof(enumType));
 
             enumType = Nullable.GetUnderlyingType(enumType) ?? enumType;
 

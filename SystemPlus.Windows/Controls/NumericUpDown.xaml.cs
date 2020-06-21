@@ -15,7 +15,7 @@ namespace SystemPlus.Windows.Controls
     {
         #region Fields
 
-        public event NumberChangedEventHandler ValueChanged;
+        public event NumberChangedEventHandler? ValueChanged;
 
         //static string decimalSeparator;
         //static string negativeSign;
@@ -158,7 +158,7 @@ namespace SystemPlus.Windows.Controls
                 if (string.IsNullOrEmpty(numberFormat))
                     txtValue.Text = newVal.ToString(CultureInfo.InvariantCulture);
                 else
-                    txtValue.Text = newVal.ToString(numberFormat);
+                    txtValue.Text = newVal.ToString(numberFormat, CultureInfo.InvariantCulture);
             }
         }
 

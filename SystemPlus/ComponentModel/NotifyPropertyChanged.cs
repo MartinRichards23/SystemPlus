@@ -10,7 +10,7 @@ namespace SystemPlus.ComponentModel
     public abstract class NotifyPropertyChanged : INotifyPropertyChanged
     {
         [field: NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string name)
         {

@@ -35,12 +35,12 @@ namespace SystemPlus.ComponentModel.Logging
                 version = ReflectionExtensions.CallerVersion;
             }
 
-            filePath = string.Format("{0}\\{1} {2} {3:yyyy-MM-dd}.log", folder, name, version, DateTime.UtcNow);
+            filePath = $"{folder}\\{name} {version} {DateTime.UtcNow:yyyy-MM-dd}.log";
         }
 
         public FileLogger(string appName, string appVersion, string folder)
         {
-            filePath = string.Format("{0}\\{1} {2} {3:yyyy-MM-dd}.log", folder, appName, appVersion, DateTime.UtcNow);
+            filePath = $"{folder}\\{appName} {appVersion} {DateTime.UtcNow:yyyy-MM-dd}.log";
         }
 
         public override void WriteInfo(string message)

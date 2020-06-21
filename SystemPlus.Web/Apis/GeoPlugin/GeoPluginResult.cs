@@ -1,5 +1,8 @@
-﻿namespace SystemPlus.Web.GeoPlugin
+﻿using System;
+
+namespace SystemPlus.Web.GeoPlugin
 {
+    [Serializable]
     public class GeoPluginResult
     {
         public string? geoplugin_request { get; set; }

@@ -7,8 +7,6 @@ using System.Text.RegularExpressions;
 
 namespace SystemPlus.Web
 {
-    // https://github.com/tobie/ua-parser/tree/master/csharp
-
     /// <summary>
     /// Represents the physical device the user agent is using
     /// </summary>
@@ -62,7 +60,7 @@ namespace SystemPlus.Web
         /// <summary>
         /// Constructs an OS instance
         /// </summary>
-        public OS(string family, string major, string minor, string patch, string patchMinor)
+        public OS(string? family, string? major, string? minor, string? patch, string? patchMinor)
         {
             Family = family;
             Major = major;
@@ -74,23 +72,23 @@ namespace SystemPlus.Web
         /// <summary>
         /// The familiy of the OS
         /// </summary>
-        public string Family { get; }
+        public string? Family { get; }
         /// <summary>
         /// The major version of the OS, if available
         /// </summary>
-        public string Major { get; }
+        public string? Major { get; }
         /// <summary>
         /// The minor version of the OS, if available
         /// </summary>
-        public string Minor { get; }
+        public string? Minor { get; }
         /// <summary>
         /// The patch version of the OS, if available
         /// </summary>
-        public string Patch { get; }
+        public string? Patch { get; }
         /// <summary>
         /// The minor patch version of the OS, if available
         /// </summary>
-        public string PatchMinor { get; }
+        public string? PatchMinor { get; }
         /// <summary>
         /// A readable description of the OS
         /// </summary>
@@ -656,16 +654,16 @@ namespace SystemPlus.Web
 
         private static string ReadQuotedValue(string value)
         {
-            if (value.StartsWith("'") && value.EndsWith("'", StringComparison.InvariantCulture))
+            if (value.StartsWith("'", StringComparison.InvariantCulture) && value.EndsWith("'", StringComparison.InvariantCulture))
                 return value[1..^1];
-            if (value.StartsWith("\"") && value.EndsWith("\"", StringComparison.InvariantCulture))
+            if (value.StartsWith("\"", StringComparison.InvariantCulture) && value.EndsWith("\"", StringComparison.InvariantCulture))
                 return value[1..^1];
             return value;
         }
 
         public IEnumerable<Dictionary<string, string>> ReadMapping(string mappingName)
         {
-            if (_mappings.TryGetValue(mappingName, out Mapping mapping))
+            if (_mappings.TryGetValue(mappingName, out Mapping? mapping))
             {
                 foreach (Dictionary<string, string> s in mapping.Sequences)
                 {

@@ -32,8 +32,8 @@ namespace SystemPlus.Web.Slack
                 request.Method = "GET";
 
                 using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream receiveStream = response.GetFullResponseStream();
-                StreamReader sr = new StreamReader(receiveStream);
+                using Stream receiveStream = response.GetFullResponseStream();
+                using StreamReader sr = new StreamReader(receiveStream);
 
                 string responseMessage = sr.ReadToEnd();
 
@@ -51,12 +51,7 @@ namespace SystemPlus.Web.Slack
             }
         }
 
-        public Task SendAsync(Payload payload, string urlWithAccessToken)
-        {
-            return Task.Run(() => Send(payload, urlWithAccessToken));
-        }
-
-        public void Send(Payload payload, string urlWithAccessToken)
+        public async Task SendAsync(Payload payload, string urlWithAccessToken)
         {
             string payloadJson = Serialization.JsonSerialize(payload);
 
@@ -67,14 +62,13 @@ namespace SystemPlus.Web.Slack
                 request.KeepAlive = true;
                 request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                 request.ContentType = "application/json; charset=utf-8";
-
                 request.WriteRequestStream(payloadJson, Encoding.UTF8);
 
-                using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream receiveStream = response.GetFullResponseStream();
-                StreamReader sr = new StreamReader(receiveStream);
+                using HttpWebResponse response = await request.GetHttpResponseAsync();
+                using Stream receiveStream = response.GetFullResponseStream();
+                using StreamReader sr = new StreamReader(receiveStream);
 
-                string responseMessage = sr.ReadToEnd();
+                string responseMessage = await sr.ReadToEndAsync();
 
                 if (responseMessage != "ok")
                     throw new Exception("Slack error: " + responseMessage);
@@ -85,7 +79,7 @@ namespace SystemPlus.Web.Slack
                 {
                     Stream responseStream = ex.Response.GetResponseStream();
                     StreamReader sr = new StreamReader(responseStream);
-                    string s = sr.ReadToEnd();
+                    string s = await sr.ReadToEndAsync();
 
                     if (string.Equals(s, "No service", StringComparison.InvariantCultureIgnoreCase))
                         throw new NoServiceException();
@@ -107,9 +101,9 @@ namespace SystemPlus.Web.Slack
         /// </summary>
         public static string EscapeMessage(string message)
         {
-            message = message.Replace("&", "&amp;");
-            message = message.Replace("<", "&lt;");
-            message = message.Replace(">", "&gt;");
+            message = message.Replace("&", "&amp;", StringComparison.InvariantCulture);
+            message = message.Replace("<", "&lt;", StringComparison.InvariantCulture);
+            message = message.Replace(">", "&gt;", StringComparison.InvariantCulture);
 
             return message;
         }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using SystemPlus.IO;
 
 namespace SystemPlus.Net
@@ -21,6 +22,12 @@ namespace SystemPlus.Net
         public static HttpWebResponse GetHttpResponse(this HttpWebRequest request, CancellationToken token)
         {
             return (HttpWebResponse)request.GetResponse(token);
+        }
+
+        public static async Task<HttpWebResponse> GetHttpResponseAsync(this HttpWebRequest request)
+        {
+            WebResponse response = await request.GetResponseAsync();
+            return (HttpWebResponse)response;
         }
 
         /// <summary>

@@ -15,7 +15,7 @@ namespace SystemPlus.ComponentModel
         /// <summary>
         /// Handle exceptions called from token
         /// </summary>
-        ProgressExceptionHandler ExceptionHandler { get; set; }
+        ProgressExceptionHandler? ExceptionHandler { get; set; }
 
         /// <summary>
         /// Title of current task

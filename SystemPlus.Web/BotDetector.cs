@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SystemPlus.Web
 {
@@ -26,7 +27,7 @@ namespace SystemPlus.Web
             {
                 foreach (string bot in bots)
                 {
-                    if (userAgent.Contains(bot))
+                    if (userAgent.Contains(bot, StringComparison.InvariantCultureIgnoreCase))
                         return true;
                 }
             }

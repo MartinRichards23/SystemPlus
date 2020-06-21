@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading;
 
 namespace SystemPlus.ComponentModel
@@ -46,7 +47,7 @@ namespace SystemPlus.ComponentModel
         /// <summary>
         /// Handle exceptions called from token
         /// </summary>
-        public ProgressExceptionHandler ExceptionHandler
+        public ProgressExceptionHandler? ExceptionHandler
         {
             get { return exceptionHandler; }
             set { exceptionHandler = value; }
@@ -140,7 +141,7 @@ namespace SystemPlus.ComponentModel
 
         public void UpdateStatus(string status, params object[] args)
         {
-            Status = string.Format(status, args);
+            Status = string.Format(CultureInfo.CurrentCulture, status, args);
         }
 
         public void UpdateProgress(double value, double max)

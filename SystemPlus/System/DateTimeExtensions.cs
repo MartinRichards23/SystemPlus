@@ -32,7 +32,7 @@ namespace SystemPlus
         /// </summary>
         public static string ToFileTimeString(this DateTime datetime)
         {
-            return datetime.ToString("yyyy-MM-dd_HH-mm-ss");
+            return datetime.ToString("yyyy-MM-dd_HH-mm-ss", CultureInfo.InvariantCulture);
         }
 
         public static DateTime ParseFileTimeString(string input)
@@ -45,7 +45,7 @@ namespace SystemPlus
         /// </summary>
         public static string ToStringStandard(this DateTime datetime)
         {
-            return datetime.ToString("yyyy-MM-dd HH:mm:ss");
+            return datetime.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
         }
 
         public static DateTime ParseStringStandard(string input)
@@ -75,11 +75,11 @@ namespace SystemPlus
             string s;
 
             if (checkIsToday && localTime.Date == now.Date)
-                s = string.Format("Today {0:HH:mm}", localTime);
+                s = $"Today {localTime:HH:mm}";
             else if (localTime.Year == now.Year)
-                s = localTime.ToString("d-MMM HH:mm");
+                s = localTime.ToString("d-MMM HH:mm", CultureInfo.InvariantCulture);
             else
-                s = localTime.ToString("d-MMM-yyyy HH:mm");
+                s = localTime.ToString("d-MMM-yyyy HH:mm", CultureInfo.InvariantCulture);
 
             if (timeZone == null && addUtc)
                 s += " (UTC)";

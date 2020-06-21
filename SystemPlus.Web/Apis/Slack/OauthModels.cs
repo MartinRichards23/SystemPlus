@@ -1,5 +1,8 @@
-﻿namespace SystemPlus.Web.Slack
+﻿using System;
+
+namespace SystemPlus.Web.Slack
 {
+    [Serializable]
     public class IncomingWebhook
     {
         public string url { get; set; }
@@ -7,12 +10,14 @@
         public string configuration_url { get; set; }
     }
 
+    [Serializable]
     public class Bot
     {
         public string bot_user_id { get; set; }
         public string bot_access_token { get; set; }
     }
 
+    [Serializable]
     public class OauthReponse
     {
         public bool ok { get; set; }

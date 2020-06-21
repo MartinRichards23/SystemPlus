@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace SystemPlus.Net
 {
@@ -207,8 +208,8 @@ namespace SystemPlus.Net
             {
                 if (temp[i] == '%')
                 {
-                    temp[i + 1] = char.ToUpper(temp[i + 1]);
-                    temp[i + 2] = char.ToUpper(temp[i + 2]);
+                    temp[i + 1] = char.ToUpper(temp[i + 1], CultureInfo.InvariantCulture);
+                    temp[i + 2] = char.ToUpper(temp[i + 2], CultureInfo.InvariantCulture);
                 }
             }
             return new string(temp);

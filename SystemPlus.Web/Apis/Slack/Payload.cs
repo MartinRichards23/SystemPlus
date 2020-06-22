@@ -10,7 +10,7 @@ namespace SystemPlus.Web.Slack
     [DataContract]
     public class Payload
     {
-        [DataMember]
+        [DataMember(Name = "channel")]
         public string? channel { get; set; }
 
         [DataMember]

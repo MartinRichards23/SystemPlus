@@ -41,7 +41,7 @@ namespace SystemPlus.Windows
             public string Description { get; set; }
             public object Value { get; set; }
 
-            public event PropertyChangedEventHandler PropertyChanged;
+            public event PropertyChangedEventHandler? PropertyChanged;
 
             public override string ToString()
             {

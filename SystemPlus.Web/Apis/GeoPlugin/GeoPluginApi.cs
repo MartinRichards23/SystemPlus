@@ -18,8 +18,8 @@ namespace SystemPlus.Web.GeoPlugin
             request.Timeout = 5000;
 
             using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream receiveStream = response.GetResponseStream();
-            StreamReader sr = new StreamReader(receiveStream);
+            using Stream receiveStream = response.GetResponseStream();
+            using StreamReader sr = new StreamReader(receiveStream);
 
             string data = sr.ReadToEnd();
 
@@ -27,24 +27,5 @@ namespace SystemPlus.Web.GeoPlugin
 
             return result;
         }
-
-        //public GeoPluginResult GetIpInfoData(string ipAddress)
-        //{
-        //    string url = string.Format("https://ipinfo.io/{0}?token=23090145e61601", ipAddress);
-
-        //    HttpWebRequest request = WebRequest.CreateHttp(url);
-        //    request.Method = "GET";
-        //    request.Timeout = 5000;
-
-        //    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-        //    {
-        //        Stream receiveStream = response.GetResponseStream();
-        //        StreamReader sr = new StreamReader(receiveStream);
-
-        //        string data = sr.ReadToEnd();
-
-
-        //    }
-        //}
     }
 }

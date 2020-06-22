@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace SystemPlus.Text
@@ -24,13 +25,13 @@ namespace SystemPlus.Text
 
             if (!table.TryGetValue(x, out string[]? x1))
             {
-                x1 = Regex.Split(x.Replace(" ", ""), "([0-9]+)");
+                x1 = Regex.Split(x.Replace(" ", "", StringComparison.InvariantCulture), "([0-9]+)");
                 table.Add(x, x1);
             }
 
             if (!table.TryGetValue(y, out string[]? y1))
             {
-                y1 = Regex.Split(y.Replace(" ", ""), "([0-9]+)");
+                y1 = Regex.Split(y.Replace(" ", "", StringComparison.InvariantCulture), "([0-9]+)");
                 table.Add(y, y1);
             }
 
@@ -58,10 +59,10 @@ namespace SystemPlus.Text
         private static int PartCompare(string left, string right)
         {
             if (!int.TryParse(left, out int x))
-                return left.CompareTo(right);
+                return string.Compare(left, right, StringComparison.InvariantCulture);
 
             if (!int.TryParse(right, out int y))
-                return left.CompareTo(right);
+                return string.Compare(left, right, StringComparison.InvariantCulture);
 
             return x.CompareTo(y);
         }

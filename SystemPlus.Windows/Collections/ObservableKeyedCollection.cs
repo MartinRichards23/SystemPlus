@@ -16,10 +16,10 @@ namespace SystemPlus.Windows.Collections
         #region Fields
 
         [field: NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         [field: NonSerialized]
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
         [NonSerialized]
         readonly Dispatcher dispatcher;

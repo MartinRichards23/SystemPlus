@@ -80,7 +80,7 @@ namespace SystemPlus.Net
             if (string.IsNullOrWhiteSpace(url))
                 return false;
 
-            if (!url.Contains("."))
+            if (!url.Contains(".", StringComparison.InvariantCulture))
                 return false;
 
             return true;

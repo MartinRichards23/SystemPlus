@@ -14,7 +14,7 @@ namespace SystemPlus.ComponentModel.Logging
 
         readonly IList<ILogger> loggers = new List<ILogger>();
 
-        public event Action<MessageLevel, string?, Exception?> MessageLogged;
+        public event Action<MessageLevel, string?, Exception?>? MessageLogged;
 
         Exception? lastError;
         DateTime lastErrorTime;

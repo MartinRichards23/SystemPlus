@@ -4,7 +4,7 @@ using System.Windows.Interop;
 
 namespace SystemPlus.Windows
 {
-    public class WindowBehavior
+    public static class WindowBehavior
     {
         static readonly Type ownerType = typeof(WindowBehavior);
 

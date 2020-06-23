@@ -104,16 +104,15 @@ namespace SystemPlus.Reflection
         /// </summary>
         public static string[] GetResourceNames(this Assembly assembly, string dir)
         {
-            dir = dir.ToLower() + "/";
+            dir += "/";
 
             string strResources = assembly.GetName().Name + ".g.resources";
 
-            using (Stream stream = assembly.GetManifestResourceStream(strResources))
-            using (ResourceReader oResourceReader = new ResourceReader(stream))
-            {
-                IEnumerable<string> vResources = from p in oResourceReader.OfType<DictionaryEntry>() let strTheme = (string)p.Key where strTheme.StartsWith(dir, StringComparison.Ordinal) select strTheme;
-                return vResources.ToArray();
-            }
+            using Stream stream = assembly.GetManifestResourceStream(strResources);
+            using ResourceReader oResourceReader = new ResourceReader(stream);
+
+            IEnumerable<string> vResources = from p in oResourceReader.OfType<DictionaryEntry>() let strTheme = (string)p.Key where strTheme.StartsWith(dir, StringComparison.InvariantCultureIgnoreCase) select strTheme;
+            return vResources.ToArray();
         }
 
         /// <summary>

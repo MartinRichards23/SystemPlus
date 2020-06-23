@@ -64,7 +64,7 @@ namespace SystemPlus.Collections.ObjectModel
 
         public override string ToString()
         {
-            return string.Format("Type: {0} Count: {1}", typeof(TItem).Name, Count);
+            return $"Type: {typeof(TItem).Name} Count: {Count}";
         }
 
         /// <summary>

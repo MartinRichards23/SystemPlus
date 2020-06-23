@@ -55,7 +55,7 @@ namespace SystemPlus.Text.NGrams
             if (obj == null)
                 return false;
 
-            return Text.Equals(obj.Text);
+            return Text.Equals(obj.Text, StringComparison.InvariantCulture);
         }
 
         public override int GetHashCode()

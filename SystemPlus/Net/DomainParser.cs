@@ -139,7 +139,7 @@ namespace SystemPlus.Net
 
         static string NormaliseSuffix(string suffix)
         {
-            return suffix.Trim().ToLower();
+            return suffix.Trim().ToLowerInvariant();
         }
 
         sealed class UrlSuffix : IKeyed

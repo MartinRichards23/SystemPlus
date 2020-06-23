@@ -35,7 +35,7 @@ namespace SystemPlus.Windows.Media
         {
             lock (penCache)
             {
-                string key = string.Format("{0} {1} {2} {4}", col.A, col.R, col.G, col.B, thickness);
+                string key = $"{col.A} {col.R} {col.G} {thickness}";
 
                 if (penCache.ContainsKey(key))
                     return penCache[key];

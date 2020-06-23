@@ -10,7 +10,7 @@ namespace SystemPlus.Windows.Converters
     [ValueConversion(typeof(DateTimeOffset), typeof(DateTime))]
     public class DateTimeOffsetToDateTimeConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return null;
@@ -20,7 +20,7 @@ namespace SystemPlus.Windows.Converters
             return dto.UtcDateTime;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return null;

@@ -5,7 +5,7 @@ namespace SystemPlus.Security
     /// <summary>
     /// Extensions and utilities for security related activities
     /// </summary>
-    public static class Extensions
+    public static class SecurityExtensions
     {
         /// <summary>
         /// The name of the current windows user

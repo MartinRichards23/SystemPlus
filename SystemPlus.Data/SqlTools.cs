@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 
 namespace SystemPlus.Data
 {
@@ -26,73 +27,64 @@ namespace SystemPlus.Data
 
         public static Type SqlDbTypeToType(SqlDbType sqlType)
         {
-            switch (sqlType)
+            return sqlType switch
             {
-                case SqlDbType.NVarChar: return typeof(string);
-                case SqlDbType.VarChar: return typeof(string);
-                case SqlDbType.NChar: return typeof(string);
-                case SqlDbType.Char: return typeof(string);
-                case SqlDbType.Text: return typeof(string);
-                case SqlDbType.NText: return typeof(string);
-
-                case SqlDbType.TinyInt: return typeof(byte);
-                case SqlDbType.SmallInt: return typeof(short);
-                case SqlDbType.Int: return typeof(int);
-                case SqlDbType.BigInt: return typeof(long);
-                case SqlDbType.Money: return typeof(decimal);
-                case SqlDbType.Decimal: return typeof(decimal);
-                case SqlDbType.Real: return typeof(float);
-                case SqlDbType.Float: return typeof(double);
-
-                case SqlDbType.Bit: return typeof(bool);
-                case SqlDbType.UniqueIdentifier: return typeof(Guid);
-
-                case SqlDbType.Binary: return typeof(byte[]);
-                case SqlDbType.VarBinary: return typeof(byte[]);
-                case SqlDbType.Image: return typeof(byte[]);
-
-                case SqlDbType.DateTime: return typeof(DateTime);
-                case SqlDbType.DateTime2: return typeof(DateTime);
-                case SqlDbType.DateTimeOffset: return typeof(DateTimeOffset);
-                case SqlDbType.Time: return typeof(TimeSpan);
-                default: throw new Exception("Unknown data type " + sqlType.ToString());
-            }
+                SqlDbType.NVarChar => typeof(string),
+                SqlDbType.VarChar => typeof(string),
+                SqlDbType.NChar => typeof(string),
+                SqlDbType.Char => typeof(string),
+                SqlDbType.Text => typeof(string),
+                SqlDbType.NText => typeof(string),
+                SqlDbType.TinyInt => typeof(byte),
+                SqlDbType.SmallInt => typeof(short),
+                SqlDbType.Int => typeof(int),
+                SqlDbType.BigInt => typeof(long),
+                SqlDbType.Money => typeof(decimal),
+                SqlDbType.Decimal => typeof(decimal),
+                SqlDbType.Real => typeof(float),
+                SqlDbType.Float => typeof(double),
+                SqlDbType.Bit => typeof(bool),
+                SqlDbType.UniqueIdentifier => typeof(Guid),
+                SqlDbType.Binary => typeof(byte[]),
+                SqlDbType.VarBinary => typeof(byte[]),
+                SqlDbType.Image => typeof(byte[]),
+                SqlDbType.DateTime => typeof(DateTime),
+                SqlDbType.DateTime2 => typeof(DateTime),
+                SqlDbType.DateTimeOffset => typeof(DateTimeOffset),
+                SqlDbType.Time => typeof(TimeSpan),
+                _ => throw new Exception("Unknown data type " + sqlType.ToString()),
+            };
         }
 
         public static string SqlDbTypeToTypeName(SqlDbType sqlType)
         {
-            switch (sqlType)
+            return sqlType switch
             {
-                case SqlDbType.NVarChar: return "string";
-                case SqlDbType.NChar: return "string";
-                case SqlDbType.VarChar: return "string";
-                case SqlDbType.Char: return "string";
-                case SqlDbType.Text: return "string";
-                case SqlDbType.NText: return "string";
-
-                case SqlDbType.TinyInt: return "byte";
-                case SqlDbType.SmallInt: return "short";
-                case SqlDbType.Int: return "int";
-                case SqlDbType.BigInt: return "long";
-                case SqlDbType.Money: return "decimal";
-                case SqlDbType.Decimal: return "decimal";
-                case SqlDbType.Real: return "float";
-                case SqlDbType.Float: return "double";
-
-                case SqlDbType.Bit: return "bool";
-                case SqlDbType.UniqueIdentifier: return "Guid";
-
-                case SqlDbType.Binary: return "byte[]";
-                case SqlDbType.VarBinary: return "byte[]";
-                case SqlDbType.Image: return "byte[]";
-
-                case SqlDbType.DateTime: return "DateTime";
-                case SqlDbType.DateTime2: return "DateTime";
-                case SqlDbType.DateTimeOffset: return "DateTimeOffset";
-                case SqlDbType.Time: return "TimeSpan";
-
-                default: throw new Exception("Unknown data type " + sqlType.ToString());
-            }
+                SqlDbType.NVarChar => "string",
+                SqlDbType.NChar => "string",
+                SqlDbType.VarChar => "string",
+                SqlDbType.Char => "string",
+                SqlDbType.Text => "string",
+                SqlDbType.NText => "string",
+                SqlDbType.TinyInt => "byte",
+                SqlDbType.SmallInt => "short",
+                SqlDbType.Int => "int",
+                SqlDbType.BigInt => "long",
+                SqlDbType.Money => "decimal",
+                SqlDbType.Decimal => "decimal",
+                SqlDbType.Real => "float",
+                SqlDbType.Float => "double",
+                SqlDbType.Bit => "bool",
+                SqlDbType.UniqueIdentifier => "Guid",
+                SqlDbType.Binary => "byte[]",
+                SqlDbType.VarBinary => "byte[]",
+                SqlDbType.Image => "byte[]",
+                SqlDbType.DateTime => "DateTime",
+                SqlDbType.DateTime2 => "DateTime",
+                SqlDbType.DateTimeOffset => "DateTimeOffset",
+                SqlDbType.Time => "TimeSpan",
+                _ => throw new Exception("Unknown data type " + sqlType.ToString()),
+            };
         }
 
         public static string GetSqlDataTypeName(SqlDbType dataType, int length)
@@ -103,7 +95,7 @@ namespace SystemPlus.Data
             {
                 string l;
                 if (length > 0)
-                    l = (length / 2).ToString();
+                    l = (length / 2).ToString(CultureInfo.InvariantCulture);
                 else
                     l = "max";
 
@@ -113,7 +105,7 @@ namespace SystemPlus.Data
             {
                 string l;
                 if (length > 0)
-                    l = length.ToString();
+                    l = length.ToString(CultureInfo.InvariantCulture);
                 else
                     l = "max";
 

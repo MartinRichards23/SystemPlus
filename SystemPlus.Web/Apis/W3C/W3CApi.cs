@@ -24,8 +24,8 @@ namespace SystemPlus.Web.W3C
             request.WriteRequestStream(html, Encoding.UTF8);
 
             using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream receiveStream = response.GetFullResponseStream();
-            StreamReader sr = new StreamReader(receiveStream);
+            using Stream receiveStream = response.GetFullResponseStream();
+            using StreamReader sr = new StreamReader(receiveStream);
 
             string json = sr.ReadToEnd();
 

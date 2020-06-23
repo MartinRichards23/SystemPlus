@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SystemPlus.Web.W3C
 {
+    [Serializable]
     public class W3CResult
     {
         public List<Message>? messages { get; set; }
     }
 
+    [Serializable]
     public class Message
     {
         public string? type { get; set; }

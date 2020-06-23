@@ -56,6 +56,7 @@ namespace SystemPlus.ComponentModel
     /// This attribute is used to represent a string value
     /// for a value in an enum.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Interface | AttributeTargets.Delegate)]
     public class InfoAttribute : Attribute, INotifyPropertyChanged
     {
         public string Name { get; protected set; }

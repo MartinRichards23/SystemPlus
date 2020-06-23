@@ -61,10 +61,9 @@ namespace SystemPlus.Net
             HttpWebRequest request = MakeStandardGetRequest(url);
             request.UserAgent = UserAgents.MozillaUserAgent.AgentString;
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                return response.ReadWebResponse();
-            }
+            using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            return response.ReadWebResponse();
         }
 
         /// <summary>

@@ -22,8 +22,9 @@ namespace SystemPlus.Web.Slack
         [DataMember]
         public List<Attachment>? attachments { get; set; }
 
-        public string TextPlain
+        public string? TextPlain
         {
+            get { return text; }
             set { text = SlackClient.EscapeMessage(value); }
         }
     }
@@ -76,23 +77,27 @@ namespace SystemPlus.Web.Slack
         [DataMember]
         public long ts { get; set; }
 
-        public string TextPlain
+        public string? TextPlain
         {
+            get { return text; }
             set { text = SlackClient.EscapeMessage(value); }
         }
 
-        public string TitlePlain
+        public string? TitlePlain
         {
+            get { return title; }
             set { title = SlackClient.EscapeMessage(value); }
         }
 
-        public string PreTextPlain
+        public string? PreTextPlain
         {
+            get { return pretext; }
             set { pretext = SlackClient.EscapeMessage(value); }
         }
 
-        public string FooterPlain
+        public string? FooterPlain
         {
+            get { return footer; }
             set { footer = SlackClient.EscapeMessage(value); }
         }
     }

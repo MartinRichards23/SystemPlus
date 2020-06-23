@@ -31,31 +31,31 @@ namespace SystemPlus.Threading
         #region Constructors
 
         protected ProcessorBase()
-            : this(Environment.ProcessorCount, CancellationToken.None, new ConcurrentQueue<T>())
+            : this(Environment.ProcessorCount, new ConcurrentQueue<T>(), CancellationToken.None)
         {
         }
 
         protected ProcessorBase(CancellationToken cancelToken)
-            : this(Environment.ProcessorCount, cancelToken, new ConcurrentQueue<T>())
+            : this(Environment.ProcessorCount, new ConcurrentQueue<T>(), cancelToken)
         {
         }
 
         protected ProcessorBase(int maxThreads)
-            : this(maxThreads, CancellationToken.None, new ConcurrentQueue<T>())
+            : this(maxThreads, new ConcurrentQueue<T>(), CancellationToken.None)
         {
         }
 
         protected ProcessorBase(int maxThreads, IProducerConsumerCollection<T> baseCollection)
-            : this(maxThreads, CancellationToken.None, baseCollection)
+            : this(maxThreads, baseCollection, CancellationToken.None)
         {
         }
 
         protected ProcessorBase(int maxThreads, CancellationToken cancelToken)
-            : this(maxThreads, cancelToken, new ConcurrentQueue<T>())
+            : this(maxThreads, new ConcurrentQueue<T>(), cancelToken)
         {
         }
 
-        protected ProcessorBase(int maxThreads, CancellationToken cancelToken, IProducerConsumerCollection<T> baseCollection)
+        protected ProcessorBase(int maxThreads, IProducerConsumerCollection<T> baseCollection, CancellationToken cancelToken)
         {
             items = baseCollection;
             MaxThreads = maxThreads;
@@ -220,6 +220,9 @@ namespace SystemPlus.Threading
         /// <param name="items">The item to process</param>
         public void Add(IEnumerable<T> items)
         {
+            if (items == null)
+                return;
+
             foreach (T item in items)
             {
                 Add(item);
@@ -324,7 +327,7 @@ namespace SystemPlus.Threading
 
         public override string ToString()
         {
-            return string.Format("Items={0}, Processed items={1}, Threads={2}", ItemCount, ProcessedItems, ActiveThreads);
+            return $"Items={ItemCount}, Processed items={ProcessedItems}, Threads={ActiveThreads}";
         }
 
         #endregion

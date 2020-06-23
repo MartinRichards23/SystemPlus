@@ -11,8 +11,6 @@ namespace SystemPlus.Windows
     /// </summary>
     public class EnumerationExtension : MarkupExtension
     {
-        readonly Type enumType;
-
         public EnumerationExtension(Type enumType)
         {
             if (enumType == null)
@@ -23,13 +21,10 @@ namespace SystemPlus.Windows
             if (enumType.IsEnum == false)
                 throw new ArgumentException("Type must be an Enum.");
 
-            this.enumType = enumType;
+            this.EnumType = enumType;
         }
 
-        public Type EnumType
-        {
-            get { return enumType; }
-        }
+        public Type EnumType { get; }
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -38,15 +33,10 @@ namespace SystemPlus.Windows
 
         public class EnumerationMember : INotifyPropertyChanged
         {
-            public string Description { get; set; }
-            public object Value { get; set; }
+            public string? Description { get; set; }
+            public object? Value { get; set; }
 
             public event PropertyChangedEventHandler? PropertyChanged;
-
-            public override string ToString()
-            {
-                return Description;
-            }
 
             public static EnumerationMember[] GetEnumerationMembers(Type enumType)
             {

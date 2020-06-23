@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,12 +16,12 @@ namespace SystemPlus.Security
         /// </summary>
         public static byte[] NewKey(int length = 32)
         {
-            using (RandomNumberGenerator rnd = RandomNumberGenerator.Create())
-            {
-                byte[] key = new byte[length];
-                rnd.GetBytes(key);
-                return key;
-            }
+            using RandomNumberGenerator rnd = RandomNumberGenerator.Create();
+
+            byte[] key = new byte[length];
+            rnd.GetBytes(key);
+
+            return key;
         }
 
         public static string CreateToken(int size)
@@ -53,10 +54,8 @@ namespace SystemPlus.Security
         {
             byte[] salt = new byte[length];
 
-            using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
-            {
-                crypto.GetNonZeroBytes(salt);
-            }
+            using RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
+            crypto.GetNonZeroBytes(salt);
 
             return salt;
         }
@@ -93,35 +92,6 @@ namespace SystemPlus.Security
             return Encoding.Unicode.GetString(hashData);
         }
 
-        public static string CalculateMd5Hash(string input)
-        {
-            return CalculateMd5Hash(input, Encoding.ASCII);
-        }
-
-        public static string CalculateMd5Hash(string input, Encoding encoding)
-        {
-            byte[] inputBytes = encoding.GetBytes(input);
-            return CalculateMd5Hash(inputBytes);
-        }
-
-        public static string CalculateMd5Hash(byte[] input)
-        {
-            // step 1, calculate MD5 hash from input
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] hash = md5.ComputeHash(input);
-
-                // step 2, convert byte array to hex string
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hash.Length; i++)
-                {
-                    sb.Append(hash[i].ToString("X2"));
-                }
-
-                return sb.ToString();
-            }
-        }
-
         public static string GenerateCryptoKeyString(int length)
         {
             byte[] bytes = GenerateCryptoKeyByteArray(length);
@@ -131,11 +101,11 @@ namespace SystemPlus.Security
         public static byte[] GenerateCryptoKeyByteArray(int length)
         {
             byte[] bytes = new byte[length];
-            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(bytes);
-                return bytes;
-            }
+            using RandomNumberGenerator rng = RandomNumberGenerator.Create();
+
+            rng.GetBytes(bytes);
+
+            return bytes;
         }
 
         /// <summary>

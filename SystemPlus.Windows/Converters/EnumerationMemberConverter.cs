@@ -10,7 +10,7 @@ namespace SystemPlus.Windows.Converters
     /// </summary>
     public class EnumerationMemberConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
@@ -22,11 +22,11 @@ namespace SystemPlus.Windows.Converters
             }
             catch (InvalidCastException ex)
             {
-                throw new InvalidCastException(string.Format("Unable to cast value: '{0}' to enum", value), ex);
+                throw new InvalidCastException($"Unable to cast value: '{value}' to enum", ex);
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }

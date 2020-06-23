@@ -79,20 +79,19 @@ namespace SystemPlus.ComponentModel.Logging
                     writeHeader = true;
                 }
 
-                using (FileStream fs = new FileStream(filePath, FileMode.Append))
-                using (StreamWriter w = new StreamWriter(fs))
-                {
-                    if (writeHeader)
-                    {
-                        string header = MakeLogHeader();
-                        w.WriteLine(header);
-                        w.WriteLine();
-                    }
+                using FileStream fs = new FileStream(filePath, FileMode.Append);
+                using StreamWriter w = new StreamWriter(fs);
 
-                    w.WriteLine("===== {0}: {1} =====", level, DateTime.UtcNow);
-                    w.WriteLine(text);
+                if (writeHeader)
+                {
+                    string header = MakeLogHeader();
+                    w.WriteLine(header);
                     w.WriteLine();
                 }
+
+                w.WriteLine("===== {0}: {1} =====", level, DateTime.UtcNow);
+                w.WriteLine(text);
+                w.WriteLine();
             }
         }
     }
@@ -245,19 +244,19 @@ namespace SystemPlus.ComponentModel.Logging
 
             lastFlush = DateTime.UtcNow;
 
-            using (MailMessage message = new MailMessage())
-            using (SmtpClient smtp = new SmtpClient(host))
+            using MailMessage message = new MailMessage();
+            using SmtpClient smtp = new SmtpClient(host);
+
+            foreach (string address in addresses)
             {
-                foreach (string address in addresses)
-                {
-                    message.To.Add(address);
-                }
-                message.From = new MailAddress(from);
-                message.Subject = subject;
-                message.Body = body;
-                smtp.Credentials = new NetworkCredential(from, password);
-                smtp.Send(message);
+                message.To.Add(address);
             }
+
+            message.From = new MailAddress(from);
+            message.Subject = subject;
+            message.Body = body;
+            smtp.Credentials = new NetworkCredential(from, password);
+            smtp.Send(message);
         }
     }
 }

@@ -99,8 +99,11 @@ namespace SystemPlus.Web.Slack
         /// Formats message
         /// https://api.slack.com/docs/message-formatting
         /// </summary>
-        public static string EscapeMessage(string message)
+        public static string? EscapeMessage(string? message)
         {
+            if (message == null)
+                return null;
+
             message = message.Replace("&", "&amp;", StringComparison.InvariantCulture);
             message = message.Replace("<", "&lt;", StringComparison.InvariantCulture);
             message = message.Replace(">", "&gt;", StringComparison.InvariantCulture);

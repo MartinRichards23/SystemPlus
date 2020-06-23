@@ -146,7 +146,7 @@ namespace SystemPlus.Web
 
     internal static class VersionString
     {
-        public static string Format(params string[] parts)
+        public static string Format(params string?[] parts)
         {
             return string.Join(".", parts.Where(v => !string.IsNullOrEmpty(v)).ToArray());
         }
@@ -387,7 +387,7 @@ namespace SystemPlus.Web
                 // compiled regular expressions which are faster but increase 
                 // startup time
                 RegexOptions options = RegexOptions.None;
-                if ("i".Equals(regexFlag))
+                if ("i" == regexFlag)
                 {
                     options |= RegexOptions.IgnoreCase;
                 }
@@ -441,7 +441,7 @@ namespace SystemPlus.Web
             private static Func<Match, IEnumerator<int>, string> Replace(
                 string replacement, string token)
             {
-                return replacement != null && replacement.Contains(token)
+                return replacement != null && replacement.Contains(token, StringComparison.InvariantCulture)
                      ? Select(s => s != null ? replacement.ReplaceFirstOccurence(token, s) : replacement)
                      : Replace(replacement);
             }

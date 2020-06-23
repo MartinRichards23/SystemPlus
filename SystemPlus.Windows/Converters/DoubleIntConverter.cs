@@ -10,20 +10,20 @@ namespace SystemPlus.Windows.Converters
     [ValueConversion(typeof(int), typeof(double))]
     public class DoubleIntConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return 0;
 
-            return System.Convert.ToDouble(value);
+            return System.Convert.ToDouble(value, CultureInfo.CurrentCulture);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return 0;
 
-            return System.Convert.ToInt32(value);
+            return System.Convert.ToInt32(value, CultureInfo.CurrentCulture);
         }
     }
 }

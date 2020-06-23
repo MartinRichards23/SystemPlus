@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Globalization;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -40,7 +41,7 @@ namespace SystemPlus.Windows.Controls
             if (objComWebBrowser == null)
                 return;
 
-            objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { hide });
+            objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { hide }, CultureInfo.InvariantCulture);
         }
     }
 }

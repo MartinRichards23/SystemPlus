@@ -310,7 +310,7 @@ namespace SystemPlus.ComponentModel.Ini
                 if (line.StartsWith("[", StringComparison.Ordinal))
                 {
                     // section line
-                    string name = line.GetFragment("[", "]");
+                    string name = line.GetFragment("[", "]", StringComparison.InvariantCulture);
                     currentSection = GetOrCreateSection(name);
                     continue;
                 }
@@ -318,13 +318,13 @@ namespace SystemPlus.ComponentModel.Ini
                 if (currentSection == null)
                     continue;
 
-                if (!line.Contains("="))
+                if (!line.Contains("=", StringComparison.InvariantCulture))
                 {
                     // no "=", therefore not valid key=value line
                     continue;
                 }
 
-                string key = line.GetFragment(null, "=").Trim();
+                string key = line.GetFragment(null, "=", StringComparison.InvariantCulture).Trim();
                 string value = line.GetFragment("=").Trim();
 
                 IniValue val = new IniValue(key) { Value = value };
@@ -335,11 +335,9 @@ namespace SystemPlus.ComponentModel.Ini
 
         public void Save(string path)
         {
-            using (FileStream fs = File.Create(path))
-            using (TextWriter sw = new StreamWriter(fs))
-            {
-                Save(sw);
-            }
+            using FileStream fs = File.Create(path);
+            using TextWriter sw = new StreamWriter(fs);
+            Save(sw);
         }
 
         public void Save(TextWriter sw)
@@ -359,22 +357,20 @@ namespace SystemPlus.ComponentModel.Ini
 
         public string Save()
         {
-            using (StringWriter sw = new StringWriter())
+            using StringWriter sw = new StringWriter();
+            foreach (IniSection section in sections)
             {
-                foreach (IniSection section in sections)
+                sw.WriteLine("[{0}]", section.Name);
+
+                foreach (IniValue iniValue in section)
                 {
-                    sw.WriteLine("[{0}]", section.Name);
-
-                    foreach (IniValue iniValue in section)
-                    {
-                        sw.WriteLine("{0}={1}", iniValue.Name, iniValue.Value);
-                    }
-
-                    sw.WriteLine();
+                    sw.WriteLine("{0}={1}", iniValue.Name, iniValue.Value);
                 }
 
-                return sw.ToString();
+                sw.WriteLine();
             }
+
+            return sw.ToString();
         }
 
         #endregion

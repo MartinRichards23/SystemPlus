@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -84,6 +85,7 @@ namespace SystemPlus.Windows.Controls
 
         public bool AllowCancel
         {
+            get { return btnCancel.Visibility == Visibility.Visible; }
             set { btnCancel.Visibility = value ? Visibility.Visible : Visibility.Hidden; }
         }
 
@@ -117,7 +119,7 @@ namespace SystemPlus.Windows.Controls
             Dispatcher.BeginInvoke((Action)delegate
             {
                 progressBar1.Value = percent;
-                txtPercent.Content = percent.ToString("0.#") + "%";
+                txtPercent.Content = percent.ToString("0.#", CultureInfo.CurrentCulture) + "%";
             });
         }
 

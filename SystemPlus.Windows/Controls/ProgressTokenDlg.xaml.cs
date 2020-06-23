@@ -10,7 +10,7 @@ namespace SystemPlus.Windows.Controls
         {
         }
 
-        public ProgressTokenDlg(Window owner)
+        public ProgressTokenDlg(Window? owner)
         {
             InitializeComponent();
 
@@ -37,6 +37,7 @@ namespace SystemPlus.Windows.Controls
 
         public bool AllowCancel
         {
+            get { return btnCancel.Visibility == Visibility.Visible; }
             set { btnCancel.Visibility = value ? Visibility.Visible : Visibility.Hidden; }
         }
 

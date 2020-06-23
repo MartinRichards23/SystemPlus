@@ -2,7 +2,7 @@
 
 namespace SystemPlus.Collections.ObjectModel
 {
-    public static class ExtensionMethods
+    public static class ObjectModelExtensions
     {
         public static KeyedCollection<T> ToKeyedCollection<T>(this IEnumerable<T> list) where T : IKeyed
         {

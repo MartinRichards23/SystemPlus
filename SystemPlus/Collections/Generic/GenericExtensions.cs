@@ -9,7 +9,7 @@ namespace SystemPlus.Collections.Generic
     /// <summary>
     /// Extension methods for collections
     /// </summary>
-    public static class ExtensionMethods
+    public static class GenericExtensions
     {
         /// <summary>
         /// Randomly pick one item in the array.

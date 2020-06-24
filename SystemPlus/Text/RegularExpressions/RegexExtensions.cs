@@ -2,7 +2,7 @@
 
 namespace SystemPlus.Text.RegularExpressions
 {
-    public static class Extensions
+    public static class RegexExtensions
     {
         /// <summary>
         /// Replace all matches with the given char

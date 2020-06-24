@@ -8,7 +8,7 @@ namespace SystemPlus.Xml
     /// <summary>
     /// Extension methods to help with navigating xml documents
     /// </summary>
-    public static class ExtensionMethods
+    public static class XmlExtension
     {
         /// <summary>
         /// Checks is a string is a valid xpath expression

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SystemPlus.Collections.Concurrent
 {
-    public static class Extensions
+    public static class ConcurrentExtensions
     {
         public static IEnumerable<T> DequeueAll<T>(this ConcurrentQueue<T> queue)
         {

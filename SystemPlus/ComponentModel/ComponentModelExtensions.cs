@@ -2,7 +2,7 @@
 
 namespace SystemPlus.ComponentModel
 {
-    public static class Extensions
+    public static class ComponentModelExtensions
     {
         /// <summary>
         /// If enum implements the InfoAttribute then returns this tostring
@@ -10,6 +10,9 @@ namespace SystemPlus.ComponentModel
         /// </summary>
         public static string ToInfoString(this Enum value)
         {
+            if (value == null)
+                throw new NullReferenceException(nameof(value));
+
             InfoAttribute? info = EnumTools.GetEnumInfo(value, value.GetType());
 
             if (info != null)
@@ -25,7 +28,7 @@ namespace SystemPlus.ComponentModel
         public static string ToDescriptionString(this Enum value)
         {
             if (value == null)
-                throw new NullReferenceException();
+                throw new NullReferenceException(nameof(value));
 
             string info = EnumTools.GetEnumDescription(value, value.GetType());
 

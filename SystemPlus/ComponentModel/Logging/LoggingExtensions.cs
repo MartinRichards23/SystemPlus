@@ -2,7 +2,7 @@
 
 namespace SystemPlus.ComponentModel.Logging
 {
-    public static class Extensions
+    public static class LoggingExtensions
     {
         public static Task ContinueWithLogErrors(this Task task)
         {

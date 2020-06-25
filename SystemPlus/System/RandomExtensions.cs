@@ -13,6 +13,9 @@ namespace SystemPlus
         /// </summary>
         public static string NextString(this Random rand, int size)
         {
+            if (rand == null)
+                throw new ArgumentNullException(nameof(rand));
+
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < size; i++)
             {
@@ -28,6 +31,9 @@ namespace SystemPlus
         /// </summary>
         public static bool NextBool(this Random rand, double trueChance = 0.5)
         {
+            if (rand == null)
+                throw new ArgumentNullException(nameof(rand));
+
             return rand.NextDouble() < trueChance;
         }
 
@@ -45,6 +51,9 @@ namespace SystemPlus
         /// </summary>
         public static long NextLong(this Random rand)
         {
+            if (rand == null)
+                throw new ArgumentNullException(nameof(rand));
+
             byte[] buffer = new byte[8];
             rand.NextBytes(buffer);
             return BitConverter.ToInt64(buffer, 0);
@@ -66,9 +75,12 @@ namespace SystemPlus
         /// <summary>
         /// Returns a random number between 0 and 1
         /// </summary>
-        public static float NextFloat(this Random random)
+        public static float NextFloat(this Random rand)
         {
-            double d = random.NextDouble();
+            if (rand == null)
+                throw new ArgumentNullException(nameof(rand));
+
+            double d = rand.NextDouble();
             return (float)d;
         }
 
@@ -77,8 +89,14 @@ namespace SystemPlus
         /// </summary>
         public static T NextEnumValue<T>(this Random rand) where T : struct
         {
+            if (rand == null)
+                throw new ArgumentNullException(nameof(rand));
+
             Array values = Enum.GetValues(typeof(T));
-            return (T)values.GetValue(rand.Next(values.Length));
+            int index = rand.Next(values.Length);
+            object? result = values.GetValue(index);
+
+            return (T)result;
         }
 
         static bool IsModuloBiased(long randomOffset, long numbersInRange)

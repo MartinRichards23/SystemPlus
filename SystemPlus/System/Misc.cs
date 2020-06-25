@@ -90,7 +90,7 @@ namespace SystemPlus
 
                         if (posEquals > 1)
                         {
-                            string key = param.Substring(0, posEquals).ToLower().Trim();
+                            string key = param.Substring(0, posEquals).Trim();
                             string val = param.Substring(posEquals + 1);
 
                             if (string.IsNullOrWhiteSpace(key))

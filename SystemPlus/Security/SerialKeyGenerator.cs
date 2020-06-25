@@ -36,7 +36,7 @@ namespace SystemPlus.Security
             Guid newguid = Guid.NewGuid();
             string randomStr = newguid.ToString("N");
             string tracStr = randomStr.Substring(0, (int)keyLength);
-            tracStr = tracStr.ToUpper();
+            tracStr = tracStr.ToUpperInvariant();
             char[] newKey = tracStr.ToCharArray();
             string newSerialNumber = "";
 

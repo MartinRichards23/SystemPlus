@@ -13,13 +13,16 @@ namespace SystemPlus
             return Math.Sqrt(CalcVariance(doubleList));
         }
 
-        public static double CalcVariance(IEnumerable<double> doubleList)
+        public static double CalcVariance(IEnumerable<double> doubleCollection)
         {
+            if (doubleCollection == null)
+                throw new ArgumentNullException(nameof(doubleCollection));
+
             double average = 0;
             int count = 0;
             double sumOfDerivation = 0;
 
-            foreach (double value in doubleList)
+            foreach (double value in doubleCollection)
             {
                 average += value;
                 count++;

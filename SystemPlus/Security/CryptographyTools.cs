@@ -65,6 +65,11 @@ namespace SystemPlus.Security
         /// </summary>
         public static byte[] CreateSha256Hash(byte[] data, byte[] salt)
         {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+            if (salt == null)
+                throw new ArgumentNullException(nameof(salt));
+
             byte[] combinedBytes = new byte[data.Length + salt.Length];
 
             for (int i = 0; i < data.Length; i++)
@@ -113,6 +118,9 @@ namespace SystemPlus.Security
         /// </summary>
         public static double CheckStrength(string password)
         {
+            if (password == null)
+                throw new ArgumentNullException(nameof(password));
+
             double score = 1;
 
             if (password.Length < 1)

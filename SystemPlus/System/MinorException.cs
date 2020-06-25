@@ -23,7 +23,7 @@ namespace SystemPlus
         {
         }
 
-        public MinorException(SerializationInfo info, StreamingContext context)
+        protected MinorException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

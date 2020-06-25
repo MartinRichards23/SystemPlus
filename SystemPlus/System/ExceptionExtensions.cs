@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using SystemPlus.Text;
 
@@ -14,6 +15,9 @@ namespace SystemPlus
         /// </summary>
         public static string ToString(this Exception ex, bool includeData)
         {
+            if (ex == null)
+                throw new ArgumentNullException(nameof(ex));
+
             StringBuilder sb = new StringBuilder(ex.ToString());
 
             if (includeData)
@@ -46,6 +50,8 @@ namespace SystemPlus
         /// </summary>
         public static void AddData(this Exception ex, string key, object data)
         {
+            if (ex == null)
+                throw new ArgumentNullException(nameof(ex));
             if (key == null)
                 return;
             if (data == null)
@@ -66,6 +72,9 @@ namespace SystemPlus
         /// </summary>
         public static string AllMessage(this Exception ex)
         {
+            if (ex == null)
+                throw new ArgumentNullException(nameof(ex));
+
             string message = ex.Message;
 
             if (ex.InnerException != null)
@@ -82,14 +91,21 @@ namespace SystemPlus
         /// </summary>
         public static void SetResult(this Exception ex, object result)
         {
+            if (ex == null)
+                throw new ArgumentNullException(nameof(ex));
+
             ex.Data.Add("Result", result);
         }
 
         /// <summary>
         /// Gets the result object from the exception if there is one
         /// </summary>
+        [return: MaybeNull]
         public static T GetResult<T>(this Exception ex)
         {
+            if (ex == null)
+                throw new ArgumentNullException(nameof(ex));
+
             object? obj = ex.Data["Result"];
 
             if (obj is T t)

@@ -1,4 +1,6 @@
-﻿namespace SystemPlus
+﻿using System;
+
+namespace SystemPlus
 {
     /// <summary>
     /// Helpers for dealing with byte[] data
@@ -31,6 +33,11 @@
         /// <returns>Returns the array poistion if found or -1 if not</returns>
         public static int FindSequence(int start, int end, byte[] data, byte[] target)
         {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             // check the parameters are sensible
             if ((start > data.Length) || (start >= end) || (end > data.Length))
                 return -1;
@@ -60,6 +67,11 @@
 
         public static bool CompareMessage(int startingPoint, byte[] haystack, byte[] needle)
         {
+            if (haystack == null)
+                throw new ArgumentNullException(nameof(haystack));
+            if (needle == null)
+                throw new ArgumentNullException(nameof(needle));
+
             // will start at a specific point in the haystack and check the subsequent 
             // bytes for the full needle message - if it fails then will return false
             // if find it then return true

@@ -16,16 +16,25 @@ namespace SystemPlus.Net
     {
         public static HttpWebResponse GetHttpResponse(this HttpWebRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             return (HttpWebResponse)request.GetResponse();
         }
 
         public static HttpWebResponse GetHttpResponse(this HttpWebRequest request, CancellationToken token)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             return (HttpWebResponse)request.GetResponse(token);
         }
 
         public static async Task<HttpWebResponse> GetHttpResponseAsync(this HttpWebRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             WebResponse response = await request.GetResponseAsync();
             return (HttpWebResponse)response;
         }
@@ -36,6 +45,9 @@ namespace SystemPlus.Net
         /// <returns>The WebRequest response or WebException response.</returns>
         public static WebResponse GetResponseSafe(this WebRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             try
             {
                 return request.GetResponse();
@@ -63,6 +75,9 @@ namespace SystemPlus.Net
         /// </summary>
         public static WebResponse GetResponse(this WebRequest request, CancellationToken token)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             IAsyncResult asyncResult = request.BeginGetResponse(null, null);
 
             WaitHandle.WaitAny(new[] { asyncResult.AsyncWaitHandle, token.WaitHandle });
@@ -131,6 +146,9 @@ namespace SystemPlus.Net
         /// </summary>
         public static string ReadWebResponse(this WebResponse response, int maxLength = int.MaxValue)
         {
+            if (response == null)
+                throw new ArgumentNullException(nameof(response));
+
             using (MemoryStream rawdata = new MemoryStream())
             {
                 using (Stream rs = response.GetResponseStream())
@@ -145,7 +163,7 @@ namespace SystemPlus.Net
                 Encoding encoding = GetEncoding(charset);
 
                 rawdata.Seek(0, SeekOrigin.Begin);
-                StreamReader sr = new StreamReader(rawdata, encoding);
+                using StreamReader sr = new StreamReader(rawdata, encoding);
 
                 return sr.ReadToEnd();
             }
@@ -153,6 +171,9 @@ namespace SystemPlus.Net
 
         public static string? GetCharSet(WebHeaderCollection headers)
         {
+            if (headers == null)
+                throw new ArgumentNullException(nameof(headers));
+
             string? charset = null;
             string ctype = headers["content-type"];
             if (ctype != null)
@@ -213,6 +234,9 @@ namespace SystemPlus.Net
 
         public static void AddBasicAuthHeader(this HttpWebRequest request, string name, string password)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+
             string s = $"{name}:{password}";
             var plainTextBytes = Encoding.UTF8.GetBytes(s);
             string base64 = Convert.ToBase64String(plainTextBytes);

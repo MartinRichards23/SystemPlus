@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace SystemPlus.Collections.Generic
@@ -24,6 +25,11 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static T Random<T>(this IList<T> items, Random rand)
         {
+            if (items == null)
+                throw new ArgumentNullException(nameof(items));
+            if (rand == null)
+                throw new ArgumentNullException(nameof(rand));
+
             int i = rand.Next(items.Count);
 
             return items[i];
@@ -34,6 +40,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void ForEach<T>(this IEnumerable<T> enumeration, Action<T> action)
         {
+            if (enumeration == null)
+                throw new ArgumentNullException(nameof(enumeration));
+
             foreach (T item in enumeration)
             {
                 action(item);
@@ -42,8 +51,8 @@ namespace SystemPlus.Collections.Generic
 
         /// <summary>
         /// Determine if collection is null or empty
-        /// </summary>
-        public static bool IsNullOrEmpty<T>(this IEnumerable<T> list)
+        /// </summary>        
+        public static bool IsNullOrEmpty<T>([NotNullWhen(false)] this IEnumerable<T> list)
         {
             return list == null || !list.Any();
         }
@@ -61,6 +70,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void LimitSize(this IList list, int maxSize)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             while (list.Count > maxSize)
             {
                 list.RemoveAt(list.Count - 1);
@@ -69,6 +81,9 @@ namespace SystemPlus.Collections.Generic
 
         public static void LimitSizeRandom<T>(this IList<T> list, int maxSize)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             Random rand = new Random(1);
 
             while (list.Count > maxSize)
@@ -93,11 +108,18 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static T TakeLast<T>(this IList<T> list)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             return list.TakeAt(list.Count - 1);
         }
 
+        [return: MaybeNull]
         public static T TakeLastOrDefault<T>(this IList<T> list)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             if (list.Count > 0)
                 return list.TakeLast();
 
@@ -109,6 +131,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static T TakeAt<T>(this IList<T> list, int index)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             T item = list[index];
             list.RemoveAt(index);
             return item;
@@ -117,59 +142,65 @@ namespace SystemPlus.Collections.Generic
         /// <summary>
         /// Add range to the collection
         /// </summary>
-        public static void AddRange<T>(this ICollection<T> destination, IEnumerable<T> source)
+        public static void AddRange<T>(this ICollection<T> list, IEnumerable<T> source)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
             if (source == null)
                 return;
 
             foreach (T item in source)
             {
-                destination.Add(item);
+                list.Add(item);
             }
         }
 
         /// <summary>
         /// Add range to the collection if not already exists
         /// </summary>
-        public static void TryAddRange<T>(this ICollection<T> destination, IEnumerable source)
+        public static void TryAddRange<T>(this ICollection<T> list, IEnumerable source)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
             if (source == null)
                 return;
 
             foreach (T item in source.OfType<T>())
             {
-                if (!destination.Contains(item))
-                    destination.Add(item);
+                if (!list.Contains(item))
+                    list.Add(item);
             }
         }
 
         /// <summary>
         /// Add range to the collection
         /// </summary>
-        public static void AddRange(this IList destination, IEnumerable source)
+        public static void AddRange(this IList list, IEnumerable source)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
             if (source == null)
                 return;
 
             foreach (object? item in source)
             {
-                destination.Add(item);
+                list.Add(item);
             }
         }
 
         /// <summary>
         /// Removes a collection of items from the list
         /// </summary>
-        public static void RemoveRange<T>(this ICollection<T> destination, IEnumerable<T> source)
+        public static void RemoveRange<T>(this ICollection<T> list, IEnumerable<T> source)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
             if (source == null)
-            {
                 return;
-            }
 
             foreach (T item in source.ToArray())
             {
-                destination.Remove(item);
+                list.Remove(item);
             }
         }
 
@@ -178,6 +209,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void RemoveWhere<T>(this IList<T> list, Func<T, bool> predicate)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             // iterate list backwards
             for (int i = list.Count - 1; i >= 0; i--)
             {
@@ -191,6 +225,9 @@ namespace SystemPlus.Collections.Generic
 
         public static void RemoveLast<T>(this IList<T> list)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             list.RemoveAt(list.Count - 1);
         }
 
@@ -199,6 +236,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static IEnumerable<T> ReverseEnumerate<T>(this IList<T> list)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 T item = list[i];
@@ -224,6 +264,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static IEnumerable<T> First<T>(this IEnumerable<T> list, int max)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             int count = 0;
 
             foreach (T item in list)
@@ -238,6 +281,9 @@ namespace SystemPlus.Collections.Generic
 
         public static IEnumerable<IList<T>> EnumerateBatches<T>(this IEnumerable<T> list, int batchSize)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             IList<T> batch = new List<T>();
 
             foreach (T item in list)
@@ -263,6 +309,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static IEnumerable<Tuple<T, T>> GetPairs<T>(this IList<T> list)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             for (int x = 0; x < list.Count - 1; x++)
             {
                 for (int y = x + 1; y < list.Count; y++)
@@ -290,6 +339,11 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void TryAddRange<T>(this ISet<T> list, IEnumerable<T> items)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+            if (items == null)
+                return;
+
             foreach (T item in items)
             {
                 list.Add(item);
@@ -360,6 +414,9 @@ namespace SystemPlus.Collections.Generic
         /// <param name="collection">The collection to be cleared.</param>
         public static void Clear<T>(this IProducerConsumerCollection<T> collection)
         {
+            if (collection == null)
+                throw new ArgumentNullException(nameof(collection));
+
             while (collection.TryTake(out _))
             {
             }

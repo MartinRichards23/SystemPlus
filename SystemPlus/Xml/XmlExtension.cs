@@ -34,6 +34,9 @@ namespace SystemPlus.Xml
         /// </summary>
         public static string GetAttributeValue(this XElement element, string name)
         {
+            if (element == null)
+                throw new ArgumentNullException(nameof(element));
+
             XAttribute attribute = element.Attribute(name);
 
             if (attribute == null)
@@ -44,6 +47,9 @@ namespace SystemPlus.Xml
 
         public static T GetAttributeValue<T>(this XElement element, string name) where T : struct
         {
+            if (element == null)
+                throw new ArgumentNullException(nameof(element));
+
             XAttribute attribute = element.Attribute(name);
 
             if (attribute == null)

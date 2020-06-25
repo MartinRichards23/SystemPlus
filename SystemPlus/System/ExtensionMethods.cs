@@ -12,6 +12,9 @@ namespace SystemPlus
         /// </summary>
         public static bool IsNullable(this Type type)
         {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             return !type.IsValueType || (Nullable.GetUnderlyingType(type) != null);
         }
 
@@ -44,15 +47,18 @@ namespace SystemPlus
             return new[] { item };
         }
 
-        public static string FormatVersion(this Version v)
+        public static string FormatVersion(this Version version)
         {
-            if (v.Revision > 0)
-                return string.Format("{0}.{1}.{2}.{3}", v.Major, v.Minor, v.Build, v.Revision);
+            if (version == null)
+                throw new ArgumentNullException(nameof(version));
 
-            if (v.Build > 0)
-                return string.Format("{0}.{1}.{2}", v.Major, v.Minor, v.Build);
+            if (version.Revision > 0)
+                return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
 
-            return string.Format("{0}.{1}", v.Major, v.Minor);
+            if (version.Build > 0)
+                return $"{version.Major}.{version.Minor}.{version.Build}";
+
+            return $"{version.Major}.{version.Minor}";
         }
     }
 

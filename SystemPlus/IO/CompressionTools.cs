@@ -1,17 +1,21 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.Compression;
 
 namespace SystemPlus.IO
 {
     public enum CompressionType { GZip, Deflate }
 
-    public static class Compression
+    public static class CompressionTools
     {
         /// <summary>
         /// GZip compresses the given buffer
         /// </summary>
         public static MemoryStream CompressToStream(byte[] data, CompressionType compression = CompressionType.GZip)
         {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+
             MemoryStream baseStream = new MemoryStream();
 
             if (compression == CompressionType.GZip)
@@ -86,6 +90,11 @@ namespace SystemPlus.IO
         /// </summary>
         public static bool CheckMagicNumber(byte[] buffer, byte[] pattern)
         {
+            if (buffer == null)
+                throw new ArgumentNullException(nameof(buffer));
+            if (pattern == null)
+                throw new ArgumentNullException(nameof(pattern));
+
             if (buffer.Length < pattern.Length)
                 return false;
 

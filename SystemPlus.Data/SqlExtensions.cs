@@ -151,7 +151,7 @@ namespace SystemPlus.Data
             if (compressedData == null)
                 return default;
 
-            byte[] data = Compression.Decompress(compressedData);
+            byte[] data = CompressionTools.Decompress(compressedData);
             string json = Encoding.UTF8.GetString(data);
 
             return Serialization.JsonDeserialize<T>(json);
@@ -178,7 +178,7 @@ namespace SystemPlus.Data
                 string json = Serialization.JsonSerialize(value);
 
                 byte[] data = Encoding.UTF8.GetBytes(json);
-                byte[] compressedData = Compression.Compress(data);
+                byte[] compressedData = CompressionTools.Compress(data);
 
                 return target.AddWithValue(parameterName, compressedData);
             }

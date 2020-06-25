@@ -98,6 +98,11 @@ namespace SystemPlus.IO
         /// <returns></returns>
         public static string MakeNewFileName(string name, string directory, string extension)
         {
+            if (directory == null)
+                throw new ArgumentNullException(nameof(directory));
+            if (extension == null)
+                throw new ArgumentNullException(nameof(extension));
+
             if (!extension.StartsWith(".", StringComparison.Ordinal))
                 extension = "." + extension;
 

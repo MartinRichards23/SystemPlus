@@ -47,6 +47,9 @@ namespace SystemPlus.IO
 
         public static void XmlSerialize<T>(T obj, FileInfo file, bool hideDeclaration = true, bool indent = true, bool hideNameSpaces = true, bool checkChars = false)
         {
+            if (file == null)
+                throw new ArgumentNullException(nameof(file));
+
             if (!file.Directory.Exists)
                 file.Directory.Create();
 
@@ -70,11 +73,16 @@ namespace SystemPlus.IO
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             using StringReader reader = new StringReader(data);
-            return (T)serializer.Deserialize(reader);
+            using XmlReader xmlReader = XmlReader.Create(reader);
+
+            return (T)serializer.Deserialize(xmlReader);
         }
 
         public static T XmlDeserialize<T>(FileInfo file)
         {
+            if (file == null)
+                throw new ArgumentNullException(nameof(file));
+
             using FileStream fs = File.OpenRead(file.FullName);
             return XmlDeserialize<T>(fs);
         }
@@ -101,6 +109,9 @@ namespace SystemPlus.IO
 
         public static void DataSerialize<T>(T obj, FileInfo file, XmlWriterSettings? settings = null)
         {
+            if (file == null)
+                throw new ArgumentNullException(nameof(file));
+
             if (!file.Directory.Exists)
                 file.Directory.Create();
 
@@ -143,6 +154,9 @@ namespace SystemPlus.IO
 
         public static T DataDeserialize<T>(FileInfo file, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
+            if (file == null)
+                throw new ArgumentNullException(nameof(file));
+
             using FileStream fs = File.OpenRead(file.FullName);
             return DataDeserialize<T>(fs, settings, knownTypes);
         }
@@ -199,6 +213,9 @@ namespace SystemPlus.IO
 
         public static void BinarySerialize<T>(T obj, FileInfo file)
         {
+            if (file == null)
+                throw new ArgumentNullException(nameof(file));
+
             if (!file.Directory.Exists)
                 file.Directory.Create();
 
@@ -220,6 +237,9 @@ namespace SystemPlus.IO
 
         public static T BinaryDeserialize<T>(FileInfo file)
         {
+            if (file == null)
+                throw new ArgumentNullException(nameof(file));
+
             using FileStream fs = File.OpenRead(file.FullName);
             return BinaryDeserialize<T>(fs);
         }

@@ -7,7 +7,7 @@ namespace SystemPlus.Threading
     {
         readonly Action<T> process;
 
-        public Processor(int maxThreads, CancellationToken cancelToken, Action<T> process)
+        public Processor(int maxThreads, Action<T> process, CancellationToken cancelToken)
             : base(maxThreads, cancelToken)
         {
             this.process = process;

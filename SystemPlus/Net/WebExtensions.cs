@@ -60,14 +60,13 @@ namespace SystemPlus.Net
 
         public static MemoryStream GetFullResponseStream(this HttpWebResponse response, int maxLength = int.MaxValue)
         {
-            using (Stream s = response.GetResponseStream())
-            {
-                MemoryStream ms = new MemoryStream();
-                s.CopyTo(ms, 8000, maxLength);
+            using Stream s = response.GetResponseStream();
 
-                ms.Position = 0;
-                return ms;
-            }
+            MemoryStream ms = new MemoryStream();
+            s.CopyTo(ms, 8000, maxLength);
+
+            ms.Position = 0;
+            return ms;
         }
 
         /// <summary>
@@ -95,10 +94,9 @@ namespace SystemPlus.Net
 
         public static string DownloadString(this WebRequest request, CancellationToken token, int maxLength = int.MaxValue)
         {
-            using (WebResponse response = request.GetResponse(token))
-            {
-                return response.ReadWebResponse(maxLength);
-            }
+            using WebResponse response = request.GetResponse(token);
+
+            return response.ReadWebResponse(maxLength);
         }
 
         public static IList<KeyValuePair<string, string>> GetHeaders(this WebHeaderCollection headers)
@@ -120,10 +118,9 @@ namespace SystemPlus.Net
 
             request.ContentLength = bytes.Length;
 
-            using (Stream ps = request.GetRequestStream())
-            {
-                ps.Write(bytes);
-            }
+            using Stream ps = request.GetRequestStream();
+
+            ps.Write(bytes);
         }
 
         /// <summary>
@@ -133,12 +130,11 @@ namespace SystemPlus.Net
         /// <returns></returns>
         public static string GetResponseContent(this WebException exception)
         {
-            using (HttpWebResponse response = (HttpWebResponse)exception.Response)
-            using (Stream responseStream = response.GetResponseStream())
-            using (StreamReader sr = new StreamReader(responseStream, Encoding.ASCII))
-            {
-                return sr.ReadToEnd();
-            }
+            using WebResponse response = exception.Response;
+            using Stream responseStream = response.GetResponseStream();
+            using StreamReader sr = new StreamReader(responseStream, Encoding.ASCII);
+
+            return sr.ReadToEnd();
         }
 
         /// <summary>
@@ -149,24 +145,22 @@ namespace SystemPlus.Net
             if (response == null)
                 throw new ArgumentNullException(nameof(response));
 
-            using (MemoryStream rawdata = new MemoryStream())
+            using MemoryStream rawdata = new MemoryStream();
+            using (Stream rs = response.GetResponseStream())
             {
-                using (Stream rs = response.GetResponseStream())
-                {
-                    rs.CopyTo(rawdata, 8000, maxLength);
-                }
-
-                string? charset = GetCharSet(response.Headers);
-                if (string.IsNullOrEmpty(charset))
-                    charset = GetCharSetFromBody(rawdata);
-
-                Encoding encoding = GetEncoding(charset);
-
-                rawdata.Seek(0, SeekOrigin.Begin);
-                using StreamReader sr = new StreamReader(rawdata, encoding);
-
-                return sr.ReadToEnd();
+                rs.CopyTo(rawdata, 8000, maxLength);
             }
+
+            string? charset = GetCharSet(response.Headers);
+            if (string.IsNullOrEmpty(charset))
+                charset = GetCharSetFromBody(rawdata);
+
+            Encoding encoding = GetEncoding(charset);
+
+            rawdata.Seek(0, SeekOrigin.Begin);
+            using StreamReader sr = new StreamReader(rawdata, encoding);
+
+            return sr.ReadToEnd();
         }
 
         public static string? GetCharSet(WebHeaderCollection headers)

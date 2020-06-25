@@ -36,10 +36,9 @@ namespace SystemPlus.IO
 
         public static byte[] ToBytes(this Stream stream)
         {
-            using (MemoryStream ms = stream.ToMemoryStream())
-            {
-                return ms.ToArray();
-            }
+            using MemoryStream ms = stream.ToMemoryStream();
+
+            return ms.ToArray();
         }
 
         public static MemoryStream ToStream(this byte[] data)

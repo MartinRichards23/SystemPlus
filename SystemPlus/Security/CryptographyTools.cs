@@ -81,10 +81,9 @@ namespace SystemPlus.Security
                 combinedBytes[data.Length + i] = salt[i];
             }
 
-            using (HashAlgorithm algorithm = new SHA256Managed())
-            {
-                return algorithm.ComputeHash(combinedBytes);
-            }
+            using HashAlgorithm algorithm = new SHA256Managed();
+
+            return algorithm.ComputeHash(combinedBytes);
         }
 
         /// <summary>

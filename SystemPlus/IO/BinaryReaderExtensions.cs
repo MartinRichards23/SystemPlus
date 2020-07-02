@@ -13,6 +13,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static short ReadBigEndianInt16(this BinaryReader br)
         {
+            if (br == null)
+                throw new ArgumentNullException(nameof(br));
+
             byte[] b = br.ReadBytes(2);
             Array.Reverse(b);
             short result = BitConverter.ToInt16(b, 0);
@@ -24,6 +27,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static int ReadBigEndianInt32(this BinaryReader br)
         {
+            if (br == null)
+                throw new ArgumentNullException(nameof(br));
+
             byte[] b = br.ReadBytes(4);
             Array.Reverse(b);
             int result = BitConverter.ToInt32(b, 0);
@@ -35,6 +41,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static long ReadBigEndianInt64(this BinaryReader br)
         {
+            if (br == null)
+                throw new ArgumentNullException(nameof(br));
+
             byte[] b = br.ReadBytes(8);
             Array.Reverse(b);
             long result = BitConverter.ToInt64(b, 0);
@@ -46,6 +55,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static float ReadBigEndianSingle(this BinaryReader br)
         {
+            if (br == null)
+                throw new ArgumentNullException(nameof(br));
+
             byte[] b = br.ReadBytes(4);
             Array.Reverse(b);
             float result = BitConverter.ToSingle(b, 0);
@@ -57,6 +69,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static double ReadBigEndianDouble(this BinaryReader br)
         {
+            if (br == null)
+                throw new ArgumentNullException(nameof(br));
+
             byte[] b = br.ReadBytes(8);
             Array.Reverse(b);
             double result = BitConverter.ToDouble(b, 0);
@@ -68,6 +83,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static float ReadIbmSingle(this BinaryReader br)
         {
+            if (br == null)
+                throw new ArgumentNullException(nameof(br));
+
             byte[] b = br.ReadBytes(4);
             float result = Ibm32ToIeee32(b);
             return result;
@@ -78,6 +96,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static double ReadIbmDouble(this BinaryReader br)
         {
+            if (br == null)
+                throw new ArgumentNullException(nameof(br));
+
             byte[] b = br.ReadBytes(8);
             double result = Ibm64ToIeee64(b);
             return result;
@@ -88,6 +109,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static float Ibm32ToIeee32(byte[] b)
         {
+            if (b == null)
+                throw new ArgumentNullException(nameof(b));
+
             long intMantissa = ((long)b[1] << 16) + ((long)b[2] << 8) + b[3];
 
             float mantissa = intMantissa / (float)0x1000000;
@@ -105,6 +129,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static double Ibm64ToIeee64(byte[] b)
         {
+            if (b == null)
+                throw new ArgumentNullException(nameof(b));
+
             long intMantissa = ((long)b[1] << 48) + ((long)b[2] << 40) + ((long)b[3] << 32) + ((long)b[4] << 24) + ((long)b[5] << 16) + ((long)b[6] << 8) + b[7];
 
             double mantissa = intMantissa / (double)0x1000000;
@@ -121,6 +148,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static char[] ReadEbcdiCchars(BinaryReader br, int length)
         {
+            if (br == null)
+                throw new ArgumentNullException(nameof(br));
+
             byte[] b = br.ReadBytes(length);
             char[] c = new char[length];
 

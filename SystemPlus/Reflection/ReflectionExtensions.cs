@@ -83,6 +83,9 @@ namespace SystemPlus.Reflection
 
         public static T GetAssemblyAttribute<T>(this Assembly assembly)
         {
+            if (assembly == null)
+                throw new ArgumentNullException(nameof(assembly));
+
             object[] attributes = assembly.GetCustomAttributes(typeof(T), false);
 
             if (attributes.Length == 0)
@@ -104,6 +107,9 @@ namespace SystemPlus.Reflection
         /// </summary>
         public static string[] GetResourceNames(this Assembly assembly, string dir)
         {
+            if (assembly == null)
+                throw new ArgumentNullException(nameof(assembly));
+
             dir += "/";
 
             string strResources = assembly.GetName().Name + ".g.resources";
@@ -120,6 +126,9 @@ namespace SystemPlus.Reflection
         /// </summary>
         public static IEnumerable<T> GetInstancesOfInterface<T>(this Assembly assembly, params object[] constructorArgs) where T : class
         {
+            if (assembly == null)
+                throw new ArgumentNullException(nameof(assembly));
+
             Type baseType = typeof(T);
 
             IList<T> instances = new List<T>();
@@ -139,6 +148,9 @@ namespace SystemPlus.Reflection
         /// </summary>
         public static IEnumerable<T> GetInstancesOfType<T>(this Assembly assembly, params object[] constructorArgs) where T : class
         {
+            if (assembly == null)
+                throw new ArgumentNullException(nameof(assembly));
+
             IList<T> instances = new List<T>();
             IEnumerable<Type> types = assembly.GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.IsSubclassOf(typeof(T)));
 
@@ -158,6 +170,11 @@ namespace SystemPlus.Reflection
         /// </summary>
         public static Stream? GetEmbeddedResource(this Assembly assembly, string baseNamespace, string path)
         {
+            if (assembly == null)
+                throw new ArgumentNullException(nameof(assembly));
+            if (path == null)
+                throw new ArgumentNullException(nameof(path));
+
             string fullpath = baseNamespace + "." + path.Replace('\\', '.').Replace('/', '.').Trim('.');
             return assembly.GetManifestResourceStream(fullpath);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using SystemPlus.Collections.Generic;
 
@@ -162,7 +163,7 @@ namespace SystemPlus.Net
         {
             if (!string.IsNullOrEmpty(s))
             {
-                if (s.Contains("?"))
+                if (s.Contains("?", StringComparison.InvariantCulture))
                     return s.Substring(s.IndexOf("?", StringComparison.InvariantCultureIgnoreCase) + 1);
             }
             return s;
@@ -182,7 +183,7 @@ namespace SystemPlus.Net
 
             foreach (string part in parts)
             {
-                int index = part.IndexOf('=');
+                int index = part.IndexOf('=', StringComparison.InvariantCulture);
 
                 if (index < 0)
                     continue;
@@ -231,7 +232,7 @@ namespace SystemPlus.Net
 
             public override string ToString()
             {
-                return string.Format("Name: {0} Value: {1}", Name, Value);
+                return $"Name: {Name} Value: {Value}";
             }
         }
     }

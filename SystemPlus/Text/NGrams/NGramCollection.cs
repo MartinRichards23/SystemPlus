@@ -32,7 +32,7 @@ namespace SystemPlus.Text.NGrams
 
         public override string ToString()
         {
-            return string.Format("Gram length: {0}, Count: {1}", GramLength, grams.Count);
+            return $"Gram length: {GramLength}, Count: {grams.Count}";
         }
     }
 
@@ -78,7 +78,7 @@ namespace SystemPlus.Text.NGrams
 
         public override string ToString()
         {
-            return string.Format("Gram length: {0}, Count: {1}", GramLength, grams.Count);
+            return $"Gram length: {GramLength}, Count: {grams.Count}";
         }
 
         public static UniqueNGramCollection Create(NGramCollection ngrams)

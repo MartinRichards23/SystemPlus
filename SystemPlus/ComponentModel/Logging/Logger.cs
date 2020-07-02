@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using SystemPlus.Collections.Generic;
 
@@ -54,7 +55,7 @@ namespace SystemPlus.ComponentModel.Logging
                 return;
 
             if (!args.IsNullOrEmpty())
-                message = string.Format(message, args);
+                message = string.Format(CultureInfo.InvariantCulture, message, args);
 
             foreach (ILogger lb in loggers)
             {
@@ -90,7 +91,7 @@ namespace SystemPlus.ComponentModel.Logging
                 return;
 
             if (!args.IsNullOrEmpty())
-                message = string.Format(message, args);
+                message = string.Format(CultureInfo.InvariantCulture, message, args);
 
             foreach (ILogger lb in loggers)
             {

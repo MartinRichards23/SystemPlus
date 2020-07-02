@@ -10,10 +10,13 @@ namespace SystemPlus.Text.RegularExpressions
     {
         public void AddRange(IEnumerable<string> patterns, RegexOptions regexOptions)
         {
-            foreach (string pattern in patterns)
+            if (patterns != null)
             {
-                Regex regex = new Regex(pattern, regexOptions);
-                Add(regex);
+                foreach (string pattern in patterns)
+                {
+                    Regex regex = new Regex(pattern, regexOptions);
+                    Add(regex);
+                }
             }
         }
 

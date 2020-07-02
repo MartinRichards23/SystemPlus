@@ -32,6 +32,9 @@ namespace SystemPlus.Text
         /// </summary>
         public static string TrimLineEnds(string value)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             string[] lines = value.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             string newvalue = string.Join(Environment.NewLine, lines.Select(s => s.TrimEnd()));
             return newvalue;
@@ -75,7 +78,7 @@ namespace SystemPlus.Text
         public static string[] SplitIntoWords(string input)
         {
             if (input == null)
-                return new string[0];
+                return Array.Empty<string>();
 
             return CommonRegexes.WordSplit.Split(input);
         }
@@ -119,6 +122,9 @@ namespace SystemPlus.Text
         /// </summary>
         public static string RemoveDiacritics(string input)
         {
+            if (input == null)
+                throw new ArgumentNullException(nameof(input));
+
             string normalizedString = input.Normalize(NormalizationForm.FormD);
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -153,6 +159,11 @@ namespace SystemPlus.Text
         /// </summary>
         public static void Swap(string a, string b, out string shortest, out string longest)
         {
+            if (a == null)
+                throw new ArgumentNullException(nameof(a));
+            if (b == null)
+                throw new ArgumentNullException(nameof(b));
+
             if (a.Length < b.Length)
             {
                 shortest = a;
@@ -167,6 +178,9 @@ namespace SystemPlus.Text
 
         public static string PutInQuotes(string value)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             value = value.Trim('\"');
             return "\"" + value + "\"";
         }

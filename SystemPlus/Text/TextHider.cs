@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace SystemPlus.Text
@@ -36,7 +38,7 @@ namespace SystemPlus.Text
                 Match m = matches[i];
 
                 count++;
-                string key = string.Format(format, count);
+                string key = string.Format(CultureInfo.InvariantCulture, format, count);
 
                 values.Add(new KeyValuePair<string, string>(key, m.Value));
 
@@ -52,7 +54,7 @@ namespace SystemPlus.Text
             for (int i = values.Count - 1; i >= 0; i--)
             {
                 KeyValuePair<string, string> kvp = values[i];
-                text = text.Replace(kvp.Key, kvp.Value);
+                text = text.Replace(kvp.Key, kvp.Value, StringComparison.InvariantCultureIgnoreCase);
             }
 
             return text;

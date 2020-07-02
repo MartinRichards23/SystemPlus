@@ -29,10 +29,13 @@ namespace SystemPlus.Text.RegularExpressions
         {
             List<Regex> regexes = new List<Regex>();
 
-            foreach (string pattern in patterns)
+            if (patterns != null)
             {
-                Regex reg = new Regex(pattern, options);
-                regexes.Add(reg);
+                foreach (string pattern in patterns)
+                {
+                    Regex reg = new Regex(pattern, options);
+                    regexes.Add(reg);
+                }
             }
 
             return regexes;

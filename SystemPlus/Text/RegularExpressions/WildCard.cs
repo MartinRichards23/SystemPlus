@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 
 namespace SystemPlus.Text.RegularExpressions
@@ -26,6 +27,12 @@ namespace SystemPlus.Text.RegularExpressions
         {
         }
 
+        protected WildCard(SerializationInfo serializationInfo, StreamingContext streamingContext)
+            : base(serializationInfo, streamingContext)
+        {
+
+        }
+
         #region Static methods
 
         /// <summary>
@@ -34,9 +41,9 @@ namespace SystemPlus.Text.RegularExpressions
         public static string WildcardToRegex(string pattern)
         {
             string regex = Escape(pattern);
-            regex = regex.Replace("\\*", ".*");
-            regex = regex.Replace("\\?", ".");
-            regex = regex.Replace("\\|\\|", "|");
+            regex = regex.Replace("\\*", ".*", StringComparison.InvariantCultureIgnoreCase);
+            regex = regex.Replace("\\?", ".", StringComparison.InvariantCultureIgnoreCase);
+            regex = regex.Replace("\\|\\|", "|", StringComparison.InvariantCultureIgnoreCase);
 
             return regex;
         }
@@ -45,10 +52,13 @@ namespace SystemPlus.Text.RegularExpressions
         {
             List<WildCard> regexes = new List<WildCard>();
 
-            foreach (string pattern in patterns)
+            if (patterns != null)
             {
-                WildCard reg = new WildCard(pattern, options);
-                regexes.Add(reg);
+                foreach (string pattern in patterns)
+                {
+                    WildCard reg = new WildCard(pattern, options);
+                    regexes.Add(reg);
+                }
             }
 
             return regexes;

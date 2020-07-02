@@ -169,7 +169,7 @@ namespace SystemPlus.IO
 
                 foreach (char c in invalid)
                 {
-                    int i = name.IndexOf(c);
+                    int i = name.IndexOf(c, StringComparison.InvariantCulture);
 
                     if (i >= 0)
                         invalidChars += c;

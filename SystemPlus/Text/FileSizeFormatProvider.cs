@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace SystemPlus.Text
 {
@@ -33,7 +34,7 @@ namespace SystemPlus.Text
 
             try
             {
-                size = Convert.ToDecimal(arg);
+                size = Convert.ToDecimal(arg, CultureInfo.InvariantCulture);
             }
             catch (InvalidCastException)
             {
@@ -66,7 +67,7 @@ namespace SystemPlus.Text
                 precision = "2";
 
             string stringFormat = "{0:N" + precision + "}{1}";
-            return string.Format(stringFormat, size, suffix);
+            return string.Format(CultureInfo.InvariantCulture, stringFormat, size, suffix);
         }
 
         static string DefaultFormat(string? format, object? arg, IFormatProvider? formatProvider)

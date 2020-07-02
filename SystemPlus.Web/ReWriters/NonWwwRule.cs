@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Rewrite;
+using System;
 using System.Text;
 
 namespace SystemPlus.Web.ReWriters
@@ -14,7 +15,7 @@ namespace SystemPlus.Web.ReWriters
             HttpRequest req = context.HttpContext.Request;
             HostString currentHost = req.Host;
 
-            if (currentHost.Host.StartsWith("www."))
+            if (currentHost.Host.StartsWith("www.", StringComparison.InvariantCulture))
             {
                 HostString newHost = new HostString(currentHost.Host.Substring(4), currentHost.Port ?? 80);
                 StringBuilder newUrl = new StringBuilder().Append("http://").Append(newHost).Append(req.PathBase).Append(req.Path).Append(req.QueryString);

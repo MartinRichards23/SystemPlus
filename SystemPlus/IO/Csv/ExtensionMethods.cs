@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace SystemPlus.IO.Csv
 {
@@ -41,14 +42,14 @@ namespace SystemPlus.IO.Csv
             if (string.IsNullOrEmpty(value))
                 return string.Empty;
 
-            value = value.Replace("\r\n", " ");
-            value = value.Replace("\n", " ");
-            value = value.Replace("\r", " ");
+            value = value.Replace("\r\n", " ", StringComparison.InvariantCulture);
+            value = value.Replace("\n", " ", StringComparison.InvariantCulture);
+            value = value.Replace("\r", " ", StringComparison.InvariantCulture);
 
-            if (value.Contains(separator))
+            if (value.Contains(separator, StringComparison.InvariantCulture))
             {
-                if (value.Contains("\""))
-                    value = "\"" + value.Replace("\"", "\"\"") + "\"";
+                if (value.Contains("\"", StringComparison.InvariantCulture))
+                    value = "\"" + value.Replace("\"", "\"\"", StringComparison.InvariantCulture) + "\"";
                 else
                     value = "\"" + value + "\"";
             }

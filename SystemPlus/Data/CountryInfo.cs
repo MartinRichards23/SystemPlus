@@ -37,7 +37,7 @@ namespace SystemPlus.Data
 
         public override string ToString()
         {
-            return string.Format("Id: {0}, Name: {1}", Iso3, Name);
+            return $"Id: {Iso3}, Name: {Name}";
         }
 
         public static IEnumerable<CountryInfo> GetCountries()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using SystemPlus.Collections.Generic;
 
 namespace SystemPlus.Text
 {
@@ -16,6 +17,9 @@ namespace SystemPlus.Text
         /// </summary>
         public static string Clip(this string value, int max, string ending = "…")
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             if (value.Length <= max)
                 return value;
 
@@ -25,41 +29,47 @@ namespace SystemPlus.Text
         /// <summary>
         /// Returns a value indicating whether the specified string occurs within this string, can be case insensitive
         /// </summary>
-        public static bool Contains(this string s, string value, StringComparison comp)
+        public static bool Contains(this string value, string text, StringComparison comp)
         {
-            return s.IndexOf(value, comp) >= 0;
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            return value.IndexOf(text, comp) >= 0;
         }
 
         /// <summary>
         /// Trims the string, works on null values
         /// </summary>
-        public static string? TryTrim(this string? s)
+        public static string? TryTrim(this string? value)
         {
-            if (s == null)
+            if (value == null)
                 return null;
 
-            return s.Trim();
+            return value.Trim();
         }
 
         /// <summary>
         /// Trims the string, works on null values
         /// </summary>
-        public static string? TryTrim(this string? s, params char[] trimChars)
+        public static string? TryTrim(this string? value, params char[] trimChars)
         {
-            if (s == null)
+            if (value == null)
                 return null;
 
-            return s.Trim(trimChars);
+            return value.Trim(trimChars);
         }
 
-        public static IEnumerable<string> Trim(this IEnumerable<string> input, params char[] trimChars)
+        public static IEnumerable<string> Trim(this IEnumerable<string> values, params char[] trimChars)
         {
             List<string> output = new List<string>();
 
-            foreach (string s in input)
+            if (values != null)
             {
-                string s2 = s.Trim(trimChars);
-                output.Add(s2);
+                foreach (string s in values)
+                {
+                    string s2 = s.Trim(trimChars);
+                    output.Add(s2);
+                }
             }
 
             return output;
@@ -78,7 +88,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static string ToTitleCase(this string value)
         {
-            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value.ToLower());
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(value);
         }
 
         /// <summary>
@@ -86,6 +96,9 @@ namespace SystemPlus.Text
         /// </summary>
         public static string GetBeginning(this string value, int count)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             if (value.Length > count)
                 value = value.Substring(0, count);
 
@@ -97,6 +110,9 @@ namespace SystemPlus.Text
         /// </summary>
         public static string GetEnd(this string value, int count)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             if (value.Length > count)
                 value = value.Remove(0, value.Length - count);
 
@@ -108,6 +124,9 @@ namespace SystemPlus.Text
         /// </summary>
         public static string GetFragmentInclusive(this string value, string after, string before, StringComparison comparisonType)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             int start;
             int end;
 
@@ -129,6 +148,9 @@ namespace SystemPlus.Text
         /// </summary>
         public static string GetFragment(this string value, string? after, string? before, StringComparison comparisonType)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             int start;
             int end;
 
@@ -166,6 +188,9 @@ namespace SystemPlus.Text
         /// </summary>
         public static string ReplaceAt(this string value, string replacement, int start, int length)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             string replaced = value.Substring(0, start) + replacement + value.Substring(start + length);
             return replaced;
         }
@@ -203,7 +228,10 @@ namespace SystemPlus.Text
         /// </summary>
         public static StringBuilder AppendLine(this StringBuilder value, string format, params object[] args)
         {
-            string line = string.Format(format, args);
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            string line = string.Format(CultureInfo.InvariantCulture, format, args);
             value.AppendLine(line);
 
             return value;
@@ -228,18 +256,18 @@ namespace SystemPlus.Text
         /// <summary>
         /// Removes pluralization from string
         /// </summary>
-        public static string RemovePlural(this string val)
+        public static string RemovePlural(this string value)
         {
-            if (string.IsNullOrWhiteSpace(val))
-                return val;
+            if (string.IsNullOrWhiteSpace(value))
+                return value;
 
-            if (val.EndsWith("ses", StringComparison.InvariantCultureIgnoreCase))
-                return val.Remove(val.Length - 2);
+            if (value.EndsWith("ses", StringComparison.InvariantCultureIgnoreCase))
+                return value.Remove(value.Length - 2);
 
-            if (val.EndsWith("s", StringComparison.InvariantCultureIgnoreCase))
-                return val.Remove(val.Length - 1);
+            if (value.EndsWith("s", StringComparison.InvariantCultureIgnoreCase))
+                return value.Remove(value.Length - 1);
 
-            return val;
+            return value;
         }
     }
 }

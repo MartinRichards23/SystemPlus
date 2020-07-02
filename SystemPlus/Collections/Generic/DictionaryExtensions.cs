@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SystemPlus.Collections.Generic
 {
@@ -10,8 +12,12 @@ namespace SystemPlus.Collections.Generic
         /// <summary>
         /// Gets a value, returns default if no key
         /// </summary>
+        [return: MaybeNull]
         public static TValue TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue defaultValue = default) where TKey : notnull
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             if (list.ContainsKey(key))
             {
                 TValue value = list[key];
@@ -24,8 +30,12 @@ namespace SystemPlus.Collections.Generic
         /// <summary>
         /// Removes a values and returns it, otherwise returns default value
         /// </summary>
+        [return: MaybeNull]
         public static TValue TryTakeValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key) where TKey : notnull
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             if (list.ContainsKey(key))
             {
                 TValue value = list[key];
@@ -41,6 +51,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue item) where TKey : notnull
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             if (list.ContainsKey(key))
                 return false;
 
@@ -53,6 +66,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void AddOrSet<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue value) where TKey : notnull
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             if (list.ContainsKey(key))
                 list[key] = value;
             else
@@ -66,6 +82,9 @@ namespace SystemPlus.Collections.Generic
 
         public static void Increment<TKey>(this IDictionary<TKey, int> list, TKey key, int increment) where TKey : notnull
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+
             if (list.ContainsKey(key))
                 list[key] += increment;
             else
@@ -85,6 +104,9 @@ namespace SystemPlus.Collections.Generic
 
         public static IDictionary<TKey, TValue> AsDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> keyValues) where TKey : notnull
         {
+            if (keyValues == null)
+                throw new ArgumentNullException(nameof(keyValues));
+
             Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
 
             foreach (KeyValuePair<TKey, TValue> kvp in keyValues)

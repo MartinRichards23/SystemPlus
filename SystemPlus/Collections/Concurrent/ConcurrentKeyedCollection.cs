@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using SystemPlus.Collections.ObjectModel;
 
 namespace SystemPlus.Collections.Concurrent
 {
-    public class ConcurrentKeyedCollection<T> : IProducerConsumerCollection<T> where T : IKeyed
+    public class ConcurrentKeyedCollection<T> : IProducerConsumerCollection<T>, ICollection<T> where T : IKeyed
     {
         readonly object key = new object();
         readonly KeyedCollection<T> items = new KeyedCollection<T>();
@@ -68,6 +69,26 @@ namespace SystemPlus.Collections.Concurrent
             }
         }
 
+        public void Add(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(T item)
+        {
+            throw new NotImplementedException();
+        }
+
         public int Count
         {
             get
@@ -94,5 +115,7 @@ namespace SystemPlus.Collections.Concurrent
         {
             get { return key; }
         }
+
+        public bool IsReadOnly { get { return false; } }
     }
 }

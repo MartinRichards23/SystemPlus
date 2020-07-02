@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SystemPlus.Collections.ObjectModel
 {
@@ -30,20 +31,27 @@ namespace SystemPlus.Collections.ObjectModel
 
         public void AddRange(IEnumerable<TItem> items)
         {
-            foreach (TItem item in items)
+            if (items != null)
             {
-                Add(item);
+                foreach (TItem item in items)
+                {
+                    Add(item);
+                }
             }
         }
 
         public void TryAddRange(IEnumerable<TItem> items)
         {
-            foreach (TItem item in items)
+            if (items != null)
             {
-                TryAdd(item);
+                foreach (TItem item in items)
+                {
+                    TryAdd(item);
+                }
             }
         }
 
+        [return: MaybeNull]
         public TItem ItemOrDefault(TKey key)
         {
             if (Contains(key))
@@ -97,6 +105,7 @@ namespace SystemPlus.Collections.ObjectModel
             Add(item);
         }
 
+        [return: MaybeNull]
         public TItem TryGet(TKey key)
         {
             if (Contains(key))
@@ -108,7 +117,7 @@ namespace SystemPlus.Collections.ObjectModel
         /// <summary>
         /// Attempts to take the first item
         /// </summary>
-        public bool TryTake(out TItem item)
+        public bool TryTake([MaybeNull] out TItem item)
         {
             if (Count > 0)
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using SystemPlus.Collections.Generic;
 
@@ -43,7 +44,7 @@ namespace SystemPlus.ComponentModel.Logging
             Task.Factory.StartNew(() =>
             {
                 LogInfo(message, args);
-            });
+            }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace SystemPlus.ComponentModel.Logging
             Task.Factory.StartNew(() =>
             {
                 LogWarning(message, args);
-            });
+            }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
         }
 
         /// <summary>

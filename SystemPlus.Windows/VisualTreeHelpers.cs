@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,7 +13,7 @@ namespace SystemPlus.Windows
         /// </summary>
         /// <typeparam name="T">The type of element to find.</typeparam>
         /// <param name="visual">The parent element.</param>
-        /// <returns></returns>
+        [return: MaybeNull]
         public static T FindVisualChild<T>(Visual visual) //where T : Visual
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(visual); i++)
@@ -65,6 +66,7 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Returns datacontext from first ancstor of that type
         /// </summary>
+        [return: MaybeNull]
         public static T FindAncestorDataContext<T>(DependencyObject current)
         {
             current = VisualTreeHelper.GetParent(current);
@@ -215,6 +217,7 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Returns typed datacontext from "sender" object
         /// </summary>
+        [return: MaybeNull]
         public static T GetDataContext<T>(object sender)
         {
             if (sender is FrameworkElement fe && fe.DataContext is T t)
@@ -226,6 +229,7 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Returns typed tag from "sender" object
         /// </summary>
+        [return: MaybeNull]
         public static T GetTag<T>(object sender)
         {
             if (sender is FrameworkElement fe && fe.Tag is T t)

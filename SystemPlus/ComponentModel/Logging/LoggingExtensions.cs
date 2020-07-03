@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace SystemPlus.ComponentModel.Logging
 {
@@ -10,7 +11,7 @@ namespace SystemPlus.ComponentModel.Logging
             {
                 if (t.Exception != null)
                     Logger.Default.LogError(t.Exception);
-            }, TaskContinuationOptions.OnlyOnFaulted);
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
         }
     }
 }

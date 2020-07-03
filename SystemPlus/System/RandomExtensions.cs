@@ -96,6 +96,9 @@ namespace SystemPlus
             int index = rand.Next(values.Length);
             object? result = values.GetValue(index);
 
+            if (result == null)
+                throw new NullReferenceException(nameof(result));
+
             return (T)result;
         }
 

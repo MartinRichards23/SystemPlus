@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -81,6 +82,7 @@ namespace SystemPlus.Reflection
 
         #region Methods
 
+        [return: MaybeNull]
         public static T GetAssemblyAttribute<T>(this Assembly assembly)
         {
             if (assembly == null)
@@ -114,7 +116,11 @@ namespace SystemPlus.Reflection
 
             string strResources = assembly.GetName().Name + ".g.resources";
 
-            using Stream stream = assembly.GetManifestResourceStream(strResources);
+            using Stream? stream = assembly.GetManifestResourceStream(strResources);
+
+            if (stream == null)
+                throw new NullReferenceException(nameof(stream));
+
             using ResourceReader oResourceReader = new ResourceReader(stream);
 
             IEnumerable<string> vResources = from p in oResourceReader.OfType<DictionaryEntry>() let strTheme = (string)p.Key where strTheme.StartsWith(dir, StringComparison.InvariantCultureIgnoreCase) select strTheme;

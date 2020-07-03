@@ -74,6 +74,10 @@ namespace SystemPlus.ComponentModel.Logging
                 if (!File.Exists(filePath))
                 {
                     string? dir = Path.GetDirectoryName(filePath);
+
+                    if (dir == null)
+                        throw new NullReferenceException(nameof(dir));
+
                     FileSystem.EnsureDirExists(dir);
 
                     writeHeader = true;

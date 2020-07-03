@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -58,11 +59,16 @@ namespace SystemPlus.Net
             }
         }
 
+        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
         public static MemoryStream GetFullResponseStream(this HttpWebResponse response, int maxLength = int.MaxValue)
         {
+            if (response == null)
+                throw new ArgumentNullException(nameof(response));
+
             using Stream s = response.GetResponseStream();
 
             MemoryStream ms = new MemoryStream();
+
             s.CopyTo(ms, 8000, maxLength);
 
             ms.Position = 0;
@@ -103,10 +109,13 @@ namespace SystemPlus.Net
         {
             IList<KeyValuePair<string, string>> headerValues = new List<KeyValuePair<string, string>>();
 
-            foreach (string key in headers.AllKeys)
+            if (headers != null)
             {
-                string value = headers[key];
-                headerValues.Add(new KeyValuePair<string, string>(key.ToLowerInvariant(), value));
+                foreach (string key in headers.AllKeys)
+                {
+                    string value = headers[key];
+                    headerValues.Add(new KeyValuePair<string, string>(key, value));
+                }
             }
 
             return headerValues;
@@ -114,6 +123,11 @@ namespace SystemPlus.Net
 
         public static void WriteRequestStream(this WebRequest request, string content, Encoding encoding)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+            if (encoding == null)
+                throw new ArgumentNullException(nameof(encoding));
+
             byte[] bytes = encoding.GetBytes(content);
 
             request.ContentLength = bytes.Length;
@@ -130,6 +144,9 @@ namespace SystemPlus.Net
         /// <returns></returns>
         public static string GetResponseContent(this WebException exception)
         {
+            if (exception == null)
+                throw new ArgumentNullException(nameof(exception));
+
             using WebResponse response = exception.Response;
             using Stream responseStream = response.GetResponseStream();
             using StreamReader sr = new StreamReader(responseStream, Encoding.ASCII);
@@ -180,8 +197,12 @@ namespace SystemPlus.Net
             return charset;
         }
 
+        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
         public static string? GetCharSetFromBody(Stream rawdata)
         {
+            if (rawdata == null)
+                throw new ArgumentNullException(nameof(rawdata));
+
             rawdata.Seek(0, SeekOrigin.Begin);
 
             string? charset = null;

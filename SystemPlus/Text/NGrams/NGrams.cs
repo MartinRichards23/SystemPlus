@@ -24,7 +24,7 @@ namespace SystemPlus.Text.NGrams
             this.words = words;
         }
 
-        public string[] Words
+        public IList<string> Words
         {
             get { return words; }
         }
@@ -88,19 +88,22 @@ namespace SystemPlus.Text.NGrams
         {
             NGramCollection ngrams = new NGramCollection(length);
 
-            for (int i = 0; i < words.Count; i++)
+            if (words != null)
             {
-                if (i + length - 1 >= words.Count)
-                    break;
-
-                string[] gram = new string[length];
-
-                for (int j = 0; j < length; j++)
+                for (int i = 0; i < words.Count; i++)
                 {
-                    gram[j] = words[i + j];
-                }
+                    if (i + length - 1 >= words.Count)
+                        break;
 
-                ngrams.Add(new NGram(gram));
+                    string[] gram = new string[length];
+
+                    for (int j = 0; j < length; j++)
+                    {
+                        gram[j] = words[i + j];
+                    }
+
+                    ngrams.Add(new NGram(gram));
+                }
             }
 
             return ngrams;

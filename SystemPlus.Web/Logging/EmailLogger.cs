@@ -4,7 +4,7 @@ using SystemPlus.Web.Email;
 
 namespace SystemPlus.Web.Logging
 {
-    public class EmailLoggerProvider : ILoggerProvider
+    public sealed class EmailLoggerProvider : ILoggerProvider
     {
         readonly IEmailSender emailer;
         readonly string address;
@@ -37,7 +37,7 @@ namespace SystemPlus.Web.Logging
             this.address = address;
         }
 
-        public IDisposable BeginScope<TState>(TState state)
+        public IDisposable? BeginScope<TState>(TState state)
         {
             return null;
         }

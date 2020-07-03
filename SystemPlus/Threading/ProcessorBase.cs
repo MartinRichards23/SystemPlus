@@ -208,7 +208,7 @@ namespace SystemPlus.Threading
             Action<Task> finish = Finish;
 
             Task task = new Task(action);
-            task.ContinueWith(finish);
+            task.ContinueWith(finish, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.Default);
 
             threads.Add(task);
             task.Start();

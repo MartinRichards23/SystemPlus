@@ -22,7 +22,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public bool HasKey(string sectionName, string key)
         {
-            IniSection section = GetSection(sectionName);
+            IniSection? section = GetSection(sectionName);
 
             if (section == null)
                 return false;
@@ -32,7 +32,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         #region Get / Set values
 
-        public IniSection GetSection(string sectionName)
+        public IniSection? GetSection(string sectionName)
         {
             string normalSectionName = NormaliseKey(sectionName);
             return sections.TryGet(normalSectionName);
@@ -40,7 +40,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public IniSection GetOrCreateSection(string sectionName)
         {
-            IniSection section = GetSection(sectionName);
+            IniSection? section = GetSection(sectionName);
             if (section == null)
             {
                 section = new IniSection(sectionName);
@@ -52,7 +52,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public IEnumerable<IniValue> GetSectionValues(string sectionName)
         {
-            IniSection section = GetSection(sectionName);
+            IniSection? section = GetSection(sectionName);
 
             if (section != null)
             {
@@ -68,7 +68,7 @@ namespace SystemPlus.ComponentModel.Ini
             string normalSectionName = NormaliseKey(sectionName);
             string normalKey = NormaliseKey(key);
 
-            IniSection section = sections.TryGet(normalSectionName);
+            IniSection? section = sections.TryGet(normalSectionName);
             return section?.GetValue(normalKey);
         }
 
@@ -342,6 +342,9 @@ namespace SystemPlus.ComponentModel.Ini
 
         public void Save(TextWriter sw)
         {
+            if (sw == null)
+                throw new ArgumentNullException(nameof(sw));
+
             foreach (IniSection section in sections)
             {
                 sw.WriteLine("[{0}]", section.Name);
@@ -391,6 +394,9 @@ namespace SystemPlus.ComponentModel.Ini
 
         public static string NormaliseKey(string key)
         {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+
             return key.ToUpperInvariant().Trim();
         }
 

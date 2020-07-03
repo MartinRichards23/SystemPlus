@@ -17,7 +17,7 @@ namespace SystemPlus.Data
     {
         #region Fields
 
-        string databaseName;
+        string? databaseName;
         readonly List<SqlTable> tables = new List<SqlTable>();
 
         #endregion
@@ -133,7 +133,7 @@ namespace SystemPlus.Data
 
         #region Private methods
 
-        List<string> GetTableNames(SqlConnection conn)
+        static List<string> GetTableNames(SqlConnection conn)
         {
             string sql = GetSqlForTableNames();
             List<string> names = new List<string>();
@@ -151,7 +151,7 @@ namespace SystemPlus.Data
             return names;
         }
 
-        SqlTable GetTableSchema(SqlConnection conn, string tableName)
+        static SqlTable GetTableSchema(SqlConnection conn, string tableName)
         {
             string sql = $"sp_help '{tableName}'";
 
@@ -220,12 +220,12 @@ namespace SystemPlus.Data
             return table;
         }
 
-        string GetSqlForTableNames()
+        static string GetSqlForTableNames()
         {
             return "SELECT TABLE_NAME FROM .INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
         }
 
-        void WriteModelClass(TextWriter tw, SqlTable table)
+        static void WriteModelClass(TextWriter tw, SqlTable table)
         {
             tw.WriteLine("public class {0}", table.ClassName);
             tw.WriteLine("{");
@@ -238,7 +238,7 @@ namespace SystemPlus.Data
             tw.WriteLine("}");
         }
 
-        void WriteReader(TextWriter tw, SqlTable table)
+        static void WriteReader(TextWriter tw, SqlTable table)
         {
             string methodName = $"Read{table.ClassName}";
 
@@ -258,7 +258,7 @@ namespace SystemPlus.Data
             tw.WriteLine("}");
         }
 
-        void WriteAdd(TextWriter tw, SqlTable table)
+        static void WriteAdd(TextWriter tw, SqlTable table)
         {
             string methodName = $"Add{table.ClassName}";
 
@@ -290,7 +290,7 @@ namespace SystemPlus.Data
             tw.WriteLine("}");
         }
 
-        void WriteAddSql(TextWriter tw, SqlTable table)
+        static void WriteAddSql(TextWriter tw, SqlTable table)
         {
             List<string> paramaters = new List<string>();
             List<string> columnNames = new List<string>();
@@ -327,7 +327,7 @@ namespace SystemPlus.Data
             tw.WriteLine("END");
         }
 
-        void WriteGet(TextWriter tw, SqlTable table)
+        static void WriteGet(TextWriter tw, SqlTable table)
         {
             string methodName = $"Get{table.ClassName}";
             string parameters = string.Empty;
@@ -364,7 +364,7 @@ namespace SystemPlus.Data
             tw.WriteLine("}");
         }
 
-        void WriteGetSql(TextWriter tw, SqlTable table)
+        static void WriteGetSql(TextWriter tw, SqlTable table)
         {
             List<string> paramaters = new List<string>();
             List<string> valEquals = new List<string>();
@@ -392,7 +392,7 @@ namespace SystemPlus.Data
             tw.WriteLine("END");
         }
 
-        void WriteGetAll(TextWriter tw, SqlTable table)
+        static void WriteGetAll(TextWriter tw, SqlTable table)
         {
             string methodName = $"GetAll{table.Name}";
 
@@ -420,7 +420,7 @@ namespace SystemPlus.Data
             tw.WriteLine("}");
         }
 
-        void WriteGetAllSql(TextWriter tw, SqlTable table)
+        static void WriteGetAllSql(TextWriter tw, SqlTable table)
         {
             string methodName = $"GetAll{table.Name}";
 
@@ -435,7 +435,7 @@ namespace SystemPlus.Data
             tw.WriteLine("END");
         }
 
-        void WriteUpdate(TextWriter tw, SqlTable table)
+        static void WriteUpdate(TextWriter tw, SqlTable table)
         {
             string methodName = $"Update{table.ClassName}";
 
@@ -465,7 +465,7 @@ namespace SystemPlus.Data
             tw.WriteLine("}");
         }
 
-        void WriteUpdateSql(TextWriter tw, SqlTable table)
+        static void WriteUpdateSql(TextWriter tw, SqlTable table)
         {
             List<string> paramaters = new List<string>();
             List<string> seters = new List<string>();
@@ -504,7 +504,7 @@ namespace SystemPlus.Data
             tw.WriteLine("END");
         }
 
-        void WriteDelete(TextWriter tw, SqlTable table)
+        static void WriteDelete(TextWriter tw, SqlTable table)
         {
             string methodName = $"Delete{table.ClassName}";
             string parameters = string.Empty;
@@ -536,7 +536,7 @@ namespace SystemPlus.Data
             tw.WriteLine("}");
         }
 
-        void WriteDeleteSql(TextWriter tw, SqlTable table)
+        static void WriteDeleteSql(TextWriter tw, SqlTable table)
         {
             List<string> paramaters = new List<string>();
             List<string> valEquals = new List<string>();

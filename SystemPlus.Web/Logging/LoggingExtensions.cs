@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SystemPlus.Web.Logging
@@ -12,7 +13,7 @@ namespace SystemPlus.Web.Logging
             {
                 if (t.Exception != null)
                     logger.LogError(t.Exception, message);
-            }, TaskContinuationOptions.OnlyOnFaulted);
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
         }
     }
 }

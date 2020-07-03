@@ -118,6 +118,24 @@ namespace SystemPlus.Web.Slack
     [Serializable]
     public class NoServiceException : Exception
     {
+        public NoServiceException()
+        {
 
+        }
+
+        public NoServiceException(string message) : base(message)
+        {
+
+        }
+
+        public NoServiceException(string message, Exception innerException) : base(message, innerException)
+        {
+
+        }
+
+        protected NoServiceException(SerializationInfo serializationInfo, StreamingContext streamingContext) :base(serializationInfo, streamingContext)
+        {
+            
+        }
     }
 }

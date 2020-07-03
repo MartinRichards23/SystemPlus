@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using SystemPlus.IO;
@@ -17,6 +18,7 @@ namespace SystemPlus.Data
         /// <summary>
         /// Makes a command for a stored procedure
         /// </summary>
+        [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Stored procedure")]
         public static SqlCommand StoredProcedure(this SqlConnection connection, string storedProcedure)
         {
             SqlCommand command = new SqlCommand(storedProcedure, connection)
@@ -30,6 +32,7 @@ namespace SystemPlus.Data
         /// <summary>
         /// Makes a command for a stored procedure
         /// </summary>
+        [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Stored procedure")]
         public static SqlCommand StoredProcedure(this SqlConnection connection, string storedProcedure, SqlTransaction transaction)
         {
             SqlCommand command = new SqlCommand(storedProcedure, connection, transaction)
@@ -41,27 +44,18 @@ namespace SystemPlus.Data
         }
 
         /// <summary>
-        /// Makes a command for sql 
-        /// </summary>
-        public static SqlCommand GetTextCommand(this SqlConnection connection, string sql)
-        {
-            SqlCommand command = new SqlCommand(sql, connection)
-            {
-
-            };
-
-            return command;
-        }
-
-        /// <summary>
         /// Gets the value or the given default value is dbnull
         /// </summary>
         public static T GetValue<T>(this IDataReader reader, string name, T defaultVal)
         {
+            if (reader == null)
+                throw new ArgumentNullException(nameof(reader));
+
             object o = reader[name];
 
             if (o == DBNull.Value)
                 return defaultVal;
+
             return (T)o;
         }
 
@@ -94,7 +88,7 @@ namespace SystemPlus.Data
             return TryGetValue(reader, name, default(T));
         }
 
-        public static T TryGetJsonValue<T>(this IDataReader reader, string name) where T : class, new()
+        public static T? TryGetJsonValue<T>(this IDataReader reader, string name) where T : class, new()
         {
             try
             {
@@ -122,8 +116,14 @@ namespace SystemPlus.Data
         /// <summary>
         /// Read a row from the IDataReader, returns default if no result
         /// </summary>
+        [return: MaybeNull]
         public static T TryReadItem<T>(this IDataReader rdr, Func<IDataReader, T> t)
         {
+            if (rdr == null) 
+                throw new ArgumentNullException(nameof(rdr));
+            if (t == null) 
+                throw new ArgumentNullException(nameof(t));
+
             if (!rdr.Read())
                 return default;
 
@@ -135,6 +135,11 @@ namespace SystemPlus.Data
         /// </summary>
         public static T ReadItem<T>(this IDataReader rdr, Func<IDataReader, T> t)
         {
+            if (rdr == null) 
+                throw new ArgumentNullException(nameof(rdr));
+            if (t == null) 
+                throw new ArgumentNullException(nameof(t));
+
             if (!rdr.Read())
                 throw new Exception("Data not found");
 
@@ -162,6 +167,9 @@ namespace SystemPlus.Data
         /// </summary>
         public static SqlParameter AddCompressedJsonValue<T>(this SqlParameterCollection target, string parameterName, T value) where T : class, new()
         {
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             if (value == null)
             {
                 SqlParameter param = new SqlParameter(parameterName, SqlDbType.VarBinary, -1)
@@ -202,6 +210,9 @@ namespace SystemPlus.Data
         /// </summary>
         public static SqlParameter AddJsonValue<T>(this SqlParameterCollection target, string parameterName, T value) where T : class, new()
         {
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             if (value == null)
             {
                 return target.AddWithValue(parameterName, DBNull.Value);
@@ -215,6 +226,9 @@ namespace SystemPlus.Data
 
         public static SqlParameter AddWithValue(this SqlParameterCollection target, string parameterName, object value, object nullValue)
         {
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             if (value == null)
                 return target.AddWithValue(parameterName, nullValue ?? DBNull.Value);
 
@@ -223,6 +237,9 @@ namespace SystemPlus.Data
 
         public static SqlParameter AddWithValue(this SqlParameterCollection target, string parameterName, object value, SqlDbType sqltype)
         {
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             SqlParameter param = new SqlParameter(parameterName, sqltype)
             {
                 Value = value
@@ -233,6 +250,9 @@ namespace SystemPlus.Data
 
         public static SqlParameter? AddRecords(this SqlParameterCollection target, string parameterName, SqlRecordCollection value)
         {
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             if (value != null && value.Count > 0)
             {
                 SqlParameter param = new SqlParameter(parameterName, SqlDbType.Structured)
@@ -250,6 +270,9 @@ namespace SystemPlus.Data
         /// </summary>
         public static ISet<string> GetColumns(this IDataRecord reader)
         {
+            if (reader == null)
+                throw new ArgumentNullException(nameof(reader));
+
             ISet<string> columns = new HashSet<string>();
 
             for (int i = 0; i < reader.FieldCount; i++)
@@ -261,11 +284,14 @@ namespace SystemPlus.Data
             return columns;
         }
 
-        public static bool HasColumn(this IDataRecord dr, string columnName)
+        public static bool HasColumn(this IDataRecord record, string columnName)
         {
-            for (int i = 0; i < dr.FieldCount; i++)
+            if (record == null)
+                throw new ArgumentNullException(nameof(record));
+
+            for (int i = 0; i < record.FieldCount; i++)
             {
-                if (dr.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                if (record.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
                     return true;
             }
             return false;
@@ -274,15 +300,20 @@ namespace SystemPlus.Data
         /// <summary>
         /// Write the contents of the datareader to the streamWriter in csv format
         /// </summary>
-        public static void ToCsv(this IDataReader rdr, TextWriter sw, bool includeHeader)
+        public static void ToCsv(this IDataReader reader, TextWriter sw, bool includeHeader)
         {
-            while (rdr.NextResult())
+            if (reader == null)
+                throw new ArgumentNullException(nameof(reader));
+            if (sw == null)
+                throw new ArgumentNullException(nameof(sw));
+
+            while (reader.NextResult())
             {
                 // get all the column names first
-                object[] columns = new object[rdr.FieldCount];
-                for (int i = 0; i < rdr.FieldCount; i++)
+                object[] columns = new object[reader.FieldCount];
+                for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    columns[i] = rdr.GetName(i);
+                    columns[i] = reader.GetName(i);
                 }
 
                 // write header
@@ -292,13 +323,13 @@ namespace SystemPlus.Data
                 }
 
                 // write all the data
-                while (rdr.Read())
+                while (reader.Read())
                 {
-                    object[] vals = new object[rdr.FieldCount];
+                    object[] vals = new object[reader.FieldCount];
 
-                    for (int i = 0; i < rdr.FieldCount; i++)
+                    for (int i = 0; i < reader.FieldCount; i++)
                     {
-                        vals[i] = rdr[i];
+                        vals[i] = reader[i];
                     }
 
                     sw.WriteCsvVals(",", vals);

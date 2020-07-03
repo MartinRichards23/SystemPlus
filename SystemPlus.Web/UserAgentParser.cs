@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using SystemPlus.Text;
 
 namespace SystemPlus.Web
 {
@@ -15,13 +17,11 @@ namespace SystemPlus.Web
         /// <summary>
         /// Constructs a Device instance
         /// </summary>
-        public Device(string family, string brand, string model)
+        public Device(string? family, string? brand, string? model)
         {
-            Family = family.Trim();
-            if (brand != null)
-                Brand = brand.Trim();
-            if (model != null)
-                Model = model.Trim();
+            Family = family?.Trim();
+            Brand = brand?.Trim();
+            Model = model?.Trim();
         }
 
         /// <summary>
@@ -32,23 +32,15 @@ namespace SystemPlus.Web
         /// <summary>
         ///The brand of the device 
         /// </summary>
-        public string Brand { get; }
+        public string? Brand { get; }
         /// <summary>
         /// The family of the device, if available
         /// </summary>
-        public string Family { get; }
+        public string? Family { get; }
         /// <summary>
         /// The model of the device, if available
         /// </summary>
-        public string Model { get; }
-
-        /// <summary>
-        /// A readable description of the device
-        /// </summary>
-        public override string ToString()
-        {
-            return Family;
-        }
+        public string? Model { get; }
     }
 
     /// <summary>
@@ -161,7 +153,7 @@ namespace SystemPlus.Web
         /// <summary>
         /// The user agent string, the input for the UAParser
         /// </summary>
-        string String { get; }
+        string Value { get; }
 
         /// <summary>
         /// The OS parsed from the user agent string
@@ -188,7 +180,7 @@ namespace SystemPlus.Web
         /// <summary>
         /// The user agent string, the input for the UAParser
         /// </summary>
-        public string String { get; }
+        public string Value { get; }
         // ReSharper disable once InconsistentNaming
         /// <summary>
         /// The OS parsed from the user agent string
@@ -216,7 +208,7 @@ namespace SystemPlus.Web
         /// </summary>
         public ClientInfo(string inputString, OS os, Device device, UserAgent userAgent)
         {
-            String = inputString;
+            Value = inputString;
             OS = os;
             Device = device;
             UA = userAgent;
@@ -339,7 +331,6 @@ namespace SystemPlus.Web
                 _options = options;
             }
 
-            // ReSharper disable once InconsistentNaming
             public Func<string, OS> OSSelector(Func<string, string> indexer)
             {
                 Regex regex = Regex(indexer, "OS");
@@ -438,8 +429,7 @@ namespace SystemPlus.Web
                 return replacement != null ? Select(_ => replacement) : Select();
             }
 
-            private static Func<Match, IEnumerator<int>, string> Replace(
-                string replacement, string token)
+            private static Func<Match, IEnumerator<int>, string> Replace(string replacement, string token)
             {
                 return replacement != null && replacement.Contains(token, StringComparison.InvariantCulture)
                      ? Select(s => s != null ? replacement.ReplaceFirstOccurence(token, s) : replacement)
@@ -520,17 +510,13 @@ namespace SystemPlus.Web
             {
                 for (T state = initial; ; state = next(state))
                     yield return state;
-                // ReSharper disable once FunctionNeverReturns
             }
         }
     }
 
     internal static class RegexBinderBuilder
     {
-        public static Func<Match, IEnumerator<int>, TResult> SelectMany<T1, T2, TResult>(
-            this Func<Match, IEnumerator<int>, T1> binder,
-            Func<T1, Func<Match, IEnumerator<int>, T2>> continuation,
-            Func<T1, T2, TResult> projection)
+        public static Func<Match, IEnumerator<int>, TResult> SelectMany<T1, T2, TResult>(this Func<Match, IEnumerator<int>, T1> binder, Func<T1, Func<Match, IEnumerator<int>, T2>> continuation, Func<T1, T2, TResult> projection)
         {
             return (m, num) =>
             {
@@ -542,20 +528,9 @@ namespace SystemPlus.Web
         }
     }
 
-    internal static class StringExtensions
-    {
-        public static string ReplaceFirstOccurence(this string input, string search, string replacement)
-        {
-            if (input == null) throw new ArgumentNullException(nameof(input));
-            int index = input.IndexOf(search, StringComparison.Ordinal);
-            return index >= 0
-                 ? input.Substring(0, index) + replacement + input.Substring(index + search.Length)
-                 : input;
-        }
-    }
-
     internal static class DictionaryExtensions
     {
+        [return: MaybeNull]
         public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
             if (dictionary == null)
@@ -574,7 +549,7 @@ namespace SystemPlus.Web
     {
         internal class Mapping
         {
-            private Dictionary<string, string> _lastEntry;
+            private Dictionary<string, string>? _lastEntry;
 
             public Mapping()
             {
@@ -591,7 +566,8 @@ namespace SystemPlus.Web
 
             public void AddToSequence(string key, string value)
             {
-                _lastEntry[key] = value;
+                if (_lastEntry != null)
+                    _lastEntry[key] = value;
             }
         }
 
@@ -609,7 +585,7 @@ namespace SystemPlus.Web
             // line splitting using various splitting characters
             string[] lines = yamlInputString.Split(new[] { Environment.NewLine, "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             int lineCount = 0;
-            Mapping activeMapping = null;
+            Mapping? activeMapping = null;
 
             foreach (string line in lines)
             {

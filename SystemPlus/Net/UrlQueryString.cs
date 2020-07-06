@@ -145,6 +145,16 @@ namespace SystemPlus.Net
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Convert to Uri 
+        /// </summary>
+        public Uri ToUri()
+        {
+            string url = MakeUrl();
+            return new Uri(url);
+        }
+
+
         public override string ToString()
         {
             return MakeUrl();

@@ -361,7 +361,7 @@ namespace SystemPlus.Web
                 return Parsers.Device(regex, device, brand, model);
             }
 
-            private Regex Regex(Func<string, string> indexer, string key, string? regexFlag = null)
+            private static Regex Regex(Func<string, string> indexer, string key, string? regexFlag = null)
             {
                 string pattern = indexer("regex");
                 if (pattern == null)

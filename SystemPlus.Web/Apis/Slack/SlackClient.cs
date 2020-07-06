@@ -28,7 +28,7 @@ namespace SystemPlus.Web.Slack
 
             try
             {
-                HttpWebRequest request = request = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebRequest request = request = (HttpWebRequest)WebRequest.Create(url.ToUri());
                 request.Method = "GET";
 
                 using HttpWebResponse response = (HttpWebResponse)request.GetResponse();

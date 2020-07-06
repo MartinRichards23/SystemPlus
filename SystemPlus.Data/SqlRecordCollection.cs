@@ -15,7 +15,7 @@ namespace SystemPlus.Data
             this.columns = columns;
         }
 
-        public SqlMetaData[] Columns
+        public IList<SqlMetaData> Columns
         {
             get { return columns; }
         }

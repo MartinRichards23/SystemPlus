@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using SystemPlus.IO;
+using SystemPlus.Net;
 
 namespace SystemPlus.Web.GeoPlugin
 {
@@ -9,19 +12,21 @@ namespace SystemPlus.Web.GeoPlugin
     /// </summary>
     public class GeoPluginApi
     {
-        public GeoPluginResult GetIpData(string ipAddress)
-        {
-            string url = "http://www.geoplugin.net/json.gp?ip=" + ipAddress;
+        readonly string baseUrl = "http://www.geoplugin.net/json.gp?ip=";
 
-            HttpWebRequest request = WebRequest.CreateHttp(url);
+        public async Task<GeoPluginResult> GetIpData(string ipAddress)
+        {
+            Uri uri = new Uri(baseUrl + ipAddress);
+
+            HttpWebRequest request = WebRequest.CreateHttp(uri);
             request.Method = "GET";
             request.Timeout = 5000;
 
-            using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            using HttpWebResponse response = await request.GetHttpResponseAsync();
             using Stream receiveStream = response.GetResponseStream();
             using StreamReader sr = new StreamReader(receiveStream);
 
-            string data = sr.ReadToEnd();
+            string data = await sr.ReadToEndAsync();
 
             GeoPluginResult result = Serialization.JsonDeserialize<GeoPluginResult>(data);
 

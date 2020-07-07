@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using SystemPlus.IO;
 using SystemPlus.IO.Csv;
 
@@ -159,7 +160,7 @@ namespace SystemPlus.Data
             byte[] data = CompressionTools.Decompress(compressedData);
             string json = Encoding.UTF8.GetString(data);
 
-            return Serialization.JsonDeserialize<T>(json);
+            return JsonSerializer.Deserialize<T>(json);
         }
 
         /// <summary>
@@ -183,7 +184,7 @@ namespace SystemPlus.Data
             }
             else
             {
-                string json = Serialization.JsonSerialize(value);
+                string json = JsonSerializer.Serialize(value);
 
                 byte[] data = Encoding.UTF8.GetBytes(json);
                 byte[] compressedData = CompressionTools.Compress(data);
@@ -202,7 +203,7 @@ namespace SystemPlus.Data
             if (string.IsNullOrEmpty(json))
                 return default;
 
-            return Serialization.JsonDeserialize<T>(json);
+            return JsonSerializer.Deserialize<T>(json);
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace SystemPlus.Data
             }
             else
             {
-                string json = Serialization.JsonSerialize(value);
+                string json = JsonSerializer.Serialize(value);
                 return target.AddWithValue(parameterName, json);
             }
         }

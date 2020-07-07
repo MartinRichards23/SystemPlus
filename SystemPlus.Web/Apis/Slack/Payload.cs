@@ -1,118 +1,118 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace SystemPlus.Web.Slack
 {
     /// <summary>
     /// https://api.slack.com/docs/messages/builder
     /// </summary>
-    [DataContract]
     public class Payload
     {
-        [DataMember(Name = "channel")]
-        public string? channel { get; set; }
+        [JsonPropertyName("channel")]
+        public string? Channel { get; set; }
 
-        [DataMember]
-        public string? username { get; set; }
+        [JsonPropertyName("username")]
+        public string? Username { get; set; }
 
-        [DataMember]
-        public string? text { get; set; }
+        [JsonPropertyName("text")]
+        public string? Text { get; set; }
 
-        [DataMember]
-        public List<Attachment>? attachments { get; set; }
+        [JsonPropertyName("attachments")]
+        public List<Attachment>? Attachments { get; set; }
 
         public string? TextPlain
         {
-            get { return text; }
-            set { text = SlackClient.EscapeMessage(value); }
+            get { return Text; }
+            set { Text = SlackClient.EscapeMessage(value); }
         }
     }
 
-    [DataContract]
+    [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
     public class Attachment
     {
-        [DataMember]
-        public string? fallback { get; set; }
+        [JsonPropertyName("fallback")]
+        public string? Fallback { get; set; }
 
-        [DataMember]
-        public string? color { get; set; }
+        [JsonPropertyName("color")]
+        public string? Color { get; set; }
 
-        [DataMember]
-        public string? pretext { get; set; }
+        [JsonPropertyName("pretext")]
+        public string? Pretext { get; set; }
 
-        [DataMember]
-        public string? author_name { get; set; }
+        [JsonPropertyName("author_name")]
+        public string? AuthorName { get; set; }
 
-        [DataMember]
-        public string? author_link { get; set; }
+        [JsonPropertyName("author_link")]
+        public string? AuthorLink { get; set; }
 
-        [DataMember]
-        public string? author_icon { get; set; }
+        [JsonPropertyName("author_icon")]
+        public string? AuthorIcon { get; set; }
 
-        [DataMember]
-        public string? title { get; set; }
+        [JsonPropertyName("title")]
+        public string? Title { get; set; }
 
-        [DataMember]
-        public string? title_link { get; set; }
+        [JsonPropertyName("title_link")]
+        public string? TitleLink { get; set; }
 
-        [DataMember]
-        public string? text { get; set; }
+        [JsonPropertyName("text")]
+        public string? Text { get; set; }
 
-        [DataMember]
-        public List<Field>? fields { get; set; }
+        [JsonPropertyName("fields")]
+        public List<Field>? Fields { get; set; }
 
-        [DataMember]
-        public string? image_url { get; set; }
+        [JsonPropertyName("image_url")]
+        public string? ImageUrl { get; set; }
 
-        [DataMember]
-        public string? thumb_url { get; set; }
+        [JsonPropertyName("thumb_url")]
+        public string? ThumbUrl { get; set; }
 
-        [DataMember]
-        public string? footer { get; set; }
+        [JsonPropertyName("footer")]
+        public string? Footer { get; set; }
 
-        [DataMember]
-        public string? footer_icon { get; set; }
+        [JsonPropertyName("footer_icon")]
+        public string? FooterIcon { get; set; }
 
-        [DataMember]
-        public long ts { get; set; }
+        [JsonPropertyName("ts")]
+        public long Ts { get; set; }
 
         public string? TextPlain
         {
-            get { return text; }
-            set { text = SlackClient.EscapeMessage(value); }
+            get { return Text; }
+            set { Text = SlackClient.EscapeMessage(value); }
         }
 
         public string? TitlePlain
         {
-            get { return title; }
-            set { title = SlackClient.EscapeMessage(value); }
+            get { return Title; }
+            set { Title = SlackClient.EscapeMessage(value); }
         }
 
         public string? PreTextPlain
         {
-            get { return pretext; }
-            set { pretext = SlackClient.EscapeMessage(value); }
+            get { return Pretext; }
+            set { Pretext = SlackClient.EscapeMessage(value); }
         }
 
         public string? FooterPlain
         {
-            get { return footer; }
-            set { footer = SlackClient.EscapeMessage(value); }
+            get { return Footer; }
+            set { Footer = SlackClient.EscapeMessage(value); }
         }
     }
 
-    [DataContract]
     public class Field
     {
-        [DataMember]
-        public string? title { get; set; }
+        [JsonPropertyName("title")]
+        public string? Title { get; set; }
 
-        [DataMember]
-        public string? value { get; set; }
+        [JsonPropertyName("value")]
+        public string? Value { get; set; }
 
-        [DataMember]
-        public bool @short { get; set; }
+        [JsonPropertyName("short")]
+        public bool @Short { get; set; }
     }
 
     [Serializable]

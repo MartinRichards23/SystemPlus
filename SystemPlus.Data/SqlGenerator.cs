@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using SystemPlus.Collections.Generic;
@@ -46,6 +47,9 @@ namespace SystemPlus.Data
 
         public void WriteDatabaseClass(TextWriter tw)
         {
+            if (tw == null)
+                return;
+
             tw.WriteLine("using System;");
             tw.WriteLine("using System.Data;");
             tw.WriteLine("using System.Data.SqlClient;");
@@ -90,6 +94,9 @@ namespace SystemPlus.Data
 
         public void WriteModelClasses(TextWriter tw)
         {
+            if (tw == null)
+                return;
+
             tw.WriteLine("using System;");
             tw.WriteLine();
 
@@ -105,6 +112,9 @@ namespace SystemPlus.Data
 
         public void WriteSqlScript(TextWriter tw)
         {
+            if (tw == null)
+                return;
+
             foreach (SqlTable table in tables)
             {
                 WriteAddSql(tw, table);
@@ -133,6 +143,7 @@ namespace SystemPlus.Data
 
         #region Private methods
 
+        [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities")]
         static List<string> GetTableNames(SqlConnection conn)
         {
             string sql = GetSqlForTableNames();
@@ -151,6 +162,7 @@ namespace SystemPlus.Data
             return names;
         }
 
+        [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities")]
         static SqlTable GetTableSchema(SqlConnection conn, string tableName)
         {
             string sql = $"sp_help '{tableName}'";

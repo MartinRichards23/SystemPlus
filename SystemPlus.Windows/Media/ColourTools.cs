@@ -124,13 +124,16 @@ namespace SystemPlus.Windows.Media
             int g = 0;
             int b = 0;
 
-            foreach (Color col in colours)
+            if (colours != null)
             {
-                count++;
-                a += col.A;
-                r += col.R;
-                g += col.G;
-                b += col.B;
+                foreach (Color col in colours)
+                {
+                    count++;
+                    a += col.A;
+                    r += col.R;
+                    g += col.G;
+                    b += col.B;
+                }
             }
 
             a /= count;

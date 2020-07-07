@@ -7,14 +7,11 @@ namespace SystemPlus.Text.NGrams
     /// <summary>
     /// Class that holds data for a single ngram
     /// </summary>
-    [DataContract]
     public class NGram
     {
         #region Fields
 
-        [DataMember]
         readonly string[] words;
-
         string? text;
 
         #endregion

@@ -17,6 +17,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static IEnumerable<string> GetFiles(string dir, Regex regex, SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
+            if (regex == null)
+                throw new ArgumentNullException(nameof(regex));
+
             foreach (string file in Directory.GetFiles(dir, "*", searchOption))
             {
                 string name = Path.GetFileName(file);
@@ -44,6 +47,11 @@ namespace SystemPlus.IO
         /// </summary>
         public static void CopyDirectory(DirectoryInfo source, DirectoryInfo target)
         {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             // Check if the target directory exists, if not, create it.
             if (!Directory.Exists(target.FullName))
             {
@@ -72,6 +80,9 @@ namespace SystemPlus.IO
 
         public static long GetDirSize(DirectoryInfo dir)
         {
+            if (dir == null)
+                throw new ArgumentNullException(nameof(dir));
+
             long size = 0;
             DirectoryInfo[] dirs = dir.GetDirectories();
             FileInfo[] files = dir.GetFiles();
@@ -136,6 +147,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static string CleanFileName(string name, char replaceChar = '_', int maxLength = 100)
         {
+            if (name == null)
+                throw new ArgumentNullException(nameof(name));
+
             char[] illegals = Path.GetInvalidPathChars();
 
             foreach (char c in illegals)
@@ -195,7 +209,7 @@ namespace SystemPlus.IO
         {
             get
             {
-                string? s = Assembly.GetEntryAssembly()?.Location;                
+                string? s = Assembly.GetEntryAssembly()?.Location;
                 s = Path.GetDirectoryName(s);
                 return s;
             }
@@ -229,12 +243,13 @@ namespace SystemPlus.IO
             }
         }
 
+
         /// <summary>
         /// Gets the normalised extension of the file name e.g. "txt"
         /// </summary>
         public static string GetExtensionNormalised(string fileName)
         {
-            return Path.GetExtension(fileName).ToLowerInvariant().TrimStart('.');
+            return Path.GetExtension(fileName).ToUpperInvariant().TrimStart('.');
         }
 
         /// <summary>

@@ -25,7 +25,7 @@ namespace SystemPlus.ComponentModel.Ini
             return values.Contains(normalKey);
         }
 
-        public IniValue GetValue(string key)
+        public IniValue? GetValue(string key)
         {
             string normalKey = IniReader.NormaliseKey(key);
             return values.TryGet(normalKey);
@@ -38,7 +38,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public void AddValue(string key, object value)
         {
-            IniValue iniValue = GetValue(key);
+            IniValue? iniValue = GetValue(key);
 
             if (iniValue != null)
             {

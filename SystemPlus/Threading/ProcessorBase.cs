@@ -139,7 +139,7 @@ namespace SystemPlus.Threading
         /// <summary>
         /// Gets next item to be processed
         /// </summary>
-        bool GetNextItem(out T item)
+        bool GetNextItem([MaybeNullWhen(false)] out T item)
         {
             TimeSpan ts = TimeSpan.Zero;
             TimeSpan gap = TimeSpan.FromMilliseconds(50);
@@ -186,7 +186,7 @@ namespace SystemPlus.Threading
                 finally
                 {
                     ProcessedItems++;
-                    OnItemProcessed(item);
+                    OnItemFinished(item);
                 }
             }
         }
@@ -260,7 +260,10 @@ namespace SystemPlus.Threading
         /// </summary>
         public void Clear()
         {
-            items.Clear();
+            while (items.TryTake(out T item))
+            {
+                OnItemFinished(item);
+            }
         }
 
         /// <summary>
@@ -296,7 +299,7 @@ namespace SystemPlus.Threading
             StartedWorking?.Invoke();
         }
 
-        protected virtual void OnItemProcessed(T item)
+        protected virtual void OnItemFinished(T item)
         {
             ItemProcessed?.Invoke(item);
         }

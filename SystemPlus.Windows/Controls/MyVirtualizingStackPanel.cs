@@ -44,7 +44,7 @@ namespace SystemPlus.Windows.Controls
             // regenerate the visuals because they may have been virtualized away.
 
             container.ApplyTemplate();
-            ItemsPresenter itemsPresenter = (ItemsPresenter)container.Template.FindName("ItemsHost", container);
+            ItemsPresenter? itemsPresenter = (ItemsPresenter)container.Template.FindName("ItemsHost", container);
             if (itemsPresenter != null)
             {
                 itemsPresenter.ApplyTemplate();

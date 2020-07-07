@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace SystemPlus.Net.Mail
@@ -6,6 +7,7 @@ namespace SystemPlus.Net.Mail
     /// <summary>
     /// Tools for manipulating email addresses
     /// </summary>
+    [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
     public static class EmailTools
     {
         /// <summary>
@@ -13,6 +15,9 @@ namespace SystemPlus.Net.Mail
         /// </summary>
         public static string GetEmailDomain(string email)
         {
+            if (email == null)
+                throw new ArgumentNullException(nameof(email));
+
             int index = email.IndexOf("@", StringComparison.Ordinal);
 
             if (index < 0)
@@ -21,11 +26,15 @@ namespace SystemPlus.Net.Mail
             return email.Substring(index + 1);
         }
 
+
         /// <summary>
         /// Is uri a mailto: uri
-        /// </summary>
+        /// </summary>        
         public static bool IsEmailUri(string uri)
         {
+            if (uri == null)
+                throw new ArgumentNullException(nameof(uri));
+
             return uri.StartsWith("mailto:", StringComparison.InvariantCultureIgnoreCase);
         }
 

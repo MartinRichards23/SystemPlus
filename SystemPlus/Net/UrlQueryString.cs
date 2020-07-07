@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 using SystemPlus.Collections.Generic;
@@ -9,6 +10,9 @@ namespace SystemPlus.Net
     /// <summary>
     /// A url query string helper class
     /// </summary>
+    [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
+    [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
+    [SuppressMessage("Design", "CA1055:Uri return values should not be strings")]
     public class UrlQueryString
     {
         #region Fields
@@ -16,11 +20,6 @@ namespace SystemPlus.Net
         readonly IList<UrlParam> parameters = new List<UrlParam>();
 
         #endregion
-
-        public UrlQueryString(bool ignoreEmpty)
-        {
-            IgnoreEmpty = ignoreEmpty;
-        }
 
         public UrlQueryString(string baseUrl)
         {
@@ -108,6 +107,7 @@ namespace SystemPlus.Net
         {
             parameters.RemoveWhere(p => p.Name == name);
         }
+
 
         /// <summary>
         /// Makes the full url with query string
@@ -212,6 +212,9 @@ namespace SystemPlus.Net
         /// </summary>
         public static implicit operator string(UrlQueryString input)
         {
+            if (input == null)
+                return string.Empty;
+
             return input.MakeUrl();
         }
 

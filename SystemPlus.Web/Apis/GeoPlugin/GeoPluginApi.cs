@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
-using SystemPlus.IO;
 using SystemPlus.Net;
 
 namespace SystemPlus.Web.GeoPlugin
@@ -28,7 +28,7 @@ namespace SystemPlus.Web.GeoPlugin
 
             string data = await sr.ReadToEndAsync();
 
-            GeoPluginResult result = Serialization.JsonDeserialize<GeoPluginResult>(data);
+            GeoPluginResult result = JsonSerializer.Deserialize<GeoPluginResult>(data);
 
             return result;
         }

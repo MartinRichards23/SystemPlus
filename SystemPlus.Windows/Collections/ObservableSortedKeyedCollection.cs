@@ -14,7 +14,7 @@ namespace SystemPlus.Windows.Collections
             get { return Comparer<TKey>.Default; }
         }
 
-        public IComparer<TItem> ItemComparer { get; set; }
+        public IComparer<TItem>? ItemComparer { get; set; }
 
         protected override void InsertItem(int index, TItem item)
         {

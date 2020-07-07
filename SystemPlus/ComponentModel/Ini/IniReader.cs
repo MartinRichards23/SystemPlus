@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Text.Json;
 using SystemPlus.Collections.ObjectModel;
 using SystemPlus.IO;
 using SystemPlus.Text;
@@ -109,7 +110,7 @@ namespace SystemPlus.ComponentModel.Ini
             string json;
 
             if (value != null)
-                json = Serialization.JsonSerialize(value);
+                json = JsonSerializer.Serialize(value);
             else
                 json = string.Empty;
 
@@ -246,7 +247,7 @@ namespace SystemPlus.ComponentModel.Ini
                 if (string.IsNullOrWhiteSpace(result))
                     return defValue;
 
-                return Serialization.JsonDeserialize<T>(result);
+                return JsonSerializer.Deserialize<T>(result);
             }
             catch
             {

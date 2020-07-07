@@ -21,7 +21,7 @@ namespace SystemPlus.Collections.Concurrent
             }
         }
 
-        public bool TryTake(out T item)
+        public bool TryTake([MaybeNullWhen(false)] out T item)
         {
             lock (key)
             {

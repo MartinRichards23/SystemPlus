@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -107,7 +108,7 @@ namespace SystemPlus.Windows.Controls
             control.UpdateValue(value);
         }
 
-        static object CoerceValue(DependencyObject d, object value)
+        static object? CoerceValue(DependencyObject d, object value)
         {
             double? newVal = (double?)value;
             NumericUpDown control = (NumericUpDown)d;
@@ -121,6 +122,7 @@ namespace SystemPlus.Windows.Controls
             return val;
         }
 
+        [SuppressMessage("Naming", "CA1721:Property names should not match get methods")]
         public double? Value
         {
             get { return (double?)GetValue(ValueProperty); }

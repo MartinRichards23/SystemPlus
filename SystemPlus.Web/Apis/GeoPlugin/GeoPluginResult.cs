@@ -1,63 +1,61 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace SystemPlus.Web.GeoPlugin
 {
-    [DataContract]
     public class GeoPluginResult
     {
-        [DataMember]
-        public string? geoplugin_request { get; set; }
+        [JsonPropertyName("geoplugin_request")]
+        public string? Request { get; set; }
 
-        [DataMember]
-        public int geoplugin_status { get; set; }
+        [JsonPropertyName("geoplugin_status")]
+        public int Status { get; set; }
 
-        [DataMember]
-        public string? geoplugin_credit { get; set; }
+        [JsonPropertyName("geoplugin_credit")]
+        public string? Credit { get; set; }
 
-        [DataMember]
-        public string? geoplugin_city { get; set; }
+        [JsonPropertyName("geoplugin_city")]
+        public string? City { get; set; }
 
-        [DataMember]
-        public string? geoplugin_region { get; set; }
+        [JsonPropertyName("geoplugin_region")]
+        public string? Region { get; set; }
 
-        [DataMember]
-        public string? geoplugin_areaCode { get; set; }
+        [JsonPropertyName("geoplugin_areaCode")]
+        public string? AreaCode { get; set; }
 
-        [DataMember]
-        public string? geoplugin_dmaCode { get; set; }
+        [JsonPropertyName("geoplugin_dmaCode")]
+        public string? DmaCode { get; set; }
 
-        [DataMember]
-        public string? geoplugin_countryCode { get; set; }
+        [JsonPropertyName("geoplugin_countryCode")]
+        public string? CountryCode { get; set; }
 
-        [DataMember]
-        public string? geoplugin_countryName { get; set; }
+        [JsonPropertyName("geoplugin_countryName")]
+        public string? CountryName { get; set; }
 
-        [DataMember]
-        public string? geoplugin_continentCode { get; set; }
+        [JsonPropertyName("geoplugin_continentCode")]
+        public string? ContinentCode { get; set; }
 
-        [DataMember]
-        public string? geoplugin_latitude { get; set; }
+        [JsonPropertyName("geoplugin_latitude")]
+        public string? Latitude { get; set; }
 
-        [DataMember]
-        public string? geoplugin_longitude { get; set; }
+        [JsonPropertyName("geoplugin_longitude")]
+        public string? Longitude { get; set; }
 
-        [DataMember]
-        public string? geoplugin_regionCode { get; set; }
+        [JsonPropertyName("geoplugin_regionCode")]
+        public string? RegionCode { get; set; }
 
-        [DataMember]
-        public string? geoplugin_regionName { get; set; }
+        [JsonPropertyName("geoplugin_regionName")]
+        public string? RegionName { get; set; }
 
-        [DataMember]
-        public string? geoplugin_currencyCode { get; set; }
+        [JsonPropertyName("geoplugin_currencyCode")]
+        public string? CurrencyCode { get; set; }
 
-        [DataMember]
-        public string? geoplugin_currencySymbol { get; set; }
+        [JsonPropertyName("geoplugin_currencySymbol")]
+        public string? CurrencySymbol { get; set; }
 
-        [DataMember]
-        public string? geoplugin_currencySymbol_UTF8 { get; set; }
+        [JsonPropertyName("geoplugin_currencySymbol_UTF8")]
+        public string? CurrencySymbolUTF8 { get; set; }
 
-        [DataMember]
-        public double geoplugin_currencyConverter { get; set; }
+        [JsonPropertyName("geoplugin_currencyConverter")]
+        public double CurrencyConverter { get; set; }
     }
 }

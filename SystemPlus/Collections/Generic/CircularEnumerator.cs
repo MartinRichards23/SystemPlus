@@ -16,9 +16,9 @@ namespace SystemPlus.Collections.Generic
             this.items = new List<T>(items);
         }
 
-        public void GoToRandomPosition(Random rand)
+        public void GoToRandomPosition(Random random)
         {
-            currentPosition = rand.Next(0, items.Count - 1);
+            currentPosition = random.Next(0, items.Count - 1);
         }
 
         public T Next()

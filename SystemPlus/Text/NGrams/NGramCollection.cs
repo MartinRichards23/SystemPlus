@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace SystemPlus.Text.NGrams
 {
-    [DataContract]
     public class NGramCollection
     {
-        [DataMember]
         public int GramLength { get; }
-
-        [DataMember]
         readonly IList<NGram> grams = new List<NGram>();
 
         protected NGramCollection()
@@ -36,13 +33,9 @@ namespace SystemPlus.Text.NGrams
         }
     }
 
-    [DataContract]
     public class UniqueNGramCollection
     {
-        [DataMember]
-        readonly int gramLength;
-
-        [DataMember]
+        readonly int gramLength;        
         readonly IDictionary<NGram, int> grams = new Dictionary<NGram, int>();
 
         protected UniqueNGramCollection()
@@ -83,6 +76,9 @@ namespace SystemPlus.Text.NGrams
 
         public static UniqueNGramCollection Create(NGramCollection ngrams)
         {
+            if (ngrams == null)
+                throw new ArgumentNullException(nameof(ngrams));
+
             UniqueNGramCollection uniqueNgrams = new UniqueNGramCollection(ngrams.GramLength);
 
             foreach (NGram gram in ngrams.Grams)
@@ -97,10 +93,13 @@ namespace SystemPlus.Text.NGrams
         {
             List<UniqueNGramCollection> uniqueNgramCollections = new List<UniqueNGramCollection>();
 
-            foreach (NGramCollection gram in ngrams)
+            if (ngrams != null)
             {
-                UniqueNGramCollection uniqueCollection = UniqueNGramCollection.Create(gram);
-                uniqueNgramCollections.Add(uniqueCollection);
+                foreach (NGramCollection gram in ngrams)
+                {
+                    UniqueNGramCollection uniqueCollection = UniqueNGramCollection.Create(gram);
+                    uniqueNgramCollections.Add(uniqueCollection);
+                }
             }
 
             return uniqueNgramCollections;

@@ -12,6 +12,9 @@ namespace SystemPlus.Web.ReWriters
     {
         public void ApplyRule(RewriteContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             HttpRequest req = context.HttpContext.Request;
             HostString currentHost = req.Host;
 

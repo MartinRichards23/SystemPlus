@@ -63,6 +63,8 @@ namespace SystemPlus.Net
         {
             if (!initialised)
                 throw new Exception("Domain parser not initialised");
+            if (uri == null)
+                throw new ArgumentNullException(nameof(uri));
 
             string host = uri.Host;
             host = NormaliseSuffix(host);
@@ -101,6 +103,8 @@ namespace SystemPlus.Net
         {
             if (!initialised)
                 throw new Exception("Domain parser not initialised");
+            if (email == null)
+                throw new ArgumentNullException(nameof(email));
 
             int index = email.IndexOf("@", StringComparison.Ordinal);
 
@@ -139,7 +143,7 @@ namespace SystemPlus.Net
 
         static string NormaliseSuffix(string suffix)
         {
-            return suffix.Trim().ToLowerInvariant();
+            return suffix.Trim().ToUpperInvariant();
         }
 
         sealed class UrlSuffix : IKeyed

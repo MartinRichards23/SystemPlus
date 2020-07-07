@@ -117,7 +117,7 @@ namespace SystemPlus.Collections.ObjectModel
         /// <summary>
         /// Attempts to take the first item
         /// </summary>
-        public bool TryTake([MaybeNull] out TItem item)
+        public bool TryTake([MaybeNullWhen(false)] out TItem item)
         {
             if (Count > 0)
             {

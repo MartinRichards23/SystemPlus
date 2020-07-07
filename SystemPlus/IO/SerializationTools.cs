@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -13,7 +12,7 @@ namespace SystemPlus.IO
     /// <summary>
     /// Helpers for serialization
     /// </summary>
-    public static class Serialization
+    public static class SerializationTools
     {
         #region Xml
 
@@ -159,39 +158,6 @@ namespace SystemPlus.IO
 
             using FileStream fs = File.OpenRead(file.FullName);
             return DataDeserialize<T>(fs, settings, knownTypes);
-        }
-
-        #endregion
-
-        #region Json
-
-        public static void JsonSerialize<T>(T obj, Stream data, IEnumerable<Type>? knownTypes = null) where T : class, new()
-        {
-            DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(T), knownTypes);
-            json.WriteObject(data, obj);
-        }
-
-        public static string JsonSerialize<T>(T obj, IEnumerable<Type>? knownTypes = null) where T : class, new()
-        {
-            using MemoryStream ms = new MemoryStream();
-            using StreamReader sr = new StreamReader(ms);
-            JsonSerialize(obj, ms, knownTypes);
-            ms.Seek(0, SeekOrigin.Begin);
-            return sr.ReadToEnd();
-        }
-
-        public static T JsonDeserialize<T>(string data) where T : class, new()
-        {
-            byte[] bytes = Encoding.UTF8.GetBytes(data);
-
-            using MemoryStream stream = new MemoryStream(bytes);
-            return JsonDeserialize<T>(stream);
-        }
-
-        public static T JsonDeserialize<T>(Stream data) where T : class, new()
-        {
-            DataContractJsonSerializer json = new DataContractJsonSerializer(typeof(T));
-            return (T)json.ReadObject(data);
         }
 
         #endregion

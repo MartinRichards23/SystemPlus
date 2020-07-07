@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,6 +17,9 @@ namespace SystemPlus.Windows.Media
         /// </summary>
         public static void Write(this BitmapSource bms, BitmapEncoder encoder, Stream stream)
         {
+            if (encoder == null)
+                throw new ArgumentNullException(nameof(encoder));
+
             BitmapFrame bmf = BitmapFrame.Create(bms);
             encoder.Frames.Add(bmf);
             encoder.Save(stream);
@@ -105,6 +109,9 @@ namespace SystemPlus.Windows.Media
         /// </summary>
         public static BitmapSource Resize(this BitmapSource bms, int length, bool isWidth)
         {
+            if (bms == null)
+                throw new ArgumentNullException(nameof(bms));
+
             if (isWidth)
             {
                 double scale = length / (double)bms.PixelWidth;
@@ -140,6 +147,9 @@ namespace SystemPlus.Windows.Media
         /// </summary>
         public static byte[] ToRawBytes(this BitmapSource bms)
         {
+            if (bms == null)
+                throw new ArgumentNullException(nameof(bms));
+
             int bytesPerPixel = bms.Format.BitsPerPixel / 8;
 
             byte[] bytes = new byte[bms.PixelWidth * bms.PixelHeight * bytesPerPixel];
@@ -153,6 +163,9 @@ namespace SystemPlus.Windows.Media
         /// </summary>
         public static RenderTargetBitmap RenderToBitmap(FrameworkElement target)
         {
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             int actualWidth = (int)target.ActualWidth;
             int actualHeight = (int)target.ActualHeight;
 
@@ -167,6 +180,9 @@ namespace SystemPlus.Windows.Media
         /// </summary>
         public static byte[] ClipSize(this BitmapSource bms, int maxWidth, int maxHeight, BitmapEncoder encoder)
         {
+            if (bms == null)
+                throw new ArgumentNullException(nameof(bms));
+
             if (bms.PixelWidth > maxWidth || bms.PixelHeight > maxHeight)
             {
                 // if too wide then resize

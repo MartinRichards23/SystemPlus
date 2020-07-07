@@ -169,7 +169,7 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Gets the main active application window
         /// </summary>
-        public static Window GetActiveWindow(this Application application)
+        public static Window? GetActiveWindow(this Application application)
         {
             return application.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
         }

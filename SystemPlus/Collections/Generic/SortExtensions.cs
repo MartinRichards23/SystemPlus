@@ -13,6 +13,11 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void Shuffle<T>(this IList<T> list, Random rand)
         {
+            if (list == null)
+                return;
+            if (rand == null)
+                throw new ArgumentNullException(nameof(rand));
+
             int n = list.Count;
             while (n > 1)
             {
@@ -29,6 +34,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void SortItems<T>(this IList<T> list) where T : IComparable<T>
         {
+            if (list == null)
+                return;
+
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 for (int j = 1; j <= i; j++)
@@ -49,6 +57,11 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void SortItems<T>(this IList<T> list, IComparer<T> comparer)
         {
+            if (list == null)
+                return;
+            if (comparer == null)
+                throw new ArgumentNullException(nameof(comparer));
+
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 for (int j = 1; j <= i; j++)
@@ -69,6 +82,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void SortItems<T>(this IList<T> list, Func<T, T, int> compareFunc)
         {
+            if (list == null)
+                return;
+
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 for (int j = 1; j <= i; j++)
@@ -86,6 +102,9 @@ namespace SystemPlus.Collections.Generic
 
         public static void InsertSorted<T>(this IList<T> list, T item) where T : IComparable<T>
         {
+            if (list == null)
+                return;
+
             for (int i = 0; i < list.Count; i++)
             {
                 T o1 = list[i];
@@ -101,6 +120,11 @@ namespace SystemPlus.Collections.Generic
 
         public static void InsertSorted<T>(this IList<T> list, T item, IComparer<T> comparer)
         {
+            if (list == null)
+                return;
+            if (comparer == null)
+                throw new ArgumentNullException(nameof(comparer));
+
             for (int i = 0; i < list.Count; i++)
             {
                 T o1 = list[i];

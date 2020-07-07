@@ -31,6 +31,9 @@ namespace SystemPlus.Text
 
         public string Hide(string text, Regex pattern)
         {
+            if (pattern == null)
+                throw new ArgumentNullException(nameof(pattern));
+
             MatchCollection matches = pattern.Matches(text);
 
             for (int i = matches.Count - 1; i >= 0; i--)
@@ -50,6 +53,9 @@ namespace SystemPlus.Text
 
         public string Show(string text)
         {
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
             // Do them in reverse so they are undone properly
             for (int i = values.Count - 1; i >= 0; i--)
             {

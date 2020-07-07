@@ -2,8 +2,8 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using SystemPlus.IO;
 using SystemPlus.Net;
 
 namespace SystemPlus.Web.Slack
@@ -37,9 +37,9 @@ namespace SystemPlus.Web.Slack
 
                 string responseMessage = sr.ReadToEnd();
 
-                OauthReponse oauthResponse = Serialization.JsonDeserialize<OauthReponse>(responseMessage);
+                OauthReponse oauthResponse = JsonSerializer.Deserialize<OauthReponse>(responseMessage);
 
-                if (oauthResponse == null || !oauthResponse.ok)
+                if (oauthResponse == null || !oauthResponse.Ok)
                     throw new Exception("Slack error: " + responseMessage);
 
                 return oauthResponse;
@@ -53,7 +53,7 @@ namespace SystemPlus.Web.Slack
 
         public async Task SendAsync(Payload payload, string urlWithAccessToken)
         {
-            string payloadJson = Serialization.JsonSerialize(payload);
+            string payloadJson = JsonSerializer.Serialize(payload);
 
             try
             {

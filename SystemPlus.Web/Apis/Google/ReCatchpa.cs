@@ -1,6 +1,6 @@
 ﻿using System.Net;
-using System.Runtime.Serialization;
-using SystemPlus.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SystemPlus.Web.Google
 {
@@ -24,19 +24,18 @@ namespace SystemPlus.Web.Google
             using WebClient client = new WebClient();
             string googleReply = client.DownloadString($"https://www.google.com/recaptcha/api/siteverify?secret={privateKey}&response={response}");
 
-            ReCaptchaClass captchaResponse = Serialization.JsonDeserialize<ReCaptchaClass>(googleReply);
+            ReCaptchaClass captchaResponse = JsonSerializer.Deserialize<ReCaptchaClass>(googleReply);
 
             return captchaResponse.Success;
         }
     }
 
-    [DataContract]
     class ReCaptchaClass
     {
-        [DataMember(Name = "success")]
+        [JsonPropertyName("success")]
         public bool Success { get; set; }
 
-        [DataMember(Name = "error-codes")]
+        [JsonPropertyName("error-codes")]
         public string? ErrorCodes { get; set; }
     }
 }

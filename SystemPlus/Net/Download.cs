@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -11,6 +12,8 @@ namespace SystemPlus.Net
     /// <summary>
     /// Helpers for making web requests
     /// </summary>
+    [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
+    [SuppressMessage("Design", "CA1055:Uri return values should not be strings")]
     public static class Download
     {
         public static HttpWebRequest MakeHttpWebRequest(string url)
@@ -35,10 +38,9 @@ namespace SystemPlus.Net
             HttpWebRequest request = MakeStandardGetRequest(url);
             request.UserAgent = UserAgents.MozillaUserAgent.AgentString;
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                return response.GetFullResponseStream();
-            }
+            using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            return response.GetFullResponseStream();
         }
 
         public static byte[] GetBytes(string url)
@@ -46,11 +48,10 @@ namespace SystemPlus.Net
             HttpWebRequest request = MakeStandardGetRequest(url);
             request.UserAgent = UserAgents.MozillaUserAgent.AgentString;
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetFullResponseStream())
-            {
-                return stream.ToBytes();
-            }
+            using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            using Stream stream = response.GetFullResponseStream();
+
+            return stream.ToBytes();
         }
 
         /// <summary>
@@ -66,6 +67,7 @@ namespace SystemPlus.Net
             return response.ReadWebResponse();
         }
 
+
         /// <summary>
         /// Follows a urls and returns the redirected url
         /// </summary>
@@ -75,11 +77,9 @@ namespace SystemPlus.Net
             request.AllowAutoRedirect = false;
             request.Timeout = 15 * 1000;
 
-            using (HttpWebResponse response = request.GetHttpResponse(token))
-            {
-                string redirUrl = response.Headers["Location"];
-                return redirUrl;
-            }
+            using HttpWebResponse response = request.GetHttpResponse(token);
+            string redirUrl = response.Headers["Location"];
+            return redirUrl;
         }
 
         const int bufferSize = 16 * 1024;
@@ -88,10 +88,8 @@ namespace SystemPlus.Net
         {
             try
             {
-                using (FileStream outputFileStream = File.Create(outputFilePath, bufferSize))
-                {
-                    DownloadFile(url, outputFileStream, token);
-                }
+                using FileStream outputFileStream = File.Create(outputFilePath, bufferSize);
+                DownloadFile(url, outputFileStream, token);
             }
             catch
             {
@@ -100,48 +98,48 @@ namespace SystemPlus.Net
             }
         }
 
-        public static void DownloadFile(Uri url, Stream outputStream, IProgressToken token)
+        public static void DownloadFile(Uri url, Stream outputStream, IProgressToken? token)
         {
+            if(outputStream ==null)
+                throw new ArgumentNullException(nameof(outputStream));
+
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(url);
             req.UserAgent = UserAgents.MozillaUserAgent.AgentString;
 
-            using (WebResponse response = req.GetResponse())
-            using (Stream responseStream = response.GetResponseStream())
+            using WebResponse response = req.GetResponse();
+            using Stream responseStream = response.GetResponseStream();
+            int contentLength = response.Headers.Get("Content-Length").ToInt(-1);
+
+            if (token != null)
             {
-                int contentLength = response.Headers.Get("Content-Length").ToInt(-1);
+                if (contentLength < 0)
+                    token.IsIndeterminate = true;
+                else
+                    token.IsIndeterminate = false;
+            }
+
+            byte[] buffer = new byte[bufferSize];
+
+            int bytesRead;
+            do
+            {
+                token?.ThrowIfCancellationRequested();
+                long length = response.ContentLength;
+                long position = outputStream.Length;
 
                 if (contentLength < 0)
                 {
-                    token.IsIndeterminate = true;
+                    token?.UpdateStatus("{0}", StringTools.FormatBytes(position, "0.0"));
                 }
                 else
                 {
-                    token.IsIndeterminate = false;
+                    token?.UpdateStatus("{0} of {1}", StringTools.FormatBytes(position, "0.0"), StringTools.FormatBytes(contentLength, "0.0"));
+                    token?.UpdateProgress(position, contentLength);
                 }
 
-                byte[] buffer = new byte[bufferSize];
-
-                int bytesRead;
-                do
-                {
-                    token.ThrowIfCancellationRequested();
-                    long length = response.ContentLength;
-                    long position = outputStream.Length;
-
-                    if (contentLength < 0)
-                    {
-                        token.UpdateStatus("{0}", StringTools.FormatBytes(position, "0.0"));
-                    }
-                    else
-                    {
-                        token.UpdateStatus("{0} of {1}", StringTools.FormatBytes(position, "0.0"), StringTools.FormatBytes(contentLength, "0.0"));
-                        token.UpdateProgress(position, contentLength);
-                    }
-
-                    bytesRead = responseStream.Read(buffer, 0, bufferSize);
-                    outputStream.Write(buffer, 0, bytesRead);
-                } while (bytesRead > 0);
-            }
+                bytesRead = responseStream.Read(buffer, 0, bufferSize);
+                outputStream.Write(buffer, 0, bytesRead);
+            } while (bytesRead > 0);
         }
     }
 }

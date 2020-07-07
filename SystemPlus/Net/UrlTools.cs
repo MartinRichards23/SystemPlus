@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace SystemPlus.Net
@@ -7,6 +8,8 @@ namespace SystemPlus.Net
     /// <summary>
     /// Tools for manipulating Uris
     /// </summary>
+    [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
+    [SuppressMessage("Design", "CA1055:Uri return values should not be strings")]
     public static class UrlTools
     {
         /// <summary>
@@ -34,6 +37,9 @@ namespace SystemPlus.Net
         /// </summary>
         public static string StripAnchor(string url)
         {
+            if (url == null)
+                throw new ArgumentNullException(nameof(url));
+
             int pos = url.LastIndexOf("#", StringComparison.Ordinal);
 
             if (pos > 0)
@@ -47,6 +53,9 @@ namespace SystemPlus.Net
         /// </summary>
         public static string StripParameters(string url)
         {
+            if (url == null)
+                throw new ArgumentNullException(nameof(url));
+
             int pos = url.LastIndexOf("?", StringComparison.Ordinal);
 
             if (pos > 0)
@@ -69,6 +78,9 @@ namespace SystemPlus.Net
         /// </summary>
         public static bool IsDataUri(string uri)
         {
+            if (uri == null)
+                throw new ArgumentNullException(nameof(uri));
+
             return uri.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase);
         }
 
@@ -108,6 +120,9 @@ namespace SystemPlus.Net
         /// </summary>
         public static bool IsJsUri(string uri)
         {
+            if (uri == null)
+                throw new ArgumentNullException(nameof(uri));
+
             return uri.StartsWith("javascript:", StringComparison.InvariantCultureIgnoreCase);
         }
 
@@ -118,6 +133,7 @@ namespace SystemPlus.Net
         {
             return Uri.TryCreate(url, UriKind.Absolute, out _);
         }
+
 
         /// <summary>
         /// Gets an absolute Url from a relative one and its base url
@@ -144,10 +160,13 @@ namespace SystemPlus.Net
         {
             List<Uri> uris = new List<Uri>();
 
-            foreach (string url in urls)
+            if (urls != null)
             {
-                if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri? uri))
-                    uris.Add(uri);
+                foreach (string url in urls)
+                {
+                    if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri? uri))
+                        uris.Add(uri);
+                }
             }
 
             return uris;
@@ -157,16 +176,19 @@ namespace SystemPlus.Net
         {
             List<Uri> absoluteUris = new List<Uri>();
 
-            foreach (Uri uri in uris)
+            if (uris != null)
             {
-                if (uri.IsAbsoluteUri)
+                foreach (Uri uri in uris)
                 {
-                    absoluteUris.Add(uri);
-                }
-                else if (baseUri != null)
-                {
-                    Uri fullUri = new Uri(baseUri, uri);
-                    absoluteUris.Add(fullUri);
+                    if (uri.IsAbsoluteUri)
+                    {
+                        absoluteUris.Add(uri);
+                    }
+                    else if (baseUri != null)
+                    {
+                        Uri fullUri = new Uri(baseUri, uri);
+                        absoluteUris.Add(fullUri);
+                    }
                 }
             }
 
@@ -180,10 +202,13 @@ namespace SystemPlus.Net
             UriBuilder builder = new UriBuilder(baseUrl);
             Uri baseUri = builder.Uri;
 
-            foreach (string url in urls)
+            if (urls != null)
             {
-                string absoluteUrl = MakeAbsoluteUrl(baseUri, url);
-                absoluteUrls.Add(absoluteUrl);
+                foreach (string url in urls)
+                {
+                    string absoluteUrl = MakeAbsoluteUrl(baseUri, url);
+                    absoluteUrls.Add(absoluteUrl);
+                }
             }
 
             return absoluteUrls;

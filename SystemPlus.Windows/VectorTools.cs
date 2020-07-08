@@ -223,5 +223,75 @@ namespace SystemPlus.Windows
 
             return value;
         }
+
+        /// <summary>
+        /// Rotates one point around another
+        /// </summary>
+        /// <param name="pointToRotate">The point to rotate.</param>
+        /// <param name="centerPoint">The center point of rotation.</param>
+        /// <param name="angleInDegrees">The rotation angle in degrees.</param>
+        /// <returns>Rotated point</returns>
+        public static Point RotatePoint(Point pointToRotate, Point centerPoint, double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180);
+            double cosTheta = Math.Cos(angleInRadians);
+            double sinTheta = Math.Sin(angleInRadians);
+
+            double x = (cosTheta * (pointToRotate.X - centerPoint.X) - sinTheta * (pointToRotate.Y - centerPoint.Y) + centerPoint.X);
+            double y = (sinTheta * (pointToRotate.X - centerPoint.X) + cosTheta * (pointToRotate.Y - centerPoint.Y) + centerPoint.Y);
+
+            return new Point(x, y);
+        }
+
+        public static Point Add(this Point point, Size s)
+        {
+            return new Point(point.X + s.Width, point.Y + s.Height);
+        }
+
+        public static Point Minus(this Point point, Size s)
+        {
+            return new Point(point.X - s.Width, point.Y - s.Height);
+        }
+
+        /// <summary>
+        /// Finds which corner of the rectangle to point is closest to
+        /// </summary>
+        public static Corner FindNearestCorner(Rect container, Point point)
+        {
+            double min = double.MaxValue;
+            Corner closest = Corner.TopLeft;
+
+            double tl = Distance(new Point(container.Left, container.Top), point);
+            if (tl < min)
+            {
+                closest = Corner.TopLeft;
+                min = tl;
+            }
+
+            double tr = Distance(new Point(container.Right, container.Top), point);
+            if (tr < min)
+            {
+                closest = Corner.TopRight;
+                min = tr;
+            }
+
+            double br = Distance(new Point(container.Right, container.Bottom), point);
+            if (br < min)
+            {
+                closest = Corner.BottomRight;
+                min = br;
+            }
+
+            double bl = Distance(new Point(container.Left, container.Bottom), point);
+            if (bl < min)
+            {
+                closest = Corner.BottomLeft;
+                min = bl;
+            }
+
+            return closest;
+        }
     }
+
+    public enum Corner { TopLeft, TopRight, BottomRight, BottomLeft }
 }

@@ -80,17 +80,20 @@ namespace SystemPlus.Windows
             double left = double.MaxValue;
             double right = double.MinValue;
 
-            foreach (Point point in points)
+            if (points != null)
             {
-                if (point.Y < top)
-                    top = point.Y;
-                if (point.Y > bottom)
-                    bottom = point.Y;
+                foreach (Point point in points)
+                {
+                    if (point.Y < top)
+                        top = point.Y;
+                    if (point.Y > bottom)
+                        bottom = point.Y;
 
-                if (point.X < left)
-                    left = point.X;
-                if (point.X > right)
-                    right = point.X;
+                    if (point.X < left)
+                        left = point.X;
+                    if (point.X > right)
+                        right = point.X;
+                }
             }
 
             if (bottom < top || right < left)
@@ -109,17 +112,20 @@ namespace SystemPlus.Windows
             double left = double.MaxValue;
             double right = double.MinValue;
 
-            foreach (Rect rect in rects)
+            if (rects != null)
             {
-                if (rect.Top < top)
-                    top = rect.Top;
-                if (rect.Bottom > bottom)
-                    bottom = rect.Bottom;
+                foreach (Rect rect in rects)
+                {
+                    if (rect.Top < top)
+                        top = rect.Top;
+                    if (rect.Bottom > bottom)
+                        bottom = rect.Bottom;
 
-                if (rect.Left < left)
-                    left = rect.Left;
-                if (rect.Right > right)
-                    right = rect.Right;
+                    if (rect.Left < left)
+                        left = rect.Left;
+                    if (rect.Right > right)
+                        right = rect.Right;
+                }
             }
 
             if (bottom < top || right < left)

@@ -35,11 +35,8 @@ namespace SystemPlus.Windows.Collections
                         break;
                     }
                 }
-                else if (item is IComparable)
+                else if (item is IComparable a && retrievedItem is IComparable b)
                 {
-                    IComparable a = (IComparable)item;
-                    IComparable b = (IComparable)retrievedItem;
-
                     if (a.CompareTo(b) < 0)
                     {
                         insertIndex = i;
@@ -48,10 +45,10 @@ namespace SystemPlus.Windows.Collections
                 }
                 else
                 {
-                    TKey a = GetKeyForItem(item);
-                    TKey b = GetKeyForItem(retrievedItem);
+                    TKey ak = GetKeyForItem(item);
+                    TKey bk = GetKeyForItem(retrievedItem);
 
-                    if (KeyComparer.Compare(a, b) < 0)
+                    if (KeyComparer.Compare(ak, bk) < 0)
                     {
                         insertIndex = i;
                         break;

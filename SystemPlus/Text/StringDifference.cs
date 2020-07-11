@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using SystemPlus.Collections.Generic;
 
 namespace SystemPlus.Text
@@ -7,6 +9,7 @@ namespace SystemPlus.Text
     /// <summary>
     /// Various algorithms for comparing strings
     /// </summary>
+    [SuppressMessage("Performance", "CA1814:Prefer jagged arrays over multidimensional")]
     public static class StringDifference
     {
         /// <summary>
@@ -17,6 +20,11 @@ namespace SystemPlus.Text
         /// <returns>The edit distance between the two strings.</returns>
         public static int Levenshtein(string s, string t)
         {
+            if (s == null)
+                throw new ArgumentNullException(nameof(s));
+            if (t == null)
+                throw new ArgumentNullException(nameof(t));
+
             int n = s.Length; //length of s
             int m = t.Length; //length of t
 
@@ -135,6 +143,11 @@ namespace SystemPlus.Text
         /// </summary>
         public static int WordEditDistance(string[] source, string[] target)
         {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             // deal with null or empty situations
             if (source.IsNullOrEmpty() || target.IsNullOrEmpty())
             {
@@ -207,6 +220,11 @@ namespace SystemPlus.Text
 
         public static double WordEditDistancePercent(string[] source, string[] target)
         {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             double distance = WordEditDistance(source, target);
             double length = Math.Max(source.Length, target.Length);
             return 1 - (distance / length);
@@ -231,6 +249,11 @@ namespace SystemPlus.Text
         /// <returns>Returns normalized score, with 0.0 meaning no similarity at all, and 1.0 meaning full equality.</returns>        
         public static double JaroWinkler(string s1, string s2)
         {
+            if (s1 == null)
+                throw new ArgumentNullException(nameof(s1));
+            if (s2 == null)
+                throw new ArgumentNullException(nameof(s2));
+
             if (s1 == s2)
                 return 1.0;
 
@@ -288,6 +311,9 @@ namespace SystemPlus.Text
 
         public static double ContainsWords(string a, string b)
         {
+            if (a == null)
+                throw new ArgumentNullException(nameof(a));
+
             string[] aWords = StringTools.SplitIntoWords(a);
             double score = 0;
 

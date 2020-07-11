@@ -282,7 +282,11 @@ namespace SystemPlus.Web
         /// <returns></returns>
         public static Parser GetDefault(ParserOptions? parserOptions = null)
         {
-            using Stream stream = typeof(Parser).GetTypeInfo().Assembly.GetManifestResourceStream("SystemPlus.Web.regexes.yaml");
+            using Stream? stream = typeof(Parser).GetTypeInfo().Assembly.GetManifestResourceStream("SystemPlus.Web.regexes.yaml");
+
+            if (stream == null)
+                throw new InvalidOperationException();
+
             using StreamReader reader = new StreamReader(stream);
             return new Parser(new MinimalYamlParser(reader.ReadToEnd()), parserOptions);
         }
@@ -531,7 +535,7 @@ namespace SystemPlus.Web
     internal static class DictionaryExtensions
     {
         [return: MaybeNull]
-        public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
+        public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) where TKey : notnull
         {
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));

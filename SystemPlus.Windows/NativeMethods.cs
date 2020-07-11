@@ -448,7 +448,7 @@ namespace SystemPlus.Windows
         //    SWP_FRAMECHANGED = 0x0020
         //}
 
-        public enum WindowShowStyle : uint
+        public enum WindowShowStyle
         {
             Hide = 0,
             ShowNormal = 1,

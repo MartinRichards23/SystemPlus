@@ -194,6 +194,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static Point NextPoint(this Random random, Point origin, double maxDeviation)
         {
+            if (random == null)
+                throw new ArgumentNullException(nameof(random));
+
             double x = (random.NextDouble() * 2) - 1;
             double y = (random.NextDouble() * 2) - 1;
 

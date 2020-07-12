@@ -30,17 +30,20 @@ namespace SystemPlus.Data
 
         #region Public methods
 
-        public void GetSchema(SqlConnection conn, IEnumerable<string>? tableNames = null)
+        public void GetSchema(SqlConnection connection, IEnumerable<string>? tableNames = null)
         {
-            databaseName = conn.Database;
-            List<string> names = GetTableNames(conn);
+            if (connection == null)
+                throw new ArgumentNullException(nameof(connection));
+
+            databaseName = connection.Database;
+            List<string> names = GetTableNames(connection);
 
             foreach (string name in names)
             {
                 if (tableNames != null && !tableNames.Any(t => string.Equals(t, name, StringComparison.InvariantCultureIgnoreCase)))
                     continue;
 
-                SqlTable table = GetTableSchema(conn, name);
+                SqlTable table = GetTableSchema(connection, name);
                 tables.Add(table);
             }
         }
@@ -178,15 +181,13 @@ namespace SystemPlus.Data
             rdr.NextResult();
             while (rdr.Read())
             {
-                SqlColumn col = new SqlColumn()
-                {
-                    Name = rdr.GetValue<string>("Column_name"),
-                    DataType = EnumTools.Parse(rdr.GetValue<string>("Type"), SqlDbType.NVarChar),
-                    Computed = rdr.GetValue<string>("Computed") == "yes",
-                    Length = rdr.GetValue<int>("Length"),
-                    Nullable = rdr.GetValue<string>("Nullable") == "yes",
-                };
-                col.SetValues();
+                string colName = rdr.GetValue<string>("Column_name");
+                SqlDbType dataType = EnumTools.Parse(rdr.GetValue<string>("Type"), SqlDbType.NVarChar);
+                bool computed = rdr.GetValue<string>("Computed") == "yes";
+                int length = rdr.GetValue<int>("Length");
+                bool nullable = rdr.GetValue<string>("Nullable") == "yes";
+
+                SqlColumn col = new SqlColumn(colName, dataType, computed, length, nullable);
 
                 table.Columns.Add(col);
             }

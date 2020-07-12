@@ -23,12 +23,12 @@ namespace SystemPlus.ComponentModel
 
         public static string GetEnumDescription(object enumValue, Type enumType)
         {
-            string? enumString = enumValue.ToString();
+            string? enumString = enumValue?.ToString();
 
             if (enumString == null)
                 return string.Empty;
 
-            FieldInfo? field = enumType.GetField(enumString);
+            FieldInfo? field = enumType?.GetField(enumString);
 
             if (field == null)
                 return string.Empty;
@@ -43,12 +43,12 @@ namespace SystemPlus.ComponentModel
 
         public static InfoAttribute? GetEnumInfo(object enumValue, Type enumType)
         {
-            string? enumString = enumValue.ToString();
+            string? enumString = enumValue?.ToString();
 
             if (enumString == null)
                 return null;
 
-            return enumType.GetField(enumString)?.GetCustomAttributes(typeof(InfoAttribute), false).FirstOrDefault() as InfoAttribute;
+            return enumType?.GetField(enumString)?.GetCustomAttributes(typeof(InfoAttribute), false).FirstOrDefault() as InfoAttribute;
         }
     }
 

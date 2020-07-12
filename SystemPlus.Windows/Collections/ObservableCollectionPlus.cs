@@ -33,9 +33,12 @@ namespace SystemPlus.Windows.Collections
         {
             Dispatcher = dispatcher;
 
-            foreach (T item in collection)
+            if (collection != null)
             {
-                Add(item);
+                foreach (T item in collection)
+                {
+                    Add(item);
+                }
             }
         }
 
@@ -81,9 +84,12 @@ namespace SystemPlus.Windows.Collections
 
             try
             {
-                foreach (T item in items)
+                if (items != null)
                 {
-                    Add(item);
+                    foreach (T item in items)
+                    {
+                        Add(item);
+                    }
                 }
             }
             finally

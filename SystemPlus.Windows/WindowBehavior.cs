@@ -15,12 +15,18 @@ namespace SystemPlus.Windows
         [AttachedPropertyBrowsableForType(typeof(Window))]
         public static bool GetHideCloseButton(Window obj)
         {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+
             return (bool)obj.GetValue(HideCloseButtonProperty);
         }
 
         [AttachedPropertyBrowsableForType(typeof(Window))]
         public static void SetHideCloseButton(Window obj, bool value)
         {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+
             obj.SetValue(HideCloseButtonProperty, value);
         }
 
@@ -88,6 +94,9 @@ namespace SystemPlus.Windows
         [AttachedPropertyBrowsableForType(typeof(Window))]
         public static bool GetIsHiddenCloseButton(Window obj)
         {
+            if (obj == null)
+                throw new ArgumentNullException(nameof(obj));
+
             return (bool)obj.GetValue(IsHiddenCloseButtonProperty);
         }
 

@@ -18,6 +18,9 @@ namespace SystemPlus.Collections.Generic
 
         public void GoToRandomPosition(Random random)
         {
+            if (random == null)
+                throw new ArgumentNullException(nameof(random));
+
             currentPosition = random.Next(0, items.Count - 1);
         }
 

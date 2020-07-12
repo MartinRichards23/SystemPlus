@@ -30,25 +30,25 @@ namespace SystemPlus.Windows
         {
             return EnumerationMember.GetEnumerationMembers(EnumType);
         }
+    }
 
-        public class EnumerationMember : INotifyPropertyChanged
+    public class EnumerationMember : INotifyPropertyChanged
+    {
+        public string? Description { get; set; }
+        public object? Value { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public static EnumerationMember[] GetEnumerationMembers(Type enumType)
         {
-            public string? Description { get; set; }
-            public object? Value { get; set; }
+            Array enumValues = Enum.GetValues(enumType);
 
-            public event PropertyChangedEventHandler? PropertyChanged;
-
-            public static EnumerationMember[] GetEnumerationMembers(Type enumType)
-            {
-                Array enumValues = Enum.GetValues(enumType);
-
-                return (from object enumValue in enumValues
-                        select new EnumerationMember
-                        {
-                            Value = enumValue,
-                            Description = EnumTools.GetEnumDescription(enumValue, enumType)
-                        }).ToArray();
-            }
+            return (from object enumValue in enumValues
+                    select new EnumerationMember
+                    {
+                        Value = enumValue,
+                        Description = EnumTools.GetEnumDescription(enumValue, enumType)
+                    }).ToArray();
         }
     }
 }

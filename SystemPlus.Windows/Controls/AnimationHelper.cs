@@ -23,6 +23,9 @@ namespace SystemPlus.Windows.Controls
         /// </summary>
         public static void StartAnimation(this UIElement animatableElement, DependencyProperty dependencyProperty, double toValue, double animationDurationSeconds, EventHandler? completedEvent)
         {
+            if (animatableElement == null)
+                throw new ArgumentNullException(nameof(animatableElement));
+
             double fromValue = (double)animatableElement.GetValue(dependencyProperty);
 
             DoubleAnimation animation = new DoubleAnimation
@@ -54,6 +57,9 @@ namespace SystemPlus.Windows.Controls
         /// </summary>
         public static void CancelAnimation(this UIElement animatableElement, DependencyProperty dependencyProperty)
         {
+            if (animatableElement == null)
+                throw new ArgumentNullException(nameof(animatableElement));
+
             animatableElement.BeginAnimation(dependencyProperty, null);
         }
     }

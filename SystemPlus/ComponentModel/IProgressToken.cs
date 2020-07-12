@@ -10,8 +10,6 @@ namespace SystemPlus.ComponentModel
 
         #region Properties
 
-        CancellationToken CancelToken { get; }
-
         /// <summary>
         /// Handle exceptions called from token
         /// </summary>
@@ -50,7 +48,7 @@ namespace SystemPlus.ComponentModel
         /// <summary>
         /// Put token in error state
         /// </summary>
-        void Error(Exception ex);
+        void SetError(Exception ex);
 
         /// <summary>
         /// Requests cancellation

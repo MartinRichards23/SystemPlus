@@ -19,8 +19,9 @@ namespace SystemPlus.ComponentModel
         ProgressTokenState state = ProgressTokenState.Normal;
         readonly DateTime startTime = DateTime.UtcNow;
         CancellationTokenSource? cancelTokenSource;
-
         ProgressExceptionHandler? exceptionHandler;
+
+        bool disposedValue;
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public event ProgressTokenCancelledHandler? Cancelled;
@@ -38,11 +39,6 @@ namespace SystemPlus.ComponentModel
         }
 
         #region Properties
-
-        public CancellationToken CancelToken
-        {
-            get { return cancelTokenSource.Token; }
-        }
 
         /// <summary>
         /// Handle exceptions called from token
@@ -152,11 +148,11 @@ namespace SystemPlus.ComponentModel
         /// <summary>
         /// Put token in error state
         /// </summary>
-        public void Error(Exception ex)
+        public void SetError(Exception ex)
         {
             IsIndeterminate = false;
             Progress = 0;
-            Status = ex.Message;
+            Status = ex?.Message ?? string.Empty;
         }
 
         /// <summary>
@@ -208,13 +204,26 @@ namespace SystemPlus.ComponentModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (cancelTokenSource != null)
+                    {
+                        cancelTokenSource.Dispose();
+                        cancelTokenSource = null;
+                    }
+                }
+                disposedValue = true;
+            }
+        }
+
         public void Dispose()
         {
-            if (cancelTokenSource != null)
-            {
-                cancelTokenSource.Dispose();
-                cancelTokenSource = null;
-            }
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion

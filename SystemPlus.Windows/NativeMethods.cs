@@ -1,8 +1,6 @@
-using Microsoft.Win32;
 using System;
-using System.IO;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
 
 namespace SystemPlus.Windows
@@ -10,6 +8,7 @@ namespace SystemPlus.Windows
     /// <summary>
     /// Exposes PInvoke methods
     /// </summary>
+    [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores")]
     public static class NativeMethods
     {
         #region User32 functions
@@ -464,6 +463,7 @@ namespace SystemPlus.Windows
             ForceMinimized = 11
         }
 
+
         //[Flags]
         //public enum WindowPosition : int
         //{
@@ -484,7 +484,6 @@ namespace SystemPlus.Windows
         //public const int WM_PRINT = 0x0317;
         //public const int WM_PRINTCLIENT = 0x0318;
         //public const int WM_SIZE = 0x0005;
-        public const int SWP_FRAMECHANGED = 0x0020;
         //public const int WM_QUIT = 0x0012;
         //public const int HWND_TOP = 0x0;
         //public const int WM_COMMAND = 0x0112;
@@ -503,6 +502,7 @@ namespace SystemPlus.Windows
         public const int WS_SYSMENU = 0x80000;
         public const int WS_EX_DLGMODALFRAME = 0x0001;
 
+        public const int SWP_FRAMECHANGED = 0x0020;
         public const int SWP_NOSIZE = 0x0001;
         public const int SWP_NOMOVE = 0x0002;
         public const int SWP_NOZORDER = 0x0004;

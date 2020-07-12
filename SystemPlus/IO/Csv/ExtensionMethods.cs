@@ -15,12 +15,18 @@ namespace SystemPlus.IO.Csv
 
         public static void WriteCsvVal(this TextWriter sw, object? val, string separator = ",")
         {
+            if (sw == null)
+                throw new ArgumentNullException(nameof(sw));
+
             string sval = EscapeCsvField(val, separator);
             sw.Write(sval + separator);
         }
 
         public static void WriteCsvVals(this TextWriter sw, string separator, params object[] vals)
         {
+            if (sw == null)
+                throw new ArgumentNullException(nameof(sw));
+
             foreach (object o in vals)
             {
                 sw.WriteCsvVal(o, separator);

@@ -10,6 +10,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static bool ContainsImage(this IDataObject data)
         {
+            if (data == null)
+                return false;
+
             try
             {
                 if (data.GetData(typeof(BitmapSource)) != null)

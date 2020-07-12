@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -11,7 +12,7 @@ namespace SystemPlus.Web.Slack
     // https://api.slack.com/incoming-webhooks
     // https://api.slack.com/docs/oauth
     // https://api.slack.com/docs/slack-button
-
+    [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public class SlackClient
     {
         public SlackClient()
@@ -51,7 +52,7 @@ namespace SystemPlus.Web.Slack
             }
         }
 
-        public async Task SendAsync(Payload payload, string urlWithAccessToken)
+        public async Task SendAsync(Payload payload, Uri urlWithAccessToken)
         {
             string payloadJson = JsonSerializer.Serialize(payload);
 

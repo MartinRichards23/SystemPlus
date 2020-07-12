@@ -53,9 +53,12 @@ namespace SystemPlus.Windows
 
         public void Add(IEnumerable<T> items)
         {
-            foreach (T item in items)
+            if (items != null)
             {
-                waitingToAdd.Enqueue(item);
+                foreach (T item in items)
+                {
+                    waitingToAdd.Enqueue(item);
+                }
             }
 
             Process();

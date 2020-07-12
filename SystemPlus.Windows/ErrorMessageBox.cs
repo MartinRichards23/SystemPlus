@@ -39,7 +39,7 @@ namespace SystemPlus.Windows
             }
             else
             {
-                text = "A problem has occurred:\r\n\r\n" + error.Message;
+                text = "A problem has occurred:\r\n\r\n" + error?.Message;
             }
 
             text = text.Trim();

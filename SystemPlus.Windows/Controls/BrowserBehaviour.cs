@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,11 +16,17 @@ namespace SystemPlus.Windows.Controls
         [AttachedPropertyBrowsableForType(typeof(WebBrowser))]
         public static string GetHtml(WebBrowser d)
         {
+            if (d == null)
+                throw new ArgumentNullException(nameof(d));
+
             return (string)d.GetValue(HtmlProperty);
         }
 
         public static void SetHtml(WebBrowser d, string value)
         {
+            if (d == null)
+                throw new ArgumentNullException(nameof(d));
+
             d.SetValue(HtmlProperty, value);
         }
 

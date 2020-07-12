@@ -428,7 +428,7 @@ namespace SystemPlus.Web
                                      select new UserAgent(family, v1, v2, v3));
             }
 
-            private static Func<Match, IEnumerator<int>, string> Replace(string replacement)
+            private static Func<Match, IEnumerator<int>, string> Replace(string? replacement)
             {
                 return replacement != null ? Select(_ => replacement) : Select();
             }

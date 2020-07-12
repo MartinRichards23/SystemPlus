@@ -11,11 +11,20 @@ namespace SystemPlus.Windows.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null && parameter == null)
+                return true;
+
+            if (value == null || parameter == null)
+                return false;
+
             return value.Equals(parameter);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if(value == null)
+                return Binding.DoNothing;
+
             return value.Equals(true) ? parameter : Binding.DoNothing;
         }
     }

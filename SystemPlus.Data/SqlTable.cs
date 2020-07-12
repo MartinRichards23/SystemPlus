@@ -34,6 +34,28 @@ namespace SystemPlus.Data
 
     public class SqlColumn
     {
+        public SqlColumn(string colName , SqlDbType dataType , bool computed , int length, bool nullable)
+        {
+            Name = colName;
+            DataType = dataType;
+            Computed = computed;
+            Length = length;
+            Nullable = nullable;
+
+            PropertyName = Name.ToUpperFirst();
+            InstanceName = Name.ToLowerFirst();
+            PropertyType = SqlTools.SqlDbTypeToType(DataType);
+            string propertyTypeName = SqlTools.SqlDbTypeToTypeName(DataType);
+
+            if (Nullable && !PropertyType.IsNullable())
+                propertyTypeName += "?";
+
+            PropertyTypeName = propertyTypeName;
+
+            SqlParamName = "@" + Name.ToLowerFirst();
+            SqlDataType = SqlTools.GetSqlDataTypeName(DataType, Length);
+        }
+
         public string Name { get; set; }
         public SqlDbType DataType { get; set; }
         public bool Computed { get; set; }
@@ -49,22 +71,6 @@ namespace SystemPlus.Data
         public string PropertyTypeName { get; set; }
         public string SqlParamName { get; set; }
         public string SqlDataType { get; set; }
-
-        public void SetValues()
-        {
-            PropertyName = Name.ToUpperFirst();
-            InstanceName = Name.ToLowerFirst();
-            PropertyType = SqlTools.SqlDbTypeToType(DataType);
-            string propertyTypeName = SqlTools.SqlDbTypeToTypeName(DataType);
-
-            if (Nullable && !PropertyType.IsNullable())
-                propertyTypeName += "?";
-
-            PropertyTypeName = propertyTypeName;
-
-            SqlParamName = "@" + Name.ToLowerFirst();
-            SqlDataType = SqlTools.GetSqlDataTypeName(DataType, Length);
-        }
 
         public override string ToString()
         {

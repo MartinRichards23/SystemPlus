@@ -19,6 +19,9 @@ namespace SystemPlus.Data
         /// </summary>
         public static string[] SplitScript(string sql)
         {
+            if (sql == null)
+                throw new ArgumentNullException(nameof(sql));
+
             string[] splitter = { "\r\nGO" };
             string[] statements = sql.Split(splitter, StringSplitOptions.RemoveEmptyEntries);
 

@@ -9,7 +9,7 @@ namespace SystemPlus.Net
     /// </summary>
     public class UriParts
     {
-        public UriParts(string fullDomain, [NotNull] string domain, [NotNull] string suffix)
+        public UriParts(string fullDomain, string domain, string suffix)
         {
             FullDomain = fullDomain;
             Domain = domain;

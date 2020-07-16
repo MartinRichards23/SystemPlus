@@ -15,11 +15,17 @@ namespace SystemPlus.Windows
     {
         public static T FindResource<T>(this FrameworkElement element, object resourceKey)
         {
+            if (element == null)
+                throw new ArgumentNullException(nameof(element));
+
             return (T)element.FindResource(resourceKey);
         }
 
         public static T FindResource<T>(this Application app, object resourceKey)
         {
+            if (app == null)
+                throw new ArgumentNullException(nameof(app));
+
             return (T)app.FindResource(resourceKey);
         }
 
@@ -59,6 +65,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static void CentreOnPoint(this Window window, Point point)
         {
+            if (window == null)
+                throw new ArgumentNullException(nameof(window));
+
             window.Left = (int)(point.X - (window.ActualWidth / 2));
             window.Top = (int)(point.Y - (window.ActualHeight / 2));
         }
@@ -68,6 +77,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static void EnsureOnScreen(this Window window)
         {
+            if (window == null)
+                throw new ArgumentNullException(nameof(window));
+
             double screenH = SystemParameters.VirtualScreenHeight;
             double screenW = SystemParameters.VirtualScreenWidth;
 
@@ -89,6 +101,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static void Open(this Popup popup, TimeSpan duration)
         {
+            if (popup == null)
+                throw new ArgumentNullException(nameof(popup));
+
             popup.IsOpen = true;
 
             DispatcherTimer time = new DispatcherTimer
@@ -108,6 +123,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static void ClearAllFormatting(this RichTextBox rtb)
         {
+            if (rtb == null)
+                throw new ArgumentNullException(nameof(rtb));
+
             TextRange txtRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
             txtRange.ClearAllProperties();
         }
@@ -117,6 +135,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static Rect GetBoundingRect(this IEnumerable<Point> points)
         {
+            if (points == null)
+                throw new ArgumentNullException(nameof(points));
+
             double maxX = double.MinValue;
             double minX = double.MaxValue;
             double maxY = double.MinValue;
@@ -157,6 +178,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static Window InvokeGetMainWindow(this Application application)
         {
+            if (application == null)
+                throw new ArgumentNullException(nameof(application));
+
             if (!application.Dispatcher.CheckAccess())
             {
                 object res = application.Dispatcher.Invoke(new Func<Application, Window>(InvokeGetMainWindow), application);
@@ -171,6 +195,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static Window? GetActiveWindow(this Application application)
         {
+            if (application == null)
+                throw new ArgumentNullException(nameof(application));
+
             return application.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
         }
 
@@ -179,6 +206,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static void DoEvents(this Application application)
         {
+            if (application == null)
+                throw new ArgumentNullException(nameof(application));
+
             application.Dispatcher.Invoke(DispatcherPriority.Background, new Action(delegate { }));
         }
 
@@ -186,6 +216,9 @@ namespace SystemPlus.Windows
 
         public static Color NextColor(this Random random, byte minValue = 0)
         {
+            if (random == null)
+                throw new ArgumentNullException(nameof(random));
+
             return Color.FromArgb(255, (byte)random.Next(minValue, 255), (byte)random.Next(minValue, 255), (byte)random.Next(minValue, 255));
         }
 
@@ -215,6 +248,9 @@ namespace SystemPlus.Windows
         /// </summary>
         public static void InvokeWithExceptions(this Dispatcher dispatcher, Action action)
         {
+            if (dispatcher == null)
+                throw new ArgumentNullException(nameof(dispatcher));
+
             Exception? error = null;
             Action wrapper = () =>
             {
@@ -240,6 +276,12 @@ namespace SystemPlus.Windows
         /// </summary>
         public static void BeginInvokeIfNeeded(this Dispatcher dispatcher, Action action, DispatcherPriority priority)
         {
+            if (dispatcher == null)
+                throw new ArgumentNullException(nameof(dispatcher));
+
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
+
             if (!dispatcher.CheckAccess())
                 dispatcher.BeginInvoke(action, priority);
             else

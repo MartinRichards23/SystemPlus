@@ -182,7 +182,7 @@ namespace SystemPlus.Data
             while (rdr.Read())
             {
                 string colName = rdr.GetValue<string>("Column_name");
-                SqlDbType dataType = EnumTools.Parse(rdr.GetValue<string>("Type"), SqlDbType.NVarChar);
+                SqlDbType dataType = ParseTools.Enum(rdr.GetValue<string>("Type"), SqlDbType.NVarChar);
                 bool computed = rdr.GetValue<string>("Computed") == "yes";
                 int length = rdr.GetValue<int>("Length");
                 bool nullable = rdr.GetValue<string>("Nullable") == "yes";

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace SystemPlus.Text.NGrams
 {
@@ -35,7 +34,7 @@ namespace SystemPlus.Text.NGrams
 
     public class UniqueNGramCollection
     {
-        readonly int gramLength;        
+        readonly int gramLength;
         readonly IDictionary<NGram, int> grams = new Dictionary<NGram, int>();
 
         protected UniqueNGramCollection()

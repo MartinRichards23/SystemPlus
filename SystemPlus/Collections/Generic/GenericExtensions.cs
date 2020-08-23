@@ -30,7 +30,7 @@ namespace SystemPlus.Collections.Generic
             if (rand == null)
                 throw new ArgumentNullException(nameof(rand));
 
-            int i = rand.Next(items.Count-1);
+            int i = rand.Next(items.Count - 1);
 
             return items[i];
         }
@@ -41,7 +41,7 @@ namespace SystemPlus.Collections.Generic
         public static void ForEach<T>(this IEnumerable<T> enumeration, Action<T> action)
         {
             if (enumeration == null)
-                throw new ArgumentNullException(nameof(enumeration)); 
+                throw new ArgumentNullException(nameof(enumeration));
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
 

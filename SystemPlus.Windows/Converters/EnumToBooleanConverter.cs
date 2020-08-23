@@ -22,7 +22,7 @@ namespace SystemPlus.Windows.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value == null)
+            if (value == null)
                 return Binding.DoNothing;
 
             return value.Equals(true) ? parameter : Binding.DoNothing;

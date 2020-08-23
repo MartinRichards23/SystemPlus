@@ -34,7 +34,7 @@ namespace SystemPlus.Data
 
     public class SqlColumn
     {
-        public SqlColumn(string colName , SqlDbType dataType , bool computed , int length, bool nullable)
+        public SqlColumn(string colName, SqlDbType dataType, bool computed, int length, bool nullable)
         {
             Name = colName;
             DataType = dataType;

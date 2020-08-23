@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -27,7 +26,7 @@ namespace SystemPlus.Web.Google
             string googleReply = client.DownloadString($"https://www.google.com/recaptcha/api/siteverify?secret={privateKey}&response={response}");
 
             ReCaptchaClass captchaResponse = JsonSerializer.Deserialize<ReCaptchaClass>(googleReply);
-            
+
             return captchaResponse.Success;
         }
     }

@@ -100,7 +100,7 @@ namespace SystemPlus.Net
 
         public static void DownloadFile(Uri url, Stream outputStream, IProgressToken? token)
         {
-            if(outputStream ==null)
+            if (outputStream == null)
                 throw new ArgumentNullException(nameof(outputStream));
 
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(url);

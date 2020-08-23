@@ -45,7 +45,7 @@ namespace SystemPlus.Windows.Controls
             if (sender is TextBoxWatermarked tbw && tbw.IsLoaded)
                 tbw.ShowWatermark();
 
-            return; 
+            return;
         }
 
         void ShowWatermark()

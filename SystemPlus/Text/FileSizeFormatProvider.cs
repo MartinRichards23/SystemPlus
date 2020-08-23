@@ -7,7 +7,7 @@ namespace SystemPlus.Text
     {
         public object? GetFormat(Type? formatType)
         {
-            if (formatType == typeof(ICustomFormatter)) 
+            if (formatType == typeof(ICustomFormatter))
                 return this;
 
             return null;

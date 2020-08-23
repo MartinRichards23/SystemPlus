@@ -104,13 +104,22 @@ namespace SystemPlus.Data
         /// <summary>
         /// Reads all the rows from the IDataReader
         /// </summary>
-        public static IList<T> ReadAll<T>(this IDataReader rdr, Func<IDataReader, T> t)
+        public static IList<T> ReadAll<T>(this IDataReader rdr, Func<IDataReader, T> func)
         {
+            if (rdr == null)
+                throw new ArgumentNullException(nameof(rdr));
+
             IList<T> items = new List<T>();
-            while (rdr.Read())
+
+            if (func != null)
             {
-                items.Add(t(rdr));
+                while (rdr.Read())
+                {
+                    T value = func(rdr);
+                    items.Add(value);
+                }
             }
+
             return items;
         }
 
@@ -120,9 +129,9 @@ namespace SystemPlus.Data
         [return: MaybeNull]
         public static T TryReadItem<T>(this IDataReader rdr, Func<IDataReader, T> t)
         {
-            if (rdr == null) 
+            if (rdr == null)
                 throw new ArgumentNullException(nameof(rdr));
-            if (t == null) 
+            if (t == null)
                 throw new ArgumentNullException(nameof(t));
 
             if (!rdr.Read())
@@ -136,9 +145,9 @@ namespace SystemPlus.Data
         /// </summary>
         public static T ReadItem<T>(this IDataReader rdr, Func<IDataReader, T> t)
         {
-            if (rdr == null) 
+            if (rdr == null)
                 throw new ArgumentNullException(nameof(rdr));
-            if (t == null) 
+            if (t == null)
                 throw new ArgumentNullException(nameof(t));
 
             if (!rdr.Read())

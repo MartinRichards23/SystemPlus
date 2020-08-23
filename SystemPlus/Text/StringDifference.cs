@@ -313,6 +313,8 @@ namespace SystemPlus.Text
         {
             if (a == null)
                 throw new ArgumentNullException(nameof(a));
+            if (b == null)
+                throw new ArgumentNullException(nameof(b));
 
             string[] aWords = StringTools.SplitIntoWords(a);
             double score = 0;

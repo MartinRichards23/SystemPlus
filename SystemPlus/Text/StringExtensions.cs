@@ -34,7 +34,7 @@ namespace SystemPlus.Text
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
-            return value.IndexOf(text, comp) >= 0;
+            return value.Contains(text, comp);
         }
 
         /// <summary>
@@ -219,6 +219,9 @@ namespace SystemPlus.Text
 
         public static IEnumerable<string> SplitIntoChunks(this string value, int maxChunkSize)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             for (int i = 0; i < value.Length; i += maxChunkSize)
                 yield return value.Substring(i, Math.Min(maxChunkSize, value.Length - i));
         }

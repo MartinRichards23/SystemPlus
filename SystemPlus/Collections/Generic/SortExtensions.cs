@@ -83,7 +83,9 @@ namespace SystemPlus.Collections.Generic
         public static void SortItems<T>(this IList<T> list, Func<T, T, int> compareFunc)
         {
             if (list == null)
-                return;
+                throw new ArgumentNullException(nameof(list));
+            if (compareFunc == null)
+                throw new ArgumentNullException(nameof(compareFunc));
 
             for (int i = list.Count - 1; i >= 0; i--)
             {
@@ -140,6 +142,11 @@ namespace SystemPlus.Collections.Generic
 
         public static void InsertSorted<T>(this IList<T> list, T item, Func<T, T, int> compareFunc)
         {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+            if (compareFunc == null)
+                throw new ArgumentNullException(nameof(compareFunc));
+
             for (int i = 0; i < list.Count; i++)
             {
                 T o1 = list[i];

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -11,6 +11,11 @@ namespace SystemPlus.Net
     {
         public UriParts(string fullDomain, string domain, string suffix)
         {
+            if (domain == null)
+                throw new ArgumentNullException(nameof(domain));
+            if (suffix == null)
+                throw new ArgumentNullException(nameof(suffix));
+
             FullDomain = fullDomain;
             Domain = domain;
             Suffix = suffix;

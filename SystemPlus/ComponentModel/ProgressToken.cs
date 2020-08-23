@@ -14,8 +14,8 @@ namespace SystemPlus.ComponentModel
 
         string title = string.Empty;
         string status = string.Empty;
-        bool isIndeterminate = false;
-        double progress = 0;
+        bool isIndeterminate;
+        double progress;
         ProgressTokenState state = ProgressTokenState.Normal;
         readonly DateTime startTime = DateTime.UtcNow;
         CancellationTokenSource? cancelTokenSource;

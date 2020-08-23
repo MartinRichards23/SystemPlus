@@ -41,7 +41,9 @@ namespace SystemPlus.Collections.Generic
         public static void ForEach<T>(this IEnumerable<T> enumeration, Action<T> action)
         {
             if (enumeration == null)
-                throw new ArgumentNullException(nameof(enumeration));
+                throw new ArgumentNullException(nameof(enumeration)); 
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
 
             foreach (T item in enumeration)
             {
@@ -211,6 +213,8 @@ namespace SystemPlus.Collections.Generic
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
+            if (predicate == null)
+                throw new ArgumentNullException(nameof(predicate));
 
             // iterate list backwards
             for (int i = list.Count - 1; i >= 0; i--)
@@ -253,6 +257,9 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void ReverseEnumerate<T>(this IList<T> list, Action<T> action)
         {
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
+
             foreach (T t in list.ReverseEnumerate())
             {
                 action(t);

@@ -137,7 +137,7 @@ namespace SystemPlus.Net
                 if (IgnoreEmpty && string.IsNullOrEmpty(param.Value))
                     continue;
 
-                sb.Append(paramChar).Append(param.Name).Append("=").Append(param.ValueEncoded);
+                sb.Append(paramChar).Append(param.Name).Append('=').Append(param.ValueEncoded);
 
                 paramChar = "&";
             }

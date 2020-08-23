@@ -253,9 +253,9 @@ namespace SystemPlus.Web
 
             Config config = new Config(options ?? new ParserOptions());
 
-            _userAgentParser = CreateParser(Read(yamlParser.ReadMapping("user_agent_parsers"), config.UserAgentSelector), new UserAgent(other, null, null, null));
-            _osParser = CreateParser(Read(yamlParser.ReadMapping("os_parsers"), config.OSSelector), new OS(other, null, null, null, null));
-            _deviceParser = CreateParser(Read(yamlParser.ReadMapping("device_parsers"), config.DeviceSelector), new Device(other, string.Empty, string.Empty));
+            _userAgentParser = CreateParser(Read(yamlParser.ReadMapping("user_agent_parsers"), Config.UserAgentSelector), new UserAgent(other, null, null, null));
+            _osParser = CreateParser(Read(yamlParser.ReadMapping("os_parsers"), Config.OSSelector), new OS(other, null, null, null, null));
+            _deviceParser = CreateParser(Read(yamlParser.ReadMapping("device_parsers"), Config.DeviceSelector), new Device(other, string.Empty, string.Empty));
         }
 
         private static IEnumerable<T> Read<T>(IEnumerable<Dictionary<string, string>> entries, Func<Func<string, string>, T> selector)
@@ -335,7 +335,7 @@ namespace SystemPlus.Web
                 _options = options;
             }
 
-            public Func<string, OS> OSSelector(Func<string, string> indexer)
+            public static Func<string, OS> OSSelector(Func<string, string> indexer)
             {
                 Regex regex = Regex(indexer, "OS");
                 string os = indexer("os_replacement");
@@ -346,7 +346,7 @@ namespace SystemPlus.Web
                 return Parsers.OS(regex, os, v1, v2, v3, v4);
             }
 
-            public Func<string, UserAgent> UserAgentSelector(Func<string, string> indexer)
+            public static Func<string, UserAgent> UserAgentSelector(Func<string, string> indexer)
             {
                 Regex regex = Regex(indexer, "User agent");
                 string family = indexer("family_replacement");
@@ -356,7 +356,7 @@ namespace SystemPlus.Web
                 return Parsers.UserAgent(regex, family, v1, v2, v3);
             }
 
-            public Func<string, Device> DeviceSelector(Func<string, string> indexer)
+            public static Func<string, Device> DeviceSelector(Func<string, string> indexer)
             {
                 Regex regex = Regex(indexer, "Device", indexer("regex_flag"));
                 string device = indexer("device_replacement");
@@ -375,7 +375,7 @@ namespace SystemPlus.Web
                 // in .NET such as the \_ token so need to alter them before 
                 // proceeding.
 
-                if (pattern.IndexOf(@"\_", StringComparison.Ordinal) >= 0)
+                if (pattern.Contains(@"\_", StringComparison.Ordinal))
                     pattern = pattern.Replace(@"\_", "_", StringComparison.InvariantCulture);
 
                 // TODO: potentially allow parser to specify e.g. to use 
@@ -496,7 +496,7 @@ namespace SystemPlus.Web
                     if (!num.MoveNext()) throw new InvalidOperationException();
                     GroupCollection groups = m.Groups; Group group;
                     return selector(num.Current <= groups.Count && (group = groups[num.Current]).Success
-                                    ? group.Value : null);
+                                    ? group.Value : string.Empty);
                 };
             }
 

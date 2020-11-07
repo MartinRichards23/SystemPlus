@@ -21,7 +21,7 @@ namespace SystemPlus.Windows
             if (enumType.IsEnum == false)
                 throw new ArgumentException("Type must be an Enum.");
 
-            this.EnumType = enumType;
+            EnumType = enumType;
         }
 
         public Type EnumType { get; }

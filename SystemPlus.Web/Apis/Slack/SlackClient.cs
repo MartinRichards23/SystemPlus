@@ -41,7 +41,7 @@ namespace SystemPlus.Web.Slack
                 OauthReponse oauthResponse = JsonSerializer.Deserialize<OauthReponse>(responseMessage);
 
                 if (oauthResponse == null || !oauthResponse.Ok)
-                    throw new Exception("Slack error: " + responseMessage);
+                    throw new WebException("Slack error: " + responseMessage);
 
                 return oauthResponse;
             }
@@ -72,7 +72,7 @@ namespace SystemPlus.Web.Slack
                 string responseMessage = await sr.ReadToEndAsync();
 
                 if (responseMessage != "ok")
-                    throw new Exception("Slack error: " + responseMessage);
+                    throw new WebException("Slack error: " + responseMessage);
             }
             catch (WebException ex)
             {
@@ -82,7 +82,7 @@ namespace SystemPlus.Web.Slack
                     StreamReader sr = new StreamReader(responseStream);
                     string s = await sr.ReadToEndAsync();
 
-                    if (string.Equals(s, "No service", StringComparison.InvariantCultureIgnoreCase))
+                    if (string.Equals(s, "No service", StringComparison.OrdinalIgnoreCase))
                         throw new NoServiceException();
                 }
 

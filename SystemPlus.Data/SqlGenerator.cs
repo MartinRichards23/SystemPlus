@@ -39,7 +39,7 @@ namespace SystemPlus.Data
 
             foreach (string name in names)
             {
-                if (tableNames != null && !tableNames.Any(t => string.Equals(t, name, StringComparison.InvariantCultureIgnoreCase)))
+                if (tableNames != null && !tableNames.Any(t => string.Equals(t, name, StringComparison.OrdinalIgnoreCase)))
                     continue;
 
                 SqlTable table = GetTableSchema(connection, name);

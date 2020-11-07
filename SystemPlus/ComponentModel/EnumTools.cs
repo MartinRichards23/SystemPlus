@@ -46,10 +46,10 @@ namespace SystemPlus.ComponentModel
     /// for a value in an enum.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Interface | AttributeTargets.Delegate)]
-    public class InfoAttribute : Attribute, INotifyPropertyChanged
+    public sealed class InfoAttribute : Attribute, INotifyPropertyChanged
     {
-        public string Name { get; protected set; }
-        public string? Description { get; protected set; }
+        public string Name { get; }
+        public string? Description { get; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

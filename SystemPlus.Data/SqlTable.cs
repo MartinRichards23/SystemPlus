@@ -16,7 +16,7 @@ namespace SystemPlus.Data
         }
 
         public string Name { get; }
-        public List<SqlColumn> Columns { get; } = new List<SqlColumn>();
+        public ICollection<SqlColumn> Columns { get; } = new List<SqlColumn>();
 
         public string ClassName { get; }
         public string InstanceName { get; }

@@ -246,9 +246,7 @@ namespace SystemPlus.Collections.Generic
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 T item = list[i];
-
-                if (!Equals(item, null))
-                    yield return item;
+                yield return item;
             }
         }
 

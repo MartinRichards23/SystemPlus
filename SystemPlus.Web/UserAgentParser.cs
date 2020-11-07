@@ -369,7 +369,7 @@ namespace SystemPlus.Web
             {
                 string pattern = indexer("regex");
                 if (pattern == null)
-                    throw new Exception($"{key} is missing regular expression specification.");
+                    throw new KeyNotFoundException($"{key} is missing regular expression specification.");
 
                 // Some expressions in the regex.yaml file causes parsing errors 
                 // in .NET such as the \_ token so need to alter them before 

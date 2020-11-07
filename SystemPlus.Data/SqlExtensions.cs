@@ -151,7 +151,7 @@ namespace SystemPlus.Data
                 throw new ArgumentNullException(nameof(t));
 
             if (!rdr.Read())
-                throw new Exception("Data not found");
+                throw new InvalidOperationException("Data not found");
 
             return t(rdr);
         }
@@ -301,7 +301,7 @@ namespace SystemPlus.Data
 
             for (int i = 0; i < record.FieldCount; i++)
             {
-                if (record.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                if (record.GetName(i).Equals(columnName, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
             return false;

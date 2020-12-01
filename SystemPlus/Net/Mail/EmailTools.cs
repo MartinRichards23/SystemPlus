@@ -26,7 +26,6 @@ namespace SystemPlus.Net.Mail
             return email.Substring(index + 1);
         }
 
-
         /// <summary>
         /// Is uri a mailto: uri
         /// </summary>        

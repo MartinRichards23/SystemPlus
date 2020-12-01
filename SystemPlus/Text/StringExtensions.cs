@@ -242,12 +242,12 @@ namespace SystemPlus.Text
         /// <summary>
         /// Determine if string is a valid 64-bit integer
         /// </summary>
-        public static bool IsInt(this string value)
+        public static bool IsInt(this string? value)
         {
             return long.TryParse(value, out _);
         }
 
-        public static int ToInt(this string value, int defaultValue)
+        public static int ToInt(this string? value, int defaultValue)
         {
             if (int.TryParse(value, out int val))
                 return val;

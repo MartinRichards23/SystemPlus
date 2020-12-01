@@ -38,7 +38,7 @@ namespace SystemPlus.Web.Slack
 
                 string responseMessage = sr.ReadToEnd();
 
-                OauthReponse oauthResponse = JsonSerializer.Deserialize<OauthReponse>(responseMessage);
+                OauthReponse? oauthResponse = JsonSerializer.Deserialize<OauthReponse>(responseMessage);
 
                 if (oauthResponse == null || !oauthResponse.Ok)
                     throw new WebException("Slack error: " + responseMessage);

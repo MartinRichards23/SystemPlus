@@ -71,14 +71,14 @@ namespace SystemPlus.Net
         /// <summary>
         /// Follows a urls and returns the redirected url
         /// </summary>
-        public static string GetUrlRedirect(string url, CancellationToken token)
+        public static string? GetUrlRedirect(string url, CancellationToken token)
         {
             HttpWebRequest request = MakeStandardGetRequest(url);
             request.AllowAutoRedirect = false;
             request.Timeout = 15 * 1000;
 
             using HttpWebResponse response = request.GetHttpResponse(token);
-            string redirUrl = response.Headers["Location"];
+            string? redirUrl = response.Headers["Location"];
             return redirUrl;
         }
 

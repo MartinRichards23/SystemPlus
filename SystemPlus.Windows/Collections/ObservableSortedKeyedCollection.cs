@@ -7,7 +7,7 @@ namespace SystemPlus.Windows.Collections
     /// <summary>
     /// Maintains a sorted, keyed, observable collection
     /// </summary>
-    public abstract class ObservableSortedKeyedCollection<TKey, TItem> : ObservableKeyedCollection<TKey, TItem>
+    public abstract class ObservableSortedKeyedCollection<TKey, TItem> : ObservableKeyedCollection<TKey, TItem> where TKey : notnull
     {
         protected virtual IComparer<TKey> KeyComparer
         {

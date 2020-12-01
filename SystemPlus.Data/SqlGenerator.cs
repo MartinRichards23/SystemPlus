@@ -156,8 +156,10 @@ namespace SystemPlus.Data
             {
                 while (rdr.Read())
                 {
-                    string name = rdr.GetValue<string>("TABLE_NAME");
-                    names.Add(name);
+                    string? name = rdr.GetValue<string>("TABLE_NAME");
+
+                    if (name != null)
+                        names.Add(name);
                 }
             }
 
@@ -173,14 +175,15 @@ namespace SystemPlus.Data
             using SqlDataReader rdr = cmd.ExecuteReader();
             rdr.Read();
 
-            string name = rdr.GetValue<string>("Name");
+            string? name = rdr.GetValue<string>("Name");
+
             SqlTable table = new SqlTable(name)
             { };
 
             rdr.NextResult();
             while (rdr.Read())
             {
-                string colName = rdr.GetValue<string>("Column_name");
+                string? colName = rdr.GetValue<string>("Column_name");
                 SqlDbType dataType = ParseTools.Enum(rdr.GetValue<string>("Type"), SqlDbType.NVarChar);
                 bool computed = rdr.GetValue<string>("Computed") == "yes";
                 int length = rdr.GetValue<int>("Length");

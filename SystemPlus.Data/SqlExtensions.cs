@@ -63,7 +63,7 @@ namespace SystemPlus.Data
         /// <summary>
         /// Gets the value or the type's default value is dbnull
         /// </summary>
-        public static T GetValue<T>(this IDataReader reader, string name)
+        public static T? GetValue<T>(this IDataReader reader, string name)
         {
             return GetValue(reader, name, default(T));
         }
@@ -84,7 +84,7 @@ namespace SystemPlus.Data
             }
         }
 
-        public static T TryGetValue<T>(this IDataReader reader, string name)
+        public static T? TryGetValue<T>(this IDataReader reader, string name)
         {
             return TryGetValue(reader, name, default(T));
         }
@@ -161,7 +161,7 @@ namespace SystemPlus.Data
         /// </summary>
         public static T? GetCompressedJsonValue<T>(this IDataReader reader, string name) where T : class, new()
         {
-            byte[] compressedData = reader.GetValue<byte[]>(name);
+            byte[]? compressedData = reader.GetValue<byte[]>(name);
 
             if (compressedData == null)
                 return default;
@@ -207,7 +207,7 @@ namespace SystemPlus.Data
         /// </summary>
         public static T? GetJsonValue<T>(this IDataReader reader, string name) where T : class, new()
         {
-            string json = reader.GetValue<string>(name);
+            string? json = reader.GetValue<string>(name);
 
             if (string.IsNullOrEmpty(json))
                 return default;

@@ -247,7 +247,12 @@ namespace SystemPlus.ComponentModel.Ini
                 if (string.IsNullOrWhiteSpace(result))
                     return defValue;
 
-                return JsonSerializer.Deserialize<T>(result);
+                T? resultObject = JsonSerializer.Deserialize<T>(result);
+
+                if (resultObject == null)
+                    return defValue;
+
+                return resultObject;
             }
             catch
             {

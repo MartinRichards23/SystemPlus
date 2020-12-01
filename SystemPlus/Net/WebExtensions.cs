@@ -113,8 +113,10 @@ namespace SystemPlus.Net
             {
                 foreach (string key in headers.AllKeys)
                 {
-                    string value = headers[key];
-                    headerValues.Add(new KeyValuePair<string, string>(key, value));
+                    string? value = headers[key];
+
+                    if (value != null)
+                        headerValues.Add(new KeyValuePair<string, string>(key, value));
                 }
             }
 
@@ -186,7 +188,7 @@ namespace SystemPlus.Net
                 throw new ArgumentNullException(nameof(headers));
 
             string? charset = null;
-            string ctype = headers["content-type"];
+            string? ctype = headers["content-type"];
             if (ctype != null)
             {
                 int ind = ctype.IndexOf("charset=", StringComparison.InvariantCultureIgnoreCase);

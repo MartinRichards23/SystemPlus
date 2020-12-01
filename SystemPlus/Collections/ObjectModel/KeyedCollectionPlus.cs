@@ -9,7 +9,7 @@ namespace SystemPlus.Collections.ObjectModel
     /// Adds extra functionality to KeyedCollection
     /// </summary>
     [Serializable]
-    public abstract class KeyedCollectionPlus<TKey, TItem> : KeyedCollection<TKey, TItem>
+    public abstract class KeyedCollectionPlus<TKey, TItem> : KeyedCollection<TKey, TItem> where TKey : notnull
     {
         public virtual void Sort()
         {

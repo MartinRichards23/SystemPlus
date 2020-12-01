@@ -56,7 +56,7 @@ namespace SystemPlus.IO
             XmlSerialize(obj, fs, hideDeclaration, indent, hideNameSpaces, checkChars);
         }
 
-        public static T XmlDeserialize<T>(Stream data)
+        public static T? XmlDeserialize<T>(Stream data)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             XmlReaderSettings settings = new XmlReaderSettings
@@ -68,7 +68,7 @@ namespace SystemPlus.IO
             return (T)serializer.Deserialize(reader);
         }
 
-        public static T XmlDeserialize<T>(string data)
+        public static T? XmlDeserialize<T>(string data)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             using StringReader reader = new StringReader(data);
@@ -77,7 +77,7 @@ namespace SystemPlus.IO
             return (T)serializer.Deserialize(xmlReader);
         }
 
-        public static T XmlDeserialize<T>(FileInfo file)
+        public static T? XmlDeserialize<T>(FileInfo file)
         {
             if (file == null)
                 throw new ArgumentNullException(nameof(file));
@@ -128,7 +128,7 @@ namespace SystemPlus.IO
             return sw.ReadToEnd();
         }
 
-        public static T DataDeserialize<T>(Stream stream, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
+        public static T? DataDeserialize<T>(Stream stream, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), knownTypes);
 
@@ -136,7 +136,7 @@ namespace SystemPlus.IO
             return (T)serializer.ReadObject(reader);
         }
 
-        public static T DataDeserialize<T>(TextReader input, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
+        public static T? DataDeserialize<T>(TextReader input, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), knownTypes);
 
@@ -144,70 +144,20 @@ namespace SystemPlus.IO
             return (T)serializer.ReadObject(reader);
         }
 
-        public static T DataDeserialize<T>(string data, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
+        public static T? DataDeserialize<T>(string data, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(data);
             using MemoryStream mem = new MemoryStream(bytes);
             return DataDeserialize<T>(mem, settings, knownTypes);
         }
 
-        public static T DataDeserialize<T>(FileInfo file, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
+        public static T? DataDeserialize<T>(FileInfo file, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
         {
             if (file == null)
                 throw new ArgumentNullException(nameof(file));
 
             using FileStream fs = File.OpenRead(file.FullName);
             return DataDeserialize<T>(fs, settings, knownTypes);
-        }
-
-        #endregion
-
-        #region Binary
-
-        public static byte[] BinarySerialize<T>(T obj)
-        {
-            using MemoryStream ms = new MemoryStream();
-            BinarySerialize(obj, ms);
-            return ms.ToArray();
-        }
-
-        public static void BinarySerialize<T>(T obj, Stream data)
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(data, obj);
-        }
-
-        public static void BinarySerialize<T>(T obj, FileInfo file)
-        {
-            if (file == null)
-                throw new ArgumentNullException(nameof(file));
-
-            if (!file.Directory.Exists)
-                file.Directory.Create();
-
-            using FileStream fs = File.Create(file.FullName);
-            BinarySerialize(obj, fs);
-        }
-
-        public static T BinaryDeserialize<T>(byte[] data)
-        {
-            using MemoryStream ms = new MemoryStream(data);
-            return BinaryDeserialize<T>(ms);
-        }
-
-        public static T BinaryDeserialize<T>(Stream data)
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            return (T)bf.Deserialize(data);
-        }
-
-        public static T BinaryDeserialize<T>(FileInfo file)
-        {
-            if (file == null)
-                throw new ArgumentNullException(nameof(file));
-
-            using FileStream fs = File.OpenRead(file.FullName);
-            return BinaryDeserialize<T>(fs);
         }
 
         #endregion

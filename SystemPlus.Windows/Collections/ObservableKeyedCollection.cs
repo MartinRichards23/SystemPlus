@@ -11,7 +11,7 @@ namespace SystemPlus.Windows.Collections
     /// Extends KeyedCollectionPlus to become observable
     /// </summary>
     [Serializable]
-    public abstract class ObservableKeyedCollection<TKey, TItem> : KeyedCollectionPlus<TKey, TItem>, INotifyCollectionChanged, INotifyPropertyChanged
+    public abstract class ObservableKeyedCollection<TKey, TItem> : KeyedCollectionPlus<TKey, TItem>, INotifyCollectionChanged, INotifyPropertyChanged where TKey : notnull
     {
         #region Fields
 

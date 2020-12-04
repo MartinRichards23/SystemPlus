@@ -42,6 +42,9 @@ namespace SystemPlus.Net.Mail
         /// </summary>
         public static bool VerifyEmail(string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
             Regex emailRegex = new Regex(@"^\S+@\S+\.\S+$", RegexOptions.IgnoreCase);
             return emailRegex.IsMatch(email);
         }

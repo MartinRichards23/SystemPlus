@@ -13,6 +13,11 @@ namespace SystemPlus.Windows
 {
     public static class ExtensionsMethods
     {
+        public static Visibility ToVisibility(this bool value)
+        {
+            return value ? Visibility.Visible : Visibility.Hidden;
+        }
+
         public static T FindResource<T>(this FrameworkElement element, object resourceKey)
         {
             if (element == null)

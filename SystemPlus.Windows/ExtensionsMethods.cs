@@ -13,6 +13,14 @@ namespace SystemPlus.Windows
 {
     public static class ExtensionsMethods
     {
+        public static Visibility ToVisibility(this bool? value)
+        {
+            if (value.HasValue)
+                return value.Value ? Visibility.Visible : Visibility.Hidden;
+
+            return Visibility.Collapsed;
+        }
+
         public static Visibility ToVisibility(this bool value)
         {
             return value ? Visibility.Visible : Visibility.Hidden;

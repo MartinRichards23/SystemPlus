@@ -14,7 +14,7 @@ namespace SystemPlus.Web.GeoPlugin
     {
         readonly string baseUrl = "http://www.geoplugin.net/json.gp?ip=";
 
-        public async Task<GeoPluginResult> GetIpData(string ipAddress)
+        public async Task<GeoPluginResult?> GetIpData(string ipAddress)
         {
             Uri uri = new Uri(baseUrl + ipAddress);
 
@@ -28,7 +28,7 @@ namespace SystemPlus.Web.GeoPlugin
 
             string data = await sr.ReadToEndAsync();
 
-            GeoPluginResult result = JsonSerializer.Deserialize<GeoPluginResult>(data);
+            GeoPluginResult? result = JsonSerializer.Deserialize<GeoPluginResult>(data);
 
             return result;
         }

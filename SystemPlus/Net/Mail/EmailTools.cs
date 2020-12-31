@@ -7,7 +7,6 @@ namespace SystemPlus.Net.Mail
     /// <summary>
     /// Tools for manipulating email addresses
     /// </summary>
-    [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
     public static class EmailTools
     {
         /// <summary>
@@ -23,7 +22,7 @@ namespace SystemPlus.Net.Mail
             if (index < 0)
                 throw new ArgumentException("Email does not contain '@'");
 
-            return email.Substring(index + 1);
+            return email[(index + 1)..];
         }
 
         /// <summary>

@@ -8,7 +8,6 @@ namespace SystemPlus.Text
     /// <summary>
     /// Various algorithms for comparing strings
     /// </summary>
-    [SuppressMessage("Performance", "CA1814:Prefer jagged arrays over multidimensional")]
     public static class StringDifference
     {
         /// <summary>

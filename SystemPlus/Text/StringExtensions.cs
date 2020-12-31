@@ -190,7 +190,7 @@ namespace SystemPlus.Text
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
-            string replaced = value.Substring(0, start) + replacement + value.Substring(start + length);
+            string replaced = value.Substring(0, start) + replacement + value[(start + length)..];
             return replaced;
         }
 
@@ -202,7 +202,7 @@ namespace SystemPlus.Text
             if (string.IsNullOrEmpty(value))
                 return value;
 
-            return char.ToUpperInvariant(value[0]) + value.Substring(1);
+            return char.ToUpperInvariant(value[0]) + value[1..];
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace SystemPlus.Text
             if (string.IsNullOrEmpty(value))
                 return value;
 
-            return char.ToLowerInvariant(value[0]) + value.Substring(1);
+            return char.ToLowerInvariant(value[0]) + value[1..];
         }
 
         public static IEnumerable<string> SplitIntoChunks(this string value, int maxChunkSize)
@@ -281,7 +281,7 @@ namespace SystemPlus.Text
 
             int index = input.IndexOf(search, StringComparison.Ordinal);
             return index >= 0
-                 ? input.Substring(0, index) + replacement + input.Substring(index + search.Length)
+                 ? input.Substring(0, index) + replacement + input[(index + search.Length)..]
                  : input;
         }
     }

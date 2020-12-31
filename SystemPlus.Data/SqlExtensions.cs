@@ -19,7 +19,6 @@ namespace SystemPlus.Data
         /// <summary>
         /// Makes a command for a stored procedure
         /// </summary>
-        [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Stored procedure")]
         public static SqlCommand StoredProcedure(this SqlConnection connection, string storedProcedure)
         {
             SqlCommand command = new SqlCommand(storedProcedure, connection)
@@ -33,7 +32,6 @@ namespace SystemPlus.Data
         /// <summary>
         /// Makes a command for a stored procedure
         /// </summary>
-        [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Stored procedure")]
         public static SqlCommand StoredProcedure(this SqlConnection connection, string storedProcedure, SqlTransaction transaction)
         {
             SqlCommand command = new SqlCommand(storedProcedure, connection, transaction)

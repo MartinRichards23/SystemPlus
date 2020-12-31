@@ -9,7 +9,6 @@ namespace SystemPlus.Web.Slack
     /// <summary>
     /// https://api.slack.com/docs/messages/builder
     /// </summary>
-    [SuppressMessage("Usage", "CA2227:Collection properties should be read only")]
     public class Payload
     {
         [JsonPropertyName("channel")]
@@ -31,8 +30,6 @@ namespace SystemPlus.Web.Slack
         }
     }
 
-    [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
-    [SuppressMessage("Usage", "CA2227:Collection properties should be read only")]
     public class Attachment
     {
         [JsonPropertyName("fallback")]

@@ -9,9 +9,6 @@ namespace SystemPlus.Net
     /// <summary>
     /// A url query string helper class
     /// </summary>
-    [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
-    [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
-    [SuppressMessage("Design", "CA1055:Uri return values should not be strings")]
     public class UrlQueryString
     {
         #region Fields
@@ -173,7 +170,7 @@ namespace SystemPlus.Net
             if (!string.IsNullOrEmpty(s))
             {
                 if (s.Contains("?", StringComparison.InvariantCulture))
-                    return s.Substring(s.IndexOf("?", StringComparison.InvariantCultureIgnoreCase) + 1);
+                    return s[(s.IndexOf("?", StringComparison.InvariantCultureIgnoreCase) + 1)..];
             }
             return s;
         }
@@ -198,7 +195,7 @@ namespace SystemPlus.Net
                     continue;
 
                 string key = part.Substring(0, index);
-                string val = part.Substring(index + 1);
+                string val = part[(index + 1)..];
 
                 values.Add(new KeyValuePair<string, string>(key, val));
             }

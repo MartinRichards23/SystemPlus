@@ -11,11 +11,6 @@ namespace SystemPlus.Net.Mail
     {
         public EmailParts(string localPart, string fullDomain, string domain, string suffix)
         {
-            if (domain == null)
-                throw new ArgumentNullException(nameof(domain));
-            if (suffix == null)
-                throw new ArgumentNullException(nameof(suffix));
-
             LocalPart = localPart;
             FullDomain = fullDomain;
             Domain = domain;

@@ -44,7 +44,7 @@ namespace SystemPlus.Net
         /// A WebRequest extension method that gets the WebRequest response or the WebException response.
         /// </summary>
         /// <returns>The WebRequest response or WebException response.</returns>
-        public static WebResponse GetResponseSafe(this WebRequest request)
+        public static WebResponse? GetResponseSafe(this WebRequest request)
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
@@ -59,7 +59,6 @@ namespace SystemPlus.Net
             }
         }
 
-        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
         public static MemoryStream GetFullResponseStream(this HttpWebResponse response, int maxLength = int.MaxValue)
         {
             if (response == null)
@@ -149,7 +148,7 @@ namespace SystemPlus.Net
             if (exception == null)
                 throw new ArgumentNullException(nameof(exception));
 
-            using WebResponse response = exception.Response;
+            using WebResponse? response = exception.Response;
             using Stream responseStream = response.GetResponseStream();
             using StreamReader sr = new StreamReader(responseStream, Encoding.ASCII);
 
@@ -193,13 +192,12 @@ namespace SystemPlus.Net
             {
                 int ind = ctype.IndexOf("charset=", StringComparison.InvariantCultureIgnoreCase);
                 if (ind > -1)
-                    charset = ctype.Substring(ind + 8);
+                    charset = ctype[(ind + 8)..];
             }
 
             return charset;
         }
 
-        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
         public static string? GetCharSetFromBody(Stream rawdata)
         {
             if (rawdata == null)

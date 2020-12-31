@@ -145,7 +145,6 @@ namespace SystemPlus.Data
 
         #region Private methods
 
-        [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities")]
         static List<string> GetTableNames(SqlConnection conn)
         {
             string sql = GetSqlForTableNames();
@@ -166,7 +165,6 @@ namespace SystemPlus.Data
             return names;
         }
 
-        [SuppressMessage("Security", "CA2100:Review SQL queries for security vulnerabilities")]
         static SqlTable GetTableSchema(SqlConnection conn, string tableName)
         {
             string sql = $"sp_help '{tableName}'";
@@ -197,7 +195,7 @@ namespace SystemPlus.Data
             rdr.NextResult();
             while (rdr.Read())
             {
-                string identityCol = rdr.GetValue<string>("Identity");
+                string? identityCol = rdr.GetValue<string>("Identity");
 
                 if (!string.IsNullOrWhiteSpace(identityCol))
                 {
@@ -219,9 +217,9 @@ namespace SystemPlus.Data
             {
                 if (rdr.HasColumn("index_name"))
                 {
-                    string indexName = rdr.GetValue<string>("index_name");
-                    string indexDescription = rdr.GetValue<string>("index_description");
-                    string indexKeys = rdr.GetValue<string>("index_keys");
+                    string? indexName = rdr.GetValue<string>("index_name");
+                    string? indexDescription = rdr.GetValue<string>("index_description");
+                    string? indexKeys = rdr.GetValue<string>("index_keys");
 
                     if (indexDescription.Contains("primary key", StringComparison.InvariantCultureIgnoreCase))
                     {

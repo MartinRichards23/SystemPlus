@@ -12,8 +12,6 @@ namespace SystemPlus.Net
     /// <summary>
     /// Helpers for making web requests
     /// </summary>
-    [SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
-    [SuppressMessage("Design", "CA1055:Uri return values should not be strings")]
     public static class Download
     {
         public static HttpWebRequest MakeHttpWebRequest(string url)

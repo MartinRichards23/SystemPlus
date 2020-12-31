@@ -49,9 +49,6 @@ namespace SystemPlus.IO
             if (file == null)
                 throw new ArgumentNullException(nameof(file));
 
-            if (!file.Directory.Exists)
-                file.Directory.Create();
-
             using FileStream fs = File.Create(file.FullName);
             XmlSerialize(obj, fs, hideDeclaration, indent, hideNameSpaces, checkChars);
         }
@@ -110,9 +107,6 @@ namespace SystemPlus.IO
         {
             if (file == null)
                 throw new ArgumentNullException(nameof(file));
-
-            if (!file.Directory.Exists)
-                file.Directory.Create();
 
             using FileStream fs = File.Create(file.FullName);
             DataSerialize(obj, fs, settings);

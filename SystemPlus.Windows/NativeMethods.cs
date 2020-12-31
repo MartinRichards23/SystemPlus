@@ -9,6 +9,7 @@ namespace SystemPlus.Windows
     /// Exposes PInvoke methods
     /// </summary>
     [SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores")]
+    [SuppressMessage("Style", "IDE1006:Naming Styles")]
     public static class NativeMethods
     {
         #region User32 functions

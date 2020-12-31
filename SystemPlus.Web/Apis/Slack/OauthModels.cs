@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 
 namespace SystemPlus.Web.Slack
 {
-    [SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
     public class IncomingWebhook
     {
         [JsonPropertyName("url")]

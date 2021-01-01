@@ -13,6 +13,7 @@
     <Description>Tools and extensions for .NET Core</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>

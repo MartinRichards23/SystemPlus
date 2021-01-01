@@ -12,6 +12,7 @@
     <RepositoryType>git</RepositoryType>
     <Description>Tools and extensions for the .NET Core System.Data namespace</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

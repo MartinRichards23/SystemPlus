@@ -4,9 +4,7 @@ namespace SystemPlus.ComponentModel.Logging
 {
     public interface ILogger
     {
-        void WriteError(string? message, Exception? ex);
-        void WriteInfo(string message);
-        void WriteWarning(string message);
+        void Write(MessageLevel level, string? message = null, Exception? error = null);
         void Flush();
 
         MessageLevel MinLevel { get; }

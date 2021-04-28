@@ -12,9 +12,7 @@ namespace SystemPlus.ComponentModel.Logging
     {
         public MessageLevel MinLevel { get; set; } = MessageLevel.Info;
 
-        public abstract void WriteInfo(string message);
-        public abstract void WriteWarning(string message);
-        public abstract void WriteError(string? message, Exception? ex);
+        public abstract void Write(MessageLevel level, string? message, Exception? error);
 
         public virtual void Flush()
         {

@@ -58,21 +58,7 @@ namespace SystemPlus.ComponentModel.Logging
             if (!args.IsNullOrEmpty())
                 message = string.Format(CultureInfo.InvariantCulture, message, args);
 
-            foreach (ILogger lb in loggers)
-            {
-                try
-                {
-                    if (lb.MinLevel > MessageLevel.Info)
-                        continue;
-
-                    lb.WriteInfo(message);
-                }
-                catch
-                {
-                }
-            }
-
-            OnMessageLogged(MessageLevel.Info, message, null);
+            Log(MessageLevel.Info, message, null);
         }
 
         public void LogWarningAsync(string message, params object[] args)
@@ -94,21 +80,8 @@ namespace SystemPlus.ComponentModel.Logging
             if (!args.IsNullOrEmpty())
                 message = string.Format(CultureInfo.InvariantCulture, message, args);
 
-            foreach (ILogger lb in loggers)
-            {
-                try
-                {
-                    if (lb.MinLevel > MessageLevel.Warning)
-                        continue;
 
-                    lb.WriteWarning(message);
-                }
-                catch
-                {
-                }
-            }
-
-            OnMessageLogged(MessageLevel.Warning, message, null);
+            Log(MessageLevel.Warning, message, null);
         }
 
         /// <summary>
@@ -131,6 +104,11 @@ namespace SystemPlus.ComponentModel.Logging
         /// Record an error
         /// </summary>
         public void LogError(string? message, Exception? error)
+        {
+            Log(MessageLevel.Error, message, error);
+        }
+
+        public void Log(MessageLevel level, string? message, Exception? error)
         {
             if (error != null)
             {
@@ -177,18 +155,19 @@ namespace SystemPlus.ComponentModel.Logging
             {
                 try
                 {
-                    if (lb.MinLevel > MessageLevel.Error)
+                    if (lb.MinLevel > level)
                         continue;
 
-                    lb.WriteError(message, error);
+                    lb.Write(level, message, error);
                 }
                 catch
                 {
                 }
             }
 
-            OnMessageLogged(MessageLevel.Error, message, error);
+            OnMessageLogged(level, message, error);
         }
+
 
         protected void OnMessageLogged(MessageLevel level, string? message, Exception? error)
         {

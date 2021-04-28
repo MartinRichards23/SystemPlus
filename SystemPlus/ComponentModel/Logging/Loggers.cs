@@ -43,17 +43,7 @@ namespace SystemPlus.ComponentModel.Logging
             filePath = $"{folder}\\{appName} {appVersion} {DateTime.UtcNow:yyyy-MM-dd}.log";
         }
 
-        public override void WriteInfo(string message)
-        {
-            Write(MessageLevel.Info, message);
-        }
-
-        public override void WriteWarning(string message)
-        {
-            Write(MessageLevel.Warning, message);
-        }
-
-        public override void WriteError(string? message, Exception? error)
+        public override void Write(MessageLevel level, string? message, Exception? error)
         {
             string text = string.Empty;
 
@@ -63,7 +53,7 @@ namespace SystemPlus.ComponentModel.Logging
             if (message != null)
                 text = message + "\r\n\r\n" + text;
 
-            Write(MessageLevel.Error, text);
+            Write(level, text);
         }
 
         void Write(MessageLevel level, string text)
@@ -105,17 +95,7 @@ namespace SystemPlus.ComponentModel.Logging
     /// </summary>
     public class TraceLogger : LoggerBase
     {
-        public override void WriteInfo(string message)
-        {
-            Trace.TraceInformation(message);
-        }
-
-        public override void WriteWarning(string message)
-        {
-            Trace.TraceWarning(message);
-        }
-
-        public override void WriteError(string? message, Exception? error)
+        public override void Write(MessageLevel level, string? message, Exception? error)
         {
             string text = string.Empty;
 
@@ -134,17 +114,7 @@ namespace SystemPlus.ComponentModel.Logging
     /// </summary>
     public class ConsoleLogger : LoggerBase
     {
-        public override void WriteInfo(string message)
-        {
-            Console.WriteLine(message);
-        }
-
-        public override void WriteWarning(string message)
-        {
-            Console.WriteLine(message);
-        }
-
-        public override void WriteError(string? message, Exception? error)
+        public override void Write(MessageLevel level, string? message, Exception? error)
         {
             string text = string.Empty;
 
@@ -183,17 +153,7 @@ namespace SystemPlus.ComponentModel.Logging
             addresses.Add(to);
         }
 
-        public override void WriteInfo(string message)
-        {
-            BufferMessage(MessageLevel.Info, message);
-        }
-
-        public override void WriteWarning(string message)
-        {
-            BufferMessage(MessageLevel.Warning, message);
-        }
-
-        public override void WriteError(string? message, Exception? error)
+        public override void Write(MessageLevel level, string? message, Exception? error)
         {
             string text = string.Empty;
 
@@ -203,7 +163,7 @@ namespace SystemPlus.ComponentModel.Logging
             if (message != null)
                 text = message + "\r\n\r\n" + text;
 
-            BufferMessage(MessageLevel.Error, text);
+            BufferMessage(level, text);
         }
 
         void BufferMessage(MessageLevel level, string text)

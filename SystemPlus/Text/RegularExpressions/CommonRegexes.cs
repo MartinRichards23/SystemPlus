@@ -22,7 +22,7 @@ namespace SystemPlus.Text.RegularExpressions
         /// <summary>
         /// Matches non numeric characters
         /// </summary>
-        public static Regex NonNumeric { get; } = new Regex(@"[^\d]", RegexOptions.Compiled);
+        public static Regex NonNumeric { get; } = new Regex(@"[^\d\.,]", RegexOptions.Compiled);
 
         /// <summary>
         /// Matches a-z upper and lower case

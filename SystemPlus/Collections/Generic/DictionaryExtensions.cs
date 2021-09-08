@@ -70,6 +70,27 @@ namespace SystemPlus.Collections.Generic
         }
 
         /// <summary>
+        /// Gets string value parsed as a double
+        /// </summary>
+        public static bool TryGetDouble<TKey>(this IDictionary<TKey, string> list, TKey key, out double value)
+        {
+            if (list != null)
+            {
+                if (list.TryGetValue(key, out string v))
+                {
+                    if (double.TryParse(v, out double result))
+                    {
+                        value = result;
+                        return true;
+                    }
+                }
+            }
+
+            value = default;
+            return false;
+        }
+
+        /// <summary>
         /// Removes a values and returns it, otherwise returns default value
         /// </summary>
         [return: MaybeNull]

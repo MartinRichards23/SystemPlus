@@ -28,6 +28,48 @@ namespace SystemPlus.Collections.Generic
         }
 
         /// <summary>
+        /// Gets string value parsed as an enum
+        /// </summary>
+        public static bool TryGetEnum<TKey, TEnum>(this IDictionary<TKey, string> list, TKey key, out TEnum value) where TEnum : struct
+        {
+            if (list != null)
+            {
+                if (list.TryGetValue(key, out string? v))
+                {
+                    if (Enum.TryParse(v, out TEnum result))
+                    {
+                        value = result;
+                        return true;
+                    }
+                }
+            }
+
+            value = default;
+            return false;
+        }
+
+        /// <summary>
+        /// Gets string value parsed as an int
+        /// </summary>
+        public static bool TryGetInt<TKey>(this IDictionary<TKey, string> list, TKey key, out int value)
+        {
+            if (list != null)
+            {
+                if (list.TryGetValue(key, out string? v))
+                {
+                    if (int.TryParse(v, out int result))
+                    {
+                        value = result;
+                        return true;
+                    }
+                }
+            }
+
+            value = default;
+            return false;
+        }
+
+        /// <summary>
         /// Removes a values and returns it, otherwise returns default value
         /// </summary>
         [return: MaybeNull]

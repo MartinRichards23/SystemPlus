@@ -15,13 +15,13 @@ namespace SystemPlus.Collections.Generic
         [return: MaybeNull]
         public static TValue TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue defaultValue = default) where TKey : notnull
         {
-            if (list == null)
-                throw new ArgumentNullException(nameof(list));
-
-            if (list.ContainsKey(key))
+            if (list != null)
             {
-                TValue value = list[key];
-                return value;
+                if (list.ContainsKey(key))
+                {
+                    TValue value = list[key];
+                    return value;
+                }
             }
 
             return defaultValue;
@@ -33,14 +33,14 @@ namespace SystemPlus.Collections.Generic
         [return: MaybeNull]
         public static TValue TryTakeValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key) where TKey : notnull
         {
-            if (list == null)
-                throw new ArgumentNullException(nameof(list));
-
-            if (list.ContainsKey(key))
+            if (list != null)
             {
-                TValue value = list[key];
-                list.Remove(key);
-                return value;
+                if (list.ContainsKey(key))
+                {
+                    TValue value = list[key];
+                    list.Remove(key);
+                    return value;
+                }
             }
 
             return default;
@@ -52,7 +52,7 @@ namespace SystemPlus.Collections.Generic
         public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue item) where TKey : notnull
         {
             if (list == null)
-                throw new ArgumentNullException(nameof(list));
+                return false;
 
             if (list.ContainsKey(key))
                 return false;

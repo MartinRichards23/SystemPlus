@@ -10,8 +10,8 @@ namespace SystemPlus.Collections.Concurrent
 {
     public class ConcurrentKeyedCollection<T> : IProducerConsumerCollection<T>, ICollection<T> where T : IKeyed
     {
-        readonly object key = new object();
-        readonly KeyedCollection<T> items = new KeyedCollection<T>();
+        readonly object key = new();
+        readonly KeyedCollection<T> items = new();
 
         public bool TryAdd(T item)
         {

@@ -534,13 +534,12 @@ namespace SystemPlus.Web
 
     internal static class DictionaryExtensions
     {
-        [return: MaybeNull]
-        public static TValue Find<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) where TKey : notnull
+        public static TValue? Find<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) where TKey : notnull
         {
             if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
-            return dictionary.TryGetValue(key, out TValue result) ? result : default;
+            return dictionary.TryGetValue(key, out TValue? result) ? result : default;
         }
     }
 

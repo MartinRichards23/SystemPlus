@@ -47,7 +47,7 @@ namespace SystemPlus.Web.Logging
             return logLevel >= LogLevel.Error;
         }
 
-        public async void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        public async void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception, string> formatter)
         {
             if (logLevel >= LogLevel.Error && exception != null)
             {

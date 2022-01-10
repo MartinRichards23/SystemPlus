@@ -26,16 +26,9 @@ namespace SystemPlus.Security
         public static string CreateToken(int size)
         {
             char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
-            byte[] data = new byte[1];
+            byte[] data = RandomNumberGenerator.GetBytes(size);
 
-            using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
-            {
-                crypto.GetNonZeroBytes(data);
-                data = new byte[size];
-                crypto.GetNonZeroBytes(data);
-            }
-
-            StringBuilder result = new StringBuilder(size);
+            StringBuilder result = new(size);
             foreach (byte b in data)
             {
                 result.Append(chars[b % (chars.Length)]);
@@ -51,10 +44,7 @@ namespace SystemPlus.Security
         /// <returns>Byte array of random salt data</returns>
         public static byte[] GenerateRandomSalt(int length)
         {
-            byte[] salt = new byte[length];
-
-            using RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider();
-            crypto.GetNonZeroBytes(salt);
+            byte[] salt = RandomNumberGenerator.GetBytes(length);
 
             return salt;
         }
@@ -64,10 +54,8 @@ namespace SystemPlus.Security
         /// </summary>
         public static byte[] CreateSha256Hash(byte[] data, byte[] salt)
         {
-            if (data == null)
-                throw new ArgumentNullException(nameof(data));
-            if (salt == null)
-                throw new ArgumentNullException(nameof(salt));
+            ArgumentNullException.ThrowIfNull(data);
+            ArgumentNullException.ThrowIfNull(salt);
 
             byte[] combinedBytes = new byte[data.Length + salt.Length];
 
@@ -75,12 +63,13 @@ namespace SystemPlus.Security
             {
                 combinedBytes[i] = data[i];
             }
+
             for (int i = 0; i < salt.Length; i++)
             {
                 combinedBytes[data.Length + i] = salt[i];
             }
 
-            using HashAlgorithm algorithm = new SHA256Managed();
+            using HashAlgorithm algorithm = SHA256.Create();
 
             return algorithm.ComputeHash(combinedBytes);
         }

@@ -122,7 +122,6 @@ namespace SystemPlus.Windows.Controls
             return val;
         }
 
-        [SuppressMessage("Naming", "CA1721:Property names should not match get methods")]
         public double? Value
         {
             get { return (double?)GetValue(ValueProperty); }

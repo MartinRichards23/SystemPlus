@@ -2,3 +2,6 @@
 
 # IDE0040: Add accessibility modifiers
 dotnet_style_require_accessibility_modifiers = for_non_interface_members:none
+
+[*.cs]
+csharp_style_namespace_declarations=block_scoped:error

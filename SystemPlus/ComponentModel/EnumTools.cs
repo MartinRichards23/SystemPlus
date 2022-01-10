@@ -50,7 +50,7 @@ namespace SystemPlus.ComponentModel
     {
         public string Name { get; }
         public string? Description { get; }
-
+        
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public InfoAttribute(string name)

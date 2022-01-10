@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -62,7 +61,7 @@ namespace SystemPlus.IO
             };
 
             using XmlReader reader = XmlReader.Create(data, settings);
-            return (T)serializer.Deserialize(reader);
+            return (T?)serializer.Deserialize(reader);
         }
 
         public static T? XmlDeserialize<T>(string data)
@@ -71,7 +70,7 @@ namespace SystemPlus.IO
             using StringReader reader = new StringReader(data);
             using XmlReader xmlReader = XmlReader.Create(reader);
 
-            return (T)serializer.Deserialize(xmlReader);
+            return (T?)serializer.Deserialize(xmlReader);
         }
 
         public static T? XmlDeserialize<T>(FileInfo file)
@@ -127,7 +126,7 @@ namespace SystemPlus.IO
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), knownTypes);
 
             using XmlReader reader = XmlReader.Create(stream, settings);
-            return (T)serializer.ReadObject(reader);
+            return (T?)serializer.ReadObject(reader);
         }
 
         public static T? DataDeserialize<T>(TextReader input, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)
@@ -135,7 +134,7 @@ namespace SystemPlus.IO
             DataContractSerializer serializer = new DataContractSerializer(typeof(T), knownTypes);
 
             using XmlReader reader = XmlReader.Create(input, settings);
-            return (T)serializer.ReadObject(reader);
+            return (T?)serializer.ReadObject(reader);
         }
 
         public static T? DataDeserialize<T>(string data, XmlReaderSettings? settings = null, IEnumerable<Type>? knownTypes = null)

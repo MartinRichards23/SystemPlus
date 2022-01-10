@@ -12,8 +12,7 @@ namespace SystemPlus.Collections.Generic
         /// <summary>
         /// Gets a value, returns default if no key
         /// </summary>
-        [return: MaybeNull]
-        public static TValue TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue defaultValue = default) where TKey : notnull
+        public static TValue? TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue? defaultValue = default) where TKey : notnull
         {
             if (list != null)
             {
@@ -76,7 +75,7 @@ namespace SystemPlus.Collections.Generic
         {
             if (list != null)
             {
-                if (list.TryGetValue(key, out string v))
+                if (list.TryGetValue(key, out string? v))
                 {
                     if (double.TryParse(v, out double result))
                     {
@@ -170,7 +169,7 @@ namespace SystemPlus.Collections.Generic
             if (keyValues == null)
                 throw new ArgumentNullException(nameof(keyValues));
 
-            Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
+            Dictionary<TKey, TValue> dictionary = new();
 
             foreach (KeyValuePair<TKey, TValue> kvp in keyValues)
             {

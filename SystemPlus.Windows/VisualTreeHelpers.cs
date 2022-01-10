@@ -13,8 +13,7 @@ namespace SystemPlus.Windows
         /// </summary>
         /// <typeparam name="T">The type of element to find.</typeparam>
         /// <param name="visual">The parent element.</param>
-        [return: MaybeNull]
-        public static T FindVisualChild<T>(Visual visual) //where T : Visual
+        public static T? FindVisualChild<T>(Visual visual) //where T : Visual
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(visual); i++)
             {
@@ -25,7 +24,7 @@ namespace SystemPlus.Windows
                 if (child is T)
                     return (T)(object)child;
 
-                T descendent = FindVisualChild<T>(child);
+                T? descendent = FindVisualChild<T>(child);
 
                 if (descendent != null)
                     return descendent;
@@ -36,7 +35,7 @@ namespace SystemPlus.Windows
 
         public static T? FindVisualParent<T>(DependencyObject child) where T : Visual
         {
-            while ((child != null) && !(child is T))
+            while ((child != null) && child is not T)
             {
                 child = VisualTreeHelper.GetParent(child);
             }
@@ -73,7 +72,7 @@ namespace SystemPlus.Windows
 
             while (current != null)
             {
-                T data = GetDataContext<T>(current);
+                T? data = GetDataContext<T>(current);
                 if (data != null)
                     return data;
 
@@ -217,8 +216,7 @@ namespace SystemPlus.Windows
         /// <summary>
         /// Returns typed datacontext from "sender" object
         /// </summary>
-        [return: MaybeNull]
-        public static T GetDataContext<T>(object sender)
+        public static T? GetDataContext<T>(object sender)
         {
             if (sender is FrameworkElement fe && fe.DataContext is T t)
                 return t;

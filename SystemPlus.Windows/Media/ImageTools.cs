@@ -168,7 +168,7 @@ namespace SystemPlus.Windows.Media
             int actualWidth = (int)target.ActualWidth;
             int actualHeight = (int)target.ActualHeight;
 
-            RenderTargetBitmap renderBitmap = new RenderTargetBitmap(actualWidth, actualHeight, 96d, 96d, PixelFormats.Default);
+            RenderTargetBitmap renderBitmap = new(actualWidth, actualHeight, 96d, 96d, PixelFormats.Default);
 
             renderBitmap.Render(target);
             return renderBitmap;

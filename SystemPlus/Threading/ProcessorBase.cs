@@ -165,7 +165,7 @@ namespace SystemPlus.Threading
 
         void DoProcessing()
         {
-            while (GetNextItem(out T item))
+            while (GetNextItem(out T? item))
             {
                 if (CancelToken.IsCancellationRequested)
                     break;
@@ -259,7 +259,7 @@ namespace SystemPlus.Threading
         /// </summary>
         public void Clear()
         {
-            while (items.TryTake(out T item))
+            while (items.TryTake(out T? item))
             {
                 OnItemFinished(item);
             }

@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace SystemPlus.Web.Google
 {
@@ -11,19 +12,19 @@ namespace SystemPlus.Web.Google
     public class ReCatchpa
     {
         readonly string privateKey;
+        readonly HttpClient client = new HttpClient();
 
         public ReCatchpa(string privateKey)
         {
             this.privateKey = privateKey;
         }
 
-        public bool Validate(string response)
+        public async Task<bool> Validate(string response)
         {
             if (string.IsNullOrWhiteSpace(response))
                 return false;
 
-            using WebClient client = new WebClient();
-            string googleReply = client.DownloadString($"https://www.google.com/recaptcha/api/siteverify?secret={privateKey}&response={response}");
+            string googleReply = await client.GetStringAsync($"https://www.google.com/recaptcha/api/siteverify?secret={privateKey}&response={response}");
 
             ReCaptchaClass? captchaResponse = JsonSerializer.Deserialize<ReCaptchaClass>(googleReply);
 

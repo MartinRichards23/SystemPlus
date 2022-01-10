@@ -32,33 +32,33 @@ namespace SystemPlus.Windows
 
         static void HideCloseButtonChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is Window window))
-                return;
-
-            bool hideCloseButton = (bool)e.NewValue;
-            if (hideCloseButton && !GetIsHiddenCloseButton(window))
+            if (d is Window window)
             {
-                if (!window.IsLoaded)
+                bool hideCloseButton = (bool)e.NewValue;
+                if (hideCloseButton && !GetIsHiddenCloseButton(window))
                 {
-                    window.Loaded += LoadedDelegate;
+                    if (!window.IsLoaded)
+                    {
+                        window.Loaded += LoadedDelegate;
+                    }
+                    else
+                    {
+                        HideCloseButton(window);
+                    }
+                    SetIsHiddenCloseButton(window, true);
                 }
-                else
+                else if (!hideCloseButton && GetIsHiddenCloseButton(window))
                 {
-                    HideCloseButton(window);
+                    if (!window.IsLoaded)
+                    {
+                        window.Loaded -= LoadedDelegate;
+                    }
+                    else
+                    {
+                        ShowCloseButton(window);
+                    }
+                    SetIsHiddenCloseButton(window, false);
                 }
-                SetIsHiddenCloseButton(window, true);
-            }
-            else if (!hideCloseButton && GetIsHiddenCloseButton(window))
-            {
-                if (!window.IsLoaded)
-                {
-                    window.Loaded -= LoadedDelegate;
-                }
-                else
-                {
-                    ShowCloseButton(window);
-                }
-                SetIsHiddenCloseButton(window, false);
             }
         }
 

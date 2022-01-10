@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -124,10 +123,8 @@ namespace SystemPlus.Net
 
         public static void WriteRequestStream(this WebRequest request, string content, Encoding encoding)
         {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-            if (encoding == null)
-                throw new ArgumentNullException(nameof(encoding));
+            ArgumentNullException.ThrowIfNull(request);
+            ArgumentNullException.ThrowIfNull(encoding);
 
             byte[] bytes = encoding.GetBytes(content);
 
@@ -145,10 +142,13 @@ namespace SystemPlus.Net
         /// <returns></returns>
         public static string GetResponseContent(this WebException exception)
         {
-            if (exception == null)
-                throw new ArgumentNullException(nameof(exception));
+            ArgumentNullException.ThrowIfNull(exception);
 
             using WebResponse? response = exception.Response;
+
+            if (response == null)
+                throw new Exception("Response was null");
+
             using Stream responseStream = response.GetResponseStream();
             using StreamReader sr = new StreamReader(responseStream, Encoding.ASCII);
 
@@ -160,8 +160,7 @@ namespace SystemPlus.Net
         /// </summary>
         public static string ReadWebResponse(this WebResponse response, int maxLength = int.MaxValue)
         {
-            if (response == null)
-                throw new ArgumentNullException(nameof(response));
+            ArgumentNullException.ThrowIfNull(response);
 
             using MemoryStream rawdata = new MemoryStream();
             using (Stream rs = response.GetResponseStream())
@@ -183,8 +182,7 @@ namespace SystemPlus.Net
 
         public static string? GetCharSet(WebHeaderCollection headers)
         {
-            if (headers == null)
-                throw new ArgumentNullException(nameof(headers));
+            ArgumentNullException.ThrowIfNull(headers);
 
             string? charset = null;
             string? ctype = headers["content-type"];

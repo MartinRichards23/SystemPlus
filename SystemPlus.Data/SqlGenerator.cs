@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using SystemPlus.Collections.Generic;
@@ -175,8 +174,10 @@ namespace SystemPlus.Data
 
             string? name = rdr.GetValue<string>("Name");
 
-            SqlTable table = new SqlTable(name)
-            { };
+            if (name == null)
+                throw new Exception("Table name was null");
+
+            SqlTable table = new SqlTable(name);
 
             rdr.NextResult();
             while (rdr.Read())
@@ -199,7 +200,7 @@ namespace SystemPlus.Data
 
                 if (!string.IsNullOrWhiteSpace(identityCol))
                 {
-                    SqlColumn col = table.Columns.FirstOrDefault(c => c.Name == identityCol);
+                    SqlColumn? col = table.Columns.FirstOrDefault(c => c.Name == identityCol);
 
                     if (col != null)
                         col.IsIdentity = true;
@@ -221,7 +222,7 @@ namespace SystemPlus.Data
                     string? indexDescription = rdr.GetValue<string>("index_description");
                     string? indexKeys = rdr.GetValue<string>("index_keys");
 
-                    if (indexDescription.Contains("primary key", StringComparison.InvariantCultureIgnoreCase))
+                    if (indexDescription != null && indexKeys != null && indexDescription.Contains("primary key", StringComparison.InvariantCultureIgnoreCase))
                     {
                         string[] colNames = indexKeys.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
 

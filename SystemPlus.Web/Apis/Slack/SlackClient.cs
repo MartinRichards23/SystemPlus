@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -9,18 +9,16 @@ using SystemPlus.Net;
 
 namespace SystemPlus.Web.Slack
 {
-    // https://api.slack.com/incoming-webhooks
-    // https://api.slack.com/docs/oauth
-    // https://api.slack.com/docs/slack-button
-    [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public class SlackClient
     {
+        readonly HttpClient client = new HttpClient();
+
         public SlackClient()
         {
 
         }
 
-        public OauthReponse OauthAccess(string clientId, string clientSecret, string code)
+        public async Task<OauthReponse> OauthAccess(string clientId, string clientSecret, string code)
         {
             UrlQueryString url = new UrlQueryString("https://slack.com/api/oauth.access");
             url.Add("client_id", clientId);
@@ -29,19 +27,12 @@ namespace SystemPlus.Web.Slack
 
             try
             {
-                HttpWebRequest request = request = (HttpWebRequest)WebRequest.Create(url.ToUri());
-                request.Method = "GET";
+                string response = await client.GetStringAsync(url);
 
-                using HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                using Stream receiveStream = response.GetFullResponseStream();
-                using StreamReader sr = new StreamReader(receiveStream);
-
-                string responseMessage = sr.ReadToEnd();
-
-                OauthReponse? oauthResponse = JsonSerializer.Deserialize<OauthReponse>(responseMessage);
+                OauthReponse? oauthResponse = JsonSerializer.Deserialize<OauthReponse>(response);
 
                 if (oauthResponse == null || !oauthResponse.Ok)
-                    throw new WebException("Slack error: " + responseMessage);
+                    throw new WebException("Slack error: " + response);
 
                 return oauthResponse;
             }
@@ -58,18 +49,9 @@ namespace SystemPlus.Web.Slack
 
             try
             {
-                HttpWebRequest request = request = (HttpWebRequest)WebRequest.Create(urlWithAccessToken);
-                request.Method = "POST";
-                request.KeepAlive = true;
-                request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-                request.ContentType = "application/json; charset=utf-8";
-                request.WriteRequestStream(payloadJson, Encoding.UTF8);
-
-                using HttpWebResponse response = await request.GetHttpResponseAsync();
-                using Stream receiveStream = response.GetFullResponseStream();
-                using StreamReader sr = new StreamReader(receiveStream);
-
-                string responseMessage = await sr.ReadToEndAsync();
+                StringContent content = new StringContent(payloadJson, Encoding.UTF8, "application/json");
+                var responsed = await client.PostAsync(urlWithAccessToken, content);
+                string responseMessage = await responsed.Content.ReadAsStringAsync();
 
                 if (responseMessage != "ok")
                     throw new WebException("Slack error: " + responseMessage);

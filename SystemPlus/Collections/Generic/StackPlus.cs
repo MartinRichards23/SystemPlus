@@ -20,12 +20,12 @@ namespace SystemPlus.Collections.Generic
         public T? Pop()
         {
             if (items.Count > 0)
-            { 
+            {
                 int index = items.Count - 1;
                 return Remove(index);
             }
 
-            return default(T);
+            return default;
         }
 
         public T Remove(int index)
@@ -38,7 +38,7 @@ namespace SystemPlus.Collections.Generic
 
         public void RemoveOldest(int maxSize)
         {
-            while(items.Count > maxSize)
+            while (items.Count > maxSize)
             {
                 items.RemoveAt(0);
             }

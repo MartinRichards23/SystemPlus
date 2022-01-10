@@ -13,7 +13,7 @@ namespace SystemPlus.Collections.Concurrent
 
             List<T> items = new List<T>();
 
-            while (queue.TryDequeue(out T item))
+            while (queue.TryDequeue(out T? item))
             {
                 items.Add(item);
             }

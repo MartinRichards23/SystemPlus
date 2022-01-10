@@ -95,7 +95,7 @@ namespace SystemPlus.ComponentModel.Logging
     /// </summary>
     public class OutputLogger : LoggerBase
     {
-        public override void Write(MessageLevel level, string message, Exception error)
+        public override void Write(MessageLevel level, string? message, Exception? error)
         {
             string text = string.Empty;
 

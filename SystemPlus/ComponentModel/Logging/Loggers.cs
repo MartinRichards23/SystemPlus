@@ -91,6 +91,25 @@ namespace SystemPlus.ComponentModel.Logging
     }
 
     /// <summary>
+    /// Logs data to the debugger output
+    /// </summary>
+    public class OutputLogger : LoggerBase
+    {
+        public override void Write(MessageLevel level, string message, Exception error)
+        {
+            string text = string.Empty;
+
+            if (error != null)
+                text = error.ToString(true);
+
+            if (message != null)
+                text = message + "\r\n\r\n" + text;
+
+            Debug.WriteLine(text);
+        }
+    }
+
+    /// <summary>
     /// Logs data to the trace output
     /// </summary>
     public class TraceLogger : LoggerBase

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Text;
+﻿using System.Globalization;
 using System.Threading;
 
 namespace SystemPlus.ComponentModel.Logging

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SystemPlus.Collections.Generic
+﻿namespace SystemPlus.Collections.Generic
 {
     /// <summary>
     /// Iterates through a list, going back to the start when at the end

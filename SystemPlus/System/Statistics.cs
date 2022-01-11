@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SystemPlus
+﻿namespace SystemPlus
 {
     /// <summary>
     /// Various statistics helpers

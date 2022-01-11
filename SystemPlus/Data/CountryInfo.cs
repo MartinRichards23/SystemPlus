@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SystemPlus.Data
+﻿namespace SystemPlus.Data
 {
     /// <summary>
     /// Provides a list of all countries with the ISO 3166 code

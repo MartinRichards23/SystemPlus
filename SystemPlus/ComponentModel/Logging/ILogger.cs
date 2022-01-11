@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SystemPlus.ComponentModel.Logging
+﻿namespace SystemPlus.ComponentModel.Logging
 {
     public interface ILogger
     {

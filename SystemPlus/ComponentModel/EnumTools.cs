@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Reflection;
 
 namespace SystemPlus.ComponentModel
@@ -50,7 +48,7 @@ namespace SystemPlus.ComponentModel
     {
         public string Name { get; }
         public string? Description { get; }
-        
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public InfoAttribute(string name)

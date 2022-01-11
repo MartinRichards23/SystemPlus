@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SystemPlus.ComponentModel
+﻿namespace SystemPlus.ComponentModel
 {
     public static class ComponentModelExtensions
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SystemPlus.Collections.Generic
+﻿namespace SystemPlus.Collections.Generic
 {
     /// <summary>
     /// Extensions methods for sorting collections

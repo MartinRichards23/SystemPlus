@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using SystemPlus.Collections.ObjectModel;
 
 namespace SystemPlus.ComponentModel.Ini

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SystemPlus.Collections.ObjectModel
+﻿namespace SystemPlus.Collections.ObjectModel
 {
     [Serializable]
     public class KeyedCollection<TItem> : KeyedCollectionPlus<string, TItem> where TItem : IKeyed

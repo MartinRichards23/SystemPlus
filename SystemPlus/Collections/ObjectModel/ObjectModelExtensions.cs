@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SystemPlus.Collections.ObjectModel
+﻿namespace SystemPlus.Collections.ObjectModel
 {
     public static class ObjectModelExtensions
     {

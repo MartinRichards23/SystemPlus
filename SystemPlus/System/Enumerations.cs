@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SystemPlus
+﻿namespace SystemPlus
 {
     /// <summary>
     /// Months of the year

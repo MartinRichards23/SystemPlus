@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SystemPlus.Collections.Generic
+﻿namespace SystemPlus.Collections.Generic
 {
     /// <summary>
     /// Collection utilities

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SystemPlus
+﻿namespace SystemPlus
 {
     /// <summary>
     /// Tools for dealing with various units

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-namespace SystemPlus
+﻿namespace SystemPlus
 {
     /// <summary>
     /// Extension methods for Random

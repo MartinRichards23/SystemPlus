@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
 using SystemPlus.IO;
 using SystemPlus.Reflection;
 using SystemPlus.Text;

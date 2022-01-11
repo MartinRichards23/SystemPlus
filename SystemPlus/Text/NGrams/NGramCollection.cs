@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SystemPlus.Text.NGrams
+﻿namespace SystemPlus.Text.NGrams
 {
     public class NGramCollection
     {

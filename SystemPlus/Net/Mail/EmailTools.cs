@@ -42,7 +42,7 @@ namespace SystemPlus.Net.Mail
             if (string.IsNullOrWhiteSpace(email))
                 return false;
 
-            Regex emailRegex = new Regex(@"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,64}$", RegexOptions.IgnoreCase);
+            Regex emailRegex = new Regex(@"^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,64}$", RegexOptions.IgnoreCase);
             return emailRegex.IsMatch(email);
         }
     }

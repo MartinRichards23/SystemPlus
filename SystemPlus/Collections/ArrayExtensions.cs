@@ -12,7 +12,7 @@
 
         public static T GetValue<T>(this T[] array, int index, T defaultVal)
         {
-            if (index >= array.Length)
+            if (index < 0 || index >= array.Length)
                 return defaultVal;
 
             return array[index];

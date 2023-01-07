@@ -3,9 +3,7 @@ using SystemPlus.Collections.ObjectModel;
 
 namespace SystemPlus.ComponentModel.Ini
 {
-    /// <summary>
-    /// Represents a section from an ini file
-    /// </summary>
+
     public class IniSection : IKeyed, IEnumerable<IniValue>
     {
         public string Key { get; }
@@ -24,10 +22,23 @@ namespace SystemPlus.ComponentModel.Ini
             return values.Contains(normalKey);
         }
 
-        public IniValue? GetValue(string key)
+        public IniValue GetValue(string key)
         {
             string normalKey = IniReader.NormaliseKey(key);
             return values.TryGet(normalKey);
+        }
+
+        public IniValue GetOrCreateValue(string key)
+        {
+            IniValue iniValue = GetValue(key);
+
+            if (iniValue == null)
+            {
+                iniValue = new IniValue(key);
+                values.Add(iniValue);
+            }
+
+            return iniValue;
         }
 
         public void AddValue(IniValue item)
@@ -37,21 +48,8 @@ namespace SystemPlus.ComponentModel.Ini
 
         public void AddValue(string key, object value)
         {
-            IniValue? iniValue = GetValue(key);
-
-            if (iniValue != null)
-            {
-                iniValue.Value = value?.ToString() ?? string.Empty;
-            }
-            else
-            {
-                iniValue = new IniValue(key)
-                {
-                    Value = value?.ToString() ?? string.Empty,
-                };
-
-                values.Add(iniValue);
-            }
+            IniValue iniValue = GetOrCreateValue(key);
+            iniValue.Value = value?.ToString();
         }
 
         public override string ToString()
@@ -69,4 +67,5 @@ namespace SystemPlus.ComponentModel.Ini
             return values.GetEnumerator();
         }
     }
+
 }

@@ -14,9 +14,9 @@ namespace SystemPlus.ComponentModel.Ini
 
         public string Name { get; }
         public string Key { get; }
-        public string Value { get; set; }
+        public string? Value { get; set; }
 
-        public void SetValue(string value)
+        public void SetValue(string? value)
         {
             Value = value;
         }
@@ -65,7 +65,7 @@ namespace SystemPlus.ComponentModel.Ini
 
         public string GetString(string defaultValue)
         {
-            return Value;
+            return Value ?? defaultValue;
         }
 
         public bool GetBool(bool defaultValue)
@@ -109,7 +109,7 @@ namespace SystemPlus.ComponentModel.Ini
                 if (string.IsNullOrWhiteSpace(Value))
                     return defaultValue;
 
-                return JsonSerializer.Deserialize<T>(Value);
+                return JsonSerializer.Deserialize<T>(Value) ?? defaultValue;
             }
             catch
             {

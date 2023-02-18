@@ -188,7 +188,7 @@ namespace SystemPlus.Data
                 int length = rdr.GetValue<int>("Length");
                 bool nullable = rdr.GetValue<string>("Nullable") == "yes";
 
-                SqlColumn col = new SqlColumn(colName, dataType, computed, length, nullable);
+                SqlColumn col = new SqlColumn(colName ?? string.Empty, dataType, computed, length, nullable);
 
                 table.Columns.Add(col);
             }

@@ -1,4 +1,4 @@
-﻿namespace SystemPlus.Threading
+﻿namespace TopHatch.Concepts
 {
     public static class RetryHelper
     {
@@ -8,7 +8,7 @@
         /// <param name="maxAttempts">Max number of times to try</param>
         /// <param name="delay">Delay between each attempt</param>
         /// <param name="operation">The task to run</param>
-        public static async Task<T> RetryOnException<T>(int maxAttempts, TimeSpan delay, Func<Task<T>> operation)
+        public static async Task<T> RetryOnException<T>(int maxAttempts, TimeSpan delay, bool backOff, Func<Task<T>> operation)
         {
             if (operation == null)
                 throw new ArgumentNullException(nameof(operation));
@@ -29,6 +29,9 @@
 
                     // delay before next attempt
                     await Task.Delay(delay);
+
+                    if (backOff)
+                        delay *= 2;
                 }
             } while (true);
         }
@@ -39,7 +42,7 @@
         /// <param name="maxAttempts">Max number of times to try</param>
         /// <param name="delay">Delay between each attempt</param>
         /// <param name="operation">The task to run</param>
-        public static async Task RetryOnException(int maxAttempts, TimeSpan delay, Func<Task> operation)
+        public static async Task RetryOnException(int maxAttempts, TimeSpan delay, bool backOff, Func<Task> operation)
         {
             if (operation == null)
                 throw new ArgumentNullException(nameof(operation));
@@ -61,6 +64,9 @@
 
                     // delay before next attempt
                     await Task.Delay(delay);
+
+                    if (backOff)
+                        delay *= 2;
                 }
             } while (true);
         }

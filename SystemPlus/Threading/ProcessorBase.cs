@@ -113,11 +113,6 @@ namespace SystemPlus.Threading
         protected CancellationToken CancelToken { get; }
 
         /// <summary>
-        /// Object for syncronising worker threads
-        /// </summary>
-        protected object SyncRoot { get; } = new object();
-
-        /// <summary>
         /// Duration a thread will wait before terminating
         /// </summary>
         public TimeSpan ThreadWait

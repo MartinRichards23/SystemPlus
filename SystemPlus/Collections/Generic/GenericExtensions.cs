@@ -187,6 +187,14 @@ namespace SystemPlus.Collections.Generic
             }
         }
 
+        public static T GetValue<T>(this IList<T> array, int index, T defaultVal)
+        {
+            if (index < 0 || index >= array.Count)
+                return defaultVal;
+
+            return array[index];
+        }
+
         /// <summary>
         /// Removes a collection of items from the list
         /// </summary>

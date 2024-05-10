@@ -111,5 +111,20 @@ namespace SystemPlus
 
             return default;
         }
+
+        public static void ThrowIfNull(this object argument, string argumentName)
+        {
+            if (argument == null)
+                throw new ArgumentNullException(argumentName);
+        }
+
+        public static void ThrowIfNullOrEmpty(this string argument, string argumentName)
+        {
+            if (argument == null)
+                throw new ArgumentNullException(argumentName);
+
+            if (string.IsNullOrEmpty(argument))
+                throw new ArgumentException("Parameter was empty", argumentName);
+        }
     }
 }

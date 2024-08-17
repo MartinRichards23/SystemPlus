@@ -1,7 +1,7 @@
 ﻿namespace SystemPlus.Collections.ObjectModel
 {
     [Serializable]
-    public class KeyValueCollection<TKey, TValue> : KeyedCollectionPlus<TKey, KeyValuePair<TKey, TValue>>
+    public class KeyValueCollection<TKey, TValue> : KeyedCollectionPlus<TKey, KeyValuePair<TKey, TValue>> where TKey : notnull
     {
         protected override TKey GetKeyForItem(KeyValuePair<TKey, TValue> item)
         {

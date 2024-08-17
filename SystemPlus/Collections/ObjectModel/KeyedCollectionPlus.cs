@@ -112,7 +112,7 @@ namespace SystemPlus.Collections.ObjectModel
             return default;
         }
 
-        public bool TryGet(TKey key, out TItem value)
+        public bool TryGet(TKey key, [MaybeNullWhen(false)] out TItem value)
         {
             if (Contains(key))
             {

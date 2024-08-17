@@ -1,6 +1,15 @@
 ﻿namespace SystemPlus.Collections.ObjectModel
 {
     [Serializable]
+    public class KeyValueCollection<TKey, TValue> : KeyedCollectionPlus<TKey, KeyValuePair<TKey, TValue>>
+    {
+        protected override TKey GetKeyForItem(KeyValuePair<TKey, TValue> item)
+        {
+            return item.Key;
+        }
+    }
+
+    [Serializable]
     public class KeyedCollection<TItem> : KeyedCollectionPlus<string, TItem> where TItem : IKeyed
     {
         protected override string GetKeyForItem(TItem item)

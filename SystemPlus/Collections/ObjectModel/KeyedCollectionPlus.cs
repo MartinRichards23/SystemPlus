@@ -112,6 +112,18 @@ namespace SystemPlus.Collections.ObjectModel
             return default;
         }
 
+        public bool TryGet(TKey key, out TItem value)
+        {
+            if (Contains(key))
+            {
+                value = this[key];
+                return true;
+            }
+
+            value = default;
+            return false;
+        }
+
         /// <summary>
         /// Attempts to take the first item
         /// </summary>

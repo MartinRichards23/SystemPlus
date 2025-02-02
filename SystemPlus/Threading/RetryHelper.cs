@@ -1,4 +1,6 @@
-﻿namespace TopHatch.Concepts
+﻿using System.Threading;
+
+namespace SystemPlus.Threading
 {
     public static class RetryHelper
     {
@@ -8,7 +10,7 @@
         /// <param name="maxAttempts">Max number of times to try</param>
         /// <param name="delay">Delay between each attempt</param>
         /// <param name="operation">The task to run</param>
-        public static async Task<T> RetryOnException<T>(int maxAttempts, TimeSpan delay, bool backOff, Func<Task<T>> operation)
+        public static async Task<T> RetryOnException<T>(int maxAttempts, TimeSpan delay, bool backOff, CancellationToken cancelToken, Func<Task<T>> operation)
         {
             if (operation == null)
                 throw new ArgumentNullException(nameof(operation));
@@ -19,8 +21,14 @@
             {
                 try
                 {
+                    cancelToken.ThrowIfCancellationRequested();
+
                     attempts++;
                     return await operation();
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
                 }
                 catch
                 {
@@ -42,7 +50,7 @@
         /// <param name="maxAttempts">Max number of times to try</param>
         /// <param name="delay">Delay between each attempt</param>
         /// <param name="operation">The task to run</param>
-        public static async Task RetryOnException(int maxAttempts, TimeSpan delay, bool backOff, Func<Task> operation)
+        public static async Task RetryOnException(int maxAttempts, TimeSpan delay, bool backOff, CancellationToken cancelToken, Func<Task> operation)
         {
             if (operation == null)
                 throw new ArgumentNullException(nameof(operation));
@@ -53,9 +61,15 @@
             {
                 try
                 {
+                    cancelToken.ThrowIfCancellationRequested();
+
                     attempts++;
                     await operation();
                     return;
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
                 }
                 catch
                 {

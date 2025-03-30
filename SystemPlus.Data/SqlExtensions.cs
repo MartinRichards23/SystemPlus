@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
@@ -254,23 +254,6 @@ namespace SystemPlus.Data
             };
 
             return target.Add(param);
-        }
-
-        public static SqlParameter? AddRecords(this SqlParameterCollection target, string parameterName, SqlRecordCollection value)
-        {
-            if (target == null)
-                throw new ArgumentNullException(nameof(target));
-
-            if (value != null && value.Count > 0)
-            {
-                SqlParameter param = new SqlParameter(parameterName, SqlDbType.Structured)
-                {
-                    Value = value
-                };
-                return target.Add(param);
-            }
-
-            return null;
         }
 
         /// <summary>

@@ -10,11 +10,8 @@ namespace SystemPlus.Threading
         /// <param name="maxAttempts">Max number of times to try</param>
         /// <param name="delay">Delay between each attempt</param>
         /// <param name="operation">The task to run</param>
-        public static async Task<T> RetryOnException<T>(int maxAttempts, TimeSpan delay, bool backOff, CancellationToken cancelToken, Func<Task<T>> operation)
+        public static async Task<T> RetryOnException<T>(int maxAttempts, TimeSpan delay, bool backOff, Func<Task<T>> operation, CancellationToken cancelToken)
         {
-            if (operation == null)
-                throw new ArgumentNullException(nameof(operation));
-
             int attempts = 0;
 
             do
@@ -36,7 +33,7 @@ namespace SystemPlus.Threading
                         throw;
 
                     // delay before next attempt
-                    await Task.Delay(delay);
+                    await Task.Delay(delay, cancelToken);
 
                     if (backOff)
                         delay *= 2;
@@ -50,11 +47,8 @@ namespace SystemPlus.Threading
         /// <param name="maxAttempts">Max number of times to try</param>
         /// <param name="delay">Delay between each attempt</param>
         /// <param name="operation">The task to run</param>
-        public static async Task RetryOnException(int maxAttempts, TimeSpan delay, bool backOff, CancellationToken cancelToken, Func<Task> operation)
+        public static async Task RetryOnException(int maxAttempts, TimeSpan delay, bool backOff, Func<Task> operation, CancellationToken cancelToken)
         {
-            if (operation == null)
-                throw new ArgumentNullException(nameof(operation));
-
             int attempts = 0;
 
             do
@@ -77,7 +71,7 @@ namespace SystemPlus.Threading
                         throw;
 
                     // delay before next attempt
-                    await Task.Delay(delay);
+                    await Task.Delay(delay, cancelToken);
 
                     if (backOff)
                         delay *= 2;

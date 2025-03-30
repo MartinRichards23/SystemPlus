@@ -43,19 +43,5 @@ namespace SystemPlus.Xml
 
             return attribute.Value;
         }
-
-        public static T? GetAttributeValue<T>(this XElement element, string name) where T : struct
-        {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-
-            XAttribute? attribute = element.Attribute(name);
-
-            if (attribute == null)
-                return default;
-
-            TypeConverter tc = TypeDescriptor.GetConverter(typeof(T));
-            return (T?)tc.ConvertFrom(attribute.Value);
-        }
     }
 }

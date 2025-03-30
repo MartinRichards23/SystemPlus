@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace SystemPlus.Data
 {

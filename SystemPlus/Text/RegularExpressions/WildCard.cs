@@ -1,12 +1,10 @@
-﻿using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace SystemPlus.Text.RegularExpressions
 {
     /// <summary>
     /// Represents a wildcard
     /// </summary>
-    [Serializable]
     public class WildCard : Regex
     {
         /// <summary>
@@ -23,12 +21,6 @@ namespace SystemPlus.Text.RegularExpressions
         public WildCard(string pattern, RegexOptions options)
             : base(WildcardToRegex(pattern), options)
         {
-        }
-
-        protected WildCard(SerializationInfo serializationInfo, StreamingContext streamingContext)
-            : base(serializationInfo, streamingContext)
-        {
-
         }
 
         #region Static methods

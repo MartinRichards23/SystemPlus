@@ -199,19 +199,6 @@ namespace SystemPlus.IO
         }
 
         /// <summary>
-        /// Folder that the assembly exe is located in
-        /// </summary>
-        public static string? CurrentFolder
-        {
-            get
-            {
-                string? s = Assembly.GetEntryAssembly()?.Location;
-                s = Path.GetDirectoryName(s);
-                return s;
-            }
-        }
-
-        /// <summary>
         /// Enumerates all FileInfos in a directory (including sub directories)
         /// </summary>
         public static IEnumerable<FileInfo> EnumerateAllFiles(string dir)

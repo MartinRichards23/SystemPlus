@@ -84,12 +84,12 @@
         /// <summary>
         /// Returns a random enum value
         /// </summary>
-        public static T NextEnumValue<T>(this Random rand) where T : struct
+        public static T NextEnumValue<T>(this Random rand) where T : struct, Enum
         {
             if (rand == null)
                 throw new ArgumentNullException(nameof(rand));
 
-            Array values = Enum.GetValues(typeof(T));
+            T[] values = Enum.GetValues<T>();
             int index = rand.Next(values.Length);
             object? result = values.GetValue(index);
 

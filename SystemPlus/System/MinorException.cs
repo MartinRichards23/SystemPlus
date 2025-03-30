@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace SystemPlus
+﻿namespace SystemPlus
 {
     /// <summary>
     /// A non fatal exception that can doesn't need to be logged
@@ -19,11 +17,6 @@ namespace SystemPlus
 
         public MinorException(string message, Exception innerException)
             : base(message, innerException)
-        {
-        }
-
-        protected MinorException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         {
         }
     }

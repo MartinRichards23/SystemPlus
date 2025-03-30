@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SystemPlus.Collections.ObjectModel;
+﻿using SystemPlus.Collections.ObjectModel;
 
 namespace SystemPlus.Windows.Collections
 {

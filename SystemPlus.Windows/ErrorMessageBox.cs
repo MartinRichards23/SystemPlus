@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Windows;
-using SystemPlus.Reflection;
 
 namespace SystemPlus.Windows
 {
@@ -44,12 +43,12 @@ namespace SystemPlus.Windows
 
             text = text.Trim();
 
-            Show(text, ReflectionExtensions.ProductName ?? string.Empty);
+            Show(text, string.Empty);
         }
 
         public static void Show(string message)
         {
-            Show(message, ReflectionExtensions.ProductName ?? string.Empty);
+            Show(message, string.Empty);
         }
 
         static void Show(string text, string title)

@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 using SystemPlus.IO;
-using SystemPlus.Reflection;
 using SystemPlus.Text;
 
 namespace SystemPlus.ComponentModel.Logging
@@ -15,25 +14,6 @@ namespace SystemPlus.ComponentModel.Logging
     {
         readonly string filePath;
         readonly object key = new object();
-
-        public FileLogger(string folder)
-        {
-            string? name;
-            Version? version;
-
-            try
-            {
-                name = ReflectionExtensions.ProductName;
-                version = ReflectionExtensions.ProductVersion;
-            }
-            catch
-            {
-                name = ReflectionExtensions.CallerName;
-                version = ReflectionExtensions.CallerVersion;
-            }
-
-            filePath = $"{folder}\\{name} {version} {DateTime.UtcNow:yyyy-MM-dd}.log";
-        }
 
         public FileLogger(string appName, string appVersion, string folder)
         {

@@ -9,7 +9,7 @@ namespace SystemPlus.Net
     {
         #region Fields
 
-        readonly IList<UrlParam> parameters = new List<UrlParam>();
+        readonly List<UrlParam> parameters = new List<UrlParam>();
 
         #endregion
 
@@ -176,7 +176,7 @@ namespace SystemPlus.Net
         /// </summary>
         public static IEnumerable<KeyValuePair<string, string>> ParseKeyValues(string querystring)
         {
-            IList<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>();
+            List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>();
 
             if (string.IsNullOrEmpty(querystring))
                 return values;

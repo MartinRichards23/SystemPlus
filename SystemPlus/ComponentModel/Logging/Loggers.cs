@@ -132,7 +132,7 @@ namespace SystemPlus.ComponentModel.Logging
         readonly StringBuilder buffer = new StringBuilder();
         readonly object key = new object();
 
-        readonly IList<string> addresses = new List<string>();
+        readonly List<string> addresses = new List<string>();
 
         readonly string host;
         readonly string from;

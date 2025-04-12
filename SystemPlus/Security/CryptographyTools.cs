@@ -67,9 +67,7 @@ namespace SystemPlus.Security
                 combinedBytes[data.Length + i] = salt[i];
             }
 
-            using HashAlgorithm algorithm = SHA256.Create();
-
-            return algorithm.ComputeHash(combinedBytes);
+            return SHA256.HashData(combinedBytes);
         }
 
         /// <summary>
@@ -103,8 +101,7 @@ namespace SystemPlus.Security
         /// </summary>
         public static double CheckStrength(string password)
         {
-            if (password == null)
-                throw new ArgumentNullException(nameof(password));
+            ArgumentNullException.ThrowIfNull(password);
 
             double score = 1;
 

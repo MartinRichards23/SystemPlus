@@ -46,18 +46,6 @@ namespace SystemPlus.ComponentModel.Ini
             Value = value?.ToString(CultureInfo.InvariantCulture);
         }
 
-        public void SetJson<T>(T value) where T : class, new()
-        {
-            string? json;
-
-            if (value != null)
-                json = JsonSerializer.Serialize(value);
-            else
-                json = null;
-
-            Value = json;
-        }
-
         public void SetValue(Enum value)
         {
             Value = value.ToString();
@@ -100,21 +88,6 @@ namespace SystemPlus.ComponentModel.Ini
                 return val;
 
             return defaultValue;
-        }
-
-        public T GetJson<T>(T defaultValue) where T : class, new()
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(Value))
-                    return defaultValue;
-
-                return JsonSerializer.Deserialize<T>(Value) ?? defaultValue;
-            }
-            catch
-            {
-                return defaultValue;
-            }
         }
 
         public T GetEnum<T>(T defaultValue) where T : struct

@@ -12,8 +12,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static string Clip(this string value, int max, string ending = "…")
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             if (value.Length <= max)
                 return value;
@@ -26,8 +25,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static bool Contains(this string value, string text, StringComparison comp)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             return value.Contains(text, comp);
         }
@@ -91,8 +89,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static string GetBeginning(this string value, int count)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             if (value.Length > count)
                 value = value.Substring(0, count);
@@ -105,8 +102,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static string GetEnd(this string value, int count)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             if (value.Length > count)
                 value = value.Remove(0, value.Length - count);
@@ -119,8 +115,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static string GetFragmentInclusive(this string value, string after, string before, StringComparison comparisonType)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             int start;
             int end;
@@ -143,8 +138,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static string GetFragment(this string value, string? after, string? before, StringComparison comparisonType)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             int start;
             int end;
@@ -183,8 +177,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static string ReplaceAt(this string value, string replacement, int start, int length)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             string replaced = value.Substring(0, start) + replacement + value[(start + length)..];
             return replaced;
@@ -214,8 +207,7 @@ namespace SystemPlus.Text
 
         public static IEnumerable<string> SplitIntoChunks(this string value, int maxChunkSize)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             for (int i = 0; i < value.Length; i += maxChunkSize)
                 yield return value.Substring(i, Math.Min(maxChunkSize, value.Length - i));
@@ -226,8 +218,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static StringBuilder AppendLine(this StringBuilder value, string format, params object[] args)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
+            ArgumentNullException.ThrowIfNull(value);
 
             string line = string.Format(CultureInfo.InvariantCulture, format, args);
             value.AppendLine(line);
@@ -270,10 +261,8 @@ namespace SystemPlus.Text
 
         public static string ReplaceFirstOccurence(this string input, string search, string replacement)
         {
-            if (input == null)
-                throw new ArgumentNullException(nameof(input));
-            if (search == null)
-                throw new ArgumentNullException(nameof(search));
+            ArgumentNullException.ThrowIfNull(input);
+            ArgumentNullException.ThrowIfNull(search);
 
             int index = input.IndexOf(search, StringComparison.Ordinal);
             return index >= 0

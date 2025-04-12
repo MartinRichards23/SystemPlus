@@ -8,86 +8,6 @@ namespace SystemPlus.Collections.Generic
     public static class DictionaryExtensions
     {
         /// <summary>
-        /// Gets a value, returns default if no key
-        /// </summary>
-        public static TValue? TryGetValue<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue? defaultValue = default) where TKey : notnull
-        {
-            if (list != null)
-            {
-                if (list.ContainsKey(key))
-                {
-                    TValue value = list[key];
-                    return value;
-                }
-            }
-
-            return defaultValue;
-        }
-
-        /// <summary>
-        /// Gets string value parsed as an enum
-        /// </summary>
-        public static bool TryGetEnum<TKey, TEnum>(this IDictionary<TKey, string> list, TKey key, out TEnum value) where TEnum : struct
-        {
-            if (list != null)
-            {
-                if (list.TryGetValue(key, out string? v))
-                {
-                    if (Enum.TryParse(v, out TEnum result))
-                    {
-                        value = result;
-                        return true;
-                    }
-                }
-            }
-
-            value = default;
-            return false;
-        }
-
-        /// <summary>
-        /// Gets string value parsed as an int
-        /// </summary>
-        public static bool TryGetInt<TKey>(this IDictionary<TKey, string> list, TKey key, out int value)
-        {
-            if (list != null)
-            {
-                if (list.TryGetValue(key, out string? v))
-                {
-                    if (int.TryParse(v, out int result))
-                    {
-                        value = result;
-                        return true;
-                    }
-                }
-            }
-
-            value = default;
-            return false;
-        }
-
-        /// <summary>
-        /// Gets string value parsed as a double
-        /// </summary>
-        public static bool TryGetDouble<TKey>(this IDictionary<TKey, string> list, TKey key, out double value)
-        {
-            if (list != null)
-            {
-                if (list.TryGetValue(key, out string? v))
-                {
-                    if (double.TryParse(v, out double result))
-                    {
-                        value = result;
-                        return true;
-                    }
-                }
-            }
-
-            value = default;
-            return false;
-        }
-
-        /// <summary>
         /// Removes a values and returns it, otherwise returns default value
         /// </summary>
         [return: MaybeNull]
@@ -95,9 +15,8 @@ namespace SystemPlus.Collections.Generic
         {
             if (list != null)
             {
-                if (list.ContainsKey(key))
+                if (list.TryGetValue(key, out TValue? value))
                 {
-                    TValue value = list[key];
                     list.Remove(key);
                     return value;
                 }
@@ -126,8 +45,7 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static void AddOrSet<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue value) where TKey : notnull
         {
-            if (list == null)
-                throw new ArgumentNullException(nameof(list));
+            ArgumentNullException.ThrowIfNull(list);
 
             if (list.ContainsKey(key))
                 list[key] = value;
@@ -142,8 +60,7 @@ namespace SystemPlus.Collections.Generic
 
         public static void Increment<TKey>(this IDictionary<TKey, int> list, TKey key, int increment) where TKey : notnull
         {
-            if (list == null)
-                throw new ArgumentNullException(nameof(list));
+            ArgumentNullException.ThrowIfNull(list);
 
             if (list.ContainsKey(key))
                 list[key] += increment;
@@ -164,8 +81,7 @@ namespace SystemPlus.Collections.Generic
 
         public static IDictionary<TKey, TValue> AsDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> keyValues) where TKey : notnull
         {
-            if (keyValues == null)
-                throw new ArgumentNullException(nameof(keyValues));
+            ArgumentNullException.ThrowIfNull(keyValues);
 
             Dictionary<TKey, TValue> dictionary = new();
 

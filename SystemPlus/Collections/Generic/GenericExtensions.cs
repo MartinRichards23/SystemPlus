@@ -294,7 +294,7 @@ namespace SystemPlus.Collections.Generic
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            IList<T> batch = new List<T>();
+            List<T> batch = new List<T>();
 
             foreach (T item in list)
             {

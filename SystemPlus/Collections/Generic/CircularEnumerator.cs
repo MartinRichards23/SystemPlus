@@ -6,7 +6,7 @@
     public class CircularEnumerator<T>
     {
         int currentPosition;
-        readonly IList<T> items;
+        readonly List<T> items;
 
         public CircularEnumerator(IEnumerable<T> items)
         {

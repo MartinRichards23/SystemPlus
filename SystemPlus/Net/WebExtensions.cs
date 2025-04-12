@@ -101,7 +101,7 @@ namespace SystemPlus.Net
 
         public static IList<KeyValuePair<string, string>> GetHeaders(this WebHeaderCollection headers)
         {
-            IList<KeyValuePair<string, string>> headerValues = new List<KeyValuePair<string, string>>();
+            List<KeyValuePair<string, string>> headerValues = new List<KeyValuePair<string, string>>();
 
             if (headers != null)
             {

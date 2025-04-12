@@ -8,7 +8,7 @@ namespace SystemPlus.Text
     /// </summary>
     public class TextHider
     {
-        readonly IList<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>();
+        readonly List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>();
         readonly string format;
         int count;
 

@@ -159,8 +159,7 @@ namespace SystemPlus.ComponentModel
         /// </summary>
         public void Cancel()
         {
-            if (cancelTokenSource != null)
-                cancelTokenSource.Cancel();
+            cancelTokenSource?.Cancel();
 
             OnCancelled();
         }
@@ -170,8 +169,7 @@ namespace SystemPlus.ComponentModel
         /// </summary>
         public void ThrowIfCancellationRequested()
         {
-            if (cancelTokenSource != null)
-                cancelTokenSource.Token.ThrowIfCancellationRequested();
+            cancelTokenSource?.Token.ThrowIfCancellationRequested();
         }
 
         /// <summary>
@@ -179,8 +177,7 @@ namespace SystemPlus.ComponentModel
         /// </summary>
         public void ResetCancel()
         {
-            if (cancelTokenSource != null)
-                cancelTokenSource.Dispose();
+            cancelTokenSource?.Dispose();
 
             cancelTokenSource = new CancellationTokenSource();
         }

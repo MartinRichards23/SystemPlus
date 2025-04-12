@@ -110,13 +110,6 @@ namespace SystemPlus.ComponentModel.Ini
             iniValue.SetValue(value);
         }
 
-        public void SetJson<T>(string sectionName, string key, T value) where T : class, new()
-        {
-            IniSection section = GetOrCreateSection(sectionName);
-            IniValue iniValue = section.GetOrCreateValue(key);
-            iniValue.SetJson(value);
-        }
-
         public void SetValue(string sectionName, string key, Enum value)
         {
             IniSection section = GetOrCreateSection(sectionName);
@@ -176,15 +169,6 @@ namespace SystemPlus.ComponentModel.Ini
                 return default;
 
             return iniValue.GetDouble(defaultValue);
-        }
-
-        public T GetJson<T>(string sectionName, string key, T defaultValue) where T : class, new()
-        {
-            IniValue? iniValue = GetIniValue(sectionName, key);
-            if (iniValue == null)
-                return defaultValue;
-
-            return iniValue.GetJson(defaultValue);
         }
 
         public T GetEnum<T>(string sectionName, string key, T defaultValue) where T : struct

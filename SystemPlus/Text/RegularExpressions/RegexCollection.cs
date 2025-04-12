@@ -49,7 +49,7 @@ namespace SystemPlus.Text.RegularExpressions
         /// </summary>
         public IList<Match> AllMatches(string input)
         {
-            IList<Match> matches = new List<Match>();
+            List<Match> matches = new List<Match>();
 
             foreach (Regex regex in this)
             {

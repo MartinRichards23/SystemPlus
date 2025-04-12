@@ -6,8 +6,7 @@ namespace SystemPlus.Collections.Concurrent
     {
         public static IEnumerable<T> DequeueAll<T>(this ConcurrentQueue<T> queue)
         {
-            if (queue == null)
-                throw new ArgumentNullException(nameof(queue));
+            ArgumentNullException.ThrowIfNull(queue);
 
             List<T> items = new List<T>();
 

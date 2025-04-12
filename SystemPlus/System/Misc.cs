@@ -50,7 +50,7 @@ namespace SystemPlus
 
         public static IList<KeyValuePair<string, string>> GetCommandLineKeyValues()
         {
-            IList<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>();
+            List<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>();
             string[] parameters = Environment.GetCommandLineArgs();
 
             if (parameters != null)

@@ -14,7 +14,7 @@ namespace SystemPlus.Threading
         int maxThreads = 1;
         readonly object key = new object();
         readonly IProducerConsumerCollection<T> items;
-        readonly IList<Task> threads = new List<Task>();
+        readonly List<Task> threads = new List<Task>();
 
         public event Action? StartedWorking;
         public event Action? StoppedWorking;

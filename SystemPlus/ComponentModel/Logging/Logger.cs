@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Threading;
 using SystemPlus.Collections.Generic;
 
 namespace SystemPlus.ComponentModel.Logging
@@ -36,14 +35,6 @@ namespace SystemPlus.ComponentModel.Logging
             loggers.Add(logger);
         }
 
-        public void LogInfoAsync(string message, params object[] args)
-        {
-            Task.Factory.StartNew(() =>
-            {
-                LogInfo(message, args);
-            }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
-        }
-
         /// <summary>
         /// Record information
         /// </summary>
@@ -56,14 +47,6 @@ namespace SystemPlus.ComponentModel.Logging
                 message = string.Format(CultureInfo.InvariantCulture, message, args);
 
             Log(MessageLevel.Info, message, null);
-        }
-
-        public void LogWarningAsync(string message, params object[] args)
-        {
-            Task.Factory.StartNew(() =>
-            {
-                LogWarning(message, args);
-            }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
         }
 
         /// <summary>

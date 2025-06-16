@@ -92,13 +92,6 @@ namespace SystemPlus.Net
             return response;
         }
 
-        public static string DownloadString(this WebRequest request, CancellationToken token, int maxLength = int.MaxValue)
-        {
-            using WebResponse response = request.GetResponse(token);
-
-            return response.ReadWebResponse(maxLength);
-        }
-
         public static IList<KeyValuePair<string, string>> GetHeaders(this WebHeaderCollection headers)
         {
             List<KeyValuePair<string, string>> headerValues = new List<KeyValuePair<string, string>>();

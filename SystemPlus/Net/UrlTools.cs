@@ -1,5 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Web;
 
 namespace SystemPlus.Net
 {
@@ -31,97 +33,12 @@ namespace SystemPlus.Net
         }
 
         /// <summary>
-        /// Removes the anchor part of the url
-        /// </summary>
-        public static string StripAnchor(string url)
-        {
-            if (url == null)
-                throw new ArgumentNullException(nameof(url));
-
-            int pos = url.LastIndexOf("#", StringComparison.Ordinal);
-
-            if (pos > 0)
-                return url.Substring(0, pos);
-
-            return url;
-        }
-
-        /// <summary>
-        /// Removes the parameters
-        /// </summary>
-        public static string StripParameters(string url)
-        {
-            if (url == null)
-                throw new ArgumentNullException(nameof(url));
-
-            int pos = url.LastIndexOf("?", StringComparison.Ordinal);
-
-            if (pos > 0)
-                return url.Substring(0, pos);
-
-            return url;
-        }
-
-        /// <summary>
         /// Turns http://www.abc.com into www.abc.com
         /// </summary>
         public static string StripProtocol(string url)
         {
             Uri uri = new Uri(url);
             return uri.Host + uri.PathAndQuery;
-        }
-
-        /// <summary>
-        /// Is uri a data: uri
-        /// </summary>
-        public static bool IsDataUri(string uri)
-        {
-            if (uri == null)
-                throw new ArgumentNullException(nameof(uri));
-
-            return uri.StartsWith("data:", StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        /// <summary>
-        /// Checks is a string is potentially a valid url
-        /// </summary>
-        public static bool VerifyUrl(string url)
-        {
-            if (string.IsNullOrWhiteSpace(url))
-                return false;
-
-            if (!url.Contains(".", StringComparison.InvariantCulture))
-                return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// Is url a google ad url or similar
-        /// </summary>
-        public static bool IsAdvertUrl(string url)
-        {
-            string domain = GetDomain(url);
-
-            if (domain.Contains("googleadservices.com", StringComparison.InvariantCultureIgnoreCase))
-                return true;
-            if (domain.Contains("googlesyndication.com", StringComparison.InvariantCultureIgnoreCase))
-                return true;
-            if (domain.Contains("doubleclick.net", StringComparison.InvariantCultureIgnoreCase))
-                return true;
-
-            return false;
-        }
-
-        /// <summary>
-        /// Is uri a javascript: uri
-        /// </summary>
-        public static bool IsJsUri(string uri)
-        {
-            if (uri == null)
-                throw new ArgumentNullException(nameof(uri));
-
-            return uri.StartsWith("javascript:", StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <summary>
@@ -154,22 +71,6 @@ namespace SystemPlus.Net
             return frameUri.ToString();
         }
 
-        public static List<Uri> ToUris(this IEnumerable<string> urls)
-        {
-            List<Uri> uris = new List<Uri>();
-
-            if (urls != null)
-            {
-                foreach (string url in urls)
-                {
-                    if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out Uri? uri))
-                        uris.Add(uri);
-                }
-            }
-
-            return uris;
-        }
-
         public static List<Uri> MakeAbsoluteUris(this IEnumerable<Uri> uris, Uri baseUri)
         {
             List<Uri> absoluteUris = new List<Uri>();
@@ -191,25 +92,6 @@ namespace SystemPlus.Net
             }
 
             return absoluteUris;
-        }
-
-        public static IList<string> MakeAbsoluteUrls(this IEnumerable<string> urls, string baseUrl)
-        {
-            List<string> absoluteUrls = new List<string>();
-
-            UriBuilder builder = new UriBuilder(baseUrl);
-            Uri baseUri = builder.Uri;
-
-            if (urls != null)
-            {
-                foreach (string url in urls)
-                {
-                    string absoluteUrl = MakeAbsoluteUrl(baseUri, url);
-                    absoluteUrls.Add(absoluteUrl);
-                }
-            }
-
-            return absoluteUrls;
         }
 
         /// <summary>
@@ -238,5 +120,18 @@ namespace SystemPlus.Net
             return new string(temp);
         }
 
+        public static void AddParameter(this UriBuilder uriBuilder, string paramName, string paramValue)
+        {
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query.Add(paramName, paramValue);
+            uriBuilder.Query = query.ToString();
+        }
+
+        public static void AddParameter(this UriBuilder uriBuilder, NameValueCollection values)
+        {
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+            query.Add(values);
+            uriBuilder.Query = query.ToString();
+        }
     }
 }

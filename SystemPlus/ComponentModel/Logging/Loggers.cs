@@ -1,7 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using SystemPlus.IO;
 using SystemPlus.Text;
 
@@ -20,7 +23,7 @@ namespace SystemPlus.ComponentModel.Logging
             filePath = $"{folder}\\{appName} {appVersion} {DateTime.UtcNow:yyyy-MM-dd}.log";
         }
 
-        public override void Write(MessageLevel level, string? message, Exception? error)
+        public override void Write(MessageLevel level, string message, Exception error)
         {
             string text = string.Empty;
 
@@ -37,32 +40,23 @@ namespace SystemPlus.ComponentModel.Logging
         {
             lock (key)
             {
-                bool writeHeader = false;
                 if (!File.Exists(filePath))
                 {
-                    string? dir = Path.GetDirectoryName(filePath);
+                    string dir = Path.GetDirectoryName(filePath);
 
                     if (dir == null)
                         throw new NullReferenceException(nameof(dir));
 
                     FileSystem.EnsureDirExists(dir);
-
-                    writeHeader = true;
                 }
 
-                using FileStream fs = new FileStream(filePath, FileMode.Append);
-                using StreamWriter w = new StreamWriter(fs);
-
-                if (writeHeader)
+                using (FileStream fs = new FileStream(filePath, FileMode.Append))
+                using (StreamWriter w = new StreamWriter(fs))
                 {
-                    string header = MakeLogHeader();
-                    w.WriteLine(header);
+                    w.WriteLine("= {0}: {1} =", level, DateTime.UtcNow);
+                    w.WriteLine(text);
                     w.WriteLine();
                 }
-
-                w.WriteLine("===== {0}: {1} =====", level, DateTime.UtcNow);
-                w.WriteLine(text);
-                w.WriteLine();
             }
         }
     }
@@ -72,7 +66,7 @@ namespace SystemPlus.ComponentModel.Logging
     /// </summary>
     public class OutputLogger : LoggerBase
     {
-        public override void Write(MessageLevel level, string? message, Exception? error)
+        public override void Write(MessageLevel level, string message, Exception error)
         {
             string text = string.Empty;
 
@@ -91,7 +85,7 @@ namespace SystemPlus.ComponentModel.Logging
     /// </summary>
     public class TraceLogger : LoggerBase
     {
-        public override void Write(MessageLevel level, string? message, Exception? error)
+        public override void Write(MessageLevel level, string message, Exception error)
         {
             string text = string.Empty;
 
@@ -110,7 +104,7 @@ namespace SystemPlus.ComponentModel.Logging
     /// </summary>
     public class ConsoleLogger : LoggerBase
     {
-        public override void Write(MessageLevel level, string? message, Exception? error)
+        public override void Write(MessageLevel level, string message, Exception error)
         {
             string text = string.Empty;
 
@@ -149,7 +143,7 @@ namespace SystemPlus.ComponentModel.Logging
             addresses.Add(to);
         }
 
-        public override void Write(MessageLevel level, string? message, Exception? error)
+        public override void Write(MessageLevel level, string message, Exception error)
         {
             string text = string.Empty;
 
@@ -195,28 +189,27 @@ namespace SystemPlus.ComponentModel.Logging
                 if (buffer.Length < 1)
                     return;
 
-                string header = MakeLogHeader();
-
                 // see if there is data to send
-                body = header + "\r\n\r\n" + buffer;
+                body = buffer.ToString();
                 buffer.Clear();
             }
 
             lastFlush = DateTime.UtcNow;
 
-            using MailMessage message = new MailMessage();
-            using SmtpClient smtp = new SmtpClient(host);
-
-            foreach (string address in addresses)
+            using (MailMessage message = new MailMessage())
+            using (SmtpClient smtp = new SmtpClient(host))
             {
-                message.To.Add(address);
-            }
+                foreach (string address in addresses)
+                {
+                    message.To.Add(address);
+                }
 
-            message.From = new MailAddress(from);
-            message.Subject = subject;
-            message.Body = body;
-            smtp.Credentials = new NetworkCredential(from, password);
-            smtp.Send(message);
+                message.From = new MailAddress(from);
+                message.Subject = subject;
+                message.Body = body;
+                smtp.Credentials = new NetworkCredential(from, password);
+                smtp.Send(message);
+            }
         }
     }
 }

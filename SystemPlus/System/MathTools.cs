@@ -9,7 +9,7 @@
         public const double Pi180 = 180.0 / Math.PI;
         public const double PiOver180 = Math.PI / 180;
 
-        public static bool AlmostEqual(double a, double b, double eps)
+        public static bool AlmostEqual(double a, double b, double eps = 1)
         {
             return Math.Abs(a - b) < eps;
         }

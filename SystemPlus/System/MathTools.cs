@@ -57,14 +57,15 @@
         /// </summary>
         public static double ClampAngle(double angle)
         {
-            angle %= 360;
-
-            while (angle < 0)
+            if (angle >= 0)
             {
-                angle += 360;
+                double tempAngle = angle % 360;
+                return tempAngle == 360 ? 0 : tempAngle;
             }
-
-            return angle;
+            else
+            {
+                return 360 - (-1 * angle) % 360;
+            }
         }
 
         public static double Hypotenuse(double side1, double side2)

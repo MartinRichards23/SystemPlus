@@ -113,8 +113,7 @@ namespace SystemPlus.Collections.Generic
             return list.TakeAt(list.Count - 1);
         }
 
-        [return: MaybeNull]
-        public static T TakeLastOrDefault<T>(this IList<T> list)
+        public static T? TakeLastOrDefault<T>(this IList<T> list)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));

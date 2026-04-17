@@ -124,9 +124,8 @@ namespace SystemPlus.Text
             string normalizedString = input.Normalize(NormalizationForm.FormD);
             StringBuilder stringBuilder = new StringBuilder();
 
-            for (int i = 0; i < normalizedString.Length; i++)
+            foreach (var c in normalizedString)
             {
-                char c = normalizedString[i];
                 if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
                     stringBuilder.Append(c);
             }

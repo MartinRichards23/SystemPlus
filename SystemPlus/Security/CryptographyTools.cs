@@ -114,9 +114,9 @@ namespace SystemPlus.Security
                 score++;
             if (Regex.IsMatch(password, @"\d+"))
                 score++;
-            if (Regex.IsMatch(password, @"[a-z]"))
+            if (Regex.IsMatch(password, "[a-z]"))
                 score++;
-            if (Regex.IsMatch(password, @"[A-Z]"))
+            if (Regex.IsMatch(password, "[A-Z]"))
                 score++;
             if (Regex.IsMatch(password, @"[!@#\$%\^&\*\?_~\-\(\);\.\+:]+"))
                 score++;

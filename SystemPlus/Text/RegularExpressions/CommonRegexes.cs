@@ -27,7 +27,7 @@ namespace SystemPlus.Text.RegularExpressions
         /// <summary>
         /// Matches a-z upper and lower case
         /// </summary>
-        public static Regex Char { get; } = new Regex(@"[a-zA-Z]", RegexOptions.Compiled);
+        public static Regex Char { get; } = new Regex("[a-zA-Z]", RegexOptions.Compiled);
 
         /// <summary>
         /// Matches individual newlines of all types

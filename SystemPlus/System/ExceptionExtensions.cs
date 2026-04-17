@@ -98,8 +98,7 @@ namespace SystemPlus
         /// <summary>
         /// Gets the result object from the exception if there is one
         /// </summary>
-        [return: MaybeNull]
-        public static T GetResult<T>(this Exception ex)
+        public static T? GetResult<T>(this Exception ex)
         {
             if (ex == null)
                 throw new ArgumentNullException(nameof(ex));

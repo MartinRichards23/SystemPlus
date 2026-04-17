@@ -25,7 +25,7 @@
         }
 
         /// <summary>
-        /// Sorts the list based on IComparable<T>
+        /// Sorts the list based on IComparable
         /// </summary>
         public static void SortItems<T>(this IList<T> list) where T : IComparable<T>
         {

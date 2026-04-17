@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using System.Xml.XPath;
 
 namespace SystemPlus.Xml

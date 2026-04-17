@@ -103,8 +103,7 @@ namespace SystemPlus.Collections.ObjectModel
             Add(item);
         }
 
-        [return: MaybeNull]
-        public TItem TryGet(TKey key)
+        public TItem? TryGet(TKey key)
         {
             if (Contains(key))
                 return this[key];

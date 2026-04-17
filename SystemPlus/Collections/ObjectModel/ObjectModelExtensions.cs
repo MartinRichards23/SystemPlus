@@ -72,13 +72,12 @@ namespace SystemPlus.Collections.ObjectModel
                 case NotifyCollectionChangedAction.Reset:
                     target.Clear();
 
-                    for (int i = 0; i < e.NewItems.Count; i++)
-                        target.Add((T)e.NewItems[i]);
+                    foreach (var t in e.NewItems)
+                        target.Add((T)t);
 
                     break;
-
                 default:
-                    break;
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

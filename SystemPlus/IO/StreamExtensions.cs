@@ -107,8 +107,7 @@ namespace SystemPlus.IO
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            string? line;
-            while ((line = reader.ReadLine()) != null)
+            while (reader.ReadLine() is { } line)
             {
                 yield return line;
             }

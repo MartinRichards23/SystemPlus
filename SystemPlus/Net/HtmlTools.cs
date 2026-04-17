@@ -31,7 +31,7 @@ namespace SystemPlus.Net
 
         public static string RemoveHtmlTags(this string input)
         {
-            Regex htmlTagRegex = new Regex(@"<[^>]*>", RegexOptions.IgnoreCase);
+            Regex htmlTagRegex = new Regex("<[^>]*>", RegexOptions.IgnoreCase);
 
             return htmlTagRegex.Replace(input, string.Empty);
         }
@@ -41,7 +41,7 @@ namespace SystemPlus.Net
         /// </summary>
         public static string ReplaceBrTags(string input)
         {
-            Regex brTagRegex = new Regex(@"</?w?br ?/?>", RegexOptions.IgnoreCase);
+            Regex brTagRegex = new Regex("</?w?br ?/?>", RegexOptions.IgnoreCase);
 
             input = brTagRegex.Replace(input, "\r\n");
             return input.Trim();

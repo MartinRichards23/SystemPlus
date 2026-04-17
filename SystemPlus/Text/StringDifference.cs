@@ -102,8 +102,7 @@ namespace SystemPlus.Text
             SortedDictionary<char, int> sd = new SortedDictionary<char, int>();
             foreach (char letter in (source + target))
             {
-                if (!sd.ContainsKey(letter))
-                    sd.Add(letter, 0);
+                sd.TryAdd(letter, 0);
             }
 
             for (int i = 1; i <= m; i++)
@@ -177,13 +176,11 @@ namespace SystemPlus.Text
             SortedDictionary<string, int> sd = new SortedDictionary<string, int>();
             foreach (string letter in source)
             {
-                if (!sd.ContainsKey(letter))
-                    sd.Add(letter, 0);
+                sd.TryAdd(letter, 0);
             }
             foreach (string letter in target)
             {
-                if (!sd.ContainsKey(letter))
-                    sd.Add(letter, 0);
+                sd.TryAdd(letter, 0);
             }
 
             for (int i = 1; i <= m; i++)
@@ -314,10 +311,8 @@ namespace SystemPlus.Text
             string[] aWords = StringTools.SplitIntoWords(a);
             double score = 0;
 
-            for (int i = 0; i < aWords.Length; i++)
+            foreach (var word in aWords)
             {
-                string word = aWords[i];
-
                 if (word.Length < 3)
                     continue;
 

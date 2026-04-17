@@ -122,13 +122,11 @@ namespace SystemPlus.Net
             string paramChar = includeStart ? "?" : string.Empty;
 
             // build params string
-            for (int i = 0; i < parameters.Count; i++)
+            foreach (var param in parameters)
             {
-                UrlParam param = parameters[i];
-
                 if (IgnoreEmpty && string.IsNullOrEmpty(param.Value))
                     continue;
-
+                
                 sb.Append(paramChar).Append(param.Name).Append('=').Append(param.ValueEncoded);
 
                 paramChar = "&";

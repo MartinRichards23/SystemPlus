@@ -217,9 +217,9 @@ namespace SystemPlus.IO
 
                 string[] files = Directory.GetFiles(dir);
 
-                for (int i = 0; i < files.Length; i++)
+                foreach (var t in files)
                 {
-                    FileInfo info = new FileInfo(files[i]);
+                    FileInfo info = new FileInfo(t);
 
                     yield return info;
                 }

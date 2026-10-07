@@ -26,6 +26,9 @@
                 sumOfDerivation += (value) * (value);
             }
 
+            if (count == 0)
+                throw new ArgumentException("Collection must contain at least one value", nameof(doubleCollection));
+
             average /= count;
 
             double sumOfDerivationAverage = sumOfDerivation / count;

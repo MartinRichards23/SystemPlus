@@ -61,9 +61,11 @@ namespace SystemPlus.Text
                 suffix = " B";
             }
 
-            string precision = format.Substring(2);
+            string precision = format.Substring(fileSizeFormat.Length);
             if (string.IsNullOrEmpty(precision))
                 precision = "2";
+            else if (!int.TryParse(precision, NumberStyles.None, CultureInfo.InvariantCulture, out _))
+                throw new FormatException($"Invalid precision '{precision}' in format '{format}'");
 
             string stringFormat = "{0:N" + precision + "}{1}";
             return string.Format(CultureInfo.InvariantCulture, stringFormat, size, suffix);

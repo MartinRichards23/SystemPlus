@@ -106,6 +106,9 @@
         /// </summary>
         public static double Proportion(double min, double max, double value)
         {
+            if (max == min)
+                throw new ArgumentException("max must not equal min", nameof(max));
+
             return (value - min) / (max - min);
         }
 

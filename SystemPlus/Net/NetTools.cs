@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Buffers.Binary;
+using System.Net;
 using System.Net.Sockets;
 
 namespace SystemPlus.Net
@@ -43,16 +44,16 @@ namespace SystemPlus.Net
             const byte serverReplyTime = 40;
 
             //Get the seconds part
-            ulong intPart = BitConverter.ToUInt32(ntpData, serverReplyTime);
+            uint intPart = BitConverter.ToUInt32(ntpData, serverReplyTime);
 
             //Get the seconds fraction
-            ulong fractPart = BitConverter.ToUInt32(ntpData, serverReplyTime + 4);
+            uint fractPart = BitConverter.ToUInt32(ntpData, serverReplyTime + 4);
 
             //Convert From big-endian to little-endian
-            intPart = ByteTools.SwapEndianness(intPart);
-            fractPart = ByteTools.SwapEndianness(fractPart);
+            intPart = BinaryPrimitives.ReverseEndianness(intPart);
+            fractPart = BinaryPrimitives.ReverseEndianness(fractPart);
 
-            ulong milliseconds = (intPart * 1000) + ((fractPart * 1000) / 0x100000000L);
+            ulong milliseconds = ((ulong)intPart * 1000) + (((ulong)fractPart * 1000) / 0x100000000L);
 
             //**UTC** time
             DateTime networkDateTime = (new DateTime(1900, 1, 1)).AddMilliseconds((long)milliseconds);

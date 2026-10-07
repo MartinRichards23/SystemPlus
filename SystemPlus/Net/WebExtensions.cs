@@ -10,6 +10,7 @@ namespace SystemPlus.Net
     /// </summary>
     public static class WebExtensions
     {
+        [Obsolete("HttpWebRequest is obsolete, use HttpClient instead.")]
         public static HttpWebResponse GetHttpResponse(this HttpWebRequest request)
         {
             if (request == null)
@@ -18,6 +19,7 @@ namespace SystemPlus.Net
             return (HttpWebResponse)request.GetResponse();
         }
 
+        [Obsolete("HttpWebRequest is obsolete, use HttpClient instead.")]
         public static HttpWebResponse GetHttpResponse(this HttpWebRequest request, CancellationToken token)
         {
             if (request == null)
@@ -26,6 +28,7 @@ namespace SystemPlus.Net
             return (HttpWebResponse)request.GetResponse(token);
         }
 
+        [Obsolete("HttpWebRequest is obsolete, use HttpClient instead.")]
         public static async Task<HttpWebResponse> GetHttpResponseAsync(this HttpWebRequest request)
         {
             if (request == null)
@@ -39,6 +42,7 @@ namespace SystemPlus.Net
         /// A WebRequest extension method that gets the WebRequest response or the WebException response.
         /// </summary>
         /// <returns>The WebRequest response or WebException response.</returns>
+        [Obsolete("WebRequest is obsolete, use HttpClient instead.")]
         public static WebResponse? GetResponseSafe(this WebRequest request)
         {
             if (request == null)
@@ -72,6 +76,7 @@ namespace SystemPlus.Net
         /// <summary>
         /// Returns a WebResponse from a request, aborts if the token is cancelled
         /// </summary>
+        [Obsolete("WebRequest is obsolete, use HttpClient instead.")]
         public static WebResponse GetResponse(this WebRequest request, CancellationToken token)
         {
             if (request == null)
@@ -234,16 +239,28 @@ namespace SystemPlus.Net
             return encoding;
         }
 
+        [Obsolete("HttpWebRequest is obsolete, use the HttpRequestHeaders overload with HttpClient. Only send basic auth over HTTPS.")]
         public static void AddBasicAuthHeader(this HttpWebRequest request, string name, string password)
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
-            string s = $"{name}:{password}";
-            var plainTextBytes = Encoding.UTF8.GetBytes(s);
-            string base64 = Convert.ToBase64String(plainTextBytes);
+            request.Headers.Add("Authorization", $"Basic {GetBasicAuthValue(name, password)}");
+        }
 
-            request.Headers.Add("Authorization", $"Basic {base64}");
+        /// <summary>
+        /// Adds a basic auth header. Only send over HTTPS, credentials are only base64 encoded.
+        /// </summary>
+        public static void AddBasicAuthHeader(this System.Net.Http.Headers.HttpRequestHeaders headers, string name, string password)
+        {
+            ArgumentNullException.ThrowIfNull(headers);
+
+            headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", GetBasicAuthValue(name, password));
+        }
+
+        static string GetBasicAuthValue(string name, string password)
+        {
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes($"{name}:{password}"));
         }
     }
 }

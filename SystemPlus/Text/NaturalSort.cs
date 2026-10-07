@@ -9,9 +9,6 @@ namespace SystemPlus.Text
         /// </summary>
         public int Compare(string? x, string? y)
         {
-            Dictionary<string, string[]> table = new Dictionary<string, string[]>();
-            bool isAscending = false;
-
             if (x == y)
                 return 0;
 
@@ -21,48 +18,35 @@ namespace SystemPlus.Text
             if (y == null)
                 y = string.Empty;
 
-            if (!table.TryGetValue(x, out string[]? x1))
-            {
-                x1 = Regex.Split(x.Replace(" ", "", StringComparison.InvariantCulture), "([0-9]+)");
-                table.Add(x, x1);
-            }
-
-            if (!table.TryGetValue(y, out string[]? y1))
-            {
-                y1 = Regex.Split(y.Replace(" ", "", StringComparison.InvariantCulture), "([0-9]+)");
-                table.Add(y, y1);
-            }
-
-            int returnVal;
+            string[] x1 = Regex.Split(x.Replace(" ", "", StringComparison.InvariantCulture), "([0-9]+)");
+            string[] y1 = Regex.Split(y.Replace(" ", "", StringComparison.InvariantCulture), "([0-9]+)");
 
             for (int i = 0; i < x1.Length && i < y1.Length; i++)
             {
                 if (x1[i] != y1[i])
-                {
-                    returnVal = PartCompare(x1[i], y1[i]);
-                    return isAscending ? -returnVal : returnVal;
-                }
+                    return PartCompare(x1[i], y1[i]);
             }
 
-            if (y1.Length > x1.Length)
-                returnVal = 1;
-            else if (x1.Length > y1.Length)
-                returnVal = -1;
-            else
-                returnVal = 0;
-
-            return isAscending ? returnVal : -returnVal;
+            return x1.Length.CompareTo(y1.Length);
         }
 
         private static int PartCompare(string left, string right)
         {
-            if (!int.TryParse(left, out int x))
+            if (left.Length == 0 || right.Length == 0 || !char.IsAsciiDigit(left[0]) || !char.IsAsciiDigit(right[0]))
                 return string.Compare(left, right, StringComparison.InvariantCulture);
 
-            if (!int.TryParse(right, out int y))
-                return string.Compare(left, right, StringComparison.InvariantCulture);
+            // compare digit runs numerically without parsing, so any length is supported
+            string l = left.TrimStart('0');
+            string r = right.TrimStart('0');
 
-            return x.CompareTo(y);
+            if (l.Length != r.Length)
+                return l.Length.CompareTo(r.Length);
+
+            int result = string.CompareOrdinal(l, r);
+            if (result != 0)
+                return result;
+
+            return left.Length.CompareTo(right.Length);
         }
 
     }

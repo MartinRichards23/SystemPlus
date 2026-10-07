@@ -83,12 +83,13 @@ namespace SystemPlus.Collections.Generic
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
-            Random rand = new Random(1);
+            Random rand = System.Random.Shared;
 
-            while (list.Count > maxSize)
+            // need at least 3 items to remove one that is not the first or last
+            while (list.Count > maxSize && list.Count > 2)
             {
                 // choose random index, not the first or last though
-                int i = rand.Next(1, list.Count - 2);
+                int i = rand.Next(1, list.Count - 1);
 
                 list.RemoveAt(i);
             }

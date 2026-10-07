@@ -74,6 +74,9 @@
             // bytes for the full needle message - if it fails then will return false
             // if find it then return true
 
+            if (startingPoint < 0 || startingPoint + needle.Length > haystack.Length)
+                return false;
+
             for (int i = 0; i < needle.Length; i++)
             {
                 if (haystack[startingPoint + i] != needle[i])

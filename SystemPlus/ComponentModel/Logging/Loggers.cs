@@ -39,7 +39,7 @@ namespace SystemPlus.ComponentModel.Logging
                     string dir = Path.GetDirectoryName(filePath);
 
                     if (dir == null)
-                        throw new NullReferenceException(nameof(dir));
+                        throw new InvalidOperationException("Log file path has no directory: " + filePath);
 
                     FileSystem.EnsureDirExists(dir);
                 }

@@ -4,8 +4,17 @@ using SystemPlus.Text.RegularExpressions;
 
 namespace SystemPlus.Text
 {
-    public static class StringTools
+    public static partial class StringTools
     {
+        [GeneratedRegex(@"[ \t]+")]
+        private static partial Regex WhiteSpaceRegex();
+
+        [GeneratedRegex(@"[\r\n]+")]
+        private static partial Regex NewLinesRegex();
+
+        [GeneratedRegex(@"[\s]+")]
+        private static partial Regex WhiteSpaceAllRegex();
+
         /// <summary>
         ///  returns the longest string
         /// </summary>
@@ -49,11 +58,8 @@ namespace SystemPlus.Text
         /// </summary>
         public static string CollapseWhiteSpace(string input)
         {
-            Regex whiteSpace = new Regex(@"[ \t]+");
-            Regex newlines = new Regex(@"[\r\n]+");
-
-            input = whiteSpace.Replace(input, " ");
-            input = newlines.Replace(input, "\r\n");
+            input = WhiteSpaceRegex().Replace(input, " ");
+            input = NewLinesRegex().Replace(input, "\r\n");
             return input;
         }
 
@@ -62,9 +68,7 @@ namespace SystemPlus.Text
         /// </summary>
         public static string CollapseAllWhiteSpace(string input, string replacement = " ")
         {
-            Regex whiteSpaceAll = new Regex(@"[\s]+");
-
-            input = whiteSpaceAll.Replace(input, replacement);
+            input = WhiteSpaceAllRegex().Replace(input, replacement);
             return input;
         }
 

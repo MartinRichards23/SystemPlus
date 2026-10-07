@@ -230,7 +230,7 @@ namespace SystemPlus.Net
                 {
                     encoding = Encoding.GetEncoding(charset);
                 }
-                catch
+                catch (ArgumentException)
                 {
                     encoding = Encoding.UTF8;
                 }

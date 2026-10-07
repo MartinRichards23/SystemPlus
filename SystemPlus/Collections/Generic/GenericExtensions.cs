@@ -14,7 +14,7 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static T Random<T>(this IList<T> items)
         {
-            return items.Random(new Random());
+            return items.Random(System.Random.Shared);
         }
 
         /// <summary>

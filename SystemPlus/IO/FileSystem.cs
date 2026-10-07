@@ -115,9 +115,6 @@ namespace SystemPlus.IO
             if (!extension.StartsWith(".", StringComparison.Ordinal))
                 extension = "." + extension;
 
-            if (!directory.EndsWith("\\", StringComparison.Ordinal))
-                directory += "\\";
-
             string tempName = name;
 
             //add numbers until it is unique
@@ -128,7 +125,7 @@ namespace SystemPlus.IO
                 else
                     tempName = name;
 
-                string testPath = directory + tempName + extension;
+                string testPath = Path.Combine(directory, tempName + extension);
 
                 //does basic name exist?
                 if (!File.Exists(testPath))

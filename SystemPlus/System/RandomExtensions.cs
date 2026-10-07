@@ -90,13 +90,11 @@
                 throw new ArgumentNullException(nameof(rand));
 
             T[] values = Enum.GetValues<T>();
-            int index = rand.Next(values.Length);
-            object? result = values.GetValue(index);
 
-            if (result == null)
-                throw new NullReferenceException(nameof(result));
+            if (values.Length == 0)
+                throw new InvalidOperationException($"Enum {typeof(T).Name} has no values");
 
-            return (T)result;
+            return values[rand.Next(values.Length)];
         }
 
         static bool IsModuloBiased(long randomOffset, long numbersInRange)

@@ -24,7 +24,7 @@ namespace SystemPlus.Threading
         {
             MinDelay = minDelay;
             MaxDelay = maxDelay;
-            rand = new Random();
+            rand = Random.Shared;
         }
 
         #region Properties

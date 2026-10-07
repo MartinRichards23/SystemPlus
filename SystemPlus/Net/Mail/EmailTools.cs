@@ -5,8 +5,11 @@ namespace SystemPlus.Net.Mail
     /// <summary>
     /// Tools for manipulating email addresses
     /// </summary>
-    public static class EmailTools
+    public static partial class EmailTools
     {
+        [GeneratedRegex(@"^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,64}$", RegexOptions.IgnoreCase, 1000)]
+        private static partial Regex EmailRegex();
+
         /// <summary>
         /// Gets the part of email address after @
         /// </summary>
@@ -42,8 +45,14 @@ namespace SystemPlus.Net.Mail
             if (string.IsNullOrWhiteSpace(email))
                 return false;
 
-            Regex emailRegex = new Regex(@"^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,64}$", RegexOptions.IgnoreCase);
-            return emailRegex.IsMatch(email);
+            try
+            {
+                return EmailRegex().IsMatch(email);
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
         }
     }
 }

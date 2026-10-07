@@ -63,7 +63,7 @@
                 Interval.Day2 => TimeSpan.FromDays(2),
                 Interval.Week1 => TimeSpan.FromDays(7),
                 Interval.Week2 => TimeSpan.FromDays(14),
-                _ => throw new Exception("Unknown value"),
+                _ => throw new ArgumentOutOfRangeException(nameof(interval), interval, "Unknown value"),
             };
         }
     }

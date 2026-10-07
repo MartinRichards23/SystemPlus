@@ -57,29 +57,25 @@ namespace SystemPlus
             {
                 foreach (string param in parameters)
                 {
-                    try
+                    int posEquals = param.IndexOf('=', StringComparison.Ordinal);
+                    KeyValuePair<string, string> kvp;
+
+                    if (posEquals > 1)
                     {
-                        int posEquals = param.IndexOf("=", StringComparison.InvariantCultureIgnoreCase);
-                        KeyValuePair<string, string> kvp;
+                        string key = param.Substring(0, posEquals).Trim();
+                        string val = param.Substring(posEquals + 1);
 
-                        if (posEquals > 1)
-                        {
-                            string key = param.Substring(0, posEquals).Trim();
-                            string val = param.Substring(posEquals + 1);
+                        if (string.IsNullOrWhiteSpace(key))
+                            continue;
 
-                            if (string.IsNullOrWhiteSpace(key))
-                                continue;
-
-                            kvp = new KeyValuePair<string, string>(key, val);
-                        }
-                        else
-                        {
-                            kvp = new KeyValuePair<string, string>(param, string.Empty);
-                        }
-
-                        values.Add(kvp);
+                        kvp = new KeyValuePair<string, string>(key, val);
                     }
-                    catch { }
+                    else
+                    {
+                        kvp = new KeyValuePair<string, string>(param, string.Empty);
+                    }
+
+                    values.Add(kvp);
                 }
             }
 

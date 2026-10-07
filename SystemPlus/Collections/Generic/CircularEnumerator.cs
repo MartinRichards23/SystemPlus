@@ -18,7 +18,7 @@
             if (random == null)
                 throw new ArgumentNullException(nameof(random));
 
-            currentPosition = random.Next(0, items.Count - 1);
+            currentPosition = random.Next(0, items.Count);
         }
 
         public T Next()

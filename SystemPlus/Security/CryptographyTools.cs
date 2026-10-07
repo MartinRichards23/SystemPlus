@@ -77,7 +77,7 @@ namespace SystemPlus.Security
         {
             byte[] data = Encoding.Unicode.GetBytes(plainText);
             byte[] hashData = CreateSha256Hash(data, salt);
-            return Encoding.Unicode.GetString(hashData);
+            return Convert.ToBase64String(hashData);
         }
 
         public static string GenerateCryptoKeyString(int length)

@@ -36,7 +36,7 @@ namespace SystemPlus
 
         public static DateTime ParseFileTimeString(string input)
         {
-            return DateTime.ParseExact(input, "yyyy-MM-dd_HH-mm-ss", null);
+            return DateTime.ParseExact(input, "yyyy-MM-dd_HH-mm-ss", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace SystemPlus
 
         public static DateTime ParseStringStandard(string input)
         {
-            return DateTime.ParseExact(input, "yyyy-MM-dd HH:mm:ss", null);
+            return DateTime.ParseExact(input, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
         }
 
         /// <summary>

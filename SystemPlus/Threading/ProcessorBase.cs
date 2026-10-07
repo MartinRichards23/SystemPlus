@@ -267,6 +267,8 @@ namespace SystemPlus.Threading
 
         public void Wait(int timeout)
         {
+            long start = Environment.TickCount64;
+
             while (true)
             {
                 Task t;
@@ -278,7 +280,21 @@ namespace SystemPlus.Threading
                     t = threads[0];
                 }
 
-                t.Wait(timeout, default);
+                int remaining = Timeout.Infinite;
+
+                if (timeout != Timeout.Infinite)
+                {
+                    remaining = (int)Math.Max(0, timeout - (Environment.TickCount64 - start));
+
+                    if (remaining == 0)
+                        return;
+                }
+
+                if (!t.Wait(remaining, default))
+                    return;
+
+                // wait for Finish continuation to remove the completed task
+                SpinWait.SpinUntil(() => { lock (key) { return !threads.Contains(t); } }, 100);
             }
         }
 

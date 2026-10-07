@@ -62,7 +62,7 @@ namespace SystemPlus.Net
                 if (string.IsNullOrEmpty(keyValuePair))
                     continue;
 
-                string[] split = keyValuePair.Split('=');
+                string[] split = keyValuePair.Split('=', 2);
 
                 UrlParam param = new UrlParam(split[0], split.Length == 2 ? split[1] : string.Empty);
                 parameters.Add(param);

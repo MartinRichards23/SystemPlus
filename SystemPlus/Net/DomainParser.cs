@@ -81,10 +81,18 @@ namespace SystemPlus.Net
                     if (s.Starred)
                     {
                         pos--;
+
+                        if (pos < 0)
+                            throw new ArgumentException("Domain has no registrable part: " + uri);
+
                         tld = string.Join(".", domainParts, pos, domainParts.Length - pos);
                     }
 
                     pos--;
+
+                    if (pos < 0)
+                        throw new ArgumentException("Domain has no registrable part: " + uri);
+
                     string domain = string.Join(".", domainParts, pos, domainParts.Length - pos);
 
                     UriParts result = new UriParts(uri.DnsSafeHost, domain, tld);
@@ -126,10 +134,18 @@ namespace SystemPlus.Net
                     if (s.Starred)
                     {
                         pos--;
+
+                        if (pos < 0)
+                            throw new ArgumentException("Email domain has no registrable part: " + email);
+
                         tld = string.Join(".", domainParts, pos, domainParts.Length - pos);
                     }
 
                     pos--;
+
+                    if (pos < 0)
+                        throw new ArgumentException("Email domain has no registrable part: " + email);
+
                     string domain = string.Join(".", domainParts, pos, domainParts.Length - pos);
 
                     EmailParts result = new EmailParts(localPart, domainPart, domain, tld);

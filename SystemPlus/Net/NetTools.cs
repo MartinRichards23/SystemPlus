@@ -19,10 +19,14 @@ namespace SystemPlus.Net
             //Setting the Leap Indicator, Version Number and Mode values
             ntpData[0] = 0x1B; //LI = 0 (no warning), VN = 3 (IPv4 only), Mode = 3 (Client Mode)
 
-            IPAddress[] addresses = Dns.GetHostEntry(ntpServer).AddressList;
+            IPAddress? address = Dns.GetHostEntry(ntpServer).AddressList
+                .FirstOrDefault(a => a.AddressFamily == AddressFamily.InterNetwork);
+
+            if (address == null)
+                throw new InvalidOperationException("No IPv4 address found for " + ntpServer);
 
             //The UDP port number assigned to NTP is 123
-            IPEndPoint ipEndPoint = new IPEndPoint(addresses[0], 123);
+            IPEndPoint ipEndPoint = new IPEndPoint(address, 123);
 
             using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
             {

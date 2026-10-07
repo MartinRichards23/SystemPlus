@@ -9,6 +9,12 @@ namespace SystemPlus.Net
     {
         public UriParts(string fullDomain, string domain, string suffix)
         {
+            ArgumentNullException.ThrowIfNull(domain);
+            ArgumentNullException.ThrowIfNull(suffix);
+
+            if (domain.Length <= suffix.Length + 1)
+                throw new ArgumentException("Domain must be longer than its suffix", nameof(domain));
+
             FullDomain = fullDomain;
             Domain = domain;
             Suffix = suffix;

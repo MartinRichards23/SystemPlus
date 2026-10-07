@@ -52,18 +52,19 @@ namespace SystemPlus.Collections.Concurrent
 
         public IEnumerator<T> GetEnumerator()
         {
+            List<T> snapshot;
+
             lock (key)
             {
-                return items.GetEnumerator();
+                snapshot = new List<T>(items);
             }
+
+            return snapshot.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            lock (key)
-            {
-                return items.GetEnumerator();
-            }
+            return GetEnumerator();
         }
 
         public void Add(T item)

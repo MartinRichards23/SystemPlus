@@ -27,7 +27,7 @@ namespace SystemPlus.Collections.Generic
             if (rand == null)
                 throw new ArgumentNullException(nameof(rand));
 
-            int i = rand.Next(items.Count - 1);
+            int i = rand.Next(items.Count);
 
             return items[i];
         }

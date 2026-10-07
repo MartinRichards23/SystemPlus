@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-
+﻿using System.Security.Cryptography;
+ 
 namespace SystemPlus.Security
 {
     /// <summary>
@@ -61,13 +61,6 @@ namespace SystemPlus.Security
             }
 
             return newSerialNumber;
-        }
-
-        public static string MakeNumericKey(SNKeyNumLength keyLength)
-        {
-            Random rn = new Random();
-            double sd = Math.Round(rn.NextDouble() * Math.Pow(10, (int)keyLength) + 4);
-            return sd.ToString(CultureInfo.InvariantCulture).Substring(0, (int)keyLength);
         }
     }
 

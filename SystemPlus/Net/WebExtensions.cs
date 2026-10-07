@@ -194,7 +194,7 @@ namespace SystemPlus.Net
 
             string? charset = null;
 
-            StreamReader srr = new StreamReader(rawdata, Encoding.ASCII);
+            using StreamReader srr = new StreamReader(rawdata, Encoding.ASCII, false, -1, leaveOpen: true);
             string meta = srr.ReadToEnd();
 
             int startInd = meta.IndexOf("charset=", StringComparison.InvariantCultureIgnoreCase);

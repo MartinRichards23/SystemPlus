@@ -47,11 +47,11 @@ namespace SystemPlus.Threading
                 d = MinDelay;
 
             DateTime now = DateTime.UtcNow;
+            DateTime nextAllowed = lastWait + d;
 
-            if (lastWait + d < now)
+            if (nextAllowed > now)
             {
-                TimeSpan duration = now - lastWait;
-
+                TimeSpan duration = nextAllowed - now;
                 await Task.Delay(duration, token);
             }
 

@@ -6,7 +6,7 @@ namespace SystemPlus.Security
     /// <summary>
     /// Tools relating 
     /// </summary>
-    public static class CryptographyTools
+    public static partial class CryptographyTools
     {
         /// <summary>
         /// Helper that generates a random key on each call.
@@ -112,17 +112,29 @@ namespace SystemPlus.Security
                 score++;
             if (password.Length >= 12)
                 score++;
-            if (Regex.IsMatch(password, @"\d+"))
+            if (DigitRegex().IsMatch(password))
                 score++;
-            if (Regex.IsMatch(password, "[a-z]"))
+            if (LowerCaseRegex().IsMatch(password))
                 score++;
-            if (Regex.IsMatch(password, "[A-Z]"))
+            if (UpperCaseRegex().IsMatch(password))
                 score++;
-            if (Regex.IsMatch(password, @"[!@#\$%\^&\*\?_~\-\(\);\.\+:]+"))
+            if (SymbolRegex().IsMatch(password))
                 score++;
 
             return score;
         }
+
+        [GeneratedRegex(@"\d")]
+        private static partial Regex DigitRegex();
+
+        [GeneratedRegex("[a-z]")]
+        private static partial Regex LowerCaseRegex();
+
+        [GeneratedRegex("[A-Z]")]
+        private static partial Regex UpperCaseRegex();
+
+        [GeneratedRegex(@"[!@#\$%\^&\*\?_~\-\(\);\.\+:]")]
+        private static partial Regex SymbolRegex();
 
     }
 }

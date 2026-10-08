@@ -166,7 +166,7 @@ namespace SystemPlus.ComponentModel.Ini
         {
             IniValue? iniValue = GetIniValue(sectionName, key);
             if (iniValue == null)
-                return default;
+                return defaultValue;
 
             return iniValue.GetDouble(defaultValue);
         }

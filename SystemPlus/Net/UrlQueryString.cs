@@ -163,8 +163,9 @@ namespace SystemPlus.Net
         {
             if (!string.IsNullOrEmpty(s))
             {
-                if (s.Contains("?", StringComparison.InvariantCulture))
-                    return s[(s.IndexOf("?", StringComparison.InvariantCultureIgnoreCase) + 1)..];
+                int queryIndex = s.IndexOf('?', StringComparison.Ordinal);
+                if (queryIndex != -1)
+                    return s[(queryIndex + 1)..];
             }
             return s;
         }
@@ -183,7 +184,7 @@ namespace SystemPlus.Net
 
             foreach (string part in parts)
             {
-                int index = part.IndexOf('=', StringComparison.InvariantCulture);
+                int index = part.IndexOf('=', StringComparison.Ordinal);
 
                 if (index < 0)
                     continue;

@@ -54,7 +54,7 @@ namespace SystemPlus.Net
             string? ctype = headers["content-type"];
             if (ctype != null)
             {
-                int ind = ctype.IndexOf("charset=", StringComparison.InvariantCultureIgnoreCase);
+                int ind = ctype.IndexOf("charset=", StringComparison.OrdinalIgnoreCase);
                 if (ind > -1)
                     charset = ctype[(ind + 8)..];
             }

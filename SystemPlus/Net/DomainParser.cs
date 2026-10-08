@@ -61,7 +61,7 @@ namespace SystemPlus.Net
         public UriParts ParseUrl(Uri uri)
         {
             if (!initialised)
-                throw new Exception("Domain parser not initialised");
+                throw new InvalidOperationException("Domain parser not initialised");
             if (uri == null)
                 throw new ArgumentNullException(nameof(uri));
 
@@ -109,7 +109,7 @@ namespace SystemPlus.Net
         public EmailParts ParseEmail(string email)
         {
             if (!initialised)
-                throw new Exception("Domain parser not initialised");
+                throw new InvalidOperationException("Domain parser not initialised");
             if (email == null)
                 throw new ArgumentNullException(nameof(email));
 

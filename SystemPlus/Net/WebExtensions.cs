@@ -1,7 +1,5 @@
 ﻿using System.IO;
 using System.Net;
-using System.Threading;
-using SystemPlus.IO;
 
 namespace SystemPlus.Net
 {
@@ -10,93 +8,6 @@ namespace SystemPlus.Net
     /// </summary>
     public static class WebExtensions
     {
-        [Obsolete("HttpWebRequest is obsolete, use HttpClient instead.")]
-        public static HttpWebResponse GetHttpResponse(this HttpWebRequest request)
-        {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            return (HttpWebResponse)request.GetResponse();
-        }
-
-        [Obsolete("HttpWebRequest is obsolete, use HttpClient instead.")]
-        public static HttpWebResponse GetHttpResponse(this HttpWebRequest request, CancellationToken token)
-        {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            return (HttpWebResponse)request.GetResponse(token);
-        }
-
-        [Obsolete("HttpWebRequest is obsolete, use HttpClient instead.")]
-        public static async Task<HttpWebResponse> GetHttpResponseAsync(this HttpWebRequest request)
-        {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            WebResponse response = await request.GetResponseAsync();
-            return (HttpWebResponse)response;
-        }
-
-        /// <summary>
-        /// A WebRequest extension method that gets the WebRequest response or the WebException response.
-        /// </summary>
-        /// <returns>The WebRequest response or WebException response.</returns>
-        [Obsolete("WebRequest is obsolete, use HttpClient instead.")]
-        public static WebResponse? GetResponseSafe(this WebRequest request)
-        {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            try
-            {
-                return request.GetResponse();
-            }
-            catch (WebException e)
-            {
-                return e.Response;
-            }
-        }
-
-        public static MemoryStream GetFullResponseStream(this HttpWebResponse response, int maxLength = int.MaxValue)
-        {
-            if (response == null)
-                throw new ArgumentNullException(nameof(response));
-
-            using Stream s = response.GetResponseStream();
-
-            MemoryStream ms = new MemoryStream();
-
-            s.CopyTo(ms, 8000, maxLength);
-
-            ms.Position = 0;
-            return ms;
-        }
-
-        /// <summary>
-        /// Returns a WebResponse from a request, aborts if the token is cancelled
-        /// </summary>
-        [Obsolete("WebRequest is obsolete, use HttpClient instead.")]
-        public static WebResponse GetResponse(this WebRequest request, CancellationToken token)
-        {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            IAsyncResult asyncResult = request.BeginGetResponse(null, null);
-
-            WaitHandle.WaitAny(new[] { asyncResult.AsyncWaitHandle, token.WaitHandle });
-
-            if (token.IsCancellationRequested)
-            {
-                // abort request if it was cancelled
-                request.Abort();
-                token.ThrowIfCancellationRequested();
-            }
-
-            WebResponse response = request.EndGetResponse(asyncResult);
-            return response;
-        }
-
         public static IList<KeyValuePair<string, string>> GetHeaders(this WebHeaderCollection headers)
         {
             List<KeyValuePair<string, string>> headerValues = new List<KeyValuePair<string, string>>();
@@ -115,20 +26,6 @@ namespace SystemPlus.Net
             return headerValues;
         }
 
-        public static void WriteRequestStream(this WebRequest request, string content, Encoding encoding)
-        {
-            ArgumentNullException.ThrowIfNull(request);
-            ArgumentNullException.ThrowIfNull(encoding);
-
-            byte[] bytes = encoding.GetBytes(content);
-
-            request.ContentLength = bytes.Length;
-
-            using Stream ps = request.GetRequestStream();
-
-            ps.Write(bytes);
-        }
-
         /// <summary>
         /// Gets the content of the webexception response message
         /// </summary>
@@ -141,35 +38,10 @@ namespace SystemPlus.Net
             using WebResponse? response = exception.Response;
 
             if (response == null)
-                throw new Exception("Response was null");
+                throw new InvalidOperationException("The WebException does not contain a response.");
 
             using Stream responseStream = response.GetResponseStream();
             using StreamReader sr = new StreamReader(responseStream, Encoding.ASCII);
-
-            return sr.ReadToEnd();
-        }
-
-        /// <summary>
-        /// Gets the text content of webresponse, using the correct encoding
-        /// </summary>
-        public static string ReadWebResponse(this WebResponse response, int maxLength = int.MaxValue)
-        {
-            ArgumentNullException.ThrowIfNull(response);
-
-            using MemoryStream rawdata = new MemoryStream();
-            using (Stream rs = response.GetResponseStream())
-            {
-                rs.CopyTo(rawdata, 8000, maxLength);
-            }
-
-            string? charset = GetCharSet(response.Headers);
-            if (string.IsNullOrEmpty(charset))
-                charset = GetCharSetFromBody(rawdata);
-
-            Encoding encoding = GetEncoding(charset);
-
-            rawdata.Seek(0, SeekOrigin.Begin);
-            using StreamReader sr = new StreamReader(rawdata, encoding);
 
             return sr.ReadToEnd();
         }
@@ -197,24 +69,29 @@ namespace SystemPlus.Net
 
             rawdata.Seek(0, SeekOrigin.Begin);
 
-            string? charset = null;
+            // the charset declaration must appear near the start of the document, so only scan the head
+            const int maxScanLength = 4096;
+            byte[] buffer = new byte[maxScanLength];
+            int read = rawdata.ReadAtLeast(buffer, maxScanLength, throwOnEndOfStream: false);
+            string meta = Encoding.ASCII.GetString(buffer, 0, read);
 
-            using StreamReader srr = new StreamReader(rawdata, Encoding.ASCII, false, -1, leaveOpen: true);
-            string meta = srr.ReadToEnd();
+            int startInd = meta.IndexOf("charset=", StringComparison.OrdinalIgnoreCase);
+            if (startInd == -1)
+                return null;
 
-            int startInd = meta.IndexOf("charset=", StringComparison.InvariantCultureIgnoreCase);
-            if (startInd != -1)
-            {
-                int endInd = meta.IndexOf("\"", startInd, StringComparison.InvariantCultureIgnoreCase);
-                if (endInd != -1)
-                {
-                    int start = startInd + 8;
-                    charset = meta.Substring(start, endInd - start + 1);
-                    charset = charset.TrimEnd('>', '"');
-                }
-            }
+            int start = startInd + "charset=".Length;
 
-            return charset;
+            while (start < meta.Length && (meta[start] == '"' || meta[start] == '\'' || char.IsWhiteSpace(meta[start])))
+                start++;
+
+            int end = start;
+            while (end < meta.Length && (char.IsLetterOrDigit(meta[end]) || meta[end] == '-' || meta[end] == '_' || meta[end] == '.' || meta[end] == ':'))
+                end++;
+
+            if (end == start)
+                return null;
+
+            return meta[start..end];
         }
 
         public static Encoding GetEncoding(string? charset)
@@ -237,30 +114,6 @@ namespace SystemPlus.Net
             }
 
             return encoding;
-        }
-
-        [Obsolete("HttpWebRequest is obsolete, use the HttpRequestHeaders overload with HttpClient. Only send basic auth over HTTPS.")]
-        public static void AddBasicAuthHeader(this HttpWebRequest request, string name, string password)
-        {
-            if (request == null)
-                throw new ArgumentNullException(nameof(request));
-
-            request.Headers.Add("Authorization", $"Basic {GetBasicAuthValue(name, password)}");
-        }
-
-        /// <summary>
-        /// Adds a basic auth header. Only send over HTTPS, credentials are only base64 encoded.
-        /// </summary>
-        public static void AddBasicAuthHeader(this System.Net.Http.Headers.HttpRequestHeaders headers, string name, string password)
-        {
-            ArgumentNullException.ThrowIfNull(headers);
-
-            headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", GetBasicAuthValue(name, password));
-        }
-
-        static string GetBasicAuthValue(string name, string password)
-        {
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes($"{name}:{password}"));
         }
     }
 }

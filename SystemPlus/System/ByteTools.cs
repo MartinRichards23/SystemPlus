@@ -8,23 +8,10 @@ namespace SystemPlus
     public static class ByteTools
     {
         /// <summary>
-        /// Finds a specific byte index within an array of bytes
+        /// Finds index
         /// </summary>
-        /// <returns>Returns the array poistion if found or -1 if not</returns>
-        static int Find(int start, int end, byte[] data, byte target)
-        {
-            for (int i = start; (i < data.Length && i <= end); i++)
-            {
-                if (data[i] == target)
-                    return i;
-            }
-
-            return -1;
-        }
-
-        /// <summary>
-        /// Finds index of byte array within another array
-        /// </summary>
+        /// <param name="start">Inclusive start index</param>
+        /// <param name="end">Inclusive end index, the whole match must lie within start..end</param>
         /// <returns>Returns the array poistion if found or -1 if not</returns>
         public static int FindSequence(int start, int end, byte[] data, byte[] target)
         {
@@ -32,32 +19,17 @@ namespace SystemPlus
                 throw new ArgumentNullException(nameof(data));
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
+            if (target.Length == 0)
+                throw new ArgumentException("Target must not be empty", nameof(target));
 
             // check the parameters are sensible
-            if ((start > data.Length) || (start >= end) || (end > data.Length))
+            if (start < 0 || start > end || start >= data.Length)
                 return -1;
 
-            // if they are then proceed
-            int pos = start;
-            bool found = false;
+            int length = Math.Min(end, data.Length - 1) - start + 1;
+            int index = data.AsSpan(start, length).IndexOf(target);
 
-            do
-            {
-                // try and find the first byte of needle in the haystack
-                pos = Find(pos, end, data, target[0]);
-                if (pos > -1)
-                {
-                    // have found an occurence of the first character inthe array
-                    // so will check the follwoing characters to see if the whole message is there
-                    found = CompareMessage(pos, data, target);
-                }
-                pos += 1; // so dont keep looping round on the same result move it on 1
-            } while ((pos > 0) & (!found));
-
-            if (found)
-                return pos - 1; // return -1 because we added 1 on last line of loop
-
-            return -1;
+            return index < 0 ? -1 : start + index;
         }
 
         public static bool CompareMessage(int startingPoint, byte[] haystack, byte[] needle)

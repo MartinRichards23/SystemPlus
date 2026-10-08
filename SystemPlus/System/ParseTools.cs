@@ -1,4 +1,6 @@
-﻿namespace SystemPlus
+﻿using System.Globalization;
+
+namespace SystemPlus
 {
     /// <summary>
     /// Helper tools for parsing data
@@ -18,7 +20,7 @@
 
         public static int? Int(string? s)
         {
-            if (int.TryParse(s, out int val))
+            if (int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out int val))
                 return val;
 
             return null;
@@ -26,7 +28,7 @@
 
         public static double? Double(string? s)
         {
-            if (double.TryParse(s, out double val))
+            if (double.TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out double val))
                 return val;
 
             return null;
@@ -34,7 +36,7 @@
 
         public static float? Float(string? s)
         {
-            if (float.TryParse(s, out float val))
+            if (float.TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out float val))
                 return val;
 
             return null;

@@ -74,7 +74,7 @@ namespace SystemPlus
             string s;
 
             if (checkIsToday && localTime.Date == now.Date)
-                s = $"Today {localTime:HH:mm}";
+                s = "Today " + localTime.ToString("HH:mm", CultureInfo.InvariantCulture);
             else if (localTime.Year == now.Year)
                 s = localTime.ToString("d-MMM HH:mm", CultureInfo.InvariantCulture);
             else
@@ -88,20 +88,26 @@ namespace SystemPlus
 
         public static DateTime Round(this DateTime date, TimeSpan span)
         {
+            ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(span, TimeSpan.Zero);
+
             long ticks = (date.Ticks + (span.Ticks / 2) + 1) / span.Ticks;
-            return new DateTime(ticks * span.Ticks);
+            return new DateTime(ticks * span.Ticks, date.Kind);
         }
 
         public static DateTime Floor(this DateTime date, TimeSpan span)
         {
+            ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(span, TimeSpan.Zero);
+
             long ticks = (date.Ticks / span.Ticks);
-            return new DateTime(ticks * span.Ticks);
+            return new DateTime(ticks * span.Ticks, date.Kind);
         }
 
         public static DateTime Ceiling(this DateTime date, TimeSpan span)
         {
+            ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(span, TimeSpan.Zero);
+
             long ticks = (date.Ticks + span.Ticks - 1) / span.Ticks;
-            return new DateTime(ticks * span.Ticks);
+            return new DateTime(ticks * span.Ticks, date.Kind);
         }
 
         /// <summary>
@@ -116,11 +122,11 @@ namespace SystemPlus
         }
 
         /// <summary>
-        /// Tries to convert the string into a DateTimeOffset, returns null if parse fails
+        /// Tries to convert the string into a DateTime using the invariant culture, returns null if parse fails
         /// </summary>
         public static DateTime? TryParse(string input)
         {
-            if (DateTime.TryParse(input, out DateTime date))
+            if (DateTime.TryParse(input, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
                 return date;
 
             return null;
@@ -169,12 +175,15 @@ namespace SystemPlus
         }
 
         /// <summary>
-        /// Gets the Unix time
+        /// Gets the Unix time in seconds, Local times are converted to UTC first
         /// </summary>
         public static long ToUnixTime(this DateTime dateTime)
         {
-            TimeSpan t = dateTime - new DateTime(1970, 1, 1);
-            return (long)t.TotalSeconds;
+            if (dateTime.Kind == DateTimeKind.Local)
+                dateTime = dateTime.ToUniversalTime();
+
+            TimeSpan t = dateTime - DateTime.UnixEpoch;
+            return (long)Math.Floor(t.TotalSeconds);
         }
 
         public static DateTime FromUnixTimeSeconds(long unixTime)

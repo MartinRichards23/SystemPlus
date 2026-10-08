@@ -57,7 +57,7 @@
         {
             EnsureMinLEQMax(ref min, ref max);
             long numbersInRange = unchecked(max - min + 1);
-            if (numbersInRange < 0)
+            if (numbersInRange <= 0)
                 throw new ArgumentException("Size of range between min and max must be less than or equal to Int64.MaxValue");
 
             long randomOffset = NextLong(rand);

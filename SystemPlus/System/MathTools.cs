@@ -9,7 +9,7 @@
         public const double Pi180 = 180.0 / Math.PI;
         public const double PiOver180 = Math.PI / 180;
 
-        public static bool AlmostEqual(double a, double b, double eps = 1)
+        public static bool AlmostEqual(double a, double b, double eps = 1e-9)
         {
             return Math.Abs(a - b) < eps;
         }
@@ -29,7 +29,7 @@
         /// <returns></returns>
         public static double ReverseBearing(double bearing)
         {
-            return (bearing + 180) % 360;
+            return ClampAngle(bearing + 180);
         }
 
         public static double DegreesToRadians(double degs)
@@ -57,15 +57,13 @@
         /// </summary>
         public static double ClampAngle(double angle)
         {
-            if (angle >= 0)
-            {
-                double tempAngle = angle % 360;
-                return tempAngle == 360 ? 0 : tempAngle;
-            }
-            else
-            {
-                return 360 - (-1 * angle) % 360;
-            }
+            double tempAngle = angle % 360;
+
+            if (tempAngle < 0)
+                tempAngle += 360;
+
+            // guards against -tiny % 360 + 360 rounding to exactly 360
+            return tempAngle >= 360 ? 0 : tempAngle;
         }
 
         public static double Hypotenuse(double side1, double side2)
@@ -117,7 +115,7 @@
         /// </summary>
         public static int RoundUp(int value)
         {
-            return 10 * ((value + 9) / 10);
+            return 10 * (int)Math.Ceiling(value / 10.0);
         }
 
         /// <summary>
@@ -125,7 +123,7 @@
         /// </summary>
         public static int RoundDown(int value)
         {
-            return 10 * (value / 10);
+            return 10 * (int)Math.Floor(value / 10.0);
         }
     }
 }

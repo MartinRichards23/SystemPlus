@@ -92,7 +92,7 @@ namespace SystemPlus
             if (ex == null)
                 throw new ArgumentNullException(nameof(ex));
 
-            ex.Data.Add("Result", result);
+            ex.Data["Result"] = result;
         }
 
         /// <summary>

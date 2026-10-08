@@ -40,12 +40,12 @@ namespace SystemPlus
 
         public static string NewShortGuid()
         {
-            long i = 1;
-            foreach (byte b in Guid.NewGuid().ToByteArray())
-            {
-                i *= (b + 1);
-            }
-            return $"{i - DateTime.UtcNow.Ticks:x}";
+            Span<byte> bytes = stackalloc byte[16];
+            Guid.NewGuid().TryWriteBytes(bytes);
+
+            // fold the 128 bit guid into 64 bits
+            ulong i = BitConverter.ToUInt64(bytes[..8]) ^ BitConverter.ToUInt64(bytes[8..]);
+            return $"{i:x}";
         }
 
         public static IList<KeyValuePair<string, string>> GetCommandLineKeyValues()
@@ -60,7 +60,7 @@ namespace SystemPlus
                     int posEquals = param.IndexOf('=', StringComparison.Ordinal);
                     KeyValuePair<string, string> kvp;
 
-                    if (posEquals > 1)
+                    if (posEquals > 0)
                     {
                         string key = param.Substring(0, posEquals).Trim();
                         string val = param.Substring(posEquals + 1);

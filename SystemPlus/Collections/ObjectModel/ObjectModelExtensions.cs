@@ -72,8 +72,11 @@ namespace SystemPlus.Collections.ObjectModel
                 case NotifyCollectionChangedAction.Reset:
                     target.Clear();
 
-                    foreach (var t in e.NewItems)
-                        target.Add((T)t);
+                    if (e.NewItems != null)
+                    {
+                        foreach (var t in e.NewItems)
+                            target.Add((T)t);
+                    }
 
                     break;
                 default:

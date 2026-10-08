@@ -97,6 +97,9 @@ namespace SystemPlus.Collections.ObjectModel
         {
             TKey itemKey = GetKeyForItem(item);
 
+            if (itemKey == null)
+                throw new ArgumentException("Item key cannot be null.", nameof(item));
+
             if (Contains(itemKey))
                 Remove(itemKey);
 

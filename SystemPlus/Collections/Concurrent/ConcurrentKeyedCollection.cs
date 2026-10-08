@@ -69,22 +69,34 @@ namespace SystemPlus.Collections.Concurrent
 
         public void Add(T item)
         {
-            throw new NotImplementedException();
+            lock (key)
+            {
+                items.Add(item);
+            }
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            lock (key)
+            {
+                items.Clear();
+            }
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            lock (key)
+            {
+                return items.Contains(item);
+            }
         }
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            lock (key)
+            {
+                return items.Remove(item);
+            }
         }
 
         public int Count

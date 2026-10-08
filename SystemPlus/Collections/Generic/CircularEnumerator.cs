@@ -23,7 +23,9 @@
 
         public T Next()
         {
-            T item = items[currentPosition];
+            ThrowIfEmpty();
+
+            T item
 
             currentPosition++;
             CheckPos();
@@ -33,12 +35,20 @@
 
         public T Previous()
         {
-            T item = items[currentPosition];
+            ThrowIfEmpty();
+
+            T item
 
             currentPosition--;
             CheckPos();
 
             return item;
+        }
+
+        void ThrowIfEmpty()
+        {
+            if (items.Count == 0)
+                throw new InvalidOperationException("The collection is empty.");
         }
 
         public int Count

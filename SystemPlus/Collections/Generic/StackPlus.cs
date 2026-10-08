@@ -37,10 +37,10 @@ namespace SystemPlus.Collections.Generic
 
         public void RemoveOldest(int maxSize)
         {
-            while (items.Count > maxSize)
-            {
-                items.RemoveAt(0);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(maxSize);
+
+            if (items.Count > maxSize)
+                items.RemoveRange(0, items.Count - maxSize);
         }
 
         public void Clear()
@@ -48,14 +48,20 @@ namespace SystemPlus.Collections.Generic
             items.Clear();
         }
 
+        /// <summary>
+        /// Enumerates items in LIFO order (newest first), like Stack&lt;T&gt;
+        /// </summary>
         public IEnumerator<T> GetEnumerator()
         {
-            return ((IEnumerable<T>)items).GetEnumerator();
+            for (int i = items.Count - 1; i >= 0; i--)
+            {
+                yield return items[i];
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)items).GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

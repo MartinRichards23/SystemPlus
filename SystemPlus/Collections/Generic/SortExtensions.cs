@@ -39,8 +39,8 @@
                     T o2 = list[j];
                     if (o1.CompareTo(o2) > 0)
                     {
-                        list.Remove(o1);
-                        list.Insert(j, o1);
+                        list[j - 1] = o2;
+                        list[j] = o1;
                     }
                 }
             }
@@ -62,8 +62,8 @@
                     T o2 = list[j];
                     if (comparer.Compare(o1, o2) > 0)
                     {
-                        list.Remove(o1);
-                        list.Insert(j, o1);
+                        list[j - 1] = o2;
+                        list[j] = o1;
                     }
                 }
             }
@@ -85,8 +85,8 @@
                     T o2 = list[j];
                     if (compareFunc(o1, o2) > 0)
                     {
-                        list.Remove(o1);
-                        list.Insert(j, o1);
+                        list[j - 1] = o2;
+                        list[j] = o1;
                     }
                 }
             }

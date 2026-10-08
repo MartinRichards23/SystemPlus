@@ -94,6 +94,12 @@ namespace SystemPlus.Collections.Generic
 
                 list.RemoveAt(i);
             }
+
+            // fewer than 3 items left, remove from the end
+            while (list.Count > Math.Max(maxSize, 0))
+            {
+                list.RemoveAt(list.Count - 1);
+            }
         }
 
         /// <summary>
@@ -278,6 +284,9 @@ namespace SystemPlus.Collections.Generic
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
 
+            if (max <= 0)
+                yield break;
+
             int count = 0;
 
             foreach (T item in list)
@@ -346,23 +355,7 @@ namespace SystemPlus.Collections.Generic
         }
 
         /// <summary>
-        /// Adds items if not already in collection
-        /// </summary>
-        public static void TryAddRange<T>(this ISet<T> list, IEnumerable<T> items)
-        {
-            if (list == null)
-                throw new ArgumentNullException(nameof(list));
-            if (items == null)
-                return;
-
-            foreach (T item in items)
-            {
-                list.Add(item);
-            }
-        }
-
-        /// <summary>
-        /// Returns all distinct elements of the given source, where "distinctness"
+        /// Returns all distinct
         /// is determined via a projection and the default eqaulity comparer for the projected type.
         /// </summary>
         /// <remarks>

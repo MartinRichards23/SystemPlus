@@ -14,7 +14,7 @@
 
             foreach (var kvp in this)
             {
-                dictionary.TryAdd(kvp.Key, kvp.Value);
+                dictionary.Add(kvp.Key, kvp.Value);
             }
 
             return dictionary;

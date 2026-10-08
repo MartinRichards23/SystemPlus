@@ -116,7 +116,7 @@ namespace SystemPlus.IO
             float mantissa = intMantissa / (float)0x1000000;
             float posResult = mantissa * (float)Math.Pow(16.0, (b[0] & 0x7F) - 64);
 
-            if ((b[0] & 0x80) == 1)
+            if ((b[0] & 0x80) != 0)
                 return -posResult;
 
             return posResult;
@@ -136,7 +136,7 @@ namespace SystemPlus.IO
             double mantissa = intMantissa / (double)0x1000000;
             double posResult = mantissa * Math.Pow(16.0, (double)(b[0] & 0x7F) - 64);
 
-            if ((b[0] & 0x80) == 1)
+            if ((b[0] & 0x80) != 0)
                 return -posResult;
 
             return posResult;

@@ -192,13 +192,13 @@ namespace SystemPlus
         public static bool IsOlderThanUTC(this DateTime dateTime, TimeSpan time)
         {
             TimeSpan age = DateTime.UtcNow - dateTime;
-            return time > age;
+            return age > time;
         }
 
         public static bool IsOlderThanUTC(this DateTimeOffset dateTime, TimeSpan time)
         {
             TimeSpan age = DateTimeOffset.UtcNow - dateTime;
-            return time > age;
+            return age > time;
         }
     }
 }

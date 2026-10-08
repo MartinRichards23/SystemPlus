@@ -1,4 +1,5 @@
-﻿using SystemPlus.Collections.Generic;
+﻿using System.Net;
+using SystemPlus.Collections.Generic;
 
 namespace SystemPlus.Net
 {
@@ -64,7 +65,7 @@ namespace SystemPlus.Net
 
                 string[] split = keyValuePair.Split('=', 2);
 
-                UrlParam param = new UrlParam(split[0], split.Length == 2 ? split[1] : string.Empty);
+                UrlParam param = new UrlParam(split[0], split.Length == 2 ? WebUtility.UrlDecode(split[1]) : string.Empty);
                 parameters.Add(param);
             }
         }
@@ -99,7 +100,6 @@ namespace SystemPlus.Net
         {
             parameters.RemoveWhere(p => p.Name == name);
         }
-
 
         /// <summary>
         /// Makes the full url with query string
@@ -190,7 +190,7 @@ namespace SystemPlus.Net
                     continue;
 
                 string key = part.Substring(0, index);
-                string val = part[(index + 1)..];
+                string val = WebUtility.UrlDecode(part[(index + 1)..]) ?? string.Empty;
 
                 values.Add(new KeyValuePair<string, string>(key, val));
             }

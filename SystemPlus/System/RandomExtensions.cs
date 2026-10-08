@@ -10,17 +10,14 @@
         /// </summary>
         public static string NextString(this Random rand, int size)
         {
-            if (rand == null)
-                throw new ArgumentNullException(nameof(rand));
+            ArgumentNullException.ThrowIfNull(rand);
+            ArgumentOutOfRangeException.ThrowIfNegative(size);
 
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < size; i++)
+            return string.Create(size, rand, static (span, r) =>
             {
-                char ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * rand.NextDouble() + 65)));
-                builder.Append(ch);
-            }
-
-            return builder.ToString();
+                for (int i = 0; i < span.Length; i++)
+                    span[i] = (char)r.Next('A', 'Z' + 1);
+            });
         }
 
         /// <summary>

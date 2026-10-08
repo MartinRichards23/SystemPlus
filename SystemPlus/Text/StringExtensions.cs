@@ -117,18 +117,27 @@ namespace SystemPlus.Text
         {
             ArgumentNullException.ThrowIfNull(value);
 
-            int start;
-            int end;
+            int start = 0;
+            int searchFrom = 0;
 
-            if (string.IsNullOrEmpty(after) || !value.Contains(after, comparisonType))
-                start = 0;
-            else
-                start = value.IndexOf(after, comparisonType);
+            if (!string.IsNullOrEmpty(after))
+            {
+                int afterIndex = value.IndexOf(after, comparisonType);
+                if (afterIndex >= 0)
+                {
+                    start = afterIndex;
+                    searchFrom = afterIndex + after.Length;
+                }
+            }
 
-            if (string.IsNullOrEmpty(before) || !value.Contains(before, comparisonType))
-                end = value.Length;
-            else
-                end = value.IndexOf(before, start, comparisonType) + after.Length + 1;
+            int end = value.Length;
+
+            if (!string.IsNullOrEmpty(before))
+            {
+                int beforeIndex = value.IndexOf(before, searchFrom, comparisonType);
+                if (beforeIndex >= 0)
+                    end = beforeIndex + before.Length;
+            }
 
             return value[start..end];
         }

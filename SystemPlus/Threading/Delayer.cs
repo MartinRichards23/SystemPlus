@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Diagnostics;
+using System.Threading;
 
 namespace SystemPlus.Threading
 {
@@ -10,18 +11,24 @@ namespace SystemPlus.Threading
         #region Fields
 
         readonly Random? rand;
-        DateTime lastWait = DateTime.MinValue;
+        readonly SemaphoreSlim gate = new SemaphoreSlim(1, 1);
+        long? lastWaitTicks;
 
         #endregion
 
         public Delayer(TimeSpan delay)
         {
+            ArgumentOutOfRangeException.ThrowIfLessThan(delay, TimeSpan.Zero);
+
             MinDelay = delay;
             MaxDelay = delay;
         }
 
         public Delayer(TimeSpan minDelay, TimeSpan maxDelay)
         {
+            ArgumentOutOfRangeException.ThrowIfLessThan(minDelay, TimeSpan.Zero);
+            ArgumentOutOfRangeException.ThrowIfLessThan(maxDelay, minDelay);
+
             MinDelay = minDelay;
             MaxDelay = maxDelay;
             rand = Random.Shared;
@@ -39,23 +46,30 @@ namespace SystemPlus.Threading
         /// </summary>
         public async Task Delay(CancellationToken token = default)
         {
-            TimeSpan d;
+            await gate.WaitAsync(token).ConfigureAwait(false);
 
-            if (rand != null)
-                d = rand.NextTimespan(MinDelay, MaxDelay);
-            else
-                d = MinDelay;
-
-            DateTime now = DateTime.UtcNow;
-            DateTime nextAllowed = lastWait + d;
-
-            if (nextAllowed > now)
+            try
             {
-                TimeSpan duration = nextAllowed - now;
-                await Task.Delay(duration, token);
-            }
+                TimeSpan d;
 
-            lastWait = DateTime.UtcNow;
+                if (rand != null)
+                    d = rand.NextTimespan(MinDelay, MaxDelay);
+                else
+                    d = MinDelay;
+
+                if (lastWaitTicks.HasValue)
+                {
+                    TimeSpan elapsed = Stopwatch.GetElapsedTime(lastWaitTicks.Value);
+
+                    if (elapsed < d)
+                        await Task.Delay(d - elapsed, token).ConfigureAwait(false);
+                }
+            }
+            finally
+            {
+                lastWaitTicks = Stopwatch.GetTimestamp();
+                gate.Release();
+            }
         }
     }
 }

@@ -9,14 +9,20 @@ namespace SystemPlus.Text.RegularExpressions
         /// </summary>
         public static bool VerifyRegex(string pattern, out string? error)
         {
+            if (pattern == null)
+            {
+                error = "Pattern is null";
+                return false;
+            }
+
             try
             {
-                Regex regex = new Regex(pattern);
+                _ = new Regex(pattern);
 
                 error = null;
                 return true;
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
                 error = ex.Message;
                 return false;

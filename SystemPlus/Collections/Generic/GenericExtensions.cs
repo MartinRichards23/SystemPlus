@@ -22,10 +22,11 @@ namespace SystemPlus.Collections.Generic
         /// </summary>
         public static T Random<T>(this IList<T> items, Random rand)
         {
-            if (items == null)
-                throw new ArgumentNullException(nameof(items));
-            if (rand == null)
-                throw new ArgumentNullException(nameof(rand));
+            ArgumentNullException.ThrowIfNull(items);
+            ArgumentNullException.ThrowIfNull(rand);
+
+            if (items.Count == 0)
+                throw new InvalidOperationException("Cannot pick a random item from an empty collection.");
 
             int i = rand.Next(items.Count);
 

@@ -26,9 +26,12 @@ namespace SystemPlus.IO.Csv
             if (sw == null)
                 throw new ArgumentNullException(nameof(sw));
 
-            foreach (object o in vals)
+            for (int i = 0; i < vals.Length; i++)
             {
-                sw.WriteCsvVal(o, separator);
+                if (i > 0)
+                    sw.Write(separator);
+
+                sw.Write(EscapeCsvField(vals[i], separator));
             }
 
             sw.WriteLine();
@@ -47,17 +50,12 @@ namespace SystemPlus.IO.Csv
             if (string.IsNullOrEmpty(value))
                 return string.Empty;
 
-            value = value.Replace("\r\n", " ", StringComparison.InvariantCulture);
-            value = value.Replace("\n", " ", StringComparison.InvariantCulture);
-            value = value.Replace("\r", " ", StringComparison.InvariantCulture);
+            value = value.Replace("\r\n", " ", StringComparison.Ordinal);
+            value = value.Replace('\n', ' ');
+            value = value.Replace('\r', ' ');
 
-            if (value.Contains(separator, StringComparison.InvariantCulture))
-            {
-                if (value.Contains("\"", StringComparison.InvariantCulture))
-                    value = "\"" + value.Replace("\"", "\"\"", StringComparison.InvariantCulture) + "\"";
-                else
-                    value = "\"" + value + "\"";
-            }
+            if (value.Contains(separator, StringComparison.Ordinal) || value.Contains('"'))
+                value = "\"" + value.Replace("\"", "\"\"", StringComparison.Ordinal) + "\"";
 
             return value;
         }

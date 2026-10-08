@@ -29,6 +29,7 @@ namespace SystemPlus.IO
             }
 
             // only safe to read after deflate closed
+            baseStream.Position = 0;
             return baseStream;
         }
 
@@ -45,35 +46,29 @@ namespace SystemPlus.IO
         /// <summary>
         /// GZip decompresses the given buffer
         /// </summary>
-        public static byte[] Decompress(MemoryStream stream, CompressionType compression = CompressionType.GZip)
+        /// <param name="maxLength">Maximum allowed decompressed size in bytes, guards against decompression bombs</param>
+        public static byte[] Decompress(MemoryStream stream, CompressionType compression = CompressionType.GZip, int maxLength = int.MaxValue)
         {
-            if (compression == CompressionType.GZip)
-            {
-                using Stream zip = new GZipStream(stream, CompressionMode.Decompress);
-                using MemoryStream memoryStream = new MemoryStream();
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
 
-                zip.CopyTo(memoryStream);
-                return memoryStream.ToArray();
-            }
-            else
-            {
-                using Stream zip = new DeflateStream(stream, CompressionMode.Decompress);
-                using MemoryStream memoryStream = new MemoryStream();
+            using Stream zip = compression == CompressionType.GZip
+                ? new GZipStream(stream, CompressionMode.Decompress, true)
+                : new DeflateStream(stream, CompressionMode.Decompress, true);
+            using MemoryStream memoryStream = new MemoryStream();
 
-                zip.CopyTo(memoryStream);
-                return memoryStream.ToArray();
-            }
-
+            zip.CopyTo(memoryStream, 81920, maxLength);
+            return memoryStream.ToArray();
         }
 
         /// <summary>
         /// GZip decompresses the given buffer
         /// </summary>
-        public static byte[] Decompress(byte[] data, CompressionType compression = CompressionType.GZip)
+        public static byte[] Decompress(byte[] data, CompressionType compression = CompressionType.GZip, int maxLength = int.MaxValue)
         {
             using MemoryStream stream = new MemoryStream(data);
 
-            return Decompress(stream, compression);
+            return Decompress(stream, compression, maxLength);
         }
 
         public static bool CheckMagicNumberGZip(byte[] buffer)

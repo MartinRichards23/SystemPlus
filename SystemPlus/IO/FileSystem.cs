@@ -59,7 +59,7 @@ namespace SystemPlus.IO
             // Copy each file into it’s new directory.
             foreach (FileInfo fi in source.GetFiles())
             {
-                fi.CopyTo(Path.Combine(target.ToString(), fi.Name), true);
+                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
             }
 
             // Copy each subdirectory using recursion.
@@ -145,16 +145,18 @@ namespace SystemPlus.IO
             if (name == null)
                 throw new ArgumentNullException(nameof(name));
 
-            char[] illegals = Path.GetInvalidPathChars();
+            char[] illegals = Path.GetInvalidFileNameChars();
 
             foreach (char c in illegals)
             {
                 name = name.Replace(c, replaceChar);
             }
 
-            name = name.Replace(':', replaceChar);
-            name = name.Replace('/', replaceChar);
-            name = name.Replace('?', replaceChar);
+            // invalid on Windows but not reported on all platforms
+            foreach (char c in ":/\\?*\"<>|")
+            {
+                name = name.Replace(c, replaceChar);
+            }
 
             if (name.Length > maxLength)
                 name = name.Substring(0, maxLength);
@@ -200,6 +202,9 @@ namespace SystemPlus.IO
         /// </summary>
         public static IEnumerable<FileInfo> EnumerateAllFiles(string dir)
         {
+            if (dir == null)
+                throw new ArgumentNullException(nameof(dir));
+
             Queue<string> queue = new Queue<string>();
             queue.Enqueue(dir);
 
@@ -207,12 +212,22 @@ namespace SystemPlus.IO
             {
                 dir = queue.Dequeue();
 
-                foreach (string subDir in Directory.GetDirectories(dir))
-                {
-                    queue.Enqueue(subDir);
-                }
+                string[] files;
 
-                string[] files = Directory.GetFiles(dir);
+                try
+                {
+                    foreach (string subDir in Directory.GetDirectories(dir))
+                    {
+                        queue.Enqueue(subDir);
+                    }
+
+                    files = Directory.GetFiles(dir);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    // skip directories we cannot access
+                    continue;
+                }
 
                 foreach (var t in files)
                 {

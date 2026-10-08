@@ -25,7 +25,7 @@
         {
             ThrowIfEmpty();
 
-            T item
+            T item = items[currentPosition];
 
             currentPosition++;
             CheckPos();
@@ -37,7 +37,7 @@
         {
             ThrowIfEmpty();
 
-            T item
+            T item = items[currentPosition];
 
             currentPosition--;
             CheckPos();

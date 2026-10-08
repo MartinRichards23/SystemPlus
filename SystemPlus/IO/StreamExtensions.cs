@@ -66,17 +66,16 @@ namespace SystemPlus.IO
             byte[] buffer = new byte[bufferSize];
 
             int read;
-            int totalRead = 0;
-            do
+            long totalRead = 0;
+            while ((read = source.Read(buffer, 0, buffer.Length)) > 0)
             {
-                read = source.Read(buffer, 0, buffer.Length);
                 totalRead += read;
-
-                destination.Write(buffer, 0, read);
 
                 if (totalRead > maxLength)
                     throw new IOException("Stream exceeded max length");
-            } while (read > 0);
+
+                destination.Write(buffer, 0, read);
+            }
         }
 
         /// <summary>
@@ -98,8 +97,8 @@ namespace SystemPlus.IO
                 throw new ArgumentNullException(nameof(reader));
 
             char[] buffer = new char[count];
-            reader.Read(buffer, 0, buffer.Length);
-            return new string(buffer);
+            int read = reader.ReadBlock(buffer, 0, buffer.Length);
+            return new string(buffer, 0, read);
         }
 
         public static IEnumerable<string> EnumerateLines(this TextReader reader)

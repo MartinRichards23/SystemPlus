@@ -7,15 +7,25 @@ namespace SystemPlus.IO
     /// </summary>
     public static class BinaryReaderExtensions
     {
+        static byte[] ReadExactly(BinaryReader br, int count)
+        {
+            byte[] b = br.ReadBytes(count);
+
+            if (b.Length != count)
+                throw new EndOfStreamException($"Expected {count} bytes but only {b.Length} were available.");
+
+            return b;
+        }
+
         /// <summary>
-        /// Reads a big endian 2-byte singed integer from the current stream and advances the current position of the stream by 2 bytes.
+        /// Reads a big endian 2-byte singed integer
         /// </summary>
         public static short ReadBigEndianInt16(this BinaryReader br)
         {
             if (br == null)
                 throw new ArgumentNullException(nameof(br));
 
-            byte[] b = br.ReadBytes(2);
+            byte[] b = ReadExactly(br, 2);
             Array.Reverse(b);
             short result = BitConverter.ToInt16(b, 0);
             return result;
@@ -29,7 +39,7 @@ namespace SystemPlus.IO
             if (br == null)
                 throw new ArgumentNullException(nameof(br));
 
-            byte[] b = br.ReadBytes(4);
+            byte[] b = ReadExactly(br, 4);
             Array.Reverse(b);
             int result = BitConverter.ToInt32(b, 0);
             return result;
@@ -43,7 +53,7 @@ namespace SystemPlus.IO
             if (br == null)
                 throw new ArgumentNullException(nameof(br));
 
-            byte[] b = br.ReadBytes(8);
+            byte[] b = ReadExactly(br, 8);
             Array.Reverse(b);
             long result = BitConverter.ToInt64(b, 0);
             return result;
@@ -57,7 +67,7 @@ namespace SystemPlus.IO
             if (br == null)
                 throw new ArgumentNullException(nameof(br));
 
-            byte[] b = br.ReadBytes(4);
+            byte[] b = ReadExactly(br, 4);
             Array.Reverse(b);
             float result = BitConverter.ToSingle(b, 0);
             return result;
@@ -71,7 +81,7 @@ namespace SystemPlus.IO
             if (br == null)
                 throw new ArgumentNullException(nameof(br));
 
-            byte[] b = br.ReadBytes(8);
+            byte[] b = ReadExactly(br, 8);
             Array.Reverse(b);
             double result = BitConverter.ToDouble(b, 0);
             return result;
@@ -85,7 +95,7 @@ namespace SystemPlus.IO
             if (br == null)
                 throw new ArgumentNullException(nameof(br));
 
-            byte[] b = br.ReadBytes(4);
+            byte[] b = ReadExactly(br, 4);
             float result = Ibm32ToIeee32(b);
             return result;
         }
@@ -98,7 +108,7 @@ namespace SystemPlus.IO
             if (br == null)
                 throw new ArgumentNullException(nameof(br));
 
-            byte[] b = br.ReadBytes(8);
+            byte[] b = ReadExactly(br, 8);
             double result = Ibm64ToIeee64(b);
             return result;
         }
@@ -123,7 +133,6 @@ namespace SystemPlus.IO
         }
 
         /// <summary>
-        /// *** Untested! ***
         /// Converts a 64bit floating point from IBM to IEEE
         /// </summary>
         public static double Ibm64ToIeee64(byte[] b)
@@ -133,7 +142,7 @@ namespace SystemPlus.IO
 
             long intMantissa = ((long)b[1] << 48) + ((long)b[2] << 40) + ((long)b[3] << 32) + ((long)b[4] << 24) + ((long)b[5] << 16) + ((long)b[6] << 8) + b[7];
 
-            double mantissa = intMantissa / (double)0x1000000;
+            double mantissa = intMantissa / (double)(1L << 56);
             double posResult = mantissa * Math.Pow(16.0, (double)(b[0] & 0x7F) - 64);
 
             if ((b[0] & 0x80) != 0)
@@ -150,7 +159,7 @@ namespace SystemPlus.IO
             if (br == null)
                 throw new ArgumentNullException(nameof(br));
 
-            byte[] b = br.ReadBytes(length);
+            byte[] b = ReadExactly(br, length);
             char[] c = new char[length];
 
             for (int i = 0; i < b.Length; i++)

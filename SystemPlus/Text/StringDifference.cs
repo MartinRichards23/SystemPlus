@@ -50,7 +50,7 @@ namespace SystemPlus.Text
                 for (int j = 1; j <= m; j++)
                 {
                     // Step 5
-                    int cost = (t.Substring(j - 1, 1) == s.Substring(i - 1, 1) ? 0 : 1); // cost
+                    int cost = t[j - 1] == s[i - 1] ? 0 : 1; // cost
 
                     // Step 6                    
                     d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1), d[i - 1, j - 1] + cost);

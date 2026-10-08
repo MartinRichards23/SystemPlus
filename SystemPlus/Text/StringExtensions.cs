@@ -250,10 +250,18 @@ namespace SystemPlus.Text
             if (string.IsNullOrWhiteSpace(value))
                 return value;
 
-            if (value.EndsWith("ses", StringComparison.InvariantCultureIgnoreCase))
+            // too short to be a meaningful plural, e.g. "s", "as", "bus"
+            if (value.Length <= 3)
+                return value;
+
+            // words ending in "ss" are not plurals, e.g. "class", "glass"
+            if (value.EndsWith("ss", StringComparison.OrdinalIgnoreCase))
+                return value;
+
+            if (value.EndsWith("ses", StringComparison.OrdinalIgnoreCase))
                 return value.Remove(value.Length - 2);
 
-            if (value.EndsWith("s", StringComparison.InvariantCultureIgnoreCase))
+            if (value.EndsWith("s", StringComparison.OrdinalIgnoreCase))
                 return value.Remove(value.Length - 1);
 
             return value;

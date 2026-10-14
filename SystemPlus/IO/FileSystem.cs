@@ -198,48 +198,6 @@ namespace SystemPlus.IO
         }
 
         /// <summary>
-        /// Enumerates all FileInfos in a directory (including sub directories)
-        /// </summary>
-        public static IEnumerable<FileInfo> EnumerateAllFiles(string dir)
-        {
-            if (dir == null)
-                throw new ArgumentNullException(nameof(dir));
-
-            Queue<string> queue = new Queue<string>();
-            queue.Enqueue(dir);
-
-            while (queue.Count > 0)
-            {
-                dir = queue.Dequeue();
-
-                string[] files;
-
-                try
-                {
-                    foreach (string subDir in Directory.GetDirectories(dir))
-                    {
-                        queue.Enqueue(subDir);
-                    }
-
-                    files = Directory.GetFiles(dir);
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    // skip directories we cannot access
-                    continue;
-                }
-
-                foreach (var t in files)
-                {
-                    FileInfo info = new FileInfo(t);
-
-                    yield return info;
-                }
-            }
-        }
-
-
-        /// <summary>
         /// Gets the normalised extension of the file name e.g. "txt"
         /// </summary>
         public static string GetExtensionNormalised(string fileName)

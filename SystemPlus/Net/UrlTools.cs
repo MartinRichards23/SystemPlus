@@ -42,13 +42,17 @@ namespace SystemPlus.Net
         }
 
         /// <summary>
-        /// Determines if Url is a relative one
+        /// Determines if Url is absolute
         /// </summary>
         public static bool IsAbsoluteUrl(string url)
         {
             return Uri.TryCreate(url, UriKind.Absolute, out _);
         }
 
+        public static bool IsBrowserUrl(string url, out Uri uri)
+        {
+            return Uri.TryCreate(url, UriKind.Absolute, out uri) && (uri.Scheme == Uri.UriSchemeHttps || uri.Scheme == Uri.UriSchemeHttp);
+        }
 
         /// <summary>
         /// Gets an absolute Url from a relative one and its base url
